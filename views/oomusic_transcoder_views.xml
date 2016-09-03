@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="oomusic_transcoder_view_form" model="ir.ui.view">
+        <field name="name">oomusic.transcoder.form</field>
+        <field name="model">oomusic.transcoder</field>
+        <field name="arch" type="xml">
+            <form string="Transcoder">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="command"/>
+                        <field name="bitrate"/>
+                        <field name="buffer_size"/>
+                    </group>
+                    <group>
+                        <field name="input_formats" widget="many2many_tags"/>
+                        <field name="output_format"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="oomusic_transcoder_view_tree" model="ir.ui.view">
+        <field name="name">oomusic.transcoder.tree</field>
+        <field name="model">oomusic.transcoder</field>
+        <field name="arch" type="xml">
+            <tree string="Transcoders">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="command"/>
+                <field name="bitrate"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_transcoder" model="ir.actions.act_window">
+        <field name="name">Transcoders</field>
+        <field name="res_model">oomusic.transcoder</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>
+                You can define your own oomusic transcoders.
+            </p><p>
+                Please read the documentation in a first place.
+            </p>
+        </field>
+    </record>
+
+    <!-- Third Level Menu -->
+    <menuitem id="menu_action_transcoder" parent="menu_oomusic_config" action="action_transcoder" sequence="10"/>
+</odoo>

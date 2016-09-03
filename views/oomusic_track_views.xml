@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="oomusic_track_view_form" model="ir.ui.view">
+        <field name="name">oomusic.track.form</field>
+        <field name="model">oomusic.track</field>
+        <field name="arch" type="xml">
+            <form string="Track">
+                <header>
+                    <button name="action_add_to_playlist" string="Add To Current Playlist" class="btn-primary"
+                        type="object" attrs="{'invisible': [('in_playlist','=', True)]}"/>
+                </header>
+                <sheet>
+                    <field name="in_playlist" invisible="1"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="artist_id"/>
+                            <field name="album_id"/>
+                            <field name="year"/>
+                            <field name="genre_id"/>
+                        </group>
+                        <group>
+                            <field name="star" widget="priority"/>
+                            <field name="duration_min" widget="float_time"/>
+                            <field name="track_number"/>
+                            <field name="track_total"/>
+                            <field name="disc"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="album_artist_id"/>
+                            <field name="description"/>
+                            <field name="composer"/>
+                            <field name="performer_id"/>
+                            <field name="copyright"/>
+                            <field name="contact"/>
+                            <field name="encoded_by"/>
+                        </group>
+                        <group>
+                            <field name="play_count"/>
+                            <field name="last_play"/>
+                            <field name="bitrate"/>
+                            <field name="last_modification" groups="base.group_no_one"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="path"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="oomusic_track_view_tree" model="ir.ui.view">
+        <field name="name">oomusic.track.tree</field>
+        <field name="model">oomusic.track</field>
+        <field name="arch" type="xml">
+            <tree string="Tracks">
+                <field name="in_playlist" invisible="1"/>
+                <button name="action_add_to_playlist" string="Add To Current Playlist"
+                    icon="fa-plus" type="object" widget="jplayer_add"
+                    attrs="{'invisible': [('in_playlist','=', True)]}"/>
+                <field name="name"/>
+                <field name="album_id"/>
+                <field name="artist_id"/>
+                <field name="track_number"/>
+                <field name="genre_id"/>
+                <field name="duration_min" widget="float_time"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="oomusic_track_view_search" model="ir.ui.view">
+        <field name="name">oomusic.track.search</field>
+        <field name="model">oomusic.track</field>
+        <field name="arch" type="xml">
+            <search string="Tracks">
+                <field name="name"/>
+                <field name="artist_id"/>
+                <field name="album_id"/>
+                <field name="genre_id"/>
+                <field name="year"/>
+                <field name="duration_min" widget="float_time"/>
+
+                <filter string="Added Today" name="filter_added_today"
+                    domain="[('create_date', '&gt;=', time.strftime('%%Y-%%m-%%d''))]"/>
+                <filter string="Added This Month" name="filter_added_this_month"
+                    domain="[('create_date', '&gt;=', time.strftime('%%Y-%%m-01''))]"/>
+                <filter string="Favorite" name="filter_favorite"
+                    domain="[('star', '=', '1')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_track" model="ir.actions.act_window">
+        <field name="name">Tracks</field>
+        <field name="res_model">oomusic.track</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>
+                You will find here all your tracks.
+            </p><p>
+                As soons as a folder is added in your library, the tracks will be listed here. Click
+                on the <span class="fa fa-plus"></span> button to add them to the current playlist,
+                or on the <span class="fa fa-star"></span> to mark them as favorite!
+            </p>
+        </field>
+    </record>
+
+    <!-- Third Level Menu -->
+    <menuitem id="menu_action_track" parent="menu_oomusic_library" action="action_track" sequence="10"/>
+</odoo>

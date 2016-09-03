@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="oomusic_suggestion_view_form" model="ir.ui.view">
+        <field name="name">oomusic.suggestion.form</field>
+        <field name="model">oomusic.suggestion</field>
+        <field name="arch" type="xml">
+            <form string="Suggestion">
+                <h1>
+                    <field name="name_albums" readonly="1"/>
+                </h1>
+                <notebook>
+                    <page string="Recently Added">
+                        <field name="album_recently_added" mode="kanban">
+                            <kanban>
+                                <field name="image_small_kanban"/>
+                                <field name="in_playlist"/>
+                                <templates>
+                                    <t t-name="kanban-box">
+                                        <div class="oe_kanban_global_click">
+                                            <div class="o_kanban_image">
+                                                <t t-if="record.image_small_kanban and record.image_small_kanban.raw_value">
+                                                    <img t-att-src="kanban_image('oomusic.album', 'image_small_kanban', record.id.value)"/>
+                                                </t>
+                                                <t t-else="t-else">
+                                                    <img t-att-src="kanban_image('oomusic.album', 'image_small', record.id.value)"/>
+                                                </t>
+                                            </div>
+                                            <div class="oe_kanban_content">
+                                                <strong>
+                                                    <field name="name"/>
+                                                </strong>
+                                                <div>
+                                                    <field name="year"/>
+                                                </div>
+                                                <div>
+                                                    <field name="artist_id"/>
+                                                </div>
+
+                                                <div class="oe_kanban_bottom_right">
+                                                    <field name="star" widget="priority"/>
+                                                    <button name="action_add_to_playlist" string="Add To Current Playlist"
+                                                        class="btn btn-default btn-xs fa fa-plus" type="object"
+                                                        attrs="{'invisible': [('in_playlist','=', True)]}"/>
+                                                </div>
+                                                <div>
+                                                    <field name="genre_id"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </templates>
+                            </kanban>
+                        </field>
+                    </page>
+                    <page string="Random">
+                        <field name="album_random" mode="kanban">
+                            <kanban>
+                                <field name="image_small_kanban"/>
+                                <field name="in_playlist"/>
+                                <templates>
+                                    <t t-name="kanban-box">
+                                        <div class="oe_kanban_global_click">
+                                            <div class="o_kanban_image">
+                                                <t t-if="record.image_small_kanban and record.image_small_kanban.raw_value">
+                                                    <img t-att-src="kanban_image('oomusic.album', 'image_small_kanban', record.id.value)"/>
+                                                </t>
+                                                <t t-else="t-else">
+                                                    <img t-att-src="kanban_image('oomusic.album', 'image_small', record.id.value)"/>
+                                                </t>
+                                            </div>
+                                            <div class="oe_kanban_content">
+                                                <strong>
+                                                    <field name="name"/>
+                                                </strong>
+                                                <div>
+                                                    <field name="year"/>
+                                                </div>
+                                                <div>
+                                                    <field name="artist_id"/>
+                                                </div>
+
+                                                <div class="oe_kanban_bottom_right">
+                                                    <field name="star" widget="priority"/>
+                                                    <button name="action_add_to_playlist" string="Add To Current Playlist"
+                                                        class="btn btn-default btn-xs fa fa-plus" type="object"
+                                                        attrs="{'invisible': [('in_playlist','=', True)]}"/>
+                                                </div>
+                                                <div>
+                                                    <field name="genre_id"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </templates>
+                            </kanban>
+                        </field>
+                    </page>
+                </notebook>
+                <h1>
+                    <field name="name_tracks" readonly="1"/>
+                </h1>
+                <notebook>
+                    <page string="Recently Added">
+                        <field name="track_recently_added"/>
+                    </page>
+                    <page string="Random">
+                        <field name="track_random"/>
+                    </page>
+                    <page string="Last Played">
+                        <field name="track_last_played"/>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_suggestion" model="ir.actions.act_window">
+        <field name="name">Suggestions</field>
+        <field name="res_model">oomusic.suggestion</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="help" type="html">
+            <p>
+                You will find here suggestions.
+            </p><p>
+                As soons as a folder...
+            </p>
+        </field>
+    </record>
+
+    <!-- Second Level Menu -->
+    <menuitem id="menu_action_suggestion" parent="menu_oomusic_root" action="action_suggestion" sequence="0"/>
+</odoo>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Fist Level Menu -->
+    <menuitem name="Music" id="menu_oomusic_root" sequence="90"/>
+
+    <!-- Second Level Menu -->
+    <menuitem id="menu_oomusic_playlist" name="Playlists" parent="menu_oomusic_root" sequence="10"/>
+    <menuitem id="menu_oomusic_library" name="Library" parent="menu_oomusic_root" sequence="20"/>
+    <menuitem id="menu_oomusic_config" name="Configuration" parent="menu_oomusic_root" sequence="100"/>
+</odoo>

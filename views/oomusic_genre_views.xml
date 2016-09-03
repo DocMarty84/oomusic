@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="oomusic_genre_view_form" model="ir.ui.view">
+        <field name="name">oomusic.genre.form</field>
+        <field name="model">oomusic.genre</field>
+        <field name="arch" type="xml">
+            <form string="Genre">
+                <sheet>
+                    <h1>
+                        <field name="name"/>
+                    </h1>
+                    <field name="album_ids">
+                        <tree string="Albums">
+                            <field name="in_playlist" invisible="1"/>
+                            <button name="action_add_to_playlist" string="Add To Current Playlist"
+                                icon="fa-plus" type="object" widget="jplayer_add"
+                                attrs="{'invisible': [('in_playlist','=', True)]}"/>
+                            <field name="name"/>
+                            <field name="year"/>
+                            <field name="artist_id"/>
+                        </tree>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

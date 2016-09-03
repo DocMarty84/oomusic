@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Default playlist for root user -->
+        <record id="oomusic_my_playlist" model="oomusic.playlist">
+            <field name="name">My Playlist</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="current" eval="True"/>
+        </record>
+    </data>
+</odoo>

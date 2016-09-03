@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="oomusic_playlist_view_form" model="ir.ui.view">
+        <field name="name">oomusic.playlist.form</field>
+        <field name="model">oomusic.playlist</field>
+        <field name="arch" type="xml">
+            <form string="Playlist">
+                <header>
+                    <button name="action_current" string="Set As Current" type="object" attrs="{'invisible': [('current', '=', True)]}"/>
+                    <button name="action_purge" string="Purge" type="object"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="comment"/>
+                        </group>
+                        <group>
+                            <field name="current" readonly="1"/>
+                            <field name="public"/>
+                        </group>
+                    </group>
+                    <group class="oe_edit_only">
+                        <group>
+                            <field name="album_id"/>
+                        </group>
+                        <group>
+                            <field name="artist_id"/>
+                        </group>
+                    </group>
+                    <field name="playlist_line_ids">
+                        <tree string="Tracks" editable="bottom" decoration-success="playing == True">
+                            <field name="playing" invisible="1"/>
+                            <field name="sequence" widget="handle"/>
+                            <field name="dummy_field" widget="jplayer_play"/>
+                            <field name="track_id"/>
+                            <field name="artist_id"/>
+                            <field name="album_id"/>
+                            <field name="duration_min" widget="float_time"/>
+                       </tree>
+                   </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="oomusic_playlist_view_tree" model="ir.ui.view">
+        <field name="name">oomusic.playlist.tree</field>
+        <field name="model">oomusic.playlist</field>
+        <field name="arch" type="xml">
+            <tree string="Playlists" decoration-success="current == True">
+                <field name="current" invisible="1"/>
+                <field name="name"/>
+                <field name="comment"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_playlist" model="ir.actions.act_window">
+        <field name="name">Playlists</field>
+        <field name="res_model">oomusic.playlist</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                You will find here all the playlists.
+            </p><p>
+                At least one playlist is required. You can easily add the tracks to the playlist
+                directly from the playlist form view, or from any other view. In the latter case,
+                tracks will be added to the current playlist, which is unique.
+            </p>
+        </field>
+    </record>
+
+    <record id="oomusic_playlist_line_view_tree" model="ir.ui.view">
+        <field name="name">oomusic.playlist.line.tree</field>
+        <field name="model">oomusic.playlist.line</field>
+        <field name="arch" type="xml">
+            <tree string="Tracks" decoration-success="playing == True">
+                <field name="playing" invisible="1"/>
+                <field name="sequence" widget="handle"/>
+                <field name="dummy_field" widget="jplayer_play"/>
+                <field name="track_id"/>
+                <field name="track_number"/>
+                <field name="album_id"/>
+                <field name="artist_id"/>
+                <field name="genre_id"/>
+                <field name="year"/>
+                <field name="duration_min" widget="float_time"/>
+           </tree>
+        </field>
+    </record>
+
+    <record id="oomusic_playlist_line_view_search" model="ir.ui.view">
+        <field name="name">oomusic.playlist.line.search</field>
+        <field name="model">oomusic.playlist.line</field>
+        <field name="arch" type="xml">
+            <search string="Tracks">
+                <field name="track_id"/>
+                <field name="album_id"/>
+                <field name="artist_id"/>
+                <field name="genre_id"/>
+                <field name="year"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_current_playlist" model="ir.actions.act_window">
+        <field name="name">Current Playlist</field>
+        <field name="res_model">oomusic.playlist.line</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[('playlist_id.current', '=', True)]</field>
+        <field name="help" type="html">
+            <p>
+                You will find here the current playlist.
+            </p><p>
+                You can create your first playlist from the "Playlists" menu, and set it as
+                "Current" so the tracks will appear here.
+            </p>
+        </field>
+    </record>
+
+    <!-- Third Level Menu -->
+    <menuitem id="menu_action_current_playlist" parent="menu_oomusic_playlist" action="action_current_playlist" sequence="10"/>
+    <menuitem id="menu_action_playlist" parent="menu_oomusic_playlist" action="action_playlist" sequence="20"/>
+</odoo>

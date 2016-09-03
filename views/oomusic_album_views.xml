@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="oomusic_album_view_form" model="ir.ui.view">
+        <field name="name">oomusic.album.form</field>
+        <field name="model">oomusic.album</field>
+        <field name="arch" type="xml">
+            <form string="Album">
+                <header>
+                    <button name="action_add_to_playlist" string="Add To Current Playlist" class="btn-primary"
+                        type="object" attrs="{'invisible': [('in_playlist','=', True)]}"/>
+                </header>
+                <sheet>
+                    <field name="in_playlist" invisible="1"/>
+                    <field name="image_medium" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="year"/>
+                            <field name="artist_id"/>
+                        </group>
+                        <group>
+                            <field name="genre_id"/>
+                            <field name="star" widget="priority"/>
+                        </group>
+                    </group>
+                    <field name="track_ids">
+                        <tree string="Tracks">
+                            <field name="in_playlist" invisible="1"/>
+                            <button name="action_add_to_playlist" string="Add To Current Playlist"
+                                icon="fa-plus" widget="jplayer_add" type="object"
+                                attrs="{'invisible': [('in_playlist','=', True)]}"/>
+                            <field name="track_number"/>
+                            <field name="name"/>
+                            <field name="duration_min" widget="float_time"/>
+                        </tree>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="oomusic_album_view_tree" model="ir.ui.view">
+        <field name="name">oomusic.album.tree</field>
+        <field name="model">oomusic.album</field>
+        <field name="arch" type="xml">
+            <tree string="Albums">
+                <field name="in_playlist" invisible="1"/>
+                <button name="action_add_to_playlist" string="Add To Current Playlist"
+                    icon="fa-plus" widget="jplayer_add" type="object"
+                    attrs="{'invisible': [('in_playlist','=', True)]}"/>
+                <field name="name"/>
+                <field name="year"/>
+                <field name="artist_id"/>
+                <field name="genre_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="oomusic_album_view_search" model="ir.ui.view">
+        <field name="name">oomusic.album.search</field>
+        <field name="model">oomusic.album</field>
+        <field name="arch" type="xml">
+            <search string="Albums">
+                <field name="name"/>
+                <field name="artist_id"/>
+                <field name="genre_id"/>
+                <field name="year"/>
+
+                <filter string="Released This Year" name="filter_released_this_year"
+                    domain="[('year', '=', time.strftime('%%Y'))]"/>
+                <filter string="Added This Month" name="filter_added_this_month"
+                    domain="[('create_date', '&gt;=', time.strftime('%%Y-%%m-01''))]"/>
+                <filter string="Favorite" name="filter_favorite"
+                    domain="[('star', '=', '1')]"/>
+
+                <group string="Group By">
+                    <filter name="group_by_year" string="Year" context="{'group_by': 'year'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="oomusic_album_view_kanban" model="ir.ui.view">
+        <field name="name">oomusic.album.kanban</field>
+        <field name="model">oomusic.album</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="image_small_kanban"/>
+                <field name="in_playlist"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_image">
+                                <t t-if="record.image_small_kanban and record.image_small_kanban.raw_value">
+                                    <img t-att-src="kanban_image('oomusic.album', 'image_small_kanban', record.id.value)"/>
+                                </t>
+                                <t t-else="t-else">
+                                    <img t-att-src="kanban_image('oomusic.album', 'image_small', record.id.value)"/>
+                                </t>
+                            </div>
+                            <div class="oe_kanban_content">
+                                <strong>
+                                    <field name="name"/>
+                                </strong>
+                                <div>
+                                    <field name="year"/>
+                                </div>
+                                <div>
+                                    <field name="artist_id"/>
+                                </div>
+
+                                <div class="oe_kanban_bottom_right">
+                                    <field name="star" widget="priority"/>
+                                    <button name="action_add_to_playlist" string="Add To Current Playlist"
+                                        class="btn btn-default btn-xs fa fa-plus" type="object"
+                                        attrs="{'invisible': [('in_playlist','=', True)]}"/>
+                                </div>
+                                <div>
+                                    <field name="genre_id"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_album" model="ir.actions.act_window">
+        <field name="name">Albums</field>
+        <field name="res_model">oomusic.album</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="help" type="html">
+            <p>
+                You will find here all your albums.
+            </p><p>
+                As soons as a folder is added in your library, the tracks are organized here by
+                album. When available, a cover picture is displayed. Click on the <span class="fa fa-plus"></span>
+                button to add them to the current playlist, or on the <span class="fa fa-star"></span>
+                to mark them as favorite!
+            </p>
+        </field>
+    </record>
+
+    <!-- Third Level Menu -->
+    <menuitem id="menu_action_album" parent="menu_oomusic_library" action="action_album" sequence="20"/>
+</odoo>

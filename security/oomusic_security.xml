@@ -1,0 +1,39 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="oomusic_album" model="ir.rule">
+        <field name="name">oomusic.album: see own albums</field>
+        <field name="model_id" ref="model_oomusic_album"/>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="domain_force">[('user_id', '=', user.id)]</field>
+    </record>
+    <record id="oomusic_artist" model="ir.rule">
+        <field name="name">oomusic.artist: see own artists</field>
+        <field name="model_id" ref="model_oomusic_artist"/>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="domain_force">[('user_id', '=', user.id)]</field>
+    </record>
+    <record id="oomusic_folder" model="ir.rule">
+        <field name="name">oomusic.folder: see own folders</field>
+        <field name="model_id" ref="model_oomusic_folder"/>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="domain_force">[('user_id', '=', user.id)]</field>
+    </record>
+    <record id="oomusic_genre" model="ir.rule">
+        <field name="name">oomusic.genre: see own genres</field>
+        <field name="model_id" ref="model_oomusic_genre"/>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="domain_force">[('user_id', '=', user.id)]</field>
+    </record>
+    <record id="oomusic_playlist" model="ir.rule">
+        <field name="name">oomusic.playlist: see own and public playlists</field>
+        <field name="model_id" ref="model_oomusic_playlist"/>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="domain_force">['|', ('user_id', '=', user.id), ('public', '=', True)]</field>
+    </record>
+    <record id="oomusic_track" model="ir.rule">
+        <field name="name">oomusic.track: see own tracks</field>
+        <field name="model_id" ref="model_oomusic_track"/>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="domain_force">[('user_id', '=', user.id)]</field>
+    </record>
+</odoo>

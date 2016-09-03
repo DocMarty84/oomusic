@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="oomusic_artist_view_form" model="ir.ui.view">
+        <field name="name">oomusic.artist.form</field>
+        <field name="model">oomusic.artist</field>
+        <field name="arch" type="xml">
+            <form string="Artist">
+                <header>
+                    <button name="action_add_to_playlist" string="Add To Current Playlist" class="btn-primary" type="object"/>
+                </header>
+                <sheet>
+                    <h1>
+                        <field name="name"/>
+                    </h1>
+                    <notebook>
+                        <page string="Albums">
+                            <field name="album_ids">
+                                <tree string="Albums">
+                                    <field name="in_playlist" invisible="1"/>
+                                    <button name="action_add_to_playlist" string="Add To Current Playlist"
+                                        icon="fa-plus" type="object" widget="jplayer_add"
+                                        attrs="{'invisible': [('in_playlist','=', True)]}"/>
+                                    <field name="name"/>
+                                    <field name="year"/>
+                                    <field name="genre_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Tracks">
+                            <field name="track_ids">
+                                <tree string="Tracks">
+                                    <field name="in_playlist" invisible="1"/>
+                                    <button name="action_add_to_playlist" string="Add To Current Playlist"
+                                        icon="fa-plus" type="object" widget="jplayer_add"
+                                        attrs="{'invisible': [('in_playlist','=', True)]}"/>
+                                    <field name="name"/>
+                                    <field name="album_id"/>
+                                    <field name="track_number"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="oomusic_artist_view_tree" model="ir.ui.view">
+        <field name="name">oomusic.artist.tree</field>
+        <field name="model">oomusic.artist</field>
+        <field name="arch" type="xml">
+            <tree string="Artists">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="oomusic_artist_view_search" model="ir.ui.view">
+        <field name="name">oomusic.artist.search</field>
+        <field name="model">oomusic.artist</field>
+        <field name="arch" type="xml">
+            <search string="Artists">
+                <field name="name"/>
+                <field name="album_ids"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_artist" model="ir.actions.act_window">
+        <field name="name">Artists</field>
+        <field name="res_model">oomusic.artist</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>
+                You will find here all the artists.
+            </p><p>
+                As soons as a folder is added in your library, the tracks are organized here by
+                artist.
+            </p>
+        </field>
+    </record>
+
+    <!-- Third Level Menu -->
+    <menuitem id="menu_action_artist" parent="menu_oomusic_library" action="action_artist" sequence="30"/>
+</odoo>
