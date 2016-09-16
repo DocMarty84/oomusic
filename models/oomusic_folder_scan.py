@@ -20,6 +20,13 @@ class MusicFolderScan(models.TransientModel):
     _name = 'oomusic.folder.scan'
     _description = 'Music Folder scan log'
 
+    ALLOWED_FILE_EXTENSIONS = {
+        'mp3',
+        'flac',
+        'ogg',
+        'aac',
+    }
+
     FIELDS_TO_CLEAN = {
         'name',
         'artist_id',
@@ -36,6 +43,24 @@ class MusicFolderScan(models.TransientModel):
         'copyright',
         'contact',
         'encoded_by',
+    }
+
+    MAP_ID3_FIELD = {
+        'ALBUM': 'album_id',
+        'ALBUMARTIST': 'album_artist_id',
+        'ARTIST': 'artist_id',
+        'COMPOSER': 'composer',
+        'CONTACT': 'contact',
+        'COPYRIGHT': 'copyright',
+        'DATE': 'year',
+        'DESCRIPTION': 'description',
+        'DISCNUMBER': 'disc',
+        'ENCODED-BY': 'encoded_by',
+        'GENRE': 'genre_id',
+        'PERFORMER': 'performer_id',
+        'TITLE': 'name',
+        'TRACKNUMBER': 'track_number',
+        'TRACKTOTAL':  'track_total',
     }
 
     def _get_new_cursor(self):
@@ -85,7 +110,7 @@ class MusicFolderScan(models.TransientModel):
             folderlist.add(rootdir)
             for fn in filenames:
                 fn_ext = fn.split('.')[-1]
-                if fn_ext and fn_ext.lower() in self.env['oomusic.track'].ALLOWED_FILE_EXTENSIONS:
+                if fn_ext and fn_ext.lower() in self.ALLOWED_FILE_EXTENSIONS:
                     filelist.add(os.path.join(rootdir, fn))
 
         track_data = [
@@ -424,7 +449,7 @@ class MusicFolderScan(models.TransientModel):
                 for fn in filenames:
                     # Check file extension
                     fn_ext = fn.split('.')[-1]
-                    if fn_ext and fn_ext.lower() not in MusicTrack.ALLOWED_FILE_EXTENSIONS:
+                    if fn_ext and fn_ext.lower() not in self.ALLOWED_FILE_EXTENSIONS:
                         continue
 
                     # Skip file if already in DB
@@ -441,9 +466,9 @@ class MusicFolderScan(models.TransientModel):
                         continue
                     vals = {f: '' for f in self.FIELDS_TO_CLEAN}
                     vals.update({
-                        MusicTrack.MAP_ID3_FIELD[k.upper()]: v[0]
+                        self.MAP_ID3_FIELD[k.upper()]: v[0]
                         for k, v in song.tags and song.tags.iteritems() or {}.iteritems()
-                        if v and k.upper() in MusicTrack.MAP_ID3_FIELD.keys()
+                        if v and k.upper() in self.MAP_ID3_FIELD.keys()
                     })
 
                     # Create new album, artist or genre, and update the cache

@@ -48,31 +48,6 @@ class MusicTrack(models.Model):
     star = fields.Selection(
         [('0', 'Normal'), ('1', 'I Like It!')], 'Favorite', index=True, default='0')
 
-    MAP_ID3_FIELD = {
-        'ALBUM': 'album_id',
-        'ALBUMARTIST': 'album_artist_id',
-        'ARTIST': 'artist_id',
-        'COMPOSER': 'composer',
-        'CONTACT': 'contact',
-        'COPYRIGHT': 'copyright',
-        'DATE': 'year',
-        'DESCRIPTION': 'description',
-        'DISCNUMBER': 'disc',
-        'ENCODED-BY': 'encoded_by',
-        'GENRE': 'genre_id',
-        'PERFORMER': 'performer_id',
-        'TITLE': 'name',
-        'TRACKNUMBER': 'track_number',
-        'TRACKTOTAL':  'track_total',
-    }
-
-    ALLOWED_FILE_EXTENSIONS = {
-        'mp3',
-        'flac',
-        'ogg',
-        'aac',
-    }
-
     @api.depends('playlist_line_ids')
     def _compute_in_playlist(self):
         if not self.env.context.get('compute_fields', True):
