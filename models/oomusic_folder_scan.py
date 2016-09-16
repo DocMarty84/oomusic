@@ -5,7 +5,12 @@ import logging
 import os
 import threading
 
-import taglib
+# Pytaglib and Mutagen are supported for tag reading. Pytaglib is preferred as it seems less likely
+# to send an exception in case of incorrect file.
+try:
+    import taglib as tag
+except ImportError:
+    import mutagen as tag
 
 from odoo import fields, models, api, tools
 
@@ -429,12 +434,16 @@ class MusicFolderScan(models.TransientModel):
                         continue
 
                     # Get tags
-                    song = taglib.File(os.path.join(rootdir, fn))
+                    try:
+                        song = tag.File(os.path.join(rootdir, fn))
+                    except:
+                        _logger.warning('Error while opening file "%s"', os.path.join(rootdir, fn))
+                        continue
                     vals = {f: '' for f in self.FIELDS_TO_CLEAN}
                     vals.update({
-                        MusicTrack.MAP_ID3_FIELD[k]: v[0]
-                        for k, v in song.tags.iteritems()
-                        if v and k in MusicTrack.MAP_ID3_FIELD.keys()
+                        MusicTrack.MAP_ID3_FIELD[k.upper()]: v[0]
+                        for k, v in song.tags and song.tags.iteritems() or {}.iteritems()
+                        if v and k.upper() in MusicTrack.MAP_ID3_FIELD.keys()
                     })
 
                     # Create new album, artist or genre, and update the cache
@@ -444,9 +453,12 @@ class MusicFolderScan(models.TransientModel):
                     vals = self._replace_related_by_id(vals, cache, rootdir)
 
                     # Add missing fields
-                    vals['duration'] = song.length
+                    if tag.__name__ == 'taglib':
+                        vals['duration'] = song.length
+                        vals['bitrate'] = song.bitrate
+                    else:
+                        vals['duration'] = int(song.info.length)
                     vals['duration_min'] = float(vals['duration']) / 60
-                    vals['bitrate'] = song.bitrate
                     vals['path'] = fn_path
                     vals['last_modification'] = mtime
                     vals['root_folder_id'] = folder_id
