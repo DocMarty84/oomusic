@@ -6,7 +6,6 @@
                 <link rel="stylesheet" href="/oomusic/static/src/css/panel.css"/>
 
                 <script type="text/javascript" src="/oomusic/static/lib/jplayer/dist/jplayer/jquery.jplayer.js"></script>
-                <script type="text/javascript" src="/oomusic/static/lib/jplayer/dist/add-on/jplayer.playlist.js"></script>
                 <script type="text/javascript" src="/oomusic/static/src/js/top_button.js"></script>
                 <script type="text/javascript" src="/oomusic/static/src/js/jplayer_control.js"></script>
                 <script type="text/javascript" src="/oomusic/static/src/js/jplayer_widget.js"></script>

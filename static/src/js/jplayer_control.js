@@ -23,6 +23,8 @@ var JplayerControl = core.Class.extend(core.mixins.PropertiesMixin, {
     	});
 
         this.current_playlist_line_id = undefined;
+        this.current_time = 0;
+        this.current_progress = 0;
         this.repeat = true;
         this.shuffle = false;
         this.duration = 1;
@@ -74,23 +76,33 @@ var JplayerControl = core.Class.extend(core.mixins.PropertiesMixin, {
             self.star(self.current_playlist_line_id);
         });
 
+        // setInterval(this._updateProgress.bind(this), 1000);
+
         // Load last track played data
         this.last_track();
     },
 
     _updateProgress: function(ev) {
-        var progress = Math.round((
+        // Update Progress Time
+        var current_time = Math.round(ev.jPlayer.status.currentTime)
+        if (current_time !== this.current_time) {
+            this.current_time = current_time;
+            var current_time_html = QWeb.render('oomusic.CurrentTime', {
+                current_time: $.jPlayer.convertTime(this.seek + ev.jPlayer.status.currentTime),
+            });
+            $('.o_current_time').replaceWith(current_time_html);
+        }
+
+        // Update Progress Bar
+        var current_progress = Math.round((
             (this.seek + ev.jPlayer.status.currentTime)/this.duration
         ) * 100);
-        // Update Progress Time
-        var current_time = QWeb.render('oomusic.CurrentTime', {
-            current_time: $.jPlayer.convertTime(this.seek + ev.jPlayer.status.currentTime),
-        });
-        $('.o_current_time').replaceWith(current_time);
-        // Update Progress Bar
-        $('.o_progress_bar')
-            .css('width', String(progress) + '%')
-            .attr('aria-valuenow', progress);
+        if (current_progress !== this.current_progress) {
+            this.current_progress = current_progress;
+            $('.o_progress_bar')
+            .css('width', String(current_progress) + '%')
+            .attr('aria-valuenow', current_progress);
+        }
     },
 
     _play: function(data, play_now){

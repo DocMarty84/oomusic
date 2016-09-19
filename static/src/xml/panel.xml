@@ -7,79 +7,77 @@
         <div id="jquery_jplayer_1" class="jp-jplayer">
         </div>
         <div id="jp_container_1" class="jp-audio" role="application" aria-label="media player">
-            <div class="jp-type-playlist">
-                <div class="jp-gui jp-interface">
-                    <div class="jp-center-progress-bar pointer">
-                        <!-- Progress bar -->
-                        <div class="o_progress progress">
-                            <div class="o_progress_bar progress-bar progress-bar-striped"
-                                role="progressbar" aria-valuenow="0"
-                                aria-valuemin="0" aria-valuemax="100" style="width:0%">
+            <div class="jp-gui jp-interface">
+                <div class="jp-center-progress-bar pointer">
+                    <!-- Progress bar -->
+                    <div class="o_progress progress">
+                        <div class="o_progress_bar progress-bar progress-bar-striped"
+                            role="progressbar" aria-valuenow="0"
+                            aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                        </div>
+                    </div>
+                    <!-- Duration and Title-->
+                    <div class="jp-time-holder">
+                        <div class="jp-title">No title</div>
+                        <t t-call="oomusic.CurrentTime"/>
+                        <t t-call="oomusic.Duration"/>
+                    </div>
+                </div>
+                <div class="jp-control-buttons">
+                    <ul class="jp-controls">
+                        <li><a href="#" class="jp-previous btn btn-default" tabindex="1">
+                            <span class="fa fa-step-backward"></span>
+                        </a></li>
+                        <li><a href="#" class="jp-play btn btn-default" tabindex="1">
+                            <span class="fa fa-play"></span>
+                        </a></li>
+                        <li><a href="#" class="jp-pause btn btn-default" tabindex="1">
+                            <span class="fa fa-pause"></span>
+                        </a></li>
+                        <li><a href="#" class="jp-next btn btn-default" tabindex="1">
+                            <span class="fa fa-step-forward"></span>
+                        </a></li>
+                        <li><a href="#" class="jp-stop btn btn-default" tabindex="1">
+                            <span class="fa fa-stop"></span>
+                        </a></li>
+                        <li>
+                        </li>
+                    </ul>
+                    <ul class="jp-volume-toggles">
+                        <li><a href="#" class="jp-volume jp-mute btn btn-default btn-xs" tabindex="1" title="Mute">
+                            <span class="fa fa-volume-off fa-fw"></span>
+                        </a></li>
+                        <li><a href="#" class="jp-volume jp-unmute btn btn-default btn-xs" tabindex="1" title="Unmute">
+                            <span class="fa fa-volume-down fa-fw"></span>
+                        </a></li>
+                        <li><a href="#" class="jp-volume-max btn btn-default btn-xs" tabindex="1" title="Volume Max">
+                            <span class="fa fa-volume-up fa-fw"></span>
+                        </a></li>
+                        <li>
+                            <div class="jp-volume-bar progress pointer">
+                                <div class="jp-volume-bar-value progress-bar"></div>
                             </div>
-                        </div>
-                        <!-- Duration and Title-->
-                        <div class="jp-time-holder">
-                            <div class="jp-title">No title</div>
-                            <t t-call="oomusic.CurrentTime"/>
-                            <t t-call="oomusic.Duration"/>
-                        </div>
-                    </div>
-                    <div class="jp-control-buttons">
-                        <ul class="jp-controls">
-                            <li><a href="#" class="jp-previous btn btn-default" tabindex="1">
-                                <span class="fa fa-step-backward"></span>
-                            </a></li>
-                            <li><a href="#" class="jp-play btn btn-default" tabindex="1">
-                                <span class="fa fa-play"></span>
-                            </a></li>
-                            <li><a href="#" class="jp-pause btn btn-default" tabindex="1">
-                                <span class="fa fa-pause"></span>
-                            </a></li>
-                            <li><a href="#" class="jp-next btn btn-default" tabindex="1">
-                                <span class="fa fa-step-forward"></span>
-                            </a></li>
-                            <li><a href="#" class="jp-stop btn btn-default" tabindex="1">
-                                <span class="fa fa-stop"></span>
-                            </a></li>
-                            <li>
-                            </li>
-                        </ul>
-                        <ul class="jp-volume-toggles">
-                            <li><a href="#" class="jp-volume jp-mute btn btn-default btn-xs" tabindex="1" title="Mute">
-                                <span class="fa fa-volume-off fa-fw"></span>
-                            </a></li>
-                            <li><a href="#" class="jp-volume jp-unmute btn btn-default btn-xs" tabindex="1" title="Unmute">
-                                <span class="fa fa-volume-down fa-fw"></span>
-                            </a></li>
-                            <li><a href="#" class="jp-volume-max btn btn-default btn-xs" tabindex="1" title="Volume Max">
-                                <span class="fa fa-volume-up fa-fw"></span>
-                            </a></li>
-                            <li>
-                                <div class="jp-volume-bar progress pointer">
-                                    <div class="jp-volume-bar-value progress-bar"></div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <ul class="jp-toggles">
-                        <li><a href="#" class="jp-shuffle btn btn-default btn-xs" tabindex="1" title="Turn shuffle on">
-                            <span class="fa fa-random"></span>
-                        </a></li>
-                        <li><a href="#" class="jp-shuffle-off btn btn-default btn-xs" tabindex="1" title="Turn shuffle off">
-                            <span class="fa fa-arrow-right"></span>
-                        </a></li>
-                        <li><a href="#" class="jp-repeat btn btn-default btn-xs" tabindex="1" title="Activate repeat">
-                            <span class="fa fa-repeat"></span>
-                        </a></li>
-                        <li><a href="#" class="jp-repeat-off btn btn-default btn-xs" tabindex="1" title="Deactivate repeat">
-                            <span class="fa fa-arrow-down"></span>
-                        </a></li>
-                        <li><a href="#" class="o_star btn btn-default btn-xs" tabindex="1" title="I Like It!">
-                            <span class="fa fa-star"></span>
-                        </a></li>
+                        </li>
                     </ul>
                 </div>
+
+                <ul class="jp-toggles">
+                    <li><a href="#" class="jp-shuffle btn btn-default btn-xs" tabindex="1" title="Turn shuffle on">
+                        <span class="fa fa-random"></span>
+                    </a></li>
+                    <li><a href="#" class="jp-shuffle-off btn btn-default btn-xs" tabindex="1" title="Turn shuffle off">
+                        <span class="fa fa-arrow-right"></span>
+                    </a></li>
+                    <li><a href="#" class="jp-repeat btn btn-default btn-xs" tabindex="1" title="Activate repeat">
+                        <span class="fa fa-repeat"></span>
+                    </a></li>
+                    <li><a href="#" class="jp-repeat-off btn btn-default btn-xs" tabindex="1" title="Deactivate repeat">
+                        <span class="fa fa-arrow-down"></span>
+                    </a></li>
+                    <li><a href="#" class="o_star btn btn-default btn-xs" tabindex="1" title="I Like It!">
+                        <span class="fa fa-star"></span>
+                    </a></li>
+                </ul>
             </div>
         </div>
     </div>
