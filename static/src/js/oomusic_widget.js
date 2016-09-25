@@ -1,4 +1,4 @@
-odoo.define('oomusic.JplayerWidget', function(require) {
+odoo.define('oomusic.OomusicWidget', function(require) {
 "use strict";
 
 var core = require('web.core');
@@ -8,7 +8,7 @@ var _t = core._t;
 var QWeb = core.qweb;
 
 
-var ColumnJplayerPlayField = core.list_widget_registry.get('field').extend({
+var ColumnOomusicPlayField = core.list_widget_registry.get('field').extend({
     /**
      * Return a 'Play' button. It should be linked to a dummy field.
      */
@@ -23,7 +23,7 @@ var ColumnJplayerPlayField = core.list_widget_registry.get('field').extend({
     },
 });
 
-var ColumnJplayerAddButton = core.list_widget_registry.get('button').extend({
+var ColumnOomusicAddButton = core.list_widget_registry.get('button').extend({
     /**
      * Return a 'Add' button, with a narrow column
      */
@@ -48,6 +48,6 @@ ListView.List.include(/** @lends instance.web.ListView.List# */{
 });
 
 core.list_widget_registry
-    .add('field.jplayer_play', ColumnJplayerPlayField)
-    .add('button.jplayer_add', ColumnJplayerAddButton)
+    .add('field.oomusic_play', ColumnOomusicPlayField)
+    .add('button.oomusic_add', ColumnOomusicAddButton)
 });

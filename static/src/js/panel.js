@@ -6,7 +6,7 @@ var Model = require('web.Model');
 var web_client = require('web.web_client');
 var WebClient = require('web.WebClient');
 var Widget = require('web.Widget');
-var JplayerControl = require('oomusic.JplayerControl');
+var OomusicControl = require('oomusic.OomusicControl');
 
 var player_panel = null;
 
@@ -26,13 +26,14 @@ var Panel = Widget.extend({
         this._super(parent);
         this.shown = false;
         this.appendTo(web_client.$el);
-        this.jplayer_controls = new JplayerControl.JplayerControl();
+        this.oomusic_controls = new OomusicControl.OomusicControl();
 
         core.bus.on('oomusic_toggle_display', this, this.toggle_display);
     },
 
     start: function() {
-        $('.jp-shuffle-off').closest('li').hide();
+        $('.oom_shuffle_off').closest('li').hide();
+        $('.oom_repeat_off').closest('li').hide();
     },
 
     toggle_display: function(){

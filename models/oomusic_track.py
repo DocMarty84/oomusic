@@ -62,7 +62,7 @@ class MusicTrack(models.Model):
         if Playlist:
             Playlist._add_tracks(self)
 
-    def _jplayer_info(self, seek=0):
+    def _oomusic_info(self, seek=0):
         self.ensure_one()
         return {
             'title': self.artist_id.name + ' - ' + self.name,

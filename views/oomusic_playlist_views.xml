@@ -33,7 +33,7 @@
                         <tree string="Tracks" editable="bottom" decoration-success="playing == True">
                             <field name="playing" invisible="1"/>
                             <field name="sequence" widget="handle"/>
-                            <field name="dummy_field" widget="jplayer_play"/>
+                            <field name="dummy_field" widget="oomusic_play"/>
                             <field name="track_id"/>
                             <field name="artist_id"/>
                             <field name="album_id"/>
@@ -81,7 +81,7 @@
             <tree string="Tracks" decoration-success="playing == True">
                 <field name="playing" invisible="1"/>
                 <field name="sequence" widget="handle"/>
-                <field name="dummy_field" widget="jplayer_play"/>
+                <field name="dummy_field" widget="oomusic_play"/>
                 <field name="track_id"/>
                 <field name="track_number"/>
                 <field name="album_id"/>

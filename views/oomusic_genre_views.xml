@@ -14,7 +14,7 @@
                         <tree string="Albums">
                             <field name="in_playlist" invisible="1"/>
                             <button name="action_add_to_playlist" string="Add To Current Playlist"
-                                icon="fa-plus" type="object" widget="jplayer_add"
+                                icon="fa-plus" type="object" widget="oomusic_add"
                                 attrs="{'invisible': [('in_playlist','=', True)]}"/>
                             <field name="name"/>
                             <field name="year"/>

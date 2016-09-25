@@ -32,7 +32,7 @@
                         <tree string="Tracks">
                             <field name="in_playlist" invisible="1"/>
                             <button name="action_add_to_playlist" string="Add To Current Playlist"
-                                icon="fa-plus" widget="jplayer_add" type="object"
+                                icon="fa-plus" widget="oomusic_add" type="object"
                                 attrs="{'invisible': [('in_playlist','=', True)]}"/>
                             <field name="track_number"/>
                             <field name="name"/>
@@ -51,7 +51,7 @@
             <tree string="Albums">
                 <field name="in_playlist" invisible="1"/>
                 <button name="action_add_to_playlist" string="Add To Current Playlist"
-                    icon="fa-plus" widget="jplayer_add" type="object"
+                    icon="fa-plus" widget="oomusic_add" type="object"
                     attrs="{'invisible': [('in_playlist','=', True)]}"/>
                 <field name="name"/>
                 <field name="year"/>

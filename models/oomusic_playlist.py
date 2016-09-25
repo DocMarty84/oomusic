@@ -106,7 +106,7 @@ class MusicPlaylistLine(models.Model):
     dummy_field = fields.Boolean('Dummy field')
 
     @api.multi
-    def jplayer_play(self, seek=0):
+    def oomusic_play(self, seek=0):
         # Update playing status and stats
         self.playlist_id.playlist_line_ids.write({'playing': False})
         self.write({'playing': True})
@@ -117,11 +117,11 @@ class MusicPlaylistLine(models.Model):
 
         res = {}
         res['playlist_line_id'] = self.id
-        res.update(self.track_id._jplayer_info(seek=seek))
+        res.update(self.track_id._oomusic_info(seek=seek))
         return json.dumps(res)
 
     @api.multi
-    def jplayer_previous(self, shuffle=False):
+    def oomusic_previous(self, shuffle=False):
         res = {}
         # User might have removed the line from the playlist in the meantime
         try:
@@ -129,17 +129,17 @@ class MusicPlaylistLine(models.Model):
         except MissingError:
             return json.dumps(res)
         if shuffle:
-            return self.jplayer_shuffle()
+            return self.oomusic_shuffle()
         for i in xrange(0, len(lines)):
             if lines[i].id == self.id:
                 if i > 0:
-                    return lines[i-1].jplayer_play()
+                    return lines[i-1].oomusic_play()
                 else:
-                    return lines[len(lines)-1].jplayer_play()
+                    return lines[len(lines)-1].oomusic_play()
         return json.dumps(res)
 
     @api.multi
-    def jplayer_next(self, shuffle=False):
+    def oomusic_next(self, shuffle=False):
         res = {}
         # User might have removed the line from the playlist in the meantime
         try:
@@ -147,33 +147,33 @@ class MusicPlaylistLine(models.Model):
         except MissingError:
             return json.dumps(res)
         if shuffle:
-            return self.jplayer_shuffle()
+            return self.oomusic_shuffle()
         for i in xrange(0, len(lines)):
             if lines[i].id == self.id:
                 if i < (len(lines) - 1):
-                    return lines[i+1].jplayer_play()
+                    return lines[i+1].oomusic_play()
                 else:
-                    return lines[0].jplayer_play()
+                    return lines[0].oomusic_play()
         return json.dumps(res)
 
     @api.multi
-    def jplayer_star(self):
+    def oomusic_star(self):
         try:
             self.track_id.write({'star': '1'})
         except MissingError:
             return
         return
 
-    def jplayer_shuffle(self):
+    def oomusic_shuffle(self):
         lines = self.playlist_id.playlist_line_ids
-        return lines[random.randint(0, len(lines)-1)].jplayer_play()
+        return lines[random.randint(0, len(lines)-1)].oomusic_play()
 
-    def jplayer_last_track(self):
+    def oomusic_last_track(self):
         Playlist = self.env['oomusic.playlist'].search([('current', '=', True)], limit=1)
         if Playlist and Playlist.playlist_line_ids:
             PlaylistLine = Playlist.playlist_line_ids.filtered(lambda r: r.playing is True)
             if not PlaylistLine:
                 PlaylistLine = Playlist.playlist_line_ids
-            return PlaylistLine[0].jplayer_play()
+            return PlaylistLine[0].oomusic_play()
         else:
             return json.dumps({})
