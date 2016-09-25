@@ -16,6 +16,11 @@ class MusicFolder(models.Model):
     name = fields.Char('Name')
     root = fields.Boolean('Top Level Folder', default=True)
     path = fields.Char('Folder Path', required=True, index=True)
+    exclude_autoscan = fields.Boolean(
+        'No auto-scan', default=False,
+        help='Exclude this folder from the automatized scheduled scan. Useful if the folder is not '
+        'always accessible, e.g. linked to an external drive.'
+    )
     has_cover_art = fields.Boolean(compute='_compute_image_folder', store=True)
     last_scan = fields.Datetime('Last Scanned')
     last_scan_duration = fields.Integer('Scan Duration (s)')
@@ -135,7 +140,7 @@ class MusicFolder(models.Model):
 
     @api.model
     def cron_scan_folder(self):
-        for folder in self.search([('root', '=', True)]):
+        for folder in self.search([('root', '=', True), ('exclude_autoscan', '=', False)]):
             try:
                 self.env['oomusic.folder.scan']._scan_folder(folder.id)
             except:
