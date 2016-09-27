@@ -114,8 +114,8 @@ class MusicFolderScan(models.TransientModel):
                     filelist.add(os.path.join(rootdir, fn))
 
         track_data = [
-            ('path', 'oomusic_folder', folderlist),
-            ('path', 'oomusic_track', filelist),
+            (('id', 'path'), 'oomusic_folder', folderlist),
+            (('id', 'path'), 'oomusic_track', filelist),
         ]
 
         # Cleaning part:
@@ -123,14 +123,16 @@ class MusicFolderScan(models.TransientModel):
         # - compare with paths actually used
         # - deletes the ones which are not used anymore
         for td in track_data:
-            query = 'SELECT ' + td[0] + ' FROM ' + td[1] + ' WHERE user_id = ' + str(user_id)
+            field_list = ','.join([x for x in td[0]])
+            query = 'SELECT ' + field_list + ' FROM ' + td[1] + ' WHERE user_id = ' + str(user_id)
             self.env.cr.execute(query)
             res = self.env.cr.fetchall()
-            to_clean = {r[0] for r in res} - td[2]
+            to_clean = {r[1] for r in res} - td[2]
 
             if to_clean:
+                to_clean = {r[1]: r[0] for r in res if r[1] in to_clean}.values()
                 query = 'DELETE FROM ' + td[1]\
-                    + ' WHERE ' + td[0] + ' IN (\'' + '\',\''.join([x for x in to_clean])+ '\') '\
+                    + ' WHERE id IN (' + ','.join([str(x) for x in to_clean])+ ') '\
                     + ' AND user_id = '  + str(user_id)
                 self.env.cr.execute(query)
 
