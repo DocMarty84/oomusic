@@ -35,7 +35,8 @@
         <field name="name">oomusic.folder.tree</field>
         <field name="model">oomusic.folder</field>
         <field name="arch" type="xml">
-            <tree string="Folders">
+            <tree string="Folders" decoration-danger="locked == True">
+                <field name="locked" invisible="1"/>
                 <field name="name"/>
                 <field name="path"/>
                 <field name="last_scan"/>
