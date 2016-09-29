@@ -123,10 +123,10 @@ class MusicFolder(models.Model):
 
     @api.multi
     def unlink(self):
-        for folder in self:
-            user_id = folder.user_id.id
-            super(MusicFolder, folder).unlink()
-            self.env['oomusic.folder.scan']._clean_tags(user_id)
+        user_ids = self.mapped('user_id')
+        super(MusicFolder, self).unlink()
+        for user_id in user_ids:
+            self.env['oomusic.folder.scan']._clean_tags(user_id.id)
 
     @api.multi
     def action_scan_folder(self):

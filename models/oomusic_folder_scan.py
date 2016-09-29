@@ -131,10 +131,7 @@ class MusicFolderScan(models.TransientModel):
 
             if to_clean:
                 to_clean = {r[1]: r[0] for r in res if r[1] in to_clean}.values()
-                query = 'DELETE FROM ' + td[1]\
-                    + ' WHERE id IN (' + ','.join([str(x) for x in to_clean])+ ') '\
-                    + ' AND user_id = '  + str(user_id)
-                self.env.cr.execute(query)
+                self.env[td[1].replace('_', '.')].browse(to_clean).unlink()
 
     def _clean_tags(self, user_id):
         '''
@@ -177,10 +174,7 @@ class MusicFolderScan(models.TransientModel):
             to_clean = {r[0] for r in res} - td[2]
 
             if to_clean:
-                query = 'DELETE FROM ' + td[1]\
-                    + ' WHERE ' + td[0] + ' IN (' + ','.join([str(x) for x in to_clean])+ ') '\
-                    + ' AND user_id = '  + str(user_id)
-                self.env.cr.execute(query)
+                self.env[td[1].replace('_', '.')].browse(to_clean).unlink()
 
     def _build_cache(self, folder_id, user_id):
         '''
@@ -431,6 +425,11 @@ class MusicFolderScan(models.TransientModel):
 
             # Clean-up the DB before actual scan
             self._clean_directory(Folder.path, Folder.user_id.id)
+            if not Folder.exists():
+                if not self.env.context.get('test_mode'):
+                    self.env.cr.commit()
+                    self.env.cr.close()
+                return {}
 
             # Build the cache
             # - cache is used for read/search, i.e. avoid reading/searching same info several times
