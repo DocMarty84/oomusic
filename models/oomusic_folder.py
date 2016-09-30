@@ -83,8 +83,12 @@ class MusicFolder(models.Model):
         if not self.env.context.get('compute_fields', True):
             return
         for folder in self:
-            resized_images = tools.image_get_resized_images(
-                folder.image_folder, return_big=True, return_medium=False, return_small=False)
+            try:
+                resized_images = tools.image_get_resized_images(
+                    folder.image_folder, return_big=True, return_medium=False, return_small=False)
+            except:
+                _logger.warning('Error with image in folder "%s"', folder.path)
+                return
             folder.image_big = resized_images['image']
 
     @api.depends('image_folder')
@@ -92,8 +96,12 @@ class MusicFolder(models.Model):
         if not self.env.context.get('compute_fields', True):
             return
         for folder in self:
-            resized_images = tools.image_get_resized_images(
-                folder.image_folder, return_big=False, return_medium=True, return_small=False)
+            try:
+                resized_images = tools.image_get_resized_images(
+                    folder.image_folder, return_big=False, return_medium=True, return_small=False)
+            except:
+                _logger.warning('Error with image in folder "%s"', folder.path)
+                return
             folder.image_medium = resized_images['image_medium']
 
     @api.depends('image_folder')
@@ -105,8 +113,12 @@ class MusicFolder(models.Model):
                 folder.image_small = folder.image_small_cache
                 return
 
-            resized_images = tools.image_get_resized_images(
-                folder.image_folder, return_big=False, return_medium=False, return_small=True)
+            try:
+                resized_images = tools.image_get_resized_images(
+                    folder.image_folder, return_big=False, return_medium=False, return_small=True)
+            except:
+                _logger.warning('Error with image in folder "%s"', folder.path)
+                return
             folder.image_small = resized_images['image_small']
 
     def _set_image_big(self):

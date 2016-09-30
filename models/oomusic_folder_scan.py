@@ -585,8 +585,12 @@ class MusicFolderScan(models.TransientModel):
                 _logger.debug("Scanning folder %s/%s...", i+1, total)
 
                 Folder_child = MusicFolder.browse([folder_child_id])
-                resized_images =\
-                    tools.image_get_resized_images(Folder_child.image_folder, return_medium=False)
+                try:
+                    resized_images = tools.image_get_resized_images(
+                        Folder_child.image_folder, return_medium=False)
+                except:
+                    _logger.warning('Error with image in folder "%s"', folder_child_id.path)
+                    continue
                 Folder_child.write({'image_small_cache': resized_images['image_small']})
 
                 # Commit every 100 folders
