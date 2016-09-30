@@ -7,7 +7,7 @@
             <form string="Folder">
                 <header>
                     <button name="action_scan_folder" string="Scan" type="object"/>
-                    <button name="action_build_kanban_cache" string="Build Image Cache"
+                    <button name="action_build_image_cache" string="Build Image Cache"
                         type="object" groups="base.group_no_one"/>
                 </header>
                 <sheet>

@@ -557,18 +557,11 @@ class MusicFolderScan(models.TransientModel):
         )
         threaded_scan.start()
 
-    def _build_kanban_cache(self, folder_id):
+    def _build_image_cache(self, folder_id):
         '''
-        The Kanban cache building method. After running, the field `image_small_kanban` will be
-        computed for all albums.
-
-        It reduces the server loads, but on the other hand all images are loaded at once when the
-        Kanban view is opened. It means that globally, the page will take less time to be fully
-        displayed, but the user will have to wait until the end to see it.
-
-        On the other hand, when the cache is not created, the server load is higher. The page takes
-        more time to be fully loaded, but the images are loaded separately from the rest of the$
-        content. This makes the information appear more quickly.
+        The Kanban cache building method. After running, the field `image_small_cache` will be
+        computed for all albums. The display of the Kanban view will be significantly faster,
+        although the image displayed might not be the most recent one.
 
         :param int folder_id: ID of the folder to scan
         '''
@@ -594,7 +587,7 @@ class MusicFolderScan(models.TransientModel):
                 Folder_child = MusicFolder.browse([folder_child_id])
                 resized_images =\
                     tools.image_get_resized_images(Folder_child.image_folder, return_medium=False)
-                Folder_child.write({'image_small_kanban': resized_images['image_small']})
+                Folder_child.write({'image_small_cache': resized_images['image_small']})
 
                 # Commit every 100 folders
                 i = i + 1
@@ -606,6 +599,10 @@ class MusicFolderScan(models.TransientModel):
                         self = self._get_new_cursor()
 
                     MusicFolder = self.env['oomusic.folder']
+
+            MusicFolder.browse([folder_id]).write({
+                'locked': False,
+            })
 
             if not self.env.context.get('test_mode'):
                 self.env.cr.commit()
@@ -621,7 +618,7 @@ class MusicFolderScan(models.TransientModel):
         :param int folder_id: ID of the folder to scan
         '''
         threaded_scan = threading.Thread(
-            target=self.sudo().with_context(prefetch_fields=False)._build_kanban_cache,
+            target=self.sudo().with_context(prefetch_fields=False)._build_image_cache,
             args=(folder_id,)
         )
         threaded_scan.start()

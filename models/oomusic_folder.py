@@ -49,7 +49,7 @@ class MusicFolder(models.Model):
     image_small = fields.Binary(
         'Small-sized image', compute='_compute_image_small', inverse='_set_image_small',
         help='Image of the folder.')
-    image_small_kanban = fields.Binary(
+    image_small_cache = fields.Binary(
         'Small-sized image', attachment=True,
         help='Image of the folder, used in Kanban view')
 
@@ -101,6 +101,10 @@ class MusicFolder(models.Model):
         if not self.env.context.get('compute_fields', True):
             return
         for folder in self:
+            if folder.image_small_cache:
+                folder.image_small = folder.image_small_cache
+                return
+
             resized_images = tools.image_get_resized_images(
                 folder.image_folder, return_big=False, return_medium=False, return_small=True)
             folder.image_small = resized_images['image_small']
@@ -147,7 +151,15 @@ class MusicFolder(models.Model):
                 continue
 
     @api.multi
-    def action_build_kanban_cache(self):
+    def action_build_image_cache(self):
         folder_id = self.id
         if folder_id:
             self.env['oomusic.folder.scan'].build_kanban_cache_th(folder_id)
+
+    @api.model
+    def cron_build_image_cache(self):
+        for folder in self.search([('root', '=', True), ('exclude_autoscan', '=', False)]):
+            try:
+                self.env['oomusic.folder.scan']._build_image_cache(folder.id)
+            except:
+                continue

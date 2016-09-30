@@ -28,7 +28,7 @@ class MusicAlbum(models.Model):
     image_big = fields.Binary("Big-sized image", related='folder_id.image_big')
     image_medium = fields.Binary("Medium-sized image", related='folder_id.image_medium')
     image_small = fields.Binary("Small-sized image", related='folder_id.image_small')
-    image_small_kanban = fields.Binary("Small-sized image", related='folder_id.image_small_kanban')
+    image_small_cache = fields.Binary("Small-sized image", related='folder_id.image_small_cache')
 
     @api.depends('track_ids.in_playlist')
     def _compute_in_playlist(self):
