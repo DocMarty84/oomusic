@@ -11,6 +11,7 @@ try:
     import taglib as tag
 except ImportError:
     import mutagen as tag
+    from mutagen.easyid3 import EasyID3
 
 from odoo import fields, models, api, tools
 
@@ -291,6 +292,25 @@ class MusicFolderScan(models.TransientModel):
 
         return cache
 
+    def _get_tags(self, file_path):
+        try:
+            song = tag.File(file_path)
+        except:
+            _logger.warning('Error while opening file "%s"', file_path)
+            return False, {}
+        if tag.__name__ == 'taglib':
+            return song, song.tags
+        else:
+            try:
+                song_tags = EasyID3(file_path) or {}
+            except:
+                song_tags = song.tags or {}
+
+            song_tags = {
+                k.upper(): v for k, v in song_tags.iteritems()
+            }
+            return song, song_tags
+
     def _create_related(self, vals, cache, rootdir):
         '''
         Create the related objects of the track: album, artist and genre. Updates the cache
@@ -460,16 +480,14 @@ class MusicFolderScan(models.TransientModel):
                         continue
 
                     # Get tags
-                    try:
-                        song = tag.File(os.path.join(rootdir, fn))
-                    except:
-                        _logger.warning('Error while opening file "%s"', os.path.join(rootdir, fn))
+                    song, song_tags = self._get_tags(os.path.join(rootdir, fn))
+                    if not song:
                         continue
                     vals = {f: '' for f in self.FIELDS_TO_CLEAN}
                     vals.update({
-                        self.MAP_ID3_FIELD[k.upper()]: v[0]
-                        for k, v in song.tags and song.tags.iteritems() or {}.iteritems()
-                        if v and k.upper() in self.MAP_ID3_FIELD.keys()
+                        self.MAP_ID3_FIELD[k]: v[0]
+                        for k, v in song_tags.iteritems()
+                        if v and k in self.MAP_ID3_FIELD.keys()
                     })
 
                     # Create new album, artist or genre, and update the cache
