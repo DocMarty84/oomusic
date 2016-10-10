@@ -65,7 +65,7 @@ class MusicTrack(models.Model):
     def _oomusic_info(self, seek=0):
         self.ensure_one()
         return {
-            'title': self.artist_id.name + ' - ' + self.name,
+            'title': self.artist_id.name + ' - ' + self.name if self.artist_id else self.name,
             'duration': self.duration,
             'image': self.album_id.image_medium,
             'mp3': '/oomusic/trans/' + str(self.id) + ('_%d' % (seek) if seek else '') + '.mp3',
