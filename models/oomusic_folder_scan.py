@@ -481,7 +481,7 @@ class MusicFolderScan(models.TransientModel):
 
                     # Get tags
                     song, song_tags = self._get_tags(os.path.join(rootdir, fn))
-                    if not song:
+                    if song is False:
                         continue
                     vals = {f: '' for f in self.FIELDS_TO_CLEAN}
                     vals.update({
