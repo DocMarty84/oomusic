@@ -5,13 +5,15 @@ import imghdr
 import logging
 import os
 
-from odoo import fields, models, api, tools
+from odoo import fields, models, api, tools, _
+from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
 class MusicFolder(models.Model):
     _name = 'oomusic.folder'
     _description = 'Music Folder'
+    _order = 'path'
 
     name = fields.Char('Name')
     root = fields.Boolean('Top Level Folder', default=True)
@@ -36,6 +38,10 @@ class MusicFolder(models.Model):
         help='When a folder is being scanned, it is flagged as "locked". It might be necessary to '
         'unlock it manually if scanning has failed or has been interrupted.')
 
+    path_name = fields.Char('Folder Name', compute='_compute_path_name')
+    in_playlist = fields.Boolean('In Current Playlist', compute='_compute_in_playlist')
+    track_ids = fields.One2many('oomusic.track', 'folder_id', 'Tracks')
+
     image_folder = fields.Binary(
         'Folder Image', compute='_compute_image_folder',
         help='This field holds the image used as image for the folder, limited to 1024x1024px.')
@@ -57,6 +63,25 @@ class MusicFolder(models.Model):
     _sql_constraints = [
         ('oomusic_folder_path_uniq', 'unique(path, user_id)', 'Folder path must be unique!'),
     ]
+
+    @api.depends('path')
+    def _compute_path_name(self):
+        if not self.env.context.get('compute_fields', True):
+            return
+        for folder in self:
+            if folder.root:
+                folder.path_name = folder.path
+            else:
+                folder.path_name = folder.path.split(os.sep)[-1]
+
+    @api.depends('track_ids.in_playlist')
+    def _compute_in_playlist(self):
+        if not self.env.context.get('compute_fields', True):
+            return
+        for folder in self:
+            track_ids_in_playlist = folder.track_ids.filtered(lambda r: r.in_playlist is True)
+            if folder.track_ids <= track_ids_in_playlist:
+                folder.in_playlist = True
 
     @api.depends('name')
     def _compute_image_folder(self):
@@ -187,3 +212,11 @@ class MusicFolder(models.Model):
                 self.env['oomusic.folder.scan']._build_image_cache(folder.id)
             except:
                 continue
+
+    @api.multi
+    def action_add_to_playlist(self):
+        Playlist = self.env['oomusic.playlist'].search([('current', '=', True)], limit=1)
+        if not Playlist:
+            raise UserError(_('No current playlist found!'))
+        for folder in self:
+            Playlist._add_tracks(folder.track_ids)
