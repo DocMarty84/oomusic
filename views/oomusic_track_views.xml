@@ -87,6 +87,7 @@
                 <field name="genre_id"/>
                 <field name="year"/>
                 <field name="duration_min" widget="float_time"/>
+                <field name="path"/>
 
                 <filter string="Added Today" name="filter_added_today"
                     domain="[('create_date', '&gt;=', time.strftime('%%Y-%%m-%%d''))]"/>
