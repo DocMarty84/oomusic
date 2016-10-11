@@ -137,6 +137,18 @@ class MusicFolder(models.Model):
         for folder in self:
             folder.image_folder = tools.image_resize_image_big(value)
 
+    @api.model
+    def create(self, vals):
+        if 'path' in vals and vals.get('root', True):
+            vals['path'] = os.path.normpath(vals['path'])
+        return super(MusicFolder, self).create(vals)
+
+    @api.multi
+    def write(self, vals):
+        if 'path' in vals:
+            vals['path'] = os.path.normpath(vals['path'])
+        return super(MusicFolder, self).write(vals)
+
     @api.multi
     def unlink(self):
         user_ids = self.mapped('user_id')
