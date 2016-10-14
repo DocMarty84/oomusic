@@ -262,9 +262,12 @@ class MusicFolderScan(models.TransientModel):
         elif folder[1] >= mtime:
             skip = True
         else:
+            parent_dir = os.sep.join(rootdir.split(os.sep)[:-1])
+            parent_dir = cache['folder'].get(parent_dir, [False])
             Folder = self.env['oomusic.folder'].browse(folder[0])
             Folder.write({
                 'last_modification': mtime,
+                'parent_id': parent_dir[0],
             })
         return cache, skip
 

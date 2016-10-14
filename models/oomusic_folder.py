@@ -172,6 +172,10 @@ class MusicFolder(models.Model):
     def write(self, vals):
         if 'path' in vals:
             vals['path'] = os.path.normpath(vals['path'])
+            folders = self | self.search([('id', 'child_of', self.ids)])
+            folders.write({'last_modification': 0})
+            tracks = folders.mapped('track_ids')
+            tracks.write({'last_modification': 0})
         return super(MusicFolder, self).write(vals)
 
     @api.multi
