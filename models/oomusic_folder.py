@@ -195,6 +195,25 @@ class MusicFolder(models.Model):
         if folder_id:
             self.env['oomusic.folder.scan'].scan_folder_th(folder_id)
 
+    @api.multi
+    def action_scan_folder_full(self):
+        '''
+        This is a method used to force a full scan of a folder.
+        '''
+        folder_id = self.id
+        if folder_id:
+            # Set the last modification date to zero so we force scanning all folders and files
+            new_cr = self.pool.cursor()
+            new_self = self.with_env(self.env(cr=new_cr))
+            folders = new_self.env['oomusic.folder'].search([('id', 'child_of', self.ids)]) | self
+            folders.write({'last_modification': 0})
+            tracks = folders.mapped('track_ids')
+            tracks.write({'last_modification': 0})
+            new_self.env.cr.commit()
+            new_self.env.cr.close()
+
+            self.env['oomusic.folder.scan'].scan_folder_th(folder_id)
+
     @api.model
     def cron_scan_folder(self):
         for folder in self.search([('root', '=', True), ('exclude_autoscan', '=', False)]):
