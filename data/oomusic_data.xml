@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record model="ir.config_parameter" id="lastfm_cache_duration">
+            <field name="key">oomusic.lastfm_cache_duration</field>
+            <field name="value">14</field>
+        </record>
+        <record model="ir.config_parameter" id="lastfm_key">
+            <field name="key">oomusic.lastfm_key</field>
+            <field name="value">48a48a2bc9c6fc3b4a7df96ef51c6a0f</field>
+        </record>
+    </data>
+</odoo>

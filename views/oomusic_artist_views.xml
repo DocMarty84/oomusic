@@ -13,6 +13,7 @@
                     <h1>
                         <field name="name"/>
                     </h1>
+                    <field name="fm_getinfo_bio" widget="html"/>
                     <notebook>
                         <page string="Albums">
                             <field name="album_ids">
@@ -27,6 +28,19 @@
                                 </tree>
                             </field>
                         </page>
+                        <page string="Top Tracks">
+                            <field name="fm_gettoptracks">
+                                <tree string="Top Tracks">
+                                    <field name="in_playlist" invisible="1"/>
+                                    <button name="action_add_to_playlist" string="Add To Current Playlist"
+                                        icon="fa-plus" type="object" widget="oomusic_add"
+                                        attrs="{'invisible': [('in_playlist','=', True)]}"/>
+                                    <field name="name"/>
+                                    <field name="album_id"/>
+                                    <field name="track_number"/>
+                                </tree>
+                            </field>
+                        </page>
                         <page string="Tracks">
                             <field name="track_ids">
                                 <tree string="Tracks">
@@ -37,6 +51,13 @@
                                     <field name="name"/>
                                     <field name="album_id"/>
                                     <field name="track_number"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Similar Artists">
+                            <field name="fm_getsimilar">
+                                <tree string="Similar Artists">
+                                    <field name="name"/>
                                 </tree>
                             </field>
                         </page>

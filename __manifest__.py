@@ -32,6 +32,8 @@ Music Collection
         'views/oomusic.xml',
         'views/tour_views.xml',
 
+        'data/oomusic_data.xml',
+        'data/oomusic_artist_data.xml',
         'data/oomusic_folder_data.xml',
         'data/oomusic_format_data.xml',
         'data/oomusic_playlist_data.xml',
