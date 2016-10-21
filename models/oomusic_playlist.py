@@ -33,15 +33,14 @@ class MusicPlaylist(models.Model):
 
     def _add_tracks(self, tracks, onchange=False):
         # Set starting sequence
-        seq = 10
-        seq_list = self.playlist_line_ids.mapped('sequence')
-        if seq_list:
-            seq = max(seq_list)
+        seq = self.playlist_line_ids[-1:].sequence or 10
 
         PlaylistLine = self.env['oomusic.playlist.line']
+        playlist_tracks_ids = set(self.playlist_line_ids.mapped('track_id').ids)
         for track in tracks:
-            if track in self.playlist_line_ids.mapped('track_id'):
+            if track.id in playlist_tracks_ids:
                 continue
+            playlist_tracks_ids.add(track.id)
             seq = seq + 1
             data = {
                 'sequence': seq,
