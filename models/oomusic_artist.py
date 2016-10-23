@@ -26,6 +26,13 @@ class MusicArtist(models.Model):
         default=lambda self: self.env.user
     )
 
+    star = fields.Selection(
+        [('0', 'Normal'), ('1', 'I Like It!')], 'Favorite', index=True, default='0')
+    rating = fields.Selection(
+        [('0', '0'), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')],
+        'Rating', default='0',
+    )
+
     fm_last_update = fields.Datetime('Last Update', default='2000-01-01 00:00:00')
     fm_getinfo_bio = fields.Char('Biography', compute='_compute_fm_getinfo')
     fm_getinfo_bio_cache = fields.Char('Biography')

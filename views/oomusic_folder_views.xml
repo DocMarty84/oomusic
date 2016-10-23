@@ -81,6 +81,14 @@
                             <field name="path_name"/>
                         </h1>
                     </div>
+                    <group>
+                        <group>
+                            <field name="star" widget="priority"/>
+                        </group>
+                        <group>
+                            <field name="rating"/>
+                        </group>
+                    </group>
                     <field name="track_ids" readonly="1">
                         <tree string="Tracks">
                             <field name="in_playlist" invisible="1"/>

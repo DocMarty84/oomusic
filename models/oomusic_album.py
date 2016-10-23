@@ -21,8 +21,13 @@ class MusicAlbum(models.Model):
         default=lambda self: self.env.user
     )
     in_playlist = fields.Boolean('In Current Playlist', compute='_compute_in_playlist')
+
     star = fields.Selection(
         [('0', 'Normal'), ('1', 'I Like It!')], 'Favorite', index=True, default='0')
+    rating = fields.Selection(
+        [('0', '0'), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')],
+        'Rating', default='0',
+    )
 
     image_folder = fields.Binary('Folder Image', related='folder_id.image_folder')
     image_big = fields.Binary("Big-sized image", related='folder_id.image_big')

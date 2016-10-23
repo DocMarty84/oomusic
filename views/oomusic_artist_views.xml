@@ -14,6 +14,14 @@
                         <field name="name"/>
                     </h1>
                     <field name="fm_getinfo_bio" widget="html"/>
+                    <group>
+                        <group>
+                            <field name="star" widget="priority"/>
+                        </group>
+                        <group>
+                            <field name="rating"/>
+                        </group>
+                    </group>
                     <notebook>
                         <page string="Albums">
                             <field name="album_ids">
@@ -84,6 +92,9 @@
             <search string="Artists">
                 <field name="name"/>
                 <field name="album_ids"/>
+
+                <filter string="Favorite" name="filter_favorite"
+                    domain="[('star', '=', '1')]"/>
             </search>
         </field>
     </record>

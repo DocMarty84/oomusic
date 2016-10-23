@@ -8,6 +8,7 @@ class MusicGenre(models.Model):
     _order = 'name'
 
     name = fields.Char('Music Genre', index=True)
+    track_ids = fields.One2many('oomusic.track', 'genre_id', string='Tracks')
     album_ids = fields.One2many('oomusic.album', 'genre_id', string='Albums')
     user_id = fields.Many2one(
         'res.users', string='User', index=True, required=True, ondelete='cascade',

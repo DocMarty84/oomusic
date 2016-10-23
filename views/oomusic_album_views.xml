@@ -22,10 +22,11 @@
                         <group>
                             <field name="year"/>
                             <field name="artist_id"/>
+                            <field name="genre_id"/>
                         </group>
                         <group>
-                            <field name="genre_id"/>
                             <field name="star" widget="priority"/>
+                            <field name="rating"/>
                         </group>
                     </group>
                     <field name="track_ids">
