@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0rc1c\n"
+"Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-30 23:20+0000\n"
-"PO-Revision-Date: 2016-09-30 23:20+0000\n"
+"POT-Creation-Date: 2016-10-30 22:17+0000\n"
+"PO-Revision-Date: 2016-10-30 22:17+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -38,6 +38,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:oomusic.oomusic_album_view_kanban
 #: model:ir.ui.view,arch_db:oomusic.oomusic_album_view_tree
 #: model:ir.ui.view,arch_db:oomusic.oomusic_artist_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form2
 #: model:ir.ui.view,arch_db:oomusic.oomusic_genre_view_form
 #: model:ir.ui.view,arch_db:oomusic.oomusic_suggestion_view_form
 #: model:ir.ui.view,arch_db:oomusic.oomusic_track_view_form
@@ -150,9 +151,28 @@ msgid "Big-sized image"
 msgstr ""
 
 #. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_fm_getinfo_bio
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_fm_getinfo_bio_cache
+msgid "Biography"
+msgstr ""
+
+#. module: oomusic
+#: code:addons/oomusic/models/oomusic_artist.py:82
+#: code:addons/oomusic/models/oomusic_artist.py:86
+#, python-format
+msgid "Biography not found"
+msgstr ""
+
+#. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track_bitrate
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder_bitrate
 msgid "Bitrate"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.actions.act_window,name:oomusic.action_folder_browse
+#: model:ir.ui.menu,name:oomusic.menu_action_folder_browse
+msgid "Browse Files"
 msgstr ""
 
 #. module: oomusic
@@ -333,16 +353,21 @@ msgstr ""
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album_star
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_star
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_star
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track_star
 #: model:ir.ui.view,arch_db:oomusic.oomusic_album_view_search
+#: model:ir.ui.view,arch_db:oomusic.oomusic_artist_view_search
 #: model:ir.ui.view,arch_db:oomusic.oomusic_track_view_search
 msgid "Favorite"
 msgstr ""
 
 #. module: oomusic
+#: model:ir.actions.act_window,name:oomusic.action_folder_show2
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album_folder_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track_folder_id
 #: model:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form2
 msgid "Folder"
 msgstr ""
 
@@ -350,6 +375,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album_image_folder
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_image_folder
 msgid "Folder Image"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_path_name
+msgid "Folder Name"
 msgstr ""
 
 #. module: oomusic
@@ -366,7 +396,13 @@ msgstr ""
 #: model:ir.actions.act_window,name:oomusic.action_folder
 #: model:ir.ui.menu,name:oomusic.menu_action_folder
 #: model:ir.ui.view,arch_db:oomusic.oomusic_folder_view_tree
+#: model:ir.ui.view,arch_db:oomusic.oomusic_folder_view_tree2
 msgid "Folders"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form
+msgid "Force Full Scan"
 msgstr ""
 
 #. module: oomusic
@@ -406,6 +442,8 @@ msgstr ""
 #. openerp-web
 #: code:addons/oomusic/static/src/xml/panel.xml:66
 #: selection:oomusic.album,star:0
+#: selection:oomusic.artist,star:0
+#: selection:oomusic.folder,star:0
 #: selection:oomusic.track,star:0
 #, python-format
 msgid "I Like It!"
@@ -448,6 +486,7 @@ msgstr ""
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album_in_playlist
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_in_playlist
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track_in_playlist
 msgid "In Current Playlist"
 msgstr ""
@@ -488,6 +527,11 @@ msgstr ""
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_last_scan
 msgid "Last Scanned"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_fm_last_update
+msgid "Last Update"
 msgstr ""
 
 #. module: oomusic
@@ -610,6 +654,12 @@ msgid "Music Transcoder"
 msgstr ""
 
 #. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_fm_getinfo_mbid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_fm_getinfo_mbid_cache
+msgid "MusicBrainz ID"
+msgstr ""
+
+#. module: oomusic
 #: code:addons/oomusic/models/res_users.py:13
 #, python-format
 msgid "My Playlist"
@@ -630,14 +680,17 @@ msgid "No auto-scan"
 msgstr ""
 
 #. module: oomusic
-#: code:addons/oomusic/models/oomusic_album.py:46
-#: code:addons/oomusic/models/oomusic_artist.py:27
+#: code:addons/oomusic/models/oomusic_album.py:51
+#: code:addons/oomusic/models/oomusic_artist.py:211
+#: code:addons/oomusic/models/oomusic_folder.py:249
 #, python-format
 msgid "No current playlist found!"
 msgstr ""
 
 #. module: oomusic
 #: selection:oomusic.album,star:0
+#: selection:oomusic.artist,star:0
+#: selection:oomusic.folder,star:0
 #: selection:oomusic.track,star:0
 msgid "Normal"
 msgstr ""
@@ -716,6 +769,14 @@ msgid "Random"
 msgstr ""
 
 #. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_album_rating
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_rating
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_rating
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_rating
+msgid "Rating"
+msgstr ""
+
+#. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion_album_recently_added
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion_track_recently_added
 #: model:ir.ui.view,arch_db:oomusic.oomusic_suggestion_view_form
@@ -769,6 +830,13 @@ msgid "Shared"
 msgstr ""
 
 #. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_fm_getsimilar
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_fm_getsimilar_cache
+#: model:ir.ui.view,arch_db:oomusic.oomusic_artist_view_form
+msgid "Similar Artists"
+msgstr ""
+
+#. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_transcoder_buffer_size
 msgid "Size of the buffer used while streaming. A larger value can reduce the potential\n"
 "        file download errors when playing, but will increase the waiting delay when switching\n"
@@ -819,6 +887,13 @@ msgid "Top Level Folder"
 msgstr ""
 
 #. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_fm_gettoptracks
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_fm_gettoptracks_cache
+#: model:ir.ui.view,arch_db:oomusic.oomusic_artist_view_form
+msgid "Top Tracks"
+msgstr ""
+
+#. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track_track_total
 msgid "Total Tracks"
 msgstr ""
@@ -839,10 +914,13 @@ msgstr ""
 #: model:ir.actions.act_window,name:oomusic.action_track
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album_track_ids
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_track_ids
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_track_ids
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_genre_track_ids
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_playlist_line_ids
 #: model:ir.ui.menu,name:oomusic.menu_action_track
 #: model:ir.ui.view,arch_db:oomusic.oomusic_album_view_form
 #: model:ir.ui.view,arch_db:oomusic.oomusic_artist_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form2
 #: model:ir.ui.view,arch_db:oomusic.oomusic_playlist_line_view_search
 #: model:ir.ui.view,arch_db:oomusic.oomusic_playlist_line_view_tree
 #: model:ir.ui.view,arch_db:oomusic.oomusic_playlist_view_form
