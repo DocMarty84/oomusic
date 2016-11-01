@@ -23,7 +23,6 @@ class MusicFolder(models.Model):
         help='Exclude this folder from the automatized scheduled scan. Useful if the folder is not '
         'always accessible, e.g. linked to an external drive.'
     )
-    has_cover_art = fields.Boolean(compute='_compute_image_folder', store=True)
     last_scan = fields.Datetime('Last Scanned')
     last_scan_duration = fields.Integer('Scan Duration (s)')
     parent_id = fields.Many2one('oomusic.folder', string='Parent Folder', ondelete='cascade')
@@ -55,9 +54,16 @@ class MusicFolder(models.Model):
         'Big-sized image', compute='_compute_image_big', inverse='_set_image_big',
         help='Image of the folder. It is automatically resized as a 1024x1024px image, with aspect '
         'ratio preserved.')
+    image_big_cache = fields.Binary(
+        'Big-sized image', attachment=True,
+        help='Image of the folder. It is automatically resized as a 1024x1024px image, with aspect '
+        'ratio preserved.')
     image_medium = fields.Binary(
         'Medium-sized image', compute='_compute_image_medium', inverse='_set_image_medium',
         help='Image of the folder.')
+    image_medium_cache = fields.Binary(
+        'Medium-sized image', attachment=True,
+        help='Image of the folder')
     image_small = fields.Binary(
         'Small-sized image', compute='_compute_image_small', inverse='_set_image_small',
         help='Image of the folder.')
@@ -89,68 +95,113 @@ class MusicFolder(models.Model):
             if folder.track_ids <= track_ids_in_playlist:
                 folder.in_playlist = True
 
-    @api.depends('name')
     def _compute_image_folder(self):
         if not self.env.context.get('compute_fields', True):
             return
+
+        accepted_names = ['folder', 'cover', 'front']
         for folder in self:
-            accepted_names = ['folder', 'cover', 'front']
+            _logger.debug("Computing image folder %s...", folder.path)
+
+            # Keep image files only
             files = [
                 f for f in os.listdir(folder.path)
                 if os.path.isfile(os.path.join(folder.path, f))\
                     and imghdr.what(os.path.join(folder.path, f))
             ]
+
+            # Try to find an image with a name matching the accepted names
+            folder.image_folder = False
             for f in files:
                 for n in accepted_names:
                     if n in f.lower():
                         with open(os.path.join(folder.path, f), 'r') as img:
                             folder.image_folder = base64.b64encode(img.read())
-                            folder.has_cover_art = True
-                            return
-            folder.image_folder = False
+                            break
+
+                if folder.image_folder:
+                    break
 
     @api.depends('image_folder')
     def _compute_image_big(self):
         if not self.env.context.get('compute_fields', True):
             return
         for folder in self:
+            if folder.image_big_cache and not self.env.context.get('build_cache'):
+                folder.image_big = folder.image_big_cache
+                continue
             try:
+                _logger.debug("Resizing image folder %s...", folder.path)
                 resized_images = tools.image_get_resized_images(
                     folder.image_folder, return_big=True, return_medium=False, return_small=False)
             except:
                 _logger.warning('Error with image in folder "%s"', folder.path)
-                return
+                continue
+
             folder.image_big = resized_images['image']
+
+            # Save in cache
+            new_cr = self.pool.cursor()
+            new_self = self.with_env(self.env(cr=new_cr))
+            new_self.env['oomusic.folder'].browse(folder.id).sudo().write({
+                'image_big_cache': resized_images['image'],
+            })
+            new_self.env.cr.commit()
+            new_self.env.cr.close()
 
     @api.depends('image_folder')
     def _compute_image_medium(self):
         if not self.env.context.get('compute_fields', True):
             return
         for folder in self:
+            if folder.image_medium_cache and not self.env.context.get('build_cache'):
+                folder.image_medium = folder.image_medium_cache
+                continue
             try:
+                _logger.debug("Resizing image folder %s...", folder.path)
                 resized_images = tools.image_get_resized_images(
                     folder.image_folder, return_big=False, return_medium=True, return_small=False)
             except:
                 _logger.warning('Error with image in folder "%s"', folder.path)
-                return
+                continue
+
             folder.image_medium = resized_images['image_medium']
+
+            # Save in cache
+            new_cr = self.pool.cursor()
+            new_self = self.with_env(self.env(cr=new_cr))
+            new_self.env['oomusic.folder'].browse(folder.id).sudo().write({
+                'image_medium_cache': resized_images['image_medium'],
+            })
+            new_self.env.cr.commit()
+            new_self.env.cr.close()
 
     @api.depends('image_folder')
     def _compute_image_small(self):
         if not self.env.context.get('compute_fields', True):
             return
         for folder in self:
-            if folder.image_small_cache:
+            if folder.image_small_cache and not self.env.context.get('build_cache'):
                 folder.image_small = folder.image_small_cache
-                return
-
+                continue
             try:
+                _logger.debug("Resizing image folder %s...", folder.path)
                 resized_images = tools.image_get_resized_images(
                     folder.image_folder, return_big=False, return_medium=False, return_small=True)
             except:
                 _logger.warning('Error with image in folder "%s"', folder.path)
-                return
+                continue
+
             folder.image_small = resized_images['image_small']
+
+            # Save in cache
+            new_cr = self.pool.cursor()
+            new_self = self.with_env(self.env(cr=new_cr))
+            new_self.env['oomusic.folder'].browse(folder.id).sudo().write({
+                'image_small_cache': resized_images['image_small'],
+            })
+            new_self.env.cr.commit()
+            new_self.env.cr.close()
 
     def _set_image_big(self):
         for folder in self:
@@ -228,19 +279,16 @@ class MusicFolder(models.Model):
             except:
                 continue
 
-    @api.multi
-    def action_build_image_cache(self):
-        folder_id = self.id
-        if folder_id:
-            self.env['oomusic.folder.scan'].build_kanban_cache_th(folder_id)
-
     @api.model
     def cron_build_image_cache(self):
-        for folder in self.search([('root', '=', True), ('exclude_autoscan', '=', False)]):
-            try:
-                self.env['oomusic.folder.scan']._build_image_cache(folder.id)
-            except:
-                continue
+        # Do not loop on folders to avoid prefetching image_folder for all elements. This won't work
+        # since the size of prefetched data will be larger than the maximum cache size (I guess).
+        folders = self.search([])
+        for i in xrange(0, len(folders)):
+            folder = folders[i]
+            folder.with_context(build_cache=True, prefetch_fields=False)._compute_image_big()
+            folder.with_context(build_cache=True, prefetch_fields=False)._compute_image_medium()
+            folder.with_context(build_cache=True, prefetch_fields=False)._compute_image_small()
 
     @api.multi
     def action_add_to_playlist(self):
