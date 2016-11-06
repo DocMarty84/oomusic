@@ -37,7 +37,7 @@
                             </field>
                         </page>
                         <page string="Top Tracks">
-                            <field name="fm_gettoptracks">
+                            <field name="fm_gettoptracks_track_ids">
                                 <tree string="Top Tracks">
                                     <field name="in_playlist" invisible="1"/>
                                     <button name="action_add_to_playlist" string="Add To Current Playlist"
@@ -63,7 +63,7 @@
                             </field>
                         </page>
                         <page string="Similar Artists">
-                            <field name="fm_getsimilar">
+                            <field name="fm_getsimilar_artist_ids">
                                 <tree string="Similar Artists">
                                     <field name="name"/>
                                 </tree>

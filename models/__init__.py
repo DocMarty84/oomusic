@@ -6,6 +6,7 @@ import oomusic_folder
 import oomusic_folder_scan
 import oomusic_format
 import oomusic_genre
+import oomusic_lastfm
 import oomusic_playlist
 import oomusic_suggestion
 import oomusic_track

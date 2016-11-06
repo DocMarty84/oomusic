@@ -4,6 +4,7 @@ access_oomusic_artist,oomusic.artist,model_oomusic_artist,base.group_user,1,0,0,
 access_oomusic_folder,oomusic.folder,model_oomusic_folder,base.group_user,1,1,1,1
 access_oomusic_format,oomusic.format,model_oomusic_format,base.group_user,1,0,0,0
 access_oomusic_genre,oomusic.genre,model_oomusic_genre,base.group_user,1,0,0,0
+access_oomusic_lastfm,oomusic.lastfm,model_oomusic_lastfm,base.group_user,1,1,1,1
 access_oomusic_playlist,oomusic.playlist,model_oomusic_playlist,base.group_user,1,1,1,1
 access_oomusic_playlist_line,oomusic.playlist.line,model_oomusic_playlist_line,base.group_user,1,1,1,1
 access_oomusic_track,oomusic.track,model_oomusic_track,base.group_user,1,1,0,0
