@@ -128,7 +128,7 @@ class MusicFolderScan(models.TransientModel):
             query = 'SELECT ' + field_list + ' FROM ' + td[1] + ' WHERE user_id = ' + str(user_id)
             self.env.cr.execute(query)
             res = self.env.cr.fetchall()
-            to_clean = {r[1] for r in res} - td[2]
+            to_clean = {r[1] for r in res if path in r[1]} - td[2]
 
             if to_clean:
                 to_clean = {r[1]: r[0] for r in res if r[1] in to_clean}.values()
