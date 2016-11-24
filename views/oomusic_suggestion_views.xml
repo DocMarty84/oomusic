@@ -32,7 +32,6 @@
                                                 </div>
 
                                                 <div class="oe_kanban_bottom_right">
-                                                    <field name="star" widget="priority"/>
                                                     <button name="action_add_to_playlist" string="Add To Current Playlist"
                                                         class="btn btn-default btn-xs fa fa-plus" type="object"
                                                         attrs="{'invisible': [('in_playlist','=', True)]}"/>
@@ -69,7 +68,6 @@
                                                 </div>
 
                                                 <div class="oe_kanban_bottom_right">
-                                                    <field name="star" widget="priority"/>
                                                     <button name="action_add_to_playlist" string="Add To Current Playlist"
                                                         class="btn btn-default btn-xs fa fa-plus" type="object"
                                                         attrs="{'invisible': [('in_playlist','=', True)]}"/>
