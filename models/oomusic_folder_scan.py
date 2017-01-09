@@ -132,7 +132,7 @@ class MusicFolderScan(models.TransientModel):
 
             if to_clean:
                 to_clean = {r[1]: r[0] for r in res if r[1] in to_clean}.values()
-                self.env[td[1].replace('_', '.')].browse(to_clean).unlink()
+                self.env[td[1].replace('_', '.')].browse(to_clean).sudo().unlink()
 
     def _clean_tags(self, user_id):
         '''
@@ -175,7 +175,7 @@ class MusicFolderScan(models.TransientModel):
             to_clean = {r[0] for r in res} - td[2]
 
             if to_clean:
-                self.env[td[1].replace('_', '.')].browse(to_clean).unlink()
+                self.env[td[1].replace('_', '.')].browse(to_clean).sudo().unlink()
 
     def _build_cache(self, folder_id, user_id):
         '''
