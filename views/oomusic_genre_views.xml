@@ -10,20 +10,62 @@
                     <h1>
                         <field name="name"/>
                     </h1>
-                    <field name="album_ids">
-                        <tree string="Albums">
-                            <field name="in_playlist" invisible="1"/>
-                            <button name="action_add_to_playlist" string="Add To Current Playlist"
-                                icon="fa-plus" type="object" widget="oomusic_add"
-                                attrs="{'invisible': [('in_playlist','=', True)]}"/>
-                            <field name="name"/>
-                            <field name="year"/>
-                            <field name="artist_id"/>
-                        </tree>
-                    </field>
+                    <notebook>
+                        <page string="Artists">
+                            <field name="artist_ids">
+                                <tree string="Artists">
+                                    <button name="action_add_to_playlist" string="Add To Current Playlist"
+                                        icon="fa-plus" type="object" widget="oomusic_add"/>
+                                    <field name="name"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Albums">
+                            <field name="album_ids">
+                                <tree string="Albums">
+                                    <field name="in_playlist" invisible="1"/>
+                                    <button name="action_add_to_playlist" string="Add To Current Playlist"
+                                        icon="fa-plus" type="object" widget="oomusic_add"
+                                        attrs="{'invisible': [('in_playlist','=', True)]}"/>
+                                    <field name="name"/>
+                                    <field name="year"/>
+                                    <field name="artist_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>
     </record>
+
+    <record id="oomusic_genre_view_tree" model="ir.ui.view">
+        <field name="name">oomusic.genre.tree</field>
+        <field name="model">oomusic.genre</field>
+        <field name="arch" type="xml">
+            <tree string="Genres">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_genre" model="ir.actions.act_window">
+        <field name="name">Genres</field>
+        <field name="res_model">oomusic.genre</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>
+                You will find here all the music genres.
+            </p><p>
+                As soon as a folder is added in your library, the albums and artists are organized
+                here by genre.
+            </p>
+        </field>
+    </record>
+
+    <!-- Third Level Menu -->
+    <menuitem id="menu_action_genre" parent="menu_oomusic_library" action="action_genre" sequence="35"/>
 
 </odoo>
