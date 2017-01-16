@@ -16,7 +16,7 @@ var OomusicControl = core.Class.extend(core.mixins.PropertiesMixin, {
         this.repeat = false;
         this.shuffle = false;
         this.duration = 1;
-        this.seek = 0;
+        this.user_seek = 0;
         this.sound_seek = 0;
 
         // ========================================================================================
@@ -29,10 +29,10 @@ var OomusicControl = core.Class.extend(core.mixins.PropertiesMixin, {
         // ========================================================================================
         // Progress bar
         $('.oom_progress').on('click', this, function (ev) {
-            var seek = Math.round(
+            var user_seek = Math.round(
                 self.duration * (ev.offsetX/$('.oom_progress').width())
             );
-            self.play_seek(seek);
+            self.play_seek(user_seek);
         });
 
         // Play button
@@ -115,7 +115,7 @@ var OomusicControl = core.Class.extend(core.mixins.PropertiesMixin, {
 
         // Update Progress Time every second
         var current_time = Math.round(
-            this.seek + this.sound.seek()
+            this.user_seek + this.sound.seek()
         );
         var current_time_html = QWeb.render('oomusic.CurrentTime', {
             current_time: this._convertTime(current_time),
@@ -124,7 +124,7 @@ var OomusicControl = core.Class.extend(core.mixins.PropertiesMixin, {
 
         // Update Progress Bar every 1 %
         var current_progress = Math.round((
-            (this.seek + this.sound.seek())/this.duration
+            (this.user_seek + this.sound.seek())/this.duration
         ) * 100);
         if (this.current_progress !== current_progress) {
             $('.oom_progress_bar')
@@ -142,7 +142,7 @@ var OomusicControl = core.Class.extend(core.mixins.PropertiesMixin, {
 
         // Check if we have reached the end of the track, since Howler won't fire a 'ended' event
         // in case of song being streamed.
-        if (Math.ceil(this.seek + this.sound.seek()) - this.duration >= -0.5) {
+        if (Math.ceil(this.user_seek + this.sound.seek()) - this.duration >= -0.5) {
             if (this.repeat) {
                 this.play_widget('oomusic.playlist.line', this.current_playlist_line_id);
             } else {
@@ -159,7 +159,7 @@ var OomusicControl = core.Class.extend(core.mixins.PropertiesMixin, {
         if (sound_seek === 0.0 && sound_seek === this.sound_seek) {
             console.log("Player seems stuck, trying to resume...");
             this._checkEnded_locked = true;
-            this.play_seek(Math.floor(this.seek + this.sound_seek_last_played));
+            this.play_seek(Math.floor(this.user_seek + this.sound_seek_last_played));
             setTimeout(function(){ self._checkEnded_locked = false; }, 5000);
         } else {
             this.sound_seek = sound_seek;
@@ -167,7 +167,7 @@ var OomusicControl = core.Class.extend(core.mixins.PropertiesMixin, {
     },
 
     _clearProgress: function() {
-        this.seek = 0;
+        this.user_seek = 0;
         var current_time_html = QWeb.render('oomusic.CurrentTime', {
             current_time: this._convertTime(0),
         });
@@ -231,7 +231,7 @@ var OomusicControl = core.Class.extend(core.mixins.PropertiesMixin, {
                 if (view) {
                     view.reload();
                 }
-                self.seek = 0;
+                self.user_seek = 0;
                 self._play(res, true);
             }
         );
@@ -245,7 +245,7 @@ var OomusicControl = core.Class.extend(core.mixins.PropertiesMixin, {
         var playlist_line_id = this.current_playlist_line_id;
         new Model('oomusic.playlist.line').call('oomusic_play', [[playlist_line_id], seek])
             .then(function (res) {
-                self.seek = seek;
+                self.user_seek = seek;
                 self._play(res, true);
             }
         );
@@ -284,7 +284,7 @@ var OomusicControl = core.Class.extend(core.mixins.PropertiesMixin, {
         var self = this;
         new Model('oomusic.playlist.line').call('oomusic_previous', [[playlist_line_id], this.shuffle])
             .then(function (res) {
-                self.seek = 0;
+                self.user_seek = 0;
                 self._play(res, true);
             }
         );
@@ -297,7 +297,7 @@ var OomusicControl = core.Class.extend(core.mixins.PropertiesMixin, {
         var self = this;
         new Model('oomusic.playlist.line').call('oomusic_next', [[playlist_line_id], this.shuffle])
             .then(function (res) {
-                self.seek = 0;
+                self.user_seek = 0;
                 self._play(res, true);
             }
         );
