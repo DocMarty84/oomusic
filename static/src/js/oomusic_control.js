@@ -12,6 +12,7 @@ var OomusicControl = core.Class.extend(core.mixins.PropertiesMixin, {
         core.mixins.PropertiesMixin.init.call(this, parent);
 
         this.sound = undefined;
+        this.previous_playlist_line_id = undefined;
         this.current_playlist_line_id = undefined;
         this.repeat = false;
         this.shuffle = false;
@@ -178,10 +179,14 @@ var OomusicControl = core.Class.extend(core.mixins.PropertiesMixin, {
             .attr('aria-valuenow', 0);
     },
 
-    _play: function(data, play_now){
+    _play: function(data, play_now, view){
         var self = this;
         var data_json = JSON.parse(data);
+        this.previous_playlist_line_id = this.current_playlist_line_id;
         this.current_playlist_line_id = data_json.playlist_line_id;
+        core.bus.trigger(
+            'oomusic_reload', this.previous_playlist_line_id, this.current_playlist_line_id, view
+        );
 
         // Stop potential playing sound
         if (this.sound) {
@@ -228,11 +233,8 @@ var OomusicControl = core.Class.extend(core.mixins.PropertiesMixin, {
         var self = this;
         new Model(model).call('oomusic_play', [[record_id]])
             .then(function (res) {
-                if (view) {
-                    view.reload();
-                }
                 self.user_seek = 0;
-                self._play(res, true);
+                self._play(res, true, view);
             }
         );
     },

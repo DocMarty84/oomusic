@@ -78,10 +78,9 @@
         <field name="name">oomusic.playlist.line.tree</field>
         <field name="model">oomusic.playlist.line</field>
         <field name="arch" type="xml">
-            <tree string="Tracks" decoration-success="playing == True" decoration-bf="playing == True">
+            <tree string="Tracks" decoration-success="playing == True" decoration-bf="playing == True" playlist="1">
                 <field name="playing" invisible="1"/>
                 <field name="sequence" widget="handle"/>
-                <field name="dummy_field" widget="oomusic_play"/>
                 <field name="track_id"/>
                 <field name="track_number"/>
                 <field name="album_id"/>
