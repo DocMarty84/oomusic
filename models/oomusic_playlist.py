@@ -113,6 +113,11 @@ class MusicPlaylistLine(models.Model):
             'last_play': fields.Datetime.now(),
             'play_count': self.track_id.play_count + 1,
         })
+        if not self.playlist_id.current:
+            playlists = self.env['oomusic.playlist'].search([('current', '=', True)])
+            playlists.write({'current': False})
+            playlists.playlist_line_ids.write({'playing': False})
+            self.playlist_id.write({'current': True})
 
         res = {}
         res['playlist_line_id'] = self.id
