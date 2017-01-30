@@ -40,9 +40,6 @@ class MusicArtist(models.Model):
     ]
 
     def _compute_fm_getinfo(self):
-        if not self.env.context.get('compute_fields', True):
-            return
-
         for artist in self:
             url = 'https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=' + artist.name
             req_json = json.loads(self.env['oomusic.lastfm'].get_query(url))
@@ -52,9 +49,6 @@ class MusicArtist(models.Model):
                 artist.fm_getinfo_bio = _('Biography not found')
 
     def _compute_fm_gettoptracks(self):
-        if not self.env.context.get('compute_fields', True):
-            return
-
         for artist in self:
             url = 'https://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=' + artist.name
             req_json = json.loads(self.env['oomusic.lastfm'].get_query(url))
@@ -72,9 +66,6 @@ class MusicArtist(models.Model):
                 pass
 
     def _compute_fm_getsimilar(self):
-        if not self.env.context.get('compute_fields', True):
-            return
-
         for artist in self:
             url = 'https://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist=' + artist.name
             req_json = json.loads(self.env['oomusic.lastfm'].get_query(url))

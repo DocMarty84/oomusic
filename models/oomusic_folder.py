@@ -78,8 +78,6 @@ class MusicFolder(models.Model):
 
     @api.depends('path')
     def _compute_path_name(self):
-        if not self.env.context.get('compute_fields', True):
-            return
         for folder in self:
             if folder.root:
                 folder.path_name = folder.path
@@ -88,17 +86,12 @@ class MusicFolder(models.Model):
 
     @api.depends('track_ids.in_playlist')
     def _compute_in_playlist(self):
-        if not self.env.context.get('compute_fields', True):
-            return
         for folder in self:
             track_ids_in_playlist = folder.track_ids.filtered(lambda r: r.in_playlist is True)
             if folder.track_ids <= track_ids_in_playlist:
                 folder.in_playlist = True
 
     def _compute_image_folder(self):
-        if not self.env.context.get('compute_fields', True):
-            return
-
         accepted_names = ['folder', 'cover', 'front']
         for folder in self:
             _logger.debug("Computing image folder %s...", folder.path)
@@ -124,8 +117,6 @@ class MusicFolder(models.Model):
 
     @api.depends('image_folder')
     def _compute_image_big(self):
-        if not self.env.context.get('compute_fields', True):
-            return
         for folder in self:
             if folder.image_big_cache and not self.env.context.get('build_cache'):
                 folder.image_big = folder.image_big_cache
@@ -151,8 +142,6 @@ class MusicFolder(models.Model):
 
     @api.depends('image_folder')
     def _compute_image_medium(self):
-        if not self.env.context.get('compute_fields', True):
-            return
         for folder in self:
             if folder.image_medium_cache and not self.env.context.get('build_cache'):
                 folder.image_medium = folder.image_medium_cache
@@ -178,8 +167,6 @@ class MusicFolder(models.Model):
 
     @api.depends('image_folder')
     def _compute_image_small(self):
-        if not self.env.context.get('compute_fields', True):
-            return
         for folder in self:
             if folder.image_small_cache and not self.env.context.get('build_cache'):
                 folder.image_small = folder.image_small_cache

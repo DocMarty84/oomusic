@@ -54,8 +54,6 @@ class MusicTrack(models.Model):
 
     @api.depends('playlist_line_ids')
     def _compute_in_playlist(self):
-        if not self.env.context.get('compute_fields', True):
-            return
         for track in self:
             track.in_playlist = bool(
                 track.playlist_line_ids.mapped('playlist_id').filtered(lambda r: r.current is True))

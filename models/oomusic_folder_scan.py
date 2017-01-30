@@ -567,13 +567,13 @@ class MusicFolderScan(models.TransientModel):
         scanned at a time, since different folders can share album, artist and genre data.
 
         To improve scanning speed, two parameters are set in the context:
-        - `compute_fields`: prevents calculating non-stored calculated fields
+        - `recompute`: prevents calculating non-stored calculated fields
         - `prefetch_fields`: deactivate prefetching
 
         :param int folder_id: ID of the folder to scan
         '''
         threaded_scan = threading.Thread(
-            target=self.sudo().with_context(compute_fields=False, prefetch_fields=False)._scan_folder,
+            target=self.sudo().with_context(recompute=False, prefetch_fields=False)._scan_folder,
             args=(folder_id,)
         )
         threaded_scan.start()
