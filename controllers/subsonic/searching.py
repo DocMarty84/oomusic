@@ -137,7 +137,7 @@ class MusicSubsonicSearching(http.Controller):
             min_val = min(artistOffset, len(artists))
             max_val = min_val + artistCount
             for artist in artists[min_val:max_val]:
-                xml_artist = rest.make_Child_folder(artist, tag_name='artist')
+                xml_artist = rest.make_Artist(artist)
                 xml_search.append(xml_artist)
 
         if albums:
