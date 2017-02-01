@@ -56,7 +56,7 @@ class SubsonicREST():
         self.format = args.get('f', 'xml')
         self.callback = args.get('callback', '')
 
-        self.version_server = '1.12.0' if 'auth_crypt' in request.env else '1.14.0'
+        self.version_server = '1.12.0' if 'password_crypt' in request.env['res.users'] else '1.14.0'
 
     def make_response(self, root):
         if self.format == 'json':
