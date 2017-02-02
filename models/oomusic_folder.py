@@ -132,13 +132,11 @@ class MusicFolder(models.Model):
             folder.image_big = resized_images['image']
 
             # Save in cache
-            new_cr = self.pool.cursor()
-            new_self = self.with_env(self.env(cr=new_cr))
-            new_self.env['oomusic.folder'].browse(folder.id).sudo().write({
-                'image_big_cache': resized_images['image'],
-            })
-            new_self.env.cr.commit()
-            new_self.env.cr.close()
+            with self.pool.cursor() as cr:
+                new_self = self.with_env(self.env(cr=cr))
+                new_self.env['oomusic.folder'].browse(folder.id).sudo().write({
+                    'image_big_cache': resized_images['image'],
+                })
 
     @api.depends('image_folder')
     def _compute_image_medium(self):
@@ -157,13 +155,11 @@ class MusicFolder(models.Model):
             folder.image_medium = resized_images['image_medium']
 
             # Save in cache
-            new_cr = self.pool.cursor()
-            new_self = self.with_env(self.env(cr=new_cr))
-            new_self.env['oomusic.folder'].browse(folder.id).sudo().write({
-                'image_medium_cache': resized_images['image_medium'],
-            })
-            new_self.env.cr.commit()
-            new_self.env.cr.close()
+            with self.pool.cursor() as cr:
+                new_self = self.with_env(self.env(cr))
+                new_self.env['oomusic.folder'].browse(folder.id).sudo().write({
+                    'image_medium_cache': resized_images['image_medium'],
+                })
 
     @api.depends('image_folder')
     def _compute_image_small(self):
@@ -182,13 +178,11 @@ class MusicFolder(models.Model):
             folder.image_small = resized_images['image_small']
 
             # Save in cache
-            new_cr = self.pool.cursor()
-            new_self = self.with_env(self.env(cr=new_cr))
-            new_self.env['oomusic.folder'].browse(folder.id).sudo().write({
-                'image_small_cache': resized_images['image_small'],
-            })
-            new_self.env.cr.commit()
-            new_self.env.cr.close()
+            with self.pool.cursor() as cr:
+                new_self = self.with_env(self.env(cr=cr))
+                new_self.env['oomusic.folder'].browse(folder.id).sudo().write({
+                    'image_small_cache': resized_images['image_small'],
+                })
 
     def _set_image_big(self):
         for folder in self:
@@ -247,14 +241,13 @@ class MusicFolder(models.Model):
         folder_id = self.id
         if folder_id:
             # Set the last modification date to zero so we force scanning all folders and files
-            new_cr = self.pool.cursor()
-            new_self = self.with_env(self.env(cr=new_cr))
-            folders = new_self.env['oomusic.folder'].search([('id', 'child_of', self.ids)]) | self
-            folders.write({'last_modification': 0})
-            tracks = folders.mapped('track_ids')
-            tracks.write({'last_modification': 0})
-            new_self.env.cr.commit()
-            new_self.env.cr.close()
+            with self.pool.cursor() as cr:
+                new_self = self.with_env(self.env(cr=cr))
+                folders =\
+                    new_self.env['oomusic.folder'].search([('id', 'child_of', self.ids)]) | self
+                folders.write({'last_modification': 0})
+                tracks = folders.mapped('track_ids')
+                tracks.write({'last_modification': 0})
 
             self.env['oomusic.folder.scan'].scan_folder_th(folder_id)
 

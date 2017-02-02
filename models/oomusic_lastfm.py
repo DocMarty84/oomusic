@@ -55,21 +55,19 @@ class MusicLastfm(models.Model):
             removal_date = datetime.datetime.utcnow() + datetime.timedelta(days=fm_cache + 7)
 
             # Save in cache
-            new_cr = self.pool.cursor()
-            new_self = Lastfm.with_env(self.env(cr=new_cr))
-            if not Lastfm:
-                writer = new_self.create
-            else:
-                writer = new_self.write
-            writer({
-                'name': url_hash,
-                'url': url,
-                'content': content,
-                'expiry_date': expiry_date.strftime(DATETIME_FORMAT),
-                'removal_date': removal_date.strftime(DATETIME_FORMAT),
-            })
-            new_self.env.cr.commit()
-            new_self.env.cr.close()
+            with self.pool.cursor() as cr:
+                new_self = Lastfm.with_env(self.env(cr=cr))
+                if not Lastfm:
+                    writer = new_self.create
+                else:
+                    writer = new_self.write
+                writer({
+                    'name': url_hash,
+                    'url': url,
+                    'content': content,
+                    'expiry_date': expiry_date.strftime(DATETIME_FORMAT),
+                    'removal_date': removal_date.strftime(DATETIME_FORMAT),
+                })
 
         else:
             content = Lastfm.content or '{}'
