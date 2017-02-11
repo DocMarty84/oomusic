@@ -265,10 +265,10 @@ class MusicFolder(models.Model):
         # since the size of prefetched data will be larger than the maximum cache size (I guess).
         folders = self.search([])
         for i in xrange(0, len(folders)):
-            folder = folders[i]
-            folder.with_context(build_cache=True, prefetch_fields=False)._compute_image_big()
-            folder.with_context(build_cache=True, prefetch_fields=False)._compute_image_medium()
-            folder.with_context(build_cache=True, prefetch_fields=False)._compute_image_small()
+            folder = folders[i].with_context(build_cache=True, prefetch_fields=False)
+            folder._compute_image_big()
+            folder._compute_image_medium()
+            folder._compute_image_small()
 
     @api.multi
     def action_add_to_playlist(self):
