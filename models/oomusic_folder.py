@@ -2,6 +2,7 @@
 
 import base64
 import imghdr
+import json
 import logging
 import os
 
@@ -277,3 +278,22 @@ class MusicFolder(models.Model):
             raise UserError(_('No current playlist found!'))
         for folder in self:
             Playlist._add_tracks(folder.track_ids)
+
+    @api.multi
+    def oomusic_browse(self):
+        res = {}
+        if self.root or self.parent_id:
+            res['parent_id'] =\
+                {'id': self.parent_id.id, 'name': self.path_name or ''}
+        if self:
+            res['current_id'] = {'id': self.id, 'name': self.path}
+            res['child_ids'] = [
+                {'id': c.id, 'name': c.path_name} for c in self.child_ids
+            ]
+        else:
+            res['child_ids'] = [
+                {'id': c.id, 'name': c.path_name} for c in self.search([('root', '=', True)])
+            ]
+        res['track_ids'] = [{'id': t.id, 'name': t.path.split(os.sep)[-1]} for t in self.track_ids]
+
+        return json.dumps(res)

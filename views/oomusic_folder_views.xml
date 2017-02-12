@@ -147,7 +147,13 @@
         <field eval="'ir.actions.act_window,%d'%action_folder_show2" name="value"/>
     </record>
 
+    <record id="action_oomusic_browse" model="ir.actions.client">
+        <field name="name">Browse Files</field>
+        <field name="tag">oomusic_browse</field>
+    </record>
+
     <!-- Third Level Menu -->
     <menuitem id="menu_action_folder" parent="menu_oomusic_config" action="action_folder" sequence="10"/>
     <menuitem id="menu_action_folder_browse" parent="menu_oomusic_library" action="action_folder_browse" sequence="40"/>
+    <menuitem id="menu_action_oomusic_browse" parent="menu_oomusic_library" action="action_oomusic_browse" sequence="50"/>
 </odoo>
