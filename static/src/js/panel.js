@@ -6,17 +6,19 @@ var Model = require('web.Model');
 var web_client = require('web.web_client');
 var WebClient = require('web.WebClient');
 var Widget = require('web.Widget');
-var OomusicControl = require('oomusic.OomusicControl');
+var Control = require('oomusic.Control');
 
 var player_panel = null;
 
 var _t = core._t;
 var QWeb = core.qweb;
 
+
 var Panel = Widget.extend({
     template: "oomusic.Panel",
     events:{
     },
+
     init: function(parent) {
         if (player_panel) {
             return player_panel;
@@ -26,9 +28,9 @@ var Panel = Widget.extend({
         this._super(parent);
         this.shown = false;
         this.appendTo(web_client.$el);
-        this.oomusic_controls = new OomusicControl.OomusicControl();
+        this.oomusic_controls = new Control.Control();
 
-        core.bus.on('oomusic_toggle_display', this, this.toggle_display);
+        core.bus.on('oomusic_toggle_display', this, this.toggleDisplay);
     },
 
     start: function() {
@@ -36,7 +38,7 @@ var Panel = Widget.extend({
         $('.oom_repeat_off').closest('li').hide();
     },
 
-    toggle_display: function(){
+    toggleDisplay: function(){
         if (this.shown) {
             this.$el.animate({
                 "bottom": -this.$el.outerHeight(),
@@ -48,7 +50,6 @@ var Panel = Widget.extend({
         }
         this.shown = ! this.shown;
     },
-
 });
 
 WebClient.include({

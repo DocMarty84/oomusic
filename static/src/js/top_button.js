@@ -8,12 +8,14 @@ var Widget = require('web.Widget');
 var _t = core._t;
 var QWeb = core.qweb;
 
+
 var TopButton = Widget.extend({
     template:'oomusic.TopButton',
     events: {
-        "click": "toggle_display",
+        "click": "toggleDisplay",
     },
-    toggle_display: function (ev){
+
+    toggleDisplay: function (ev){
         ev.preventDefault();
         core.bus.trigger('oomusic_toggle_display');
     },

@@ -1,4 +1,4 @@
-odoo.define('oomusic.OomusicControl', function(require) {
+odoo.define('oomusic.Control', function(require) {
 "use strict";
 
 var core = require('web.core');
@@ -6,7 +6,8 @@ var Model = require('web.Model');
 
 var QWeb = core.qweb;
 
-var OomusicControl = core.Class.extend(core.mixins.PropertiesMixin, {
+
+var Control = core.Class.extend(core.mixins.PropertiesMixin, {
     init: function(parent, options) {
         var self = this;
         core.mixins.PropertiesMixin.init.call(this, parent);
@@ -23,7 +24,7 @@ var OomusicControl = core.Class.extend(core.mixins.PropertiesMixin, {
         // ========================================================================================
         // Bus events
         // ========================================================================================
-        core.bus.on('oomusic_play', this, this.play_widget);
+        core.bus.on('oomusic_play', this, this.playWidget);
 
         // ========================================================================================
         // Click events
@@ -33,7 +34,7 @@ var OomusicControl = core.Class.extend(core.mixins.PropertiesMixin, {
             var user_seek = Math.round(
                 self.duration * (ev.offsetX/$('.oom_progress').width())
             );
-            self.play_seek(user_seek);
+            self.playSeek(user_seek);
         });
 
         // Play button
@@ -98,7 +99,7 @@ var OomusicControl = core.Class.extend(core.mixins.PropertiesMixin, {
         setInterval(this._checkEnded.bind(this), 1500);
 
         // Load last track played data
-        this.last_track();
+        this.lastTrack();
     },
 
     _convertTime: function(t) {
@@ -145,7 +146,7 @@ var OomusicControl = core.Class.extend(core.mixins.PropertiesMixin, {
         // in case of song being streamed.
         if (Math.ceil(this.user_seek + this.sound.seek()) - this.duration >= -0.5) {
             if (this.repeat) {
-                this.play_widget('oomusic.playlist.line', this.current_playlist_line_id);
+                this.playWidget('oomusic.playlist.line', this.current_playlist_line_id);
             } else {
                 this.next(this.current_playlist_line_id);
             }
@@ -160,7 +161,7 @@ var OomusicControl = core.Class.extend(core.mixins.PropertiesMixin, {
         if (sound_seek === 0.0 && sound_seek === this.sound_seek) {
             console.log("Player seems stuck, trying to resume...");
             this._checkEnded_locked = true;
-            this.play_seek(Math.floor(this.user_seek + this.sound_seek_last_played));
+            this.playSeek(Math.floor(this.user_seek + this.sound_seek_last_played));
             setTimeout(function(){ self._checkEnded_locked = false; }, 5000);
         } else {
             this.sound_seek = sound_seek;
@@ -226,7 +227,7 @@ var OomusicControl = core.Class.extend(core.mixins.PropertiesMixin, {
         $('.oom_albumart').replaceWith(image);
     },
 
-    play_widget: function(model, record_id, view){
+    playWidget: function(model, record_id, view){
         if (!_.isNumber(record_id)) {
             return;
         }
@@ -239,7 +240,7 @@ var OomusicControl = core.Class.extend(core.mixins.PropertiesMixin, {
         );
     },
 
-    play_seek: function(seek){
+    playSeek: function(seek){
         if (!this.sound) {
             return;
         }
@@ -276,7 +277,7 @@ var OomusicControl = core.Class.extend(core.mixins.PropertiesMixin, {
             this.sound.stop();
         }
         this._clearProgress();
-        this.last_track();
+        this.lastTrack();
     },
 
     previous: function(playlist_line_id) {
@@ -312,7 +313,7 @@ var OomusicControl = core.Class.extend(core.mixins.PropertiesMixin, {
         new Model('oomusic.playlist.line').call('oomusic_star', [[playlist_line_id]]);
     },
 
-    last_track: function(){
+    lastTrack: function(){
         var self = this;
         new Model('oomusic.playlist.line').call('oomusic_last_track', [[]])
             .then(function (res) {
@@ -324,7 +325,7 @@ var OomusicControl = core.Class.extend(core.mixins.PropertiesMixin, {
 });
 
 return {
-    OomusicControl: OomusicControl,
+    Control: Control,
 };
 
 });
