@@ -35,7 +35,7 @@ class MusicPlaylist(models.Model):
         # Set starting sequence
         seq = self.playlist_line_ids[-1:].sequence or 10
 
-        PlaylistLine = self.env['oomusic.playlist.line']
+        playlist_line = self.env['oomusic.playlist.line']
         playlist_tracks_ids = set(self.playlist_line_ids.mapped('track_id').ids)
         for track in tracks:
             if track.id in playlist_tracks_ids:
@@ -49,13 +49,13 @@ class MusicPlaylist(models.Model):
             if onchange:
                 # This will keep the line displayed in a (more or less) correct order while they
                 # are added
-                PlaylistLine |= PlaylistLine.new(data)
+                playlist_line |= playlist_line.new(data)
             else:
                 data['playlist_id'] = self.id
-                PlaylistLine.create(data)
+                playlist_line.create(data)
 
         if onchange:
-            self.playlist_line_ids += PlaylistLine
+            self.playlist_line_ids += playlist_line
 
     @api.onchange('album_id')
     def _onhange_album_id(self):
@@ -184,11 +184,11 @@ class MusicPlaylistLine(models.Model):
         return lines[random.randint(0, len(lines)-1)].oomusic_play()
 
     def oomusic_last_track(self):
-        Playlist = self.env['oomusic.playlist'].search([('current', '=', True)], limit=1)
-        if Playlist and Playlist.playlist_line_ids:
-            PlaylistLine = Playlist.playlist_line_ids.filtered(lambda r: r.playing is True)
-            if not PlaylistLine:
-                PlaylistLine = Playlist.playlist_line_ids
-            return PlaylistLine[0].oomusic_play()
+        playlist = self.env['oomusic.playlist'].search([('current', '=', True)], limit=1)
+        if playlist and playlist.playlist_line_ids:
+            playlist_line = playlist.playlist_line_ids.filtered(lambda r: r.playing is True)
+            if not playlist_line:
+                playlist_line = playlist.playlist_line_ids
+            return playlist_line[0].oomusic_play()
         else:
             return json.dumps({})
