@@ -106,6 +106,10 @@ class MusicPlaylistLine(models.Model):
 
     @api.multi
     def oomusic_play(self, seek=0):
+        res = {}
+        if not self:
+            return json.dumps(res)
+
         # Update playing status and stats
         self.playlist_id.playlist_line_ids.write({'playing': False})
         self.write({'playing': True})
@@ -119,7 +123,6 @@ class MusicPlaylistLine(models.Model):
             playlists.playlist_line_ids.write({'playing': False})
             self.playlist_id.write({'current': True})
 
-        res = {}
         res['playlist_line_id'] = self.id
         res.update(self.track_id._oomusic_info(seek=seek))
         return json.dumps(res)
@@ -127,11 +130,15 @@ class MusicPlaylistLine(models.Model):
     @api.multi
     def oomusic_previous(self, shuffle=False):
         res = {}
-        # User might have removed the line from the playlist in the meantime
+        # User might have removed the line from the playlist in the meantime => Fallback on first
+        # track of playlist.
         try:
             lines = self.playlist_id.playlist_line_ids
         except MissingError:
-            return json.dumps(res)
+            playlist = self.env['oomusic.playlist'].search([('current', '=', True)], limit=1)
+            return playlist.playlist_line_ids[:1].oomusic_play()
+
+        # Search for matching line, play first if end of list
         if shuffle:
             return self.oomusic_shuffle()
         for i in xrange(0, len(lines)):
@@ -145,11 +152,15 @@ class MusicPlaylistLine(models.Model):
     @api.multi
     def oomusic_next(self, shuffle=False):
         res = {}
-        # User might have removed the line from the playlist in the meantime
+        # User might have removed the line from the playlist in the meantime => Fallback on first
+        # track of playlist.
         try:
             lines = self.playlist_id.playlist_line_ids
         except MissingError:
-            return json.dumps(res)
+            playlist = self.env['oomusic.playlist'].search([('current', '=', True)], limit=1)
+            return playlist.playlist_line_ids[:1].oomusic_play()
+
+        # Search for matching line, play last if beginning of list
         if shuffle:
             return self.oomusic_shuffle()
         for i in xrange(0, len(lines)):
