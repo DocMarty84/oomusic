@@ -9,6 +9,8 @@
                 <header>
                     <button name="action_add_to_playlist" string="Add To Current Playlist" class="btn-primary"
                         type="object" attrs="{'invisible': [('in_playlist','=', True)]}"/>
+                    <button name="action_add_to_playlist" string="Replace Current Playlist"
+                        type="object" attrs="{'invisible': [('in_playlist','=', True)]}" context="{'purge': True}"/>
                 </header>
                 <sheet>
                     <field name="in_playlist" invisible="1"/>

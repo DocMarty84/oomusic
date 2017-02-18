@@ -273,11 +273,13 @@ class MusicFolder(models.Model):
 
     @api.multi
     def action_add_to_playlist(self):
-        Playlist = self.env['oomusic.playlist'].search([('current', '=', True)], limit=1)
-        if not Playlist:
+        playlist = self.env['oomusic.playlist'].search([('current', '=', True)], limit=1)
+        if not playlist:
             raise UserError(_('No current playlist found!'))
+        if self.env.context.get('purge'):
+            playlist.action_purge()
         for folder in self:
-            Playlist._add_tracks(folder.track_ids)
+            playlist._add_tracks(folder.track_ids)
 
     @api.multi
     def oomusic_browse(self):

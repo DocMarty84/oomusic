@@ -83,8 +83,10 @@ class MusicArtist(models.Model):
 
     @api.multi
     def action_add_to_playlist(self):
-        Playlist = self.env['oomusic.playlist'].search([('current', '=', True)], limit=1)
-        if not Playlist:
+        playlist = self.env['oomusic.playlist'].search([('current', '=', True)], limit=1)
+        if not playlist:
             raise UserError(_('No current playlist found!'))
+        if self.env.context.get('purge'):
+            playlist.action_purge()
         for artist in self:
-            Playlist._add_tracks(artist.track_ids)
+            playlist._add_tracks(artist.track_ids)

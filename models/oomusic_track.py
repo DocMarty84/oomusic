@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from odoo import fields, models, api
+from odoo import fields, models, api, _
+from odoo.exceptions import UserError
 
 class MusicTrack(models.Model):
     _name = 'oomusic.track'
@@ -60,9 +61,12 @@ class MusicTrack(models.Model):
 
     @api.multi
     def action_add_to_playlist(self):
-        Playlist = self.env['oomusic.playlist'].search([('current', '=', True)], limit=1)
-        if Playlist:
-            Playlist._add_tracks(self)
+        playlist = self.env['oomusic.playlist'].search([('current', '=', True)], limit=1)
+        if not playlist:
+            raise UserError(_('No current playlist found!'))
+        if self.env.context.get('purge'):
+            playlist.action_purge()
+        playlist._add_tracks(self)
 
     def _oomusic_info(self, seek=0):
         self.ensure_one()
