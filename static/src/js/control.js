@@ -158,7 +158,7 @@ var Control = core.Class.extend(core.mixins.PropertiesMixin, {
         if (sound_seek !== 0.0) {
             this.sound_seek_last_played = sound_seek;
         }
-        if (sound_seek === 0.0 && sound_seek === this.sound_seek) {
+        if (sound_seek === this.sound_seek) {
             console.log("Player seems stuck, trying to resume...");
             this._checkEnded_locked = true;
             this.playSeek(Math.floor(this.user_seek + this.sound_seek_last_played));
