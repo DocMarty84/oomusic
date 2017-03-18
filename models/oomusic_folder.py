@@ -296,6 +296,9 @@ class MusicFolder(models.Model):
             res['child_ids'] = [
                 {'id': c.id, 'name': c.path_name} for c in self.search([('root', '=', True)])
             ]
-        res['track_ids'] = [{'id': t.id, 'name': t.path.split(os.sep)[-1]} for t in self.track_ids]
+        res['track_ids'] = [
+            {'id': t.id, 'name': t.path.split(os.sep)[-1]}
+            for t in self.track_ids.sorted(key='path')
+        ]
 
         return json.dumps(res)
