@@ -6,7 +6,7 @@ from odoo.exceptions import UserError
 class MusicTrack(models.Model):
     _name = 'oomusic.track'
     _description = 'Music Track'
-    _order = 'artist_id, album_id, track_number'
+    _order = 'album_id, disc, track_number_int, track_number'
 
     create_date = fields.Datetime(index=True)
 
@@ -17,7 +17,8 @@ class MusicTrack(models.Model):
     album_id = fields.Many2one('oomusic.album', string='Album', index=True)
     disc = fields.Char('Disc')
     year = fields.Char('Year')
-    track_number = fields.Char('Track #', index=True)
+    track_number = fields.Char('Track #')
+    track_number_int = fields.Integer('Track #')
     track_total = fields.Char('Total Tracks')
     genre_id = fields.Many2one('oomusic.genre', string='Genre')
     description = fields.Char('Description')
@@ -32,7 +33,7 @@ class MusicTrack(models.Model):
     duration_min = fields.Float('Duration')
     bitrate = fields.Integer('Bitrate')
     path = fields.Char('Path', required=True, index=True)
-    play_count = fields.Integer('Play Count', default=0, index=True)
+    play_count = fields.Integer('Play Count', default=0)
     last_play = fields.Datetime('Last Played', index=True)
     last_modification = fields.Integer('Last Modification')
     root_folder_id = fields.Many2one(
@@ -47,7 +48,7 @@ class MusicTrack(models.Model):
     playlist_line_ids = fields.One2many('oomusic.playlist.line', 'track_id', 'Playlist Line')
     in_playlist = fields.Boolean('In Current Playlist', compute='_compute_in_playlist')
     star = fields.Selection(
-        [('0', 'Normal'), ('1', 'I Like It!')], 'Favorite', index=True, default='0')
+        [('0', 'Normal'), ('1', 'I Like It!')], 'Favorite', default='0')
     rating = fields.Selection(
         [('0', '0'), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')],
         'Rating', default='0',

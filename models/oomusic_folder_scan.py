@@ -513,6 +513,10 @@ class MusicFolderScan(models.TransientModel):
                     vals['user_id'] = cache['user_id']
                     if not vals['name']:
                         vals['name'] = fn
+                    try:
+                        vals['track_number_int'] = int(vals['track_number'])
+                    except ValueError:
+                        vals['track_number_int'] = 0
 
                     # Create the track. No need to insert a new track in the cache, since we won't
                     # scan it during the process.
