@@ -394,7 +394,7 @@ class MusicFolderScan(models.TransientModel):
         if vals.get('album_id') and vals['album_id'] not in cache_write['album']:
             cache_write['album'][vals['album_id']] = {
                 'year': vals.get('year'),
-                'artist_id': vals.get('artist_id'),
+                'artist_id': vals.get('album_artist_id') or vals.get('artist_id'),
                 'genre_id': vals.get('genre_id'),
             }
 
