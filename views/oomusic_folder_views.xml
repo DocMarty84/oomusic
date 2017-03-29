@@ -53,9 +53,9 @@
         <field name="domain">[('root', '=', True)]</field>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
-                Set-up the oomusic directories to scan.
+                Set-up the music directories to scan.
             </p><p>
-                Your oomusic wil be automatically organized by album and artist in the corresponding
+                Your music wil be automatically organized by album and artist in the corresponding
                 menu. Scanning a directory is usually quite fast, taking around 30 seconds to scan
                 1,000 files.
             </p>

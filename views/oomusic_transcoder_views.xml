@@ -42,7 +42,7 @@
         <field name="view_mode">tree,form</field>
         <field name="help" type="html">
             <p>
-                You can define your own oomusic transcoders.
+                You can define your own music transcoders.
             </p><p>
                 Please read the documentation in a first place.
             </p>
