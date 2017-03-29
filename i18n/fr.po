@@ -1,0 +1,1112 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: POEditor.com\n"
+"Project-Id-Version: OOMusic\n"
+"Language: fr\n"
+
+#. module: oomusic
+#. openerp-web
+#: code:addons/oomusic/static/src/xml/panel.xml:60
+msgid "Activate repeat"
+msgstr "Activer la répétition"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_album_id
+msgid "Add Album Tracks"
+msgstr "Ajouter pistes de l'album"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_artist_id
+msgid "Add Artist Tracks"
+msgstr "Ajouter pistes de l'artiste"
+
+#. module: oomusic
+#: code:addons/oomusic/static/src/xml/browse.xml:14
+#: code:addons/oomusic/static/src/xml/browse.xml:18
+#: model:ir.actions.server,name:oomusic.oomusic_track_add_to_playlist
+#: model:ir.ui.view,arch_db:oomusic.oomusic_album_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_album_view_kanban
+#: model:ir.ui.view,arch_db:oomusic.oomusic_album_view_tree
+#: model:ir.ui.view,arch_db:oomusic.oomusic_artist_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_genre_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_suggestion_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_track_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_track_view_tree
+msgid "Add To Current Playlist"
+msgstr "Ajouter à la liste de lecture courante"
+
+#. module: oomusic
+#. openerp-web
+#: code:addons/oomusic/static/src/js/tour.js:11
+msgid "Add your first music folder <b>here</b>"
+msgstr "Ajoutez votre premier répertoire musical <b>ici</b>"
+
+#. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_album_view_search
+#: model:ir.ui.view,arch_db:oomusic.oomusic_track_view_search
+msgid "Added This Month"
+msgstr "Ajoutés ce mois"
+
+#. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_track_view_search
+msgid "Added Today"
+msgstr "Ajoutés aujourd'hui"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_album_name
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line_album_id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_album_id
+#: model:ir.ui.view,arch_db:oomusic.oomusic_album_view_form
+msgid "Album"
+msgstr "Album"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_album_artist_id
+msgid "Album Artist"
+msgstr "Artiste de l'album"
+
+#. module: oomusic
+#: model:ir.actions.act_window,name:oomusic.action_album
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_album_ids
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_genre_album_ids
+#: model:ir.ui.menu,name:oomusic.menu_action_album
+#: model:ir.ui.view,arch_db:oomusic.oomusic_album_view_search
+#: model:ir.ui.view,arch_db:oomusic.oomusic_album_view_tree
+#: model:ir.ui.view,arch_db:oomusic.oomusic_artist_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_genre_view_form
+msgid "Albums"
+msgstr "Albums"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_album_artist_id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_name
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line_artist_id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_artist_id
+#: model:ir.ui.view,arch_db:oomusic.oomusic_artist_view_form
+msgid "Artist"
+msgstr "Artiste"
+
+#. module: oomusic
+#: sql_constraint:oomusic.artist:0
+msgid "Artist name must be unique!"
+msgstr "Le nom de l'artiste doit être unique !"
+
+#. module: oomusic
+#: model:ir.actions.act_window,name:oomusic.action_artist
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_genre_artist_ids
+#: model:ir.ui.menu,name:oomusic.menu_action_artist
+#: model:ir.ui.view,arch_db:oomusic.oomusic_artist_view_search
+#: model:ir.ui.view,arch_db:oomusic.oomusic_artist_view_tree
+#: model:ir.ui.view,arch_db:oomusic.oomusic_genre_view_form
+msgid "Artists"
+msgstr "Artistes"
+
+#. module: oomusic
+#: model:ir.actions.act_window,help:oomusic.action_playlist
+msgid "At least one playlist is required. You can easily add the tracks to the playlist\n"
+"                directly from the playlist form view, or from any other view. In the latter case,\n"
+"                tracks will be added to the current playlist, which is unique."
+msgstr "Au moins une liste de lecture est requise. Vous pouvez facilement ajouter les pistes à la liste de lecture à partir de la vue formulaire de la liste de lecture, ou à partir de toute autre vue. Dans ce cas, les pistes seront ajoutées à la liste de lecture courante, qui est unique."
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_album_image_big
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_image_big
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_image_big_cache
+msgid "Big-sized image"
+msgstr "Grande Image"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_bitrate
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder_bitrate
+msgid "Bitrate"
+msgstr "Taux d'Échantillonnage"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder_buffer_size
+msgid "Buffer Size (KB)"
+msgstr "Taille du Tampon (KB)"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_child_ids
+msgid "Child Folders"
+msgstr "Répertoires enfants"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder_command
+msgid "Command line"
+msgstr "Ligne de commande"
+
+#. module: oomusic
+#: model:ir.model.fields,help:oomusic.field_oomusic_transcoder_command
+msgid "Command to execute for transcoding. Specific keywords are automatically replaced:\n"
+"        - \"INPUT\": input file\n"
+"        - \"SEEK\": start from this seek time\n"
+"        - \"BITRATE\": birate for output file\n"
+"        "
+msgstr "Commande exécutée pour l'encodage. Les mots-clés spécifiques sont remplacés automatiquement :\n"
+"    - \"INPUT\": fichier d'entrée\n"
+"    - \"SEEK\": commence à partir de ce moment\n"
+"    - \"BITRATE\": taux d'échantillonnage de sortie"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_comment
+msgid "Comment"
+msgstr "Commentaire"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_composer
+msgid "Composer"
+msgstr "Compositeur"
+
+#. module: oomusic
+#: model:ir.ui.menu,name:oomusic.menu_oomusic_config
+msgid "Configuration"
+msgstr "Configuration"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_contact
+msgid "Contact"
+msgstr "Contact"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_copyright
+msgid "Copyright"
+msgstr "Droit d'Auteur"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_album_create_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_create_date
+msgid "Create date"
+msgstr "Date de création"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_album_create_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_create_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_create_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_scan_create_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_format_create_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_genre_create_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_lastfm_create_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_create_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line_create_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion_create_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_create_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder_create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_create_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_create_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_scan_create_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_format_create_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_genre_create_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_lastfm_create_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_create_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line_create_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion_create_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder_create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_current
+msgid "Current"
+msgstr "Courant"
+
+#. module: oomusic
+#: model:ir.actions.act_window,name:oomusic.action_current_playlist
+#: model:ir.ui.menu,name:oomusic.menu_action_current_playlist
+msgid "Current Playlist"
+msgstr "Liste de lecture courante"
+
+#. module: oomusic
+#. openerp-web
+#: code:addons/oomusic/static/src/xml/panel.xml:63
+msgid "Deactivate repeat"
+msgstr "Désactiver la répétition"
+
+#. module: oomusic
+#: model:ir.model.fields,help:oomusic.field_oomusic_transcoder_bitrate
+msgid "Default bitrate. Can be changed if necessary when the transcoding function is called"
+msgstr "Taux d'échantillonnage par défaut. Peut être changé si nécessaire quand la fonction d'encodage est appelée."
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_description
+msgid "Description"
+msgstr "Description"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_disc
+msgid "Disc"
+msgstr "Disque"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_album_display_name
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_display_name
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_display_name
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_scan_display_name
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_format_display_name
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_genre_display_name
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_lastfm_display_name
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_display_name
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line_display_name
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion_display_name
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_display_name
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder_display_name
+msgid "Display Name"
+msgstr "Nom Affiché"
+
+#. module: oomusic
+#. openerp-web
+#: code:addons/oomusic/static/src/xml/top_button.xml:5
+msgid "Display Player Panel"
+msgstr "Afficher le Panneau du Lecteur"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line_dummy_field
+msgid "Dummy field"
+msgstr "Champ Inutile"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line_duration
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line_duration_min
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_duration
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_duration_min
+msgid "Duration"
+msgstr "Durée"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_encoded_by
+msgid "Encoder"
+msgstr "Encodeur"
+
+#. module: oomusic
+#: model:ir.model.fields,help:oomusic.field_oomusic_playlist_album_id
+msgid "Encoding help. When selected, the associated album tracks are added to the playlist."
+msgstr "Aide d'encodage. Quand l'album est choisi, les pistes associées sont ajoutées à la liste de lecture."
+
+#. module: oomusic
+#: model:ir.model.fields,help:oomusic.field_oomusic_playlist_artist_id
+msgid "Encoding help. When selected, the associated artist tracks are added to the playlist."
+msgstr "Aide d'encodage. Quand l'artiste est choisi, les pistes associées sont ajoutées à la liste de lecture."
+
+#. module: oomusic
+#: model:ir.model.fields,help:oomusic.field_oomusic_folder_exclude_autoscan
+msgid "Exclude this folder from the automatized scheduled scan. Useful if the folder is not always accessible, e.g. linked to an external drive."
+msgstr "Exclure ce répertoire de l'analyse programmée automatique. Utile si le répertoire n'est pas toujours accessible, par exemple lié à un disque externe."
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_album_star
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_star
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_star
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_star
+#: model:ir.ui.view,arch_db:oomusic.oomusic_album_view_search
+#: model:ir.ui.view,arch_db:oomusic.oomusic_artist_view_search
+#: model:ir.ui.view,arch_db:oomusic.oomusic_track_view_search
+msgid "Favorite"
+msgstr "Favoris"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_album_folder_id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_folder_id
+#: model:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form
+msgid "Folder"
+msgstr "Répertoire"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_album_image_folder
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_image_folder
+msgid "Folder Image"
+msgstr "Image du répertoire"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_path
+msgid "Folder Path"
+msgstr "Chemin du répertoire"
+
+#. module: oomusic
+#: sql_constraint:oomusic.folder:0
+msgid "Folder path must be unique!"
+msgstr "Le chemin du répertoire doit être unique"
+
+#. module: oomusic
+#: model:ir.actions.act_window,name:oomusic.action_folder
+#: model:ir.ui.menu,name:oomusic.menu_action_folder
+#: model:ir.ui.view,arch_db:oomusic.oomusic_folder_view_tree
+msgid "Folders"
+msgstr "Répertoires"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_format_name
+msgid "Format"
+msgstr "Format"
+
+#. module: oomusic
+#: sql_constraint:oomusic.format:0
+msgid "Format name must be unique!"
+msgstr "Le nom du format doit être unique !"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_album_genre_id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line_genre_id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_genre_id
+#: model:ir.ui.view,arch_db:oomusic.oomusic_genre_view_form
+msgid "Genre"
+msgstr "Genre"
+
+#. module: oomusic
+#: sql_constraint:oomusic.genre:0
+msgid "Genre name must be unique!"
+msgstr "Le nom du genre doit être unique !"
+
+#. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_album_view_search
+msgid "Group By"
+msgstr "Grouper Par"
+
+#. module: oomusic
+#. openerp-web
+#: code:addons/oomusic/static/src/xml/panel.xml:66
+#: selection:oomusic.album,star:0
+#: selection:oomusic.artist,star:0
+#: selection:oomusic.folder,star:0
+#: selection:oomusic.track,star:0
+msgid "I Like It!"
+msgstr "J'aime !"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_album_id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_scan_id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_format_id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_genre_id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_lastfm_id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line_id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion_id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder_id
+msgid "ID"
+msgstr "ID"
+
+#. module: oomusic
+#: model:ir.model.fields,help:oomusic.field_oomusic_album_image_small_cache
+#: model:ir.model.fields,help:oomusic.field_oomusic_folder_image_small_cache
+msgid "Image of the folder, used in Kanban view"
+msgstr "Image du répertoire, utilisé dans la vue Kanban"
+
+#. module: oomusic
+#: model:ir.model.fields,help:oomusic.field_oomusic_album_image_medium
+#: model:ir.model.fields,help:oomusic.field_oomusic_album_image_small
+#: model:ir.model.fields,help:oomusic.field_oomusic_folder_image_medium
+#: model:ir.model.fields,help:oomusic.field_oomusic_folder_image_small
+msgid "Image of the folder."
+msgstr "Image du répertoire"
+
+#. module: oomusic
+#: model:ir.model.fields,help:oomusic.field_oomusic_album_image_big
+#: model:ir.model.fields,help:oomusic.field_oomusic_folder_image_big
+#: model:ir.model.fields,help:oomusic.field_oomusic_folder_image_big_cache
+msgid "Image of the folder. It is automatically resized as a 1024x1024px image, with aspect ratio preserved."
+msgstr "Image du répertoire. Elle est automatiquement redimensionnée en 1024x1024px, avec un rapport de taille préservé."
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_album_in_playlist
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_in_playlist
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_in_playlist
+msgid "In Current Playlist"
+msgstr "Dans la Liste de Lecture Courante"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder_input_formats
+msgid "Input Formats"
+msgstr "Formats d'Entrée"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_last_modification
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_last_modification
+msgid "Last Modification"
+msgstr "Dernière Modification"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_album___last_update
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist___last_update
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder___last_update
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_scan___last_update
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_format___last_update
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_genre___last_update
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_lastfm___last_update
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist___last_update
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line___last_update
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion___last_update
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track___last_update
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder___last_update
+msgid "Last Modified on"
+msgstr "Dernière Modification le"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion_track_last_played
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_last_play
+#: model:ir.ui.view,arch_db:oomusic.oomusic_suggestion_view_form
+msgid "Last Played"
+msgstr "Lus Dernièrement"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_last_scan
+msgid "Last Scanned"
+msgstr "Analysés Dernièrement"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_album_write_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_write_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_scan_write_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_write_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_format_write_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_genre_write_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_lastfm_write_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line_write_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_write_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion_write_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_write_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder_write_uid
+msgid "Last Updated by"
+msgstr "Dernière Mise-à-jour par"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_album_write_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_write_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_scan_write_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_write_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_format_write_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_genre_write_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_lastfm_write_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line_write_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_write_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion_write_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_write_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder_write_date
+msgid "Last Updated on"
+msgstr "Dernière Mise-à-jour le"
+
+#. module: oomusic
+#. openerp-web
+#: code:addons/oomusic/static/src/js/tour.js:15
+msgid "Let's create a new folder."
+msgstr "Créons un nouveau répertoire."
+
+#. module: oomusic
+#: model:ir.ui.menu,name:oomusic.menu_oomusic_library
+msgid "Library"
+msgstr "Bibliothèque"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_locked
+msgid "Locked"
+msgstr "Verrouillé"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_album_image_medium
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_image_medium
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_image_medium_cache
+msgid "Medium-sized image"
+msgstr "Image Moyenne"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_format_mimetype
+msgid "Mimetype"
+msgstr "Type MIME"
+
+#. module: oomusic
+#: model:ir.ui.menu,name:oomusic.menu_oomusic_root
+msgid "Music"
+msgstr "Musique"
+
+#. module: oomusic
+#: model:ir.model,name:oomusic.model_oomusic_album
+msgid "Music Album"
+msgstr "Album"
+
+#. module: oomusic
+#: model:ir.model,name:oomusic.model_oomusic_artist
+msgid "Music Artist"
+msgstr "Artiste"
+
+#. module: oomusic
+#: model:ir.model,name:oomusic.model_oomusic_folder
+msgid "Music Folder"
+msgstr "Répertoire"
+
+#. module: oomusic
+#: model:ir.model,name:oomusic.model_oomusic_folder_scan
+msgid "Music Folder scan log"
+msgstr "Journal d'Analyse du Répertoire"
+
+#. module: oomusic
+#: model:ir.model,name:oomusic.model_oomusic_format
+msgid "Music Format"
+msgstr "Format Musical"
+
+#. module: oomusic
+#: model:ir.model,name:oomusic.model_oomusic_genre
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_genre_name
+msgid "Music Genre"
+msgstr "Genre Musical"
+
+#. module: oomusic
+#: model:ir.model,name:oomusic.model_oomusic_playlist
+msgid "Music Playlist"
+msgstr "Liste de Lecture"
+
+#. module: oomusic
+#: model:ir.model,name:oomusic.model_oomusic_playlist_line
+msgid "Music Playlist Track"
+msgstr "Piste de la Liste de Lecture"
+
+#. module: oomusic
+#: model:ir.model,name:oomusic.model_oomusic_suggestion
+msgid "Music Suggestion page"
+msgstr "Page de Suggestion Musicale"
+
+#. module: oomusic
+#: model:ir.model,name:oomusic.model_oomusic_track
+msgid "Music Track"
+msgstr "Piste"
+
+#. module: oomusic
+#: model:ir.model,name:oomusic.model_oomusic_transcoder
+msgid "Music Transcoder"
+msgstr "Encodeur Musical"
+
+#. module: oomusic
+#: code:addons/oomusic/models/res_users.py:13
+msgid "My Playlist"
+msgstr "Ma liste de lecture"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_name
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_name
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion_name_albums
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion_name_tracks
+#: model:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form
+msgid "Name"
+msgstr "Nom"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_exclude_autoscan
+msgid "No auto-scan"
+msgstr "Pas d'auto-scan"
+
+#. module: oomusic
+#: code:addons/oomusic/models/oomusic_album.py:49
+#: code:addons/oomusic/models/oomusic_artist.py:88
+#: code:addons/oomusic/models/oomusic_folder.py:278
+#: code:addons/oomusic/models/oomusic_track.py:67
+msgid "No current playlist found!"
+msgstr "Aucune liste de lecture courante trouvée !"
+
+#. module: oomusic
+#: selection:oomusic.album,star:0
+#: selection:oomusic.artist,star:0
+#: selection:oomusic.folder,star:0
+#: selection:oomusic.track,star:0
+msgid "Normal"
+msgstr "Normal"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_performer_id
+msgid "Original Artist"
+msgstr "Artiste Original"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder_output_format
+msgid "Output Format"
+msgstr "Format de Sortie"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_parent_id
+msgid "Parent Folder"
+msgstr "Répertoire Parent"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_path
+msgid "Path"
+msgstr "Chemin"
+
+#. module: oomusic
+#. openerp-web
+#: code:addons/oomusic/static/src/js/widget.js:23
+msgid "Play"
+msgstr "Lecture"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_play_count
+msgid "Play Count"
+msgstr "Nombre d'Écoutes"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line_playing
+msgid "Playing"
+msgstr "Lecture en Cours"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line_playlist_id
+#: model:ir.ui.view,arch_db:oomusic.oomusic_playlist_view_form
+msgid "Playlist"
+msgstr "Liste de lecture"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_playlist_line_ids
+msgid "Playlist Line"
+msgstr "Ligne de liste de lecture"
+
+#. module: oomusic
+#: model:ir.actions.act_window,name:oomusic.action_playlist
+#: model:ir.ui.menu,name:oomusic.menu_action_playlist
+#: model:ir.ui.menu,name:oomusic.menu_oomusic_playlist
+#: model:ir.ui.view,arch_db:oomusic.oomusic_playlist_view_tree
+msgid "Playlists"
+msgstr "Listes de lecture"
+
+#. module: oomusic
+#: model:ir.actions.act_window,help:oomusic.action_transcoder
+msgid "Please read the documentation in a first place."
+msgstr "Veuillez tout d'abord lire la documentation."
+
+#. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_playlist_view_form
+msgid "Purge"
+msgstr "Vider"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion_album_random
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion_track_random
+#: model:ir.ui.view,arch_db:oomusic.oomusic_suggestion_view_form
+msgid "Random"
+msgstr "Aléatoire"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion_album_recently_added
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion_track_recently_added
+#: model:ir.ui.view,arch_db:oomusic.oomusic_suggestion_view_form
+msgid "Recently Added"
+msgstr "Récemment ajoutés"
+
+#. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_album_view_search
+msgid "Released This Year"
+msgstr "Sorti Cette Année"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_root_folder_id
+msgid "Root Folder"
+msgstr "Répertoire racine"
+
+#. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form
+msgid "Scan"
+msgstr "Scanner"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_last_scan_duration
+msgid "Scan Duration (s)"
+msgstr "Durée du scan (s)"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line_sequence
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder_sequence
+msgid "Sequence"
+msgstr "Séquence"
+
+#. module: oomusic
+#: model:ir.model.fields,help:oomusic.field_oomusic_transcoder_sequence
+msgid "Sequence used to order the transcoders. The lower the value, the higher the priority"
+msgstr "Séquence utilisée pour ordonner les encodeurs. Une valeur plus basse donne une priorité plus haute."
+
+#. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_playlist_view_form
+msgid "Set As Current"
+msgstr "Définir comme courante"
+
+#. module: oomusic
+#: model:ir.actions.act_window,help:oomusic.action_folder
+msgid "Set-up the music directories to scan."
+msgstr "Configurez les répertoires musicaux à analyser."
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_public
+msgid "Shared"
+msgstr "Partagé"
+
+#. module: oomusic
+#: model:ir.model.fields,help:oomusic.field_oomusic_transcoder_buffer_size
+msgid "Size of the buffer used while streaming. A larger value can reduce the potential\n"
+"        file download errors when playing, but will increase the waiting delay when switching\n"
+"        songs.\n"
+"        The default value (200 KB) should be a good compromise between waiting delay and download\n"
+"        stability. A large value (e.g. 20000 KB) will ensure the complete download of the file\n"
+"        before playing."
+msgstr "Taille du tampon utilisé pour le streaming. Une valeur plus grande peut réduire les erreur potentielles de téléchargement lors de la lecture, mais augmente le délai d'attente entre les pistes.\n"
+"La valeur par défaut (200 KB) devrait être un bon compromis entre délai d'attente et stabilité du téléchargement. Une plus grande valeur (par exemple 20000 KB) assurera un téléchargement complet du fichier avant sa lecture."
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_album_image_small
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_album_image_small_cache
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_image_small
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_image_small_cache
+msgid "Small-sized image"
+msgstr "Petite Image"
+
+#. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_suggestion_view_form
+msgid "Suggestion"
+msgstr "Suggestion"
+
+#. module: oomusic
+#: model:ir.actions.act_window,name:oomusic.action_suggestion
+#: model:ir.ui.menu,name:oomusic.menu_action_suggestion
+msgid "Suggestions"
+msgstr "Suggestions"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_format_browser_support
+msgid "Supported by browser"
+msgstr "Supporté par le navigateur"
+
+#. module: oomusic
+#: model:ir.model.fields,help:oomusic.field_oomusic_album_image_folder
+#: model:ir.model.fields,help:oomusic.field_oomusic_folder_image_folder
+msgid "This field holds the image used as image for the folder, limited to 1024x1024px."
+msgstr "Ce champs contient l'image utilisée pour l'image du répertoire, limitée à 1024x1024px."
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_name
+msgid "Title"
+msgstr "Titre"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_root
+msgid "Top Level Folder"
+msgstr "Répertoire de plus Haut Niveau"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_track_total
+msgid "Total Tracks"
+msgstr "Pistes Totales"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line_track_id
+#: model:ir.ui.view,arch_db:oomusic.oomusic_track_view_form
+msgid "Track"
+msgstr "Piste"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line_track_number
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_track_number
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_track_number_int
+msgid "Track #"
+msgstr "Piste #"
+
+#. module: oomusic
+#: model:ir.actions.act_window,name:oomusic.action_track
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_album_track_ids
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_track_ids
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_track_ids
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_genre_track_ids
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_playlist_line_ids
+#: model:ir.ui.menu,name:oomusic.menu_action_track
+#: model:ir.ui.view,arch_db:oomusic.oomusic_album_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_artist_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_playlist_line_view_search
+#: model:ir.ui.view,arch_db:oomusic.oomusic_playlist_line_view_tree
+#: model:ir.ui.view,arch_db:oomusic.oomusic_playlist_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_track_view_search
+#: model:ir.ui.view,arch_db:oomusic.oomusic_track_view_tree
+msgid "Tracks"
+msgstr "Pistes"
+
+#. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_transcoder_view_form
+msgid "Transcoder"
+msgstr "Encodeur"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder_name
+msgid "Transcoder Name"
+msgstr "Nom de l'Encodeur"
+
+#. module: oomusic
+#: model:ir.actions.act_window,name:oomusic.action_transcoder
+#: model:ir.ui.menu,name:oomusic.menu_action_transcoder
+#: model:ir.ui.view,arch_db:oomusic.oomusic_transcoder_view_tree
+msgid "Transcoders"
+msgstr "Encodeurs"
+
+#. module: oomusic
+#. openerp-web
+#: code:addons/oomusic/static/src/xml/panel.xml:57
+msgid "Turn shuffle off"
+msgstr "Désactiver Lecture Aléatoire"
+
+#. module: oomusic
+#. openerp-web
+#: code:addons/oomusic/static/src/xml/panel.xml:54
+msgid "Turn shuffle on"
+msgstr "Activer lecture aléatoire"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_album_user_id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_user_id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_user_id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_genre_user_id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line_user_id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_user_id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_user_id
+msgid "User"
+msgstr "Utilisateur"
+
+#. module: oomusic
+#: model:ir.model,name:oomusic.model_res_users
+msgid "Users"
+msgstr "Utilisateurs"
+
+#. module: oomusic
+#: model:ir.model.fields,help:oomusic.field_oomusic_folder_locked
+msgid "When a folder is being scanned, it is flagged as \"locked\". It might be necessary to unlock it manually if scanning has failed or has been interrupted."
+msgstr "Quand un répertoire est analysé, il est marqué comme \"bloqué\". Il peut être nécessaire de le débloquer manuellement si l'analyse a rencontré une erreur ou a été interrompue."
+
+#. module: oomusic
+#. openerp-web
+#: code:addons/oomusic/static/src/js/tour.js:19
+msgid "Write the full path of your folder. Click on the 'Scan' button to add the content to your library!"
+msgstr "Écrivez le chemin complet de votre répertoire. Cliquez sur le bouton \"Sauvegarder\" pour ajouter le contenu à votre bibliothèque."
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_album_year
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line_year
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_year
+#: model:ir.ui.view,arch_db:oomusic.oomusic_album_view_search
+msgid "Year"
+msgstr "Année"
+
+#. module: oomusic
+#: model:ir.actions.act_window,help:oomusic.action_current_playlist
+msgid "You can create your first playlist from the \"Playlists\" menu, and set it as\n"
+"                \"Current\" so the tracks will appear here."
+msgstr "Vous pouvez créer votre première liste de lecture à partir du menu \"Listes de Lecture\", et la définir comme \"Courante\" de façon à faire apparaître les pistes ici."
+
+#. module: oomusic
+#: model:ir.actions.act_window,help:oomusic.action_transcoder
+#, fuzzy
+msgid "You can define your own music transcoders."
+msgstr "Vous pouvez définir votre propre encodeur."
+
+#. module: oomusic
+#: model:ir.actions.act_window,help:oomusic.action_artist
+msgid "You will find here all the artists."
+msgstr "Vous trouverez ici tous les artistes."
+
+#. module: oomusic
+#: model:ir.actions.act_window,help:oomusic.action_playlist
+msgid "You will find here all the playlists."
+msgstr "Vous trouverez ici toutes les listes de lecture."
+
+#. module: oomusic
+#: model:ir.actions.act_window,help:oomusic.action_album
+msgid "You will find here all your albums."
+msgstr "Vous trouverez ici tous vos albums."
+
+#. module: oomusic
+#: model:ir.actions.act_window,help:oomusic.action_track
+msgid "You will find here all your tracks."
+msgstr "Vous trouverez ici toutes vos pistes."
+
+#. module: oomusic
+#: model:ir.actions.act_window,help:oomusic.action_suggestion
+msgid "You will find here suggestions."
+msgstr "Vous trouverez ici tous des suggestions."
+
+#. module: oomusic
+#: model:ir.actions.act_window,help:oomusic.action_current_playlist
+msgid "You will find here the current playlist."
+msgstr "Vous trouverez ici la liste de lecture courante."
+
+#. module: oomusic
+#: model:ir.actions.act_window,help:oomusic.action_folder
+msgid "Your music wil be automatically organized by album and artist in the corresponding\n"
+"                menu. Scanning a directory is usually quite fast, taking around 30 seconds to scan\n"
+"                1,000 files."
+msgstr "Votre musique sera automatiquement organisée par album et artiste dans les menus correspondants. L'analyse d'un répertoire est habituellement assez rapide, avec une durée d'environ 30 secondes pour 1000 fichiers."
+
+#. module: oomusic
+#: model:ir.actions.act_window,help:oomusic.action_suggestion
+msgid "As soon as a folder is added in your library, suggestions will appear here."
+msgstr "Dès qu'un répertoire est ajouté dans votre bibliothèque, des suggestions apparaîtront ici."
+
+#. module: oomusic
+#: model:ir.actions.act_window,help:oomusic.action_album
+msgid "As soon as a folder is added in your library, the tracks are organized here by\n"
+"                album. When available, a cover picture is displayed. Click on the <span class=\"fa fa-plus\"></span>\n"
+"                button to add them to the current playlist, or on the <span class=\"fa fa-star\"></span>\n"
+"                to mark them as favorite!"
+msgstr "Dès qu'un répertoire est ajouté à votre bibliothèque, les pistes sont organisées ici par album. Une image de couverture est affichée si disponible. Cliquez sur le bouton <span class=\"fa fa-plus\"></span> pour les ajouter à votre liste de lecture courante, ou sur le bouton <span class=\"fa fa-star\"></span> pour les marquer comme favoris !"
+
+#. module: oomusic
+#: model:ir.actions.act_window,help:oomusic.action_artist
+msgid "As soon as a folder is added in your library, the tracks are organized here by\n"
+"                artist."
+msgstr "Dès qu'un répertoire est ajouté à votre bibliothèque, les pistes sont organisées ici par artiste."
+
+#. module: oomusic
+#: model:ir.actions.act_window,help:oomusic.action_track
+msgid "As soon as a folder is added in your library, the tracks will be listed here. Click\n"
+"                on the <span class=\"fa fa-plus\"></span> button to add them to the current playlist,\n"
+"                or on the <span class=\"fa fa-star\"></span> to mark them as favorite!"
+msgstr "Dès qu'un répertoire est ajouté à votre bibliothèque, les pistes sont listées ici. Cliquez sur le bouton <span class=\"fa fa-plus\"></span> pour les ajouter à votre liste de lecture courante, ou sur le bouton <span class=\"fa fa-star\"></span> pour les marquer comme favoris !"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_fm_getinfo_bio
+msgid "Biography"
+msgstr "Biographie"
+
+#. module: oomusic
+#: code:addons/oomusic/models/oomusic_artist.py:49
+msgid "Biography not found"
+msgstr "Biographie non trouvée"
+
+#. module: oomusic
+#: code:addons/oomusic/static/src/js/browse.js:53
+#: model:ir.actions.client,name:oomusic.action_oomusic_browse
+#: model:ir.ui.menu,name:oomusic.menu_action_oomusic_browse
+msgid "Browse Files"
+msgstr "Parcourir les Fichiers"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_path_name
+msgid "Folder Name"
+msgstr "Nom du Répertoire"
+
+#. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form
+msgid "Force Full Scan"
+msgstr "Forcer Analyse Complète"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_album_rating
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_rating
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_rating
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_rating
+msgid "Rating"
+msgstr "Évaluation"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_fm_getsimilar_artist_ids
+#: model:ir.ui.view,arch_db:oomusic.oomusic_artist_view_form
+msgid "Similar Artists"
+msgstr "Artistes Similaires"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_fm_gettoptracks_track_ids
+#: model:ir.ui.view,arch_db:oomusic.oomusic_artist_view_form
+msgid "Top Tracks"
+msgstr "Meilleures Pistes"
+
+#. module: oomusic
+#. openerp-web
+#: code:addons/oomusic/static/src/js/browse.js:69
+#: code:addons/oomusic/static/src/js/browse.js:82
+msgid "\" added to playlist."
+msgstr "\" ajouté à la liste de lecture."
+
+#. module: oomusic
+#: model:ir.actions.act_window,help:oomusic.action_genre
+msgid "As soon as a folder is added in your library, the albums and artists are organized\n"
+"                here by genre."
+msgstr "Dès qu'un répertoire est ajouté à votre bibliothèque, les albums et les artistes sont organisés ici par genre."
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_lastfm_expiry_date
+msgid "Expiry Date"
+msgstr "Date d'Expiration"
+
+#. module: oomusic
+#. openerp-web
+#: code:addons/oomusic/static/src/js/browse.js:69
+msgid "Folder \""
+msgstr "Répertoire \""
+
+#. module: oomusic
+#. openerp-web
+#: code:addons/oomusic/static/src/js/browse.js:68
+msgid "Folder added"
+msgstr "Répertoire Ajouté"
+
+#. module: oomusic
+#: model:ir.actions.act_window,name:oomusic.action_genre
+#: model:ir.ui.menu,name:oomusic.menu_action_genre
+#: model:ir.ui.view,arch_db:oomusic.oomusic_genre_view_tree
+msgid "Genres"
+msgstr "Genres"
+
+#. module: oomusic
+#: model:ir.model.fields,help:oomusic.field_oomusic_folder_image_medium_cache
+msgid "Image of the folder"
+msgstr "Image du répertoire"
+
+#. module: oomusic
+#: model:ir.model,name:oomusic.model_oomusic_lastfm
+msgid "LastFM Cache Management"
+msgstr "Gestion du Cache LastFM"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_lastfm_removal_date
+msgid "Removal Date"
+msgstr "Date de Suppression"
+
+#. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_album_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_artist_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_track_view_form
+msgid "Replace Current Playlist"
+msgstr "Remplacer la Liste de Lecture Courante"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_lastfm_content
+msgid "Result"
+msgstr "Résultat"
+
+#. module: oomusic
+#. openerp-web
+#: code:addons/oomusic/static/src/js/browse.js:82
+msgid "Track \""
+msgstr "Piste \""
+
+#. module: oomusic
+#. openerp-web
+#: code:addons/oomusic/static/src/js/browse.js:81
+msgid "Track added"
+msgstr "Piste ajoutée"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_lastfm_url
+msgid "URL"
+msgstr "URL"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_lastfm_name
+msgid "URL Hash"
+msgstr "Hash de l'URL"
+
+#. module: oomusic
+#: sql_constraint:oomusic.lastfm:0
+msgid "URL hash must be unique!"
+msgstr "Le hash de l'URL doit être unique!"
+
+#. module: oomusic
+#: model:ir.actions.act_window,help:oomusic.action_genre
+msgid "You will find here all the music genres."
+msgstr "Vous trouverez ici tous les genres musicaux."
