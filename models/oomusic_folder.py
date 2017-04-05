@@ -245,11 +245,12 @@ class MusicFolder(models.Model):
             with self.pool.cursor() as cr:
                 new_self = self.with_env(self.env(cr=cr))
                 folders =\
-                    new_self.env['oomusic.folder'].search([('id', 'child_of', self.ids)]) | self
+                    new_self.env['oomusic.folder'].search([('id', 'child_of', folder_id)]) | self
                 folders.write({'last_modification': 0})
-                tracks = folders.mapped('track_ids')
-                tracks.write({'last_modification': 0})
-
+                cr.execute(
+                    'UPDATE oomusic_track SET last_modification = 0 WHERE root_folder_id = %s',
+                    (folder_id,)
+                )
             self.env['oomusic.folder.scan'].scan_folder_th(folder_id)
 
     @api.model
