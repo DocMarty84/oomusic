@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data noupdate="0">
+    <data noupdate="1">
         <!-- Cron to scan folders -->
         <record id="oomusic_scan_folder" model="ir.cron">
             <field name="name">oomusic.scan.folder</field>
