@@ -38,9 +38,7 @@ class MusicAlbum(models.Model):
     @api.depends('track_ids.in_playlist')
     def _compute_in_playlist(self):
         for album in self:
-            track_ids_in_playlist = album.track_ids.filtered(lambda r: r.in_playlist is True)
-            if album.track_ids <= track_ids_in_playlist:
-                album.in_playlist = True
+            album.in_playlist = all(t.in_playlist for t in album.track_ids)
 
     @api.multi
     def action_add_to_playlist(self):

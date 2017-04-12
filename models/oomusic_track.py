@@ -56,9 +56,10 @@ class MusicTrack(models.Model):
 
     @api.depends('playlist_line_ids')
     def _compute_in_playlist(self):
+        tracks_in_playlist = self.env['oomusic.playlist.line'].search(
+            [('playlist_id.current', '=', True)]).mapped('track_id')
         for track in self:
-            track.in_playlist = bool(
-                track.playlist_line_ids.mapped('playlist_id').filtered(lambda r: r.current is True))
+            track.in_playlist = bool(track <= tracks_in_playlist)
 
     @api.multi
     def action_add_to_playlist(self):
