@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import datetime
 import json
-import time
 
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError
-from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT as DATETIME_FORMAT
 
 
 class MusicArtist(models.Model):

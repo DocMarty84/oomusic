@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import fields, models, api, _
-from odoo.exceptions import UserError
+from odoo import models, api, _
 
 class ResUsers(models.Model):
     _inherit = 'res.users'

@@ -13,7 +13,7 @@ except ImportError:
     import mutagen as tag
     from mutagen.easyid3 import EasyID3
 
-from odoo import fields, models, api, tools
+from odoo import fields, models, api
 
 _logger = logging.getLogger(__name__)
 
