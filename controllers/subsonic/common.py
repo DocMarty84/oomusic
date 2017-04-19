@@ -15,6 +15,7 @@ from odoo.http import request
 
 _logger = logging.getLogger(__name__)
 API_VERSION_LIST = {
+    '1.15.0': 16,
     '1.14.0': 15,
     '1.13.0': 14,
     '1.12.0': 13,
@@ -56,7 +57,7 @@ class SubsonicREST():
         self.format = args.get('f', 'xml')
         self.callback = args.get('callback', '')
 
-        self.version_server = '1.12.0' if 'password_crypt' in request.env['res.users'] else '1.14.0'
+        self.version_server = '1.12.0' if 'password_crypt' in request.env['res.users'] else '1.15.0'
 
     def make_response(self, root):
         if self.format == 'json':
@@ -698,3 +699,10 @@ class SubsonicREST():
 
     def make_Bookmarks(self):
         return etree.Element('bookmarks')
+
+    def make_ScanStatus(self, folders, scan=None):
+        return etree.Element(
+            'scanStatus',
+            scanning=str(any(f.locked for f in folders) if scan is not None else scan).lower(),
+            count=str(request.env['oomusic.track'].search_count([])),
+            )

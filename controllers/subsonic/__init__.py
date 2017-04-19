@@ -7,6 +7,7 @@ from . import common
 from . import jukebox
 from . import listing
 from . import media_annotation
+from . import media_library_scanning
 from . import media_retrieval
 from . import playlist
 from . import podcast
