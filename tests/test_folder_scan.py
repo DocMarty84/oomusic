@@ -7,6 +7,7 @@ import time
 import taglib
 from . import test_common
 
+
 class TestOomusicFolderScan(test_common.TestOomusicCommon):
 
     def test_00_initial_scan(self):
@@ -61,7 +62,7 @@ class TestOomusicFolderScan(test_common.TestOomusicCommon):
         # Initial scan
         self.FolderScanObj.with_context(test_mode=True)._scan_folder(self.Folder.id)
 
-        time.sleep(2) # make sure we can detect a modification time in the files
+        time.sleep(2)  # make sure we can detect a modification time in the files
         # Modify the tags
         new_tags = {
             'Song1': {'DATE': '2011'},

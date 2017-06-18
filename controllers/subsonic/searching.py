@@ -8,6 +8,7 @@ from odoo import http
 from odoo.http import request
 from common import SubsonicREST
 
+
 class MusicSubsonicSearching(http.Controller):
     @http.route(['/rest/search.view'], type='http', auth='public', csrf=False, methods=['GET', 'POST'])
     def search(self, **kwargs):

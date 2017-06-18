@@ -17,6 +17,7 @@ from odoo import fields, models, api
 
 _logger = logging.getLogger(__name__)
 
+
 class MusicFolderScan(models.TransientModel):
     _name = 'oomusic.folder.scan'
     _description = 'Music Folder scan log'

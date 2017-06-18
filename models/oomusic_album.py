@@ -3,6 +3,7 @@
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError
 
+
 class MusicAlbum(models.Model):
     _name = 'oomusic.album'
     _description = 'Music Album'

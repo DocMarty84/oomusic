@@ -5,6 +5,7 @@ from lxml import etree
 from odoo import http
 from common import SubsonicREST
 
+
 class MusicSubsonicSystem(http.Controller):
     @http.route(['/rest/ping.view'], type='http', auth='public', csrf=False, methods=['GET', 'POST'])
     def ping(self, **kwargs):

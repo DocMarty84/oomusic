@@ -5,6 +5,7 @@ from lxml import etree
 from odoo import http
 from common import SubsonicREST
 
+
 class MusicSubsonicPodcast(http.Controller):
     @http.route(['/rest/getPodcasts.view'], type='http', auth='public', csrf=False, methods=['GET', 'POST'])
     def getPodcasts(self, **kwargs):

@@ -4,6 +4,7 @@ import random
 
 from odoo import fields, models, api
 
+
 class MusicSuggestion(models.TransientModel):
     _name = 'oomusic.suggestion'
     _description = 'Music Suggestion page'

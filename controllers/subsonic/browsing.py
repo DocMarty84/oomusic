@@ -6,6 +6,7 @@ from odoo import http
 from odoo.http import request
 from common import SubsonicREST
 
+
 class MusicSubsonicBrowsing(http.Controller):
     @http.route(['/rest/getMusicFolders.view'], type='http', auth='public', csrf=False, methods=['GET', 'POST'])
     def getMusicFolders(self, **kwargs):
@@ -52,7 +53,6 @@ class MusicSubsonicBrowsing(http.Controller):
 
         if ifModifiedSince is not None and folder.last_modification < ifModifiedSince:
             return rest.make_response(root)
-
 
         # Build indexes
         indexes_dict = rest.build_dict_indexes_folder(folder)

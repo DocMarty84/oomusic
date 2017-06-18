@@ -11,6 +11,7 @@ from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
+
 class MusicFolder(models.Model):
     _name = 'oomusic.folder'
     _description = 'Music Folder'
@@ -72,7 +73,6 @@ class MusicFolder(models.Model):
         'Small-sized image', attachment=True,
         help='Image of the folder, used in Kanban view')
 
-
     _sql_constraints = [
         ('oomusic_folder_path_uniq', 'unique(path, user_id)', 'Folder path must be unique!'),
     ]
@@ -100,8 +100,8 @@ class MusicFolder(models.Model):
             # Keep image files only
             files = [
                 f for f in os.listdir(folder.path)
-                if os.path.isfile(os.path.join(folder.path, f))\
-                    and imghdr.what(os.path.join(folder.path, f))
+                if os.path.isfile(os.path.join(folder.path, f))
+                and imghdr.what(os.path.join(folder.path, f))
             ]
 
             # Try to find an image with a name matching the accepted names

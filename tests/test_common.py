@@ -6,6 +6,7 @@ import os
 import odoo
 from odoo.tests import common
 
+
 @odoo.tests.common.at_install(True)
 @odoo.tests.common.post_install(True)
 class TestOomusicCommon(common.TransactionCase):

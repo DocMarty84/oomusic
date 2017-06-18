@@ -6,6 +6,7 @@ from odoo import http
 from odoo.http import request
 from common import SubsonicREST
 
+
 class MusicSubsonicUserManagement(http.Controller):
     @http.route(['/rest/getUser.view'], type='http', auth='public', csrf=False, methods=['GET', 'POST'])
     def getUser(self, **kwargs):

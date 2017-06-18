@@ -5,6 +5,7 @@ from lxml import etree
 from odoo import http
 from common import SubsonicREST
 
+
 class MusicSubsonicChat(http.Controller):
     @http.route(['/rest/getChatMessages.view'], type='http', auth='public', csrf=False, methods=['GET', 'POST'])
     def getChatMessages(self, **kwargs):

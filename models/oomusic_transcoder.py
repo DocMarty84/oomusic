@@ -6,13 +6,15 @@ import subprocess
 
 from odoo import fields, models
 
+
 class MusicTranscoder(models.Model):
     _name = 'oomusic.transcoder'
     _description = 'Music Transcoder'
     _order = 'sequence'
 
     name = fields.Char('Transcoder Name', required=True)
-    sequence = fields.Integer(default=10,
+    sequence = fields.Integer(
+        default=10,
         help='Sequence used to order the transcoders. The lower the value, the higher the priority')
     command = fields.Char(
         'Command line', required=True,

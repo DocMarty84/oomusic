@@ -6,6 +6,7 @@ from odoo import http
 from odoo.http import request
 from common import SubsonicREST, API_VERSION_LIST
 
+
 class MusicSubsonicPlaylist(http.Controller):
     @http.route(['/rest/getPlaylists.view'], type='http', auth='public', csrf=False, methods=['GET', 'POST'])
     def getPlaylists(self, **kwargs):

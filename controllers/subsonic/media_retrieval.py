@@ -15,6 +15,7 @@ from common import SubsonicREST
 
 _logger = logging.getLogger(__name__)
 
+
 class MusicSubsonicMediaRetrieval(http.Controller):
     @http.route(['/rest/stream.view'], type='http', auth='public', csrf=False, methods=['GET', 'POST'])
     def stream(self, **kwargs):

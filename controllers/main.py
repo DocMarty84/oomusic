@@ -11,6 +11,7 @@ from odoo.http import request
 
 _logger = logging.getLogger(__name__)
 
+
 class MusicController(http.Controller):
 
     @http.route(['/oomusic/down/<int:track_id>'], type='http', auth='user')

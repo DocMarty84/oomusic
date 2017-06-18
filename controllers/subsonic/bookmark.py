@@ -5,6 +5,7 @@ from lxml import etree
 from odoo import http
 from common import SubsonicREST
 
+
 class MusicSubsonicBookmarks(http.Controller):
     @http.route(['/rest/getBookmarks.view'], type='http', auth='public', csrf=False, methods=['GET', 'POST'])
     def getBookmarks(self, **kwargs):

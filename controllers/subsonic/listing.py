@@ -13,6 +13,7 @@ def _uniquify_list(seq):
     seen = set()
     return [x for x in seq if x not in seen and not seen.add(x)]
 
+
 class MusicSubsonicListing(http.Controller):
     @http.route(['/rest/getAlbumList.view'], type='http', auth='public', csrf=False, methods=['GET', 'POST'])
     def getAlbumList(self, **kwargs):

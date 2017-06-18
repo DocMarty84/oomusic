@@ -6,6 +6,7 @@ import random
 from odoo import fields, models, api
 from odoo.exceptions import MissingError
 
+
 class MusicPlaylist(models.Model):
     _name = 'oomusic.playlist'
     _description = 'Music Playlist'
