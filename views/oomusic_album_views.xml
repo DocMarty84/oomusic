@@ -128,12 +128,32 @@
         </field>
     </record>
 
+    <record id="oomusic_album_view_graph" model="ir.ui.view">
+        <field name="name">oomusic.album.graph</field>
+        <field name="model">oomusic.album</field>
+        <field name="arch" type="xml">
+            <graph string="Albums">
+                <field name="genre_id"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="oomusic_album_view_pivot" model="ir.ui.view">
+        <field name="name">oomusic.album.pivot</field>
+        <field name="model">oomusic.album</field>
+        <field name="arch" type="xml">
+            <pivot string="Albums">
+                <field name="genre_id"/>
+            </pivot>
+        </field>
+    </record>
+
     <record id="action_album" model="ir.actions.act_window">
         <field name="name">Albums</field>
         <field name="res_model">oomusic.album</field>
         <field name="type">ir.actions.act_window</field>
         <field name="view_type">form</field>
-        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_mode">kanban,tree,form,graph,pivot</field>
         <field name="help" type="html">
             <p>
                 You will find here all your albums.
