@@ -41,6 +41,10 @@ ListView.List.include(/** @lends instance.web.ListView.List# */{
         }
         if (!(active_view && active_view.fields_view.arch.attrs.playlist)) {
             // Stop listening if the view is not the playlist view
+            // This is done because, when switching from one view to another, the 'destroy' method
+            // is not called, so we cannot stop listening at that moment. So we must enforce
+            // stopping listening to the bus event, otherwise we might reload views which are no
+            // longer shown to the user.
             core.bus.off('oomusic_reload', this, this.reloadFromPlay);
         }
     },
