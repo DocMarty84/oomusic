@@ -21,7 +21,7 @@ class MusicAlbum(models.Model):
         'res.users', string='User', index=True, required=True, ondelete='cascade',
         default=lambda self: self.env.user
     )
-    in_playlist = fields.Boolean('In Current Playlist', compute='_compute_in_playlist')
+    in_playlist = fields.Boolean('In Current Playlist')
 
     star = fields.Selection(
         [('0', 'Normal'), ('1', 'I Like It!')], 'Favorite', default='0')
@@ -36,10 +36,11 @@ class MusicAlbum(models.Model):
     image_small = fields.Binary("Small-sized image", related='folder_id.image_small')
     image_small_cache = fields.Binary("Small-sized image", related='folder_id.image_small_cache')
 
-    @api.depends('track_ids.in_playlist')
     def _compute_in_playlist(self):
         for album in self:
-            album.in_playlist = all(t.in_playlist for t in album.track_ids)
+            in_playlist = all(t.in_playlist for t in album.track_ids)
+            if album.in_playlist != in_playlist:
+                album.in_playlist = in_playlist
 
     @api.multi
     def action_add_to_playlist(self):

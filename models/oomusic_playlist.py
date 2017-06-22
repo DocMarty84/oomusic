@@ -72,14 +72,28 @@ class MusicPlaylist(models.Model):
 
     @api.multi
     def action_purge(self):
-        for playlist in self:
-            playlist.playlist_line_ids.unlink()
+        self.mapped('playlist_line_ids').unlink()
 
     @api.multi
     def action_current(self):
         self.ensure_one()
         self.env['oomusic.playlist'].search([]).write({'current': False})
         self.current = True
+
+        # Reset 'in_playlist' field. Done with SQL for faster execution.
+        self.env.cr.execute('''
+            UPDATE oomusic_track SET in_playlist = false
+            WHERE user_id = %s
+                AND in_playlist = true
+            ''', (self.env.uid, ))
+        self.env.cr.execute('''
+            UPDATE oomusic_album SET in_playlist = false
+            WHERE user_id = %s
+                AND in_playlist = true
+            ''', (self.env.uid, ))
+
+        # Recompute 'in_playlist' field
+        self.playlist_line_ids.mapped('track_id').write({'in_playlist': True})
 
 
 class MusicPlaylistLine(models.Model):
@@ -104,6 +118,30 @@ class MusicPlaylistLine(models.Model):
     duration_min = fields.Float('Duration', related='track_id.duration_min', readonly=True)
     user_id = fields.Many2one('res.users', related='playlist_id.user_id', store=True, index=True)
     dummy_field = fields.Boolean('Dummy field')
+
+    @api.model
+    def create(self, vals):
+        playlist_line = super(MusicPlaylistLine, self).create(vals)
+        if playlist_line.playlist_id.current:
+            playlist_line.track_id.write({'in_playlist': True})
+        return playlist_line
+
+    @api.multi
+    def write(self, vals):
+        if 'track_id' in vals:
+            self.filtered(lambda r: r.playlist_id.current)\
+                .mapped('track_id').write({'in_playlist': False})
+        res = super(MusicPlaylistLine, self).write(vals)
+        if 'track_id' in vals:
+            self.filtered(lambda r: r.playlist_id.current)\
+                .mapped('track_id').write({'in_playlist': True})
+        return res
+
+    @api.multi
+    def unlink(self):
+        self.filtered(lambda r: r.playlist_id.current)\
+            .mapped('track_id').write({'in_playlist': False})
+        return super(MusicPlaylistLine, self).unlink()
 
     @api.multi
     def oomusic_play(self, seek=0):

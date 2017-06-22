@@ -47,7 +47,7 @@ class MusicTrack(models.Model):
         default=lambda self: self.env.user
     )
     playlist_line_ids = fields.One2many('oomusic.playlist.line', 'track_id', 'Playlist Line')
-    in_playlist = fields.Boolean('In Current Playlist', compute='_compute_in_playlist')
+    in_playlist = fields.Boolean('In Current Playlist')
     star = fields.Selection(
         [('0', 'Normal'), ('1', 'I Like It!')], 'Favorite', default='0')
     rating = fields.Selection(
@@ -55,12 +55,12 @@ class MusicTrack(models.Model):
         'Rating', default='0',
     )
 
-    @api.depends('playlist_line_ids')
-    def _compute_in_playlist(self):
-        tracks_in_playlist = self.env['oomusic.playlist.line'].search(
-            [('playlist_id.current', '=', True)]).mapped('track_id')
-        for track in self:
-            track.in_playlist = bool(track <= tracks_in_playlist)
+    @api.multi
+    def write(self, vals):
+        res = super(MusicTrack, self).write(vals)
+        if 'in_playlist' in vals:
+            self.mapped('album_id')._compute_in_playlist()
+        return res
 
     @api.multi
     def action_add_to_playlist(self):
