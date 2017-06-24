@@ -6,7 +6,7 @@ var ListView = require('web.ListView');
 
 
 ListView.List.include(/** @lends instance.web.ListView.List# */{
-    init: function() {
+    init: function () {
         this._super.apply(this, arguments);
 
         // Listen on 'oomusic_reload' only in specific playlist views

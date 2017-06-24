@@ -11,9 +11,9 @@ var _t = core._t;
 
 var Browse = Widget.extend({
     events: {
-        'click .oom_folder': 'openFolder',
-        'click .fa-plus': 'addFolder',
-        'click .oom_track': 'addTrack',
+        'click .oom_folder': '_onClickFolder',
+        'click .fa-plus': '_onClickAddFolder',
+        'click .oom_track': '_onClickAddTrack',
     },
 
     init: function (parent, action) {
@@ -26,11 +26,15 @@ var Browse = Widget.extend({
         return this.browse();
     },
 
-    start: function() {
+    start: function () {
         // Render now, since events don't work when using the 'template' attribute.
         this.$el.html(QWeb.render('oomusic.Browse', {widget: this}));
         return this._super.apply(this, arguments);
     },
+
+    //--------------------------------------------------------------------------
+    // Public
+    //--------------------------------------------------------------------------
 
     browse: function () {
         var self = this;
@@ -46,7 +50,11 @@ var Browse = Widget.extend({
         }
     },
 
-    openFolder: function (ev) {
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
+
+    _onClickFolder: function (ev) {
         this.do_action({
             type: 'ir.actions.client',
             tag: 'oomusic_browse',
@@ -58,7 +66,7 @@ var Browse = Widget.extend({
         });
     },
 
-    addFolder: function (ev) {
+    _onClickAddFolder: function (ev) {
         ev.stopPropagation();
         var self = this;
         new Model('oomusic.folder')
@@ -72,7 +80,7 @@ var Browse = Widget.extend({
             });
     },
 
-    addTrack: function (ev) {
+    _onClickAddTrack: function (ev) {
         var self = this;
         new Model('oomusic.track')
             .call('action_add_to_playlist', [$(ev.target).data('id')])

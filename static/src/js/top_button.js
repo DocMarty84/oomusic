@@ -12,10 +12,14 @@ var QWeb = core.qweb;
 var TopButton = Widget.extend({
     template:'oomusic.TopButton',
     events: {
-        "click": "toggleDisplay",
+        "click": "_onClickToggleDisplay",
     },
 
-    toggleDisplay: function (ev){
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
+
+    _onClickToggleDisplay: function (ev){
         ev.preventDefault();
         core.bus.trigger('oomusic_toggle_display');
     },
