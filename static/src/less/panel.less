@@ -1,0 +1,86 @@
+@background_color_1: #F0EEEE;
+
+.oom_panel {
+    height: 90px;
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    overflow: hidden;
+    background-color: @background_color_1;
+    z-index: 100;
+    box-shadow: 2px 2px 3px rgba(0,0,0,.4), 0px 0px 5px rgba(0,0,0,.8);
+
+    .oom_albumart {
+        background-color: @background_color_1;
+        float: left;
+        width: 90px;
+        height: 90px;
+        left: 0px;
+    }
+
+    .oom_time_holder {
+        margin-top: -18px;
+
+        .oom_title {
+            text-align: center;
+        }
+
+        .oom_current_time {
+            float: left;
+            margin-left: 5px;
+        }
+
+        .oom_duration {
+            float: right;
+            margin-right: 5px;
+        }
+    }
+
+    .oom_control_buttons {
+        position: absolute;
+        left: 50%;
+        width: 240px;
+        margin-left: -120px;
+        bottom: 42px;
+
+        .oom_controls {
+            position: absolute;
+            padding: 0;
+
+            li {
+                display: inline;
+            }
+        }
+
+        .oom_volume_toggles {
+            list-style: none outside none;
+            position: absolute;
+            left: 180px;
+            padding: 0;
+
+            li {
+                display: inline;
+
+                .oom_volume_bar {
+                    position: absolute;
+                    width: 60px;
+                    top: 10px;
+                }
+            }
+        }
+    }
+
+    .oom_toggles {
+        list-style-type: none;
+        padding: 0;
+        position: absolute;
+        bottom: 4px;
+        left: 50%;
+        margin-left: 145px;
+
+        li {
+            display: inline-block;
+        }
+    }
+}
