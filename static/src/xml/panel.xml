@@ -23,19 +23,19 @@
                 </div>
                 <div class="oom_control_buttons">
                     <ul class="oom_controls">
-                        <li><a href="#" class="oom_previous btn btn-default" tabindex="1">
+                        <li><a class="oom_previous btn btn-default" tabindex="1">
                             <span class="fa fa-step-backward"></span>
                         </a></li>
-                        <li><a href="#" class="oom_play btn btn-default" tabindex="1">
+                        <li><a class="oom_play btn btn-default" tabindex="1">
                             <span class="fa fa-play"></span>
                         </a></li>
-                        <li><a href="#" class="oom_pause btn btn-default" tabindex="1">
+                        <li><a class="oom_pause btn btn-default" tabindex="1">
                             <span class="fa fa-pause"></span>
                         </a></li>
-                        <li><a href="#" class="oom_next btn btn-default" tabindex="1">
+                        <li><a class="oom_next btn btn-default" tabindex="1">
                             <span class="fa fa-step-forward"></span>
                         </a></li>
-                        <li><a href="#" class="oom_stop btn btn-default" tabindex="1">
+                        <li><a class="oom_stop btn btn-default" tabindex="1">
                             <span class="fa fa-stop"></span>
                         </a></li>
                         <li>
@@ -51,19 +51,19 @@
                 </div>
 
                 <ul class="oom_toggles">
-                    <li><a href="#" class="oom_shuffle btn btn-default btn-xs" tabindex="1" title="Turn shuffle on">
+                    <li><a class="oom_shuffle btn btn-default btn-xs" tabindex="1" title="Turn shuffle on">
                         <span class="fa fa-random"></span>
                     </a></li>
-                    <li><a href="#" class="oom_shuffle_off btn btn-default btn-xs" tabindex="1" title="Turn shuffle off">
+                    <li><a class="oom_shuffle_off btn btn-default btn-xs" tabindex="1" title="Turn shuffle off">
                         <span class="fa fa-arrow-right"></span>
                     </a></li>
-                    <li><a href="#" class="oom_repeat btn btn-default btn-xs" tabindex="1" title="Activate repeat">
+                    <li><a class="oom_repeat btn btn-default btn-xs" tabindex="1" title="Activate repeat">
                         <span class="fa fa-repeat"></span>
                     </a></li>
-                    <li><a href="#" class="oom_repeat_off btn btn-default btn-xs" tabindex="1" title="Deactivate repeat">
+                    <li><a class="oom_repeat_off btn btn-default btn-xs" tabindex="1" title="Deactivate repeat">
                         <span class="fa fa-arrow-down"></span>
                     </a></li>
-                    <li><a href="#" class="oom_star btn btn-default btn-xs" tabindex="1" title="I Like It!">
+                    <li><a class="oom_star btn btn-default btn-xs" tabindex="1" title="I Like It!">
                         <span class="fa fa-star"></span>
                     </a></li>
                 </ul>

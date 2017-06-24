@@ -3,6 +3,7 @@
     <data>
         <template id="assets_backend" name="account assets" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/oomusic/static/src/css/browse.css"/>
                 <link rel="stylesheet" href="/oomusic/static/src/css/panel.css"/>
                 <link rel="stylesheet" href="/oomusic/static/src/css/volume.css"/>
 

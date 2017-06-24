@@ -7,15 +7,15 @@
             <a class="list-group-item"><t t-esc="widget.folder_data[widget.folder_id].current_id.name"/></a>
         </t>
         <t t-if="widget.folder_data[widget.folder_id].parent_id">
-            <a href="#" class="list-group-item oom_folder" t-att-data-id="widget.folder_data[widget.folder_id].parent_id.id">..</a>
+            <a class="list-group-item oom_folder" t-att-data-id="widget.folder_data[widget.folder_id].parent_id.id">..</a>
         </t>
         <t t-foreach="widget.folder_data[widget.folder_id].child_ids" t-as="child">
-            <a href="#" class="list-group-item oom_folder" t-att-data-id="child.id">
+            <a class="list-group-item oom_folder" t-att-data-id="child.id">
                 <i class="fa fa-plus" aria-hidden="true" title="Add To Current Playlist"></i> <t t-esc="child.name"/>
             </a>
         </t>
         <t t-foreach="widget.folder_data[widget.folder_id].track_ids" t-as="track">
-            <a href="#" class="list-group-item oom_track" t-att-data-id="track.id" title="Add To Current Playlist">
+            <a class="list-group-item oom_track" t-att-data-id="track.id" title="Add To Current Playlist">
                 <t t-esc="track.name"/>
             </a>
         </t>
