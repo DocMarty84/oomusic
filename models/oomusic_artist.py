@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
+import base64
 import json
 import logging
+import urllib2
 
-from odoo import fields, models, api, _
+from odoo import fields, models, api, tools, _
 from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
@@ -29,6 +31,12 @@ class MusicArtist(models.Model):
         'Rating', default='0',
     )
 
+    fm_image = fields.Binary(
+        'Image', compute='_compute_fm_image',
+        help='Image of the artist, obtained thanks to LastFM.')
+    fm_image_cache = fields.Binary(
+        'Image', attachment=True,
+        help='Image of the artist, obtained thanks to LastFM.')
     fm_getinfo_bio = fields.Char('Biography', compute='_compute_fm_getinfo')
     fm_gettoptracks_track_ids = fields.Many2many(
         'oomusic.track', string='Top Tracks', compute='_compute_fm_gettoptracks')
@@ -38,6 +46,42 @@ class MusicArtist(models.Model):
     _sql_constraints = [
         ('oomusic_artist_name_uniq', 'unique(name, user_id)', 'Artist name must be unique!'),
     ]
+
+    @api.depends('name')
+    def _compute_fm_image(self):
+        for artist in self:
+            if artist.fm_image_cache and not self.env.context.get('build_cache'):
+                artist.fm_image = artist.fm_image_cache
+                continue
+
+            resized_images = {'image_medium': False}
+            url = 'https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=' + artist.name
+            req_json = json.loads(self.env['oomusic.lastfm'].get_query(url))
+            try:
+                _logger.debug("Retrieving image for artist %s...", artist.name)
+                for image in req_json['artist']['image']:
+                    if image['size'] == 'large':
+                        image_content = urllib2.urlopen(image['#text'], timeout=5).read()
+                        resized_images = tools.image_get_resized_images(
+                            base64.b64encode(image_content),
+                            return_big=False, return_medium=True, return_small=False)
+                        break
+            except:
+                _logger.warning('Error with image for artist "%s"', artist.name)
+                continue
+
+            # Avoid doing a write is nothing has to be done
+            if not resized_images['image_medium'] and not artist.fm_image_cache:
+                continue
+
+            artist.fm_image = resized_images['image_medium']
+
+            # Save in cache
+            with self.pool.cursor() as cr:
+                new_self = self.with_env(self.env(cr=cr))
+                new_self.env['oomusic.artist'].browse(artist.id).sudo().write({
+                    'fm_image_cache': resized_images['image_medium'],
+                })
 
     def _compute_fm_getinfo(self):
         for artist in self:
@@ -96,3 +140,10 @@ class MusicArtist(models.Model):
             playlist.action_purge()
         for artist in self:
             playlist._add_tracks(artist.track_ids)
+
+    @api.model
+    def cron_build_image_cache(self):
+        artists = self.search([])
+        for i in xrange(0, len(artists)):
+            artist = artists[i].with_context(build_cache=True, prefetch_fields=False)
+            artist._compute_fm_image()

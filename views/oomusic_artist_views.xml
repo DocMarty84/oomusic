@@ -11,10 +11,15 @@
                     <button name="action_add_to_playlist" string="Replace Current Playlist" type="object" context="{'purge': True}"/>
                 </header>
                 <sheet>
-                    <h1>
-                        <field name="name"/>
-                    </h1>
-                    <field name="fm_getinfo_bio" widget="html"/>
+                    <field name="fm_image" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="fm_getinfo_bio" widget="html"/>
+                    </group>
                     <group>
                         <group>
                             <field name="star" widget="priority"/>
@@ -100,12 +105,35 @@
         </field>
     </record>
 
+    <record id="oomusic_artist_view_kanban" model="ir.ui.view">
+        <field name="name">oomusic.artist.kanban</field>
+        <field name="model">oomusic.artist</field>
+        <field name="arch" type="xml">
+            <kanban class="oom_artist_kanban">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click oom_artist_kanban_main">
+                            <div class="oom_artist_kanban_image">
+                                <img t-att-src="kanban_image('oomusic.artist', 'fm_image', record.id.value)"/>
+                            </div>
+                            <div class="oom_artist_kanban_name">
+                                <strong>
+                                    <field name="name"/>
+                                </strong>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
     <record id="action_artist" model="ir.actions.act_window">
         <field name="name">Artists</field>
         <field name="res_model">oomusic.artist</field>
         <field name="type">ir.actions.act_window</field>
         <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">kanban,tree,form</field>
         <field name="help" type="html">
             <p>
                 You will find here all the artists.
