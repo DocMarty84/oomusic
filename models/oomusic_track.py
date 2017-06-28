@@ -71,6 +71,14 @@ class MusicTrack(models.Model):
             playlist.action_purge()
         playlist._add_tracks(self)
 
+    @api.multi
+    def action_download(self):
+        return {
+            'type': 'ir.actions.act_url',
+            'url': '/oomusic/down/{}'.format(self.id),
+            'target': 'new',
+        }
+
     def _oomusic_info(self, seek=0):
         self.ensure_one()
         return {
