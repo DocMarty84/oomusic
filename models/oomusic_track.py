@@ -84,7 +84,7 @@ class MusicTrack(models.Model):
         return {
             'title': self.artist_id.name + ' - ' + self.name if self.artist_id else self.name,
             'duration': self.duration,
-            'image': self.album_id.image_medium,
+            'image': self.album_id.image_medium or self.artist_id.fm_image,
             'mp3': '/oomusic/trans/' + str(self.id) + ('_%d' % (seek) if seek else '') + '.mp3',
             'oga': '/oomusic/trans/' + str(self.id) + ('_%d' % (seek) if seek else '') + '.ogg',
         }
