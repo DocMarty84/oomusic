@@ -21,7 +21,7 @@ ListView.List.include(/** @lends instance.web.ListView.List# */{
             // Listen on the 'oomusic_reload' event since it was not loaded at init for tree view
             // inside form view.
             if ($(e.target).hasClass('oom_play')) {
-                core.bus.on('oomusic_reload', this, this.reloadFromPlay);
+                core.bus.once('oomusic_reload', this, this.reloadFromPlay);
             }
             var model = this.dataset.model;
             var record_id = $(e.currentTarget).data('id');
@@ -40,17 +40,20 @@ ListView.List.include(/** @lends instance.web.ListView.List# */{
         // - active_view is the active view in the action manager, in case the reload was triggered
         //   from the player.
         var active_view = this.view.getParent() && this.view.getParent().active_view.controller;
+
+        // Stop listening if the view is not the active view.
+        // When switching from one view to another, the 'destroy' method is not called, so we cannot
+        // stop listening at that moment. We must enforce stopping listening to the bus event,
+        // otherwise we might reload views which are no longer shown to the user.
+        if (active_view === undefined) {
+            core.bus.off('oomusic_reload', this, this.reloadFromPlay);
+            return;
+        }
+
+        // Reload the necessary records, not the whole view.
         if (view || (active_view && active_view.fields_view.arch.attrs.playlist)) {
             prev_id && this.records.get(prev_id) && this.reload_record(this.records.get(prev_id));
             curr_id && this.records.get(curr_id) && this.reload_record(this.records.get(curr_id));
-        }
-        if (!(active_view && active_view.fields_view.arch.attrs.playlist)) {
-            // Stop listening if the view is not the playlist view
-            // This is done because, when switching from one view to another, the 'destroy' method
-            // is not called, so we cannot stop listening at that moment. So we must enforce
-            // stopping listening to the bus event, otherwise we might reload views which are no
-            // longer shown to the user.
-            core.bus.off('oomusic_reload', this, this.reloadFromPlay);
         }
     },
 });
