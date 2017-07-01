@@ -16,7 +16,7 @@
         </t>
         <t t-foreach="widget.folder_data[widget.folder_id].track_ids" t-as="track">
             <a class="list-group-item oom_track" t-att-data-id="track.id" title="Add To Current Playlist">
-                <t t-esc="track.name"/>
+                <i class="fa fa-play" aria-hidden="true" title="Preview"></i> <t t-esc="track.name"/>
             </a>
         </t>
     </div>

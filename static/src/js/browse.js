@@ -14,6 +14,7 @@ var Browse = Widget.extend({
         'click .oom_folder': '_onClickFolder',
         'click .fa-plus': '_onClickAddFolder',
         'click .oom_track': '_onClickAddTrack',
+        'click .fa-play': '_onClickPreview',
     },
 
     init: function (parent, action) {
@@ -91,6 +92,11 @@ var Browse = Widget.extend({
                     false
                 );
             });
+    },
+
+    _onClickPreview: function (ev) {
+        ev.stopPropagation();
+        return core.bus.trigger('oomusic_play', 'oomusic.track', $(ev.target).parent().data('id'));
     },
 });
 

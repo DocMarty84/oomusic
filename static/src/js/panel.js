@@ -36,13 +36,14 @@ var Panel = Widget.extend({
         }
         player_panel = this;
 
-        // this._super(parent);
         this._super.apply(this, arguments);
 
         this.shown = false;
         this.sound = undefined;
         this.previous_playlist_line_id = undefined;
         this.current_playlist_line_id = undefined;
+        this.current_track_id = undefined;
+        this.current_model = 'oomusic.playlist.line';
         this.repeat = false;
         this.shuffle = false;
         this.duration = 1;
@@ -94,11 +95,15 @@ var Panel = Widget.extend({
             return;
         }
         var self = this;
-        var playlist_line_id = this.current_playlist_line_id;
-        new Model('oomusic.playlist.line').call('oomusic_play', [[playlist_line_id], seek])
+        if (this.current_model === 'oomusic.track') {
+            var id = this.current_track_id;
+        } else {
+            var id = this.current_playlist_line_id;
+        }
+        new Model(this.current_model).call('oomusic_play', [[id], seek])
             .then(function (res) {
                 self.user_seek = seek;
-                self._play(res, true);
+                self._play(res, true, self.current_model);
             }
         );
     },
@@ -161,11 +166,11 @@ var Panel = Widget.extend({
         );
     },
 
-    star: function (playlist_line_id) {
-        if (!_.isNumber(playlist_line_id)) {
+    star: function (track_id) {
+        if (!_.isNumber(track_id)) {
             return;
         }
-        new Model('oomusic.playlist.line').call('oomusic_star', [[playlist_line_id]]);
+        new Model('oomusic.track').call('oomusic_star', [[track_id]]);
     },
 
     lastTrack: function () {
@@ -196,14 +201,18 @@ var Panel = Widget.extend({
             .attr('aria-valuenow', 0);
     },
 
-    _play: function (data, play_now, view) {
+    _play: function (data, play_now, model, view) {
         var self = this;
         var data_json = JSON.parse(data);
         this.previous_playlist_line_id = this.current_playlist_line_id;
-        this.current_playlist_line_id = data_json.playlist_line_id;
+        if (data_json.playlist_line_id) {
+            this.current_playlist_line_id = data_json.playlist_line_id;
+        }
         core.bus.trigger(
             'oomusic_reload', this.previous_playlist_line_id, this.current_playlist_line_id, view
         );
+        this.current_track_id = data_json.track_id;
+        this.current_model = model || 'oomusic.playlist.line'
 
         // Stop potential playing sound
         if (this.sound) {
@@ -345,7 +354,7 @@ var Panel = Widget.extend({
     },
 
     _onClickStar: function () {
-        this.star(this.current_playlist_line_id);
+        this.star(this.current_track_id);
     },
 
     _onInputVolume: function () {
@@ -360,7 +369,7 @@ var Panel = Widget.extend({
         new Model(model).call('oomusic_play', [[record_id]])
             .then(function (res) {
                 self.user_seek = 0;
-                self._play(res, true, view);
+                self._play(res, true, model, view);
             }
         );
     },

@@ -210,14 +210,6 @@ class MusicPlaylistLine(models.Model):
                     return lines[0].oomusic_play()
         return json.dumps(res)
 
-    @api.multi
-    def oomusic_star(self):
-        try:
-            self.track_id.write({'star': '1'})
-        except MissingError:
-            return
-        return
-
     def oomusic_shuffle(self):
         lines = self.playlist_id.playlist_line_ids
         return lines[random.randint(0, len(lines)-1)].oomusic_play()

@@ -37,6 +37,7 @@
                             <button name="action_add_to_playlist" string="Add To Current Playlist"
                                 icon="fa-plus" widget="oomusic_add" type="object"
                                 attrs="{'invisible': [('in_playlist','=', True)]}"/>
+                            <field name="dummy_field" widget="oomusic_preview"/>
                             <field name="track_number"/>
                             <field name="name"/>
                             <field name="duration_min" widget="float_time"/>

@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
+import json
+
 from odoo import fields, models, api, _
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, MissingError
 
 
 class MusicTrack(models.Model):
@@ -54,6 +56,7 @@ class MusicTrack(models.Model):
         [('0', '0'), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')],
         'Rating', default='0',
     )
+    dummy_field = fields.Boolean('Dummy field')
 
     @api.multi
     def write(self, vals):
@@ -79,9 +82,27 @@ class MusicTrack(models.Model):
             'target': 'new',
         }
 
+    @api.multi
+    def oomusic_play(self, seek=0):
+        res = {}
+        if not self:
+            return json.dumps(res)
+
+        res.update(self._oomusic_info(seek=seek))
+        return json.dumps(res)
+
+    @api.multi
+    def oomusic_star(self):
+        try:
+            self.write({'star': '1'})
+        except MissingError:
+            return
+        return
+
     def _oomusic_info(self, seek=0):
         self.ensure_one()
         return {
+            'track_id': self.id,
             'title': self.artist_id.name + ' - ' + self.name if self.artist_id else self.name,
             'duration': self.duration,
             'image': self.album_id.image_medium or self.artist_id.fm_image,

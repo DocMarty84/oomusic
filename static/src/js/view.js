@@ -17,12 +17,17 @@ ListView.List.include(/** @lends instance.web.ListView.List# */{
 
     row_clicked: function (e, view) {
         // Catch the click event on the list, so we can start playing the track
-        if (this.view.fields_view.arch.attrs.playlist || $(e.target).hasClass('o_play')) {
+        if (this.view.fields_view.arch.attrs.playlist || $(e.target).hasClass('oom_play')) {
             // Listen on the 'oomusic_reload' event since it was not loaded at init for tree view
             // inside form view.
-            if ($(e.target).hasClass('o_play')) {
+            if ($(e.target).hasClass('oom_play')) {
                 core.bus.on('oomusic_reload', this, this.reloadFromPlay);
             }
+            var model = this.dataset.model;
+            var record_id = $(e.currentTarget).data('id');
+            return core.bus.trigger('oomusic_play', model, record_id, this.view);
+        }
+        if ($(e.target).hasClass('oom_preview')) {
             var model = this.dataset.model;
             var record_id = $(e.currentTarget).data('id');
             return core.bus.trigger('oomusic_play', model, record_id, this.view);

@@ -12,7 +12,7 @@ var ColumnPlayField = core.list_widget_registry.get('field').extend({
      * Return a 'Play' button. It should be linked to a dummy field.
      */
     heading: function () {
-        return '<span class="o_play fa fa-play invisible"></span>';
+        return '<span class="oom_play fa fa-play invisible"></span>';
     },
 
     width: function () {
@@ -20,7 +20,24 @@ var ColumnPlayField = core.list_widget_registry.get('field').extend({
     },
 
     _format: function (row_data, options) {
-        return '<span class="o_play fa fa-play" title="' + _t('Play') + '"/>';
+        return '<span class="oom_play fa fa-play" title="' + _t('Play') + '"/>';
+    },
+});
+
+var ColumnPreviewField = core.list_widget_registry.get('field').extend({
+    /**
+     * Return a 'Play' button. It should be linked to a dummy field.
+     */
+    heading: function () {
+        return '<span class="oom_preview fa fa-play invisible"></span>';
+    },
+
+    width: function () {
+        return 1;
+    },
+
+    _format: function (row_data, options) {
+        return '<span class="oom_preview fa fa-play" title="' + _t('Preview') + '"/>';
     },
 });
 
@@ -39,5 +56,6 @@ var ColumnAddButton = core.list_widget_registry.get('button').extend({
 
 core.list_widget_registry
     .add('field.oomusic_play', ColumnPlayField)
+    .add('field.oomusic_preview', ColumnPreviewField)
     .add('button.oomusic_add', ColumnAddButton)
 });
