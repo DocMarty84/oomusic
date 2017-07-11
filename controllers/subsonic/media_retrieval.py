@@ -42,6 +42,12 @@ class MusicSubsonicMediaRetrieval(http.Controller):
         # converted = kwargs.get('size', False)
 
         fn_ext = os.path.splitext(track.path)[1]
+
+        # As specified in Subsonic API: if maxBitRate is set to zero, no limit is imposed. We also
+        # avoid any upsampling.
+        if fn_ext[1:] == output_format and (not maxBitRate or maxBitRate >= track.bitrate):
+            return http.send_file(track.path)
+
         Transcoder = request.env['oomusic.transcoder'].search(
             [('input_formats.name', '=', fn_ext[1:]), ('output_format.name', '=', output_format)],
             limit=1,
@@ -49,7 +55,7 @@ class MusicSubsonicMediaRetrieval(http.Controller):
         if Transcoder:
             generator = Transcoder.transcode(int(trackId), bitrate=maxBitRate).stdout
             mimetype = Transcoder.output_format.mimetype
-        if not Transcoder:
+        else:
             _logger.warning('Could not find converter from "%s" to "%s"', fn_ext[1:], output_format)
             return http.send_file(track.path)
 
