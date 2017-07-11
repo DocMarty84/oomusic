@@ -506,6 +506,11 @@ class MusicFolderScan(models.TransientModel):
                         vals['bitrate'] = song.bitrate
                     else:
                         vals['duration'] = int(song.info.length)
+                        # 'bitrate' is not available for all file types
+                        if hasattr(song.info, 'bitrate'):
+                            vals['bitrate'] = round((song.info.bitrate or 0) / 1000.0)
+                        else:
+                            vals['bitrate'] = 0
                     vals['duration_min'] = float(vals['duration']) / 60
                     vals['path'] = fn_path
                     vals['last_modification'] = mtime
