@@ -121,9 +121,7 @@ class MusicSubsonicPlaylist(http.Controller):
 
         songIndexToRemove = kwargs.get('songIndexToRemove')
         if songIndexToRemove:
-            track_remove = request.env['oomusic.track'].browse([int(songIndexToRemove)])
-            if not track_remove.exists():
-                return rest.make_error(code='70', message='Song not found')
+            playlist.playlist_line_ids[int(songIndexToRemove)].unlink()
 
         vals = {}
         if name:
@@ -135,10 +133,6 @@ class MusicSubsonicPlaylist(http.Controller):
         playlist.write(vals)
         if songIdToAdd:
             playlist._add_tracks(track_add)
-        if songIndexToRemove:
-            line_remove = playlist.mapped('playlist_line_ids')\
-                .filtered(lambda r: r.track_id == track_remove)
-            line_remove.unlink()
 
         root = etree.Element('subsonic-response', status='ok', version=rest.version_server)
 
