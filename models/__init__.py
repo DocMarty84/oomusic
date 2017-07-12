@@ -2,6 +2,7 @@
 
 import oomusic_album
 import oomusic_artist
+import oomusic_converter
 import oomusic_folder
 import oomusic_folder_scan
 import oomusic_format

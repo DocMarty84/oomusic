@@ -19,14 +19,15 @@ class MusicTranscoder(models.Model):
     command = fields.Char(
         'Command line', required=True,
         help='''Command to execute for transcoding. Specific keywords are automatically replaced:
-        - "INPUT": input file
-        - "SEEK": start from this seek time
-        - "BITRATE": birate for output file
+        - "%i": input file
+        - "%s": start from this seek time
+        - "%b": birate for output file
         '''
     )
     bitrate = fields.Integer(
-        'Bitrate', required=True,
-        help='Default bitrate. Can be changed if necessary when the transcoding function is called'
+        'Bitrate/Quality', required=True,
+        help='''Default bitrate or quality (for VBR). Can be changed if necessary when the
+        transcoding function is called.'''
     )
     input_formats = fields.Many2many(
         'oomusic.format', string='Input Formats', required=True, index=True,
@@ -59,10 +60,10 @@ class MusicTranscoder(models.Model):
 
         Track = self.env['oomusic.track'].browse([track_id])
         cmd = self.command\
-            .replace('SEEK', '%s' % (str(datetime.timedelta(seconds=seek))))\
-            .replace('BITRATE', '%d' % (bitrate or self.bitrate))
+            .replace('%s', '%s' % (str(datetime.timedelta(seconds=seek))))\
+            .replace('%b', '%d' % (bitrate or self.bitrate))
         cmd = cmd.split(' ')
-        cmd[cmd.index('INPUT')] = Track.path
+        cmd[cmd.index('%i')] = Track.path
 
         proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=open(os.devnull, 'w'))
         return proc

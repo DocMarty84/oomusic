@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="oomusic_converter_view_form" model="ir.ui.view">
+        <field name="name">oomusic.converter.form</field>
+        <field name="model">oomusic.converter</field>
+        <field name="arch" type="xml">
+            <form string="Converter">
+                <header>
+                    <button name="action_run" string="Run" type="object" states="draft" class="oe_highlight"/>
+                    <button name="action_draft" string="Set To Draft" type="object" states="cancel"/>
+                    <button name="action_cancel" string="Cancel" type="object" states="running"/>
+                    <button name="action_purge" string="Purge" type="object" states="draft"/>
+                    <button name="action_convert" string="Convert" type="object" groups="base.group_no_one"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,running,done"/>
+                </header>
+                <div class="alert alert-info" role="alert" style="margin-bottom:0px;" attrs="{'invisible': [('show_waiting', '=', False)]}">
+                    The track conversion will automatically start within a few minutes.
+                </div>
+                <sheet>
+                    <field name="show_waiting" invisible="1"/>
+                    <group>
+                        <field name="name"/>
+                        <field name="comment"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="transcoder_id"/>
+                            <field name="bitrate"/>
+                            <field name="progress" widget="progressbar"/>
+                        </group>
+                        <group>
+                            <field name="dest_folder"/>
+                            <field name="max_threads"/>
+                        </group>
+                    </group>
+                    <group class="oe_edit_only" attrs="{'invisible': [('state', '!=', 'draft')]}">
+                        <group>
+                            <field name="album_id"/>
+                            <field name="artist_id"/>
+                        </group>
+                        <group>
+                            <field name="playlist_id"/>
+                        </group>
+                    </group>
+                    <field name="converter_line_ids">
+                        <tree string="Tracks" editable="bottom" decoration-muted="state == 'done'">
+                            <field name="state" invisible="1"/>
+                            <field name="sequence" widget="handle"/>
+                            <field name="track_id"/>
+                            <field name="track_number"/>
+                            <field name="artist_id"/>
+                            <field name="album_id"/>
+                            <field name="duration_min" widget="float_time"/>
+                        </tree>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="oomusic_converter_view_tree" model="ir.ui.view">
+        <field name="name">oomusic.converter.tree</field>
+        <field name="model">oomusic.converter</field>
+        <field name="arch" type="xml">
+            <tree string="Converters"
+                    decoration-info="state == 'running'"
+                    decoration-success="state == 'done'"
+                    decoration-muted="state == 'cancel'">
+                <field name="name"/>
+                <field name="comment"/>
+                <field name="progress" widget="progressbar"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_converter" model="ir.actions.act_window">
+        <field name="name">Converters</field>
+        <field name="res_model">oomusic.converter</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                You will find here all the converter jobs.
+            </p><p>
+                A converter is used to perform batch conversion of the...
+            </p>
+        </field>
+    </record>
+
+    <!-- Third Level Menu -->
+    <menuitem id="menu_action_converter" parent="menu_oomusic_playlist" action="action_converter" sequence="30"/>
+</odoo>

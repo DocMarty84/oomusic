@@ -23,6 +23,7 @@ Music Collection
         'views/oomusic_menu_views.xml',
         'views/oomusic_album_views.xml',
         'views/oomusic_artist_views.xml',
+        'views/oomusic_converter_views.xml',
         'views/oomusic_folder_views.xml',
         'views/oomusic_genre_views.xml',
         'views/oomusic_playlist_views.xml',
@@ -34,6 +35,7 @@ Music Collection
 
         'data/oomusic_data.xml',
         'data/oomusic_artist_data.xml',
+        'data/oomusic_converter_data.xml',
         'data/oomusic_folder_data.xml',
         'data/oomusic_format_data.xml',
         'data/oomusic_lastfm_data.xml',
