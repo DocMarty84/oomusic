@@ -2,7 +2,7 @@ odoo.define('oomusic.Browse', function (require) {
 'use strict';
 
 var core = require('web.core');
-var Model = require('web.Model');
+var web_client = require('web.web_client');
 var Widget = require('web.Widget');
 
 var QWeb = core.qweb;
@@ -43,11 +43,16 @@ var Browse = Widget.extend({
         if (this.folder_data[this.folder_id]) {
             return $.when();
         } else {
-            return new Model('oomusic.folder').call('oomusic_browse', [self.folder_id]).then(function (data) {
-                var tmp_data = {};
-                tmp_data[self.folder_id] = JSON.parse(data);
-                _.extend(self.folder_data, tmp_data);
-            });
+            return this._rpc({
+                    model: 'oomusic.folder',
+                    method: 'oomusic_browse',
+                    args: [self.folder_id],
+                })
+                .then(function (data) {
+                    var tmp_data = {};
+                    tmp_data[self.folder_id] = JSON.parse(data);
+                    _.extend(self.folder_data, tmp_data);
+                });
         }
     },
 
@@ -56,7 +61,7 @@ var Browse = Widget.extend({
     //--------------------------------------------------------------------------
 
     _onClickFolder: function (ev) {
-        this.do_action({
+        web_client.action_manager.do_action({
             type: 'ir.actions.client',
             tag: 'oomusic_browse',
             name: _t('Browse Files'),
@@ -70,8 +75,11 @@ var Browse = Widget.extend({
     _onClickAddFolder: function (ev) {
         ev.stopPropagation();
         var self = this;
-        new Model('oomusic.folder')
-            .call('action_add_to_playlist', [$(ev.target).parent().data('id')])
+        return this._rpc({
+                model: 'oomusic.folder',
+                method: 'action_add_to_playlist',
+                args: [$(ev.target).parent().data('id')],
+            })
             .then(function () {
                 self.do_notify(
                     _t('Folder added'),
@@ -83,8 +91,11 @@ var Browse = Widget.extend({
 
     _onClickAddTrack: function (ev) {
         var self = this;
-        new Model('oomusic.track')
-            .call('action_add_to_playlist', [$(ev.target).data('id')])
+        return this._rpc({
+                model: 'oomusic.track',
+                method: 'action_add_to_playlist',
+                args: [$(ev.target).data('id')],
+            })
             .then(function () {
                 self.do_notify(
                     _t('Track added'),

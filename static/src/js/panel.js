@@ -2,7 +2,6 @@ odoo.define('oomusic.Panel', function (require) {
 "use strict";
 
 var core = require('web.core');
-var Model = require('web.Model');
 var web_client = require('web.web_client');
 var WebClient = require('web.WebClient');
 var Widget = require('web.Widget');
@@ -104,12 +103,16 @@ var Panel = Widget.extend({
         } else {
             var id = this.current_playlist_line_id;
         }
-        new Model(this.current_model).call('oomusic_play', [[id], seek])
+
+        return this._rpc({
+                model: this.current_model,
+                method: 'oomusic_play',
+                args: [[id], seek],
+            })
             .then(function (res) {
                 self.user_seek = seek;
                 self._play(res, {play_now: true, model: self.current_model});
-            }
-        );
+            });
     },
 
     play: function () {
@@ -151,12 +154,15 @@ var Panel = Widget.extend({
             return;
         }
         var self = this;
-        new Model('oomusic.playlist.line').call('oomusic_previous', [[playlist_line_id], this.shuffle])
+        return this._rpc({
+                model: 'oomusic.playlist.line',
+                method: 'oomusic_previous',
+                args: [[playlist_line_id], this.shuffle],
+            })
             .then(function (res) {
                 self.user_seek = 0;
                 self._play(res, {play_now: true});
-            }
-        );
+            });
     },
 
     next: function (playlist_line_id, params) {
@@ -168,14 +174,17 @@ var Panel = Widget.extend({
         if (this.next_playlist_line_id) {
             self.user_seek = 0;
             self._play(this.cache_data[this.next_playlist_line_id], params);
+            return $.when();
         } else {
-            new Model('oomusic.playlist.line')
-                .call('oomusic_next', [[playlist_line_id], this.shuffle])
+            return this._rpc({
+                    model: 'oomusic.playlist.line',
+                    method: 'oomusic_next',
+                    args: [[playlist_line_id], this.shuffle],
+                })
                 .then(function (res) {
                     self.user_seek = 0;
                     self._play(res, params);
-                }
-            );
+                });
         }
     },
 
@@ -183,11 +192,19 @@ var Panel = Widget.extend({
         if (!_.isNumber(track_id)) {
             return;
         }
-        new Model('oomusic.track').call('oomusic_star', [[track_id]]);
+        return this._rpc({
+                model: 'oomusic.track',
+                method: 'oomusic_star',
+                args: [[track_id]],
+            })
     },
 
     lastTrack: function () {
-        return new Model('oomusic.playlist.line').call('oomusic_last_track', [[]]);
+        return this._rpc({
+                model: 'oomusic.playlist.line',
+                method: 'oomusic_last_track',
+                args: [[]],
+            })
     },
 
     //--------------------------------------------------------------------------
@@ -307,8 +324,11 @@ var Panel = Widget.extend({
 
         // Set current playling line and propagate to the views.
         if (this.current_model === 'oomusic.playlist.line') {
-            new Model('oomusic.playlist.line')
-                .call('oomusic_set_current', [[this.current_playlist_line_id]])
+            return this._rpc({
+                    model: 'oomusic.playlist.line',
+                    method: 'oomusic_set_current',
+                    args: [[this.current_playlist_line_id]],
+                })
                 .then(function () {
                     core.bus.trigger(
                         'oomusic_reload', self.previous_playlist_line_id,
@@ -373,8 +393,11 @@ var Panel = Widget.extend({
         if (skip) {
             return;
         }
-        new Model('oomusic.playlist.line')
-            .call('oomusic_next', [[this.current_playlist_line_id], false])
+        return this._rpc({
+                model: 'oomusic.playlist.line',
+                method: 'oomusic_next',
+                args: [[this.current_playlist_line_id], false],
+            })
             .then(function (res) {
                 var data_json = JSON.parse(res);
                 self.next_playlist_line_id = data_json.playlist_line_id;
@@ -470,17 +493,20 @@ var Panel = Widget.extend({
         return;
     },
 
-    _onBusPlayWidget: function (model, record_id, view) {
+    _onBusPlayWidget: function (model, record_id) {
         if (!_.isNumber(record_id)) {
             return;
         }
         var self = this;
-        new Model(model).call('oomusic_play', [[record_id]])
+        return this._rpc({
+                model: model,
+                method: 'oomusic_play',
+                args: [[record_id]],
+            })
             .then(function (res) {
                 self.user_seek = 0;
-                self._play(res, {play_now: true, model: model, view: view});
-            }
-        );
+                self._play(res, {play_now: true, model: model});
+            });
     },
 
     _onBusToggleDisplay: function () {
@@ -500,14 +526,11 @@ var Panel = Widget.extend({
 
 WebClient.include({
     show_application: function () {
+        var self = this;
         return this._super.apply(this, arguments).then(function () {
             self.Panel = new Panel(web_client);
         });
     },
 });
-
-return {
-    Panel: Panel,
-};
 
 });

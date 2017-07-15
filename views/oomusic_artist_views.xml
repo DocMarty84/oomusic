@@ -34,7 +34,7 @@
                                 <tree string="Albums">
                                     <field name="in_playlist" invisible="1"/>
                                     <button name="action_add_to_playlist" string="Add To Current Playlist"
-                                        icon="fa-plus" type="object" widget="oomusic_add"
+                                        icon="fa-plus" type="object"
                                         attrs="{'invisible': [('in_playlist','=', True)]}"/>
                                     <field name="name"/>
                                     <field name="year"/>
@@ -47,9 +47,9 @@
                                 <tree string="Top Tracks">
                                     <field name="in_playlist" invisible="1"/>
                                     <button name="action_add_to_playlist" string="Add To Current Playlist"
-                                        icon="fa-plus" type="object" widget="oomusic_add"
+                                        icon="fa-plus" type="object"
                                         attrs="{'invisible': [('in_playlist','=', True)]}"/>
-                                    <field name="dummy_field" widget="oomusic_preview"/>
+                                    <field name="dummy_field" widget="oomusic_play"/>
                                     <field name="name"/>
                                     <field name="album_id"/>
                                     <field name="track_number"/>
@@ -61,9 +61,9 @@
                                 <tree string="Tracks">
                                     <field name="in_playlist" invisible="1"/>
                                     <button name="action_add_to_playlist" string="Add To Current Playlist"
-                                        icon="fa-plus" type="object" widget="oomusic_add"
+                                        icon="fa-plus" type="object"
                                         attrs="{'invisible': [('in_playlist','=', True)]}"/>
-                                    <field name="dummy_field" widget="oomusic_preview"/>
+                                    <field name="dummy_field" widget="oomusic_play"/>
                                     <field name="name"/>
                                     <field name="album_id"/>
                                     <field name="track_number"/>
@@ -112,11 +112,12 @@
         <field name="model">oomusic.artist</field>
         <field name="arch" type="xml">
             <kanban class="oom_artist_kanban">
+                <field name="id"/>
                 <templates>
                     <t t-name="kanban-box">
                         <div class="oe_kanban_global_click oom_artist_kanban_main">
                             <div class="oom_artist_kanban_image">
-                                <img t-att-src="kanban_image('oomusic.artist', 'fm_image', record.id.value)"/>
+                                <img t-att-src="kanban_image('oomusic.artist', 'fm_image', record.id.raw_value)"/>
                             </div>
                             <div class="oom_artist_kanban_name">
                                 <strong>

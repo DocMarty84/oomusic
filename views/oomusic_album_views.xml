@@ -35,9 +35,9 @@
                         <tree string="Tracks">
                             <field name="in_playlist" invisible="1"/>
                             <button name="action_add_to_playlist" string="Add To Current Playlist"
-                                icon="fa-plus" widget="oomusic_add" type="object"
+                                icon="fa-plus"  type="object"
                                 attrs="{'invisible': [('in_playlist','=', True)]}"/>
-                            <field name="dummy_field" widget="oomusic_preview"/>
+                            <field name="dummy_field" widget="oomusic_play"/>
                             <field name="track_number"/>
                             <field name="name"/>
                             <field name="duration_min" widget="float_time"/>
@@ -55,7 +55,7 @@
             <tree string="Albums">
                 <field name="in_playlist" invisible="1"/>
                 <button name="action_add_to_playlist" string="Add To Current Playlist"
-                    icon="fa-plus" widget="oomusic_add" type="object"
+                    icon="fa-plus"  type="object"
                     attrs="{'invisible': [('in_playlist','=', True)]}"/>
                 <field name="name"/>
                 <field name="year"/>
@@ -94,12 +94,13 @@
         <field name="model">oomusic.album</field>
         <field name="arch" type="xml">
             <kanban>
+                <field name="id"/>
                 <field name="in_playlist"/>
                 <templates>
                     <t t-name="kanban-box">
                         <div class="oe_kanban_global_click">
                             <div class="o_kanban_image">
-                                <img t-att-src="kanban_image('oomusic.album', 'image_small', record.id.value)"/>
+                                <img t-att-src="kanban_image('oomusic.album', 'image_small', record.id.raw_value)"/>
                             </div>
                             <div class="oe_kanban_content">
                                 <strong>

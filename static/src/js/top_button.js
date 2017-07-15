@@ -5,9 +5,6 @@ var core = require('web.core');
 var SystrayMenu = require('web.SystrayMenu');
 var Widget = require('web.Widget');
 
-var _t = core._t;
-var QWeb = core.qweb;
-
 
 var TopButton = Widget.extend({
     template:'oomusic.TopButton',
@@ -28,7 +25,7 @@ var TopButton = Widget.extend({
 SystrayMenu.Items.push(TopButton);
 
 return {
-    TopButton: TopButton,
+    TopButton: new TopButton(),
 };
 
 });

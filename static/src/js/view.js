@@ -3,59 +3,59 @@ odoo.define('oomusic.View', function(require) {
 
 var core = require('web.core');
 var ListView = require('web.ListView');
+var ListRenderer = require('web.ListRenderer');
+var ListController = require('web.ListController');
 
 
-ListView.List.include(/** @lends instance.web.ListView.List# */{
+ListRenderer.include(/** @lends instance.web.ListView.List# */{
     init: function () {
         this._super.apply(this, arguments);
 
         // Listen on 'oomusic_reload' only in specific playlist views
-        if (this.view.fields_view.arch.attrs.playlist) {
-            core.bus.on('oomusic_reload', this, this.reloadFromPlay);
+        if (['playlist', 'playlist_form'].indexOf(this.arch.attrs.class) >= 0) {
+            core.bus.on('oomusic_reload', this, this._reloadFromPlay);
         }
     },
 
-    row_clicked: function (e, view) {
+    _onRowClicked: function (event) {
         // Catch the click event on the list, so we can start playing the track
-        if (this.view.fields_view.arch.attrs.playlist || $(e.target).hasClass('oom_play')) {
-            // Listen on the 'oomusic_reload' event since it was not loaded at init for tree view
-            // inside form view.
-            if ($(e.target).hasClass('oom_play')) {
-                core.bus.once('oomusic_reload', this, this.reloadFromPlay);
+        if (this.arch.attrs.class === 'playlist') {
+            event.preventDefault();
+            event.stopPropagation();
+
+            var id = $(event.currentTarget).data('id');
+            if (id) {
+                this.trigger_up('oomusic_row_clicked_play', {id:id, target: event.target});
             }
-            var model = this.dataset.model;
-            var record_id = $(e.currentTarget).data('id');
-            return core.bus.trigger('oomusic_play', model, record_id, this.view);
-        }
-        if ($(e.target).hasClass('oom_preview')) {
-            var model = this.dataset.model;
-            var record_id = $(e.currentTarget).data('id');
-            return core.bus.trigger('oomusic_play', model, record_id, this.view);
+            return;
+
         }
         return this._super.apply(this, arguments);
     },
 
-    reloadFromPlay: function (prev_id, curr_id, view) {
-        // - view is a view on which the user has clicked. It can be a list view inside a form view.
-        // - active_view is the active view in the action manager, in case the reload was triggered
-        //   from the player.
-        var active_view = this.view.getParent() && this.view.getParent().active_view.controller;
-
-        // Stop listening if the view is not the active view.
-        // When switching from one view to another, the 'destroy' method is not called, so we cannot
-        // stop listening at that moment. We must enforce stopping listening to the bus event,
-        // otherwise we might reload views which are no longer shown to the user.
-        if (active_view === undefined) {
-            core.bus.off('oomusic_reload', this, this.reloadFromPlay);
-            return;
+    _renderHeaderCell: function (node) {
+        if (node.attrs.widget === 'oomusic_play' || node.attrs.name === 'action_add_to_playlist') {
+            return $('<th width=1></th>');
         }
-
-        // Reload the necessary records, not the whole view.
-        if (view || (active_view && active_view.fields_view.arch.attrs.playlist)) {
-            prev_id && this.records.get(prev_id) && this.reload_record(this.records.get(prev_id));
-            curr_id && this.records.get(curr_id) && this.reload_record(this.records.get(curr_id));
-        }
+        return this._super.apply(this, arguments);
     },
+
+    _reloadFromPlay: function () {
+        this.trigger_up('reload');
+    },
+});
+
+
+ListController.include({
+    custom_events: _.extend({}, ListController.prototype.custom_events, {
+        oomusic_row_clicked_play: '_onRowClickedPlay',
+    }),
+
+    _onRowClickedPlay: function (event) {
+        var record = this.model.get(event.data.id, {raw: true});
+        core.bus.trigger('oomusic_play', record.model, record.res_id);
+    },
+
 });
 
 });

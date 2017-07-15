@@ -15,7 +15,7 @@ tour.register('oomusic_tour', [{
     content: _t("Let's create a new folder."),
     position: "right",
 }, {
-    trigger: ".o_form_required",
+    trigger: ".o_field_widget.o_required_modifier",
     content: _t("Write the full path of your folder. Click on the 'Scan' button to add the content to your library!"),
     position: "top",
 }]);

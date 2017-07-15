@@ -13,12 +13,13 @@
                     <page string="Recently Added">
                         <field name="album_recently_added" mode="kanban">
                             <kanban>
+                                <field name="id"/>
                                 <field name="in_playlist"/>
                                 <templates>
                                     <t t-name="kanban-box">
                                         <div class="oe_kanban_global_click">
                                             <div class="o_kanban_image">
-                                                <img t-att-src="kanban_image('oomusic.album', 'image_small', record.id.value)"/>
+                                                <img t-att-src="kanban_image('oomusic.album', 'image_small', record.id.raw_value)"/>
                                             </div>
                                             <div class="oe_kanban_content">
                                                 <strong>
@@ -50,12 +51,13 @@
                     <page string="Random">
                         <field name="album_random" mode="kanban">
                             <kanban>
+                                <field name="id"/>
                                 <field name="in_playlist"/>
                                 <templates>
                                     <t t-name="kanban-box">
                                         <div class="oe_kanban_global_click">
                                             <div class="o_kanban_image">
-                                                <img t-att-src="kanban_image('oomusic.album', 'image_small', record.id.value)"/>
+                                                <img t-att-src="kanban_image('oomusic.album', 'image_small', record.id.raw_value)"/>
                                             </div>
                                             <div class="oe_kanban_content">
                                                 <strong>

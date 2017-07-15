@@ -10,10 +10,10 @@
 
                 <script type="text/javascript" src="/oomusic/static/lib/howler.js"></script>
                 <script type="text/javascript" src="/oomusic/static/src/js/browse.js"></script>
+                <script type="text/javascript" src="/oomusic/static/src/js/field.js"></script>
                 <script type="text/javascript" src="/oomusic/static/src/js/panel.js"></script>
                 <script type="text/javascript" src="/oomusic/static/src/js/top_button.js"></script>
                 <script type="text/javascript" src="/oomusic/static/src/js/view.js"></script>
-                <script type="text/javascript" src="/oomusic/static/src/js/widget.js"></script>
 
                 <script type="text/javascript" src="/oomusic/static/src/js/tour.js"></script>
             </xpath>

@@ -69,9 +69,9 @@
             <tree string="Tracks" default_order="artist_id, album_id, disc, track_number_int, track_number">
                 <field name="in_playlist" invisible="1"/>
                 <button name="action_add_to_playlist" string="Add To Current Playlist"
-                    icon="fa-plus" type="object" widget="oomusic_add"
+                    icon="fa-plus" type="object"
                     attrs="{'invisible': [('in_playlist','=', True)]}"/>
-                <field name="dummy_field" widget="oomusic_preview"/>
+                <field name="dummy_field" widget="oomusic_play"/>
                 <field name="name"/>
                 <field name="album_id"/>
                 <field name="artist_id"/>
