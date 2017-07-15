@@ -10,9 +10,9 @@
             <field name="interval_type">minutes</field>
             <field name="numbercall">-1</field>
             <field name="doall" eval="False"/>
-            <field name="model">oomusic.converter</field>
-            <field name="function">cron_convert</field>
-            <field name="args">()</field>
+            <field name="model_id" ref="oomusic.model_oomusic_converter"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_convert()</field>
         </record>
     </data>
 </odoo>

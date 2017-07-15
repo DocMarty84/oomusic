@@ -10,9 +10,9 @@
             <field name="interval_type">hours</field>
             <field name="numbercall">-1</field>
             <field name="doall" eval="False"/>
-            <field name="model">oomusic.folder</field>
-            <field name="function">cron_scan_folder</field>
-            <field name="args">()</field>
+            <field name="model_id" ref="oomusic.model_oomusic_folder"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_scan_folder()</field>
         </record>
 
         <!-- Cron to build image cache -->
@@ -24,9 +24,9 @@
             <field name="interval_type">days</field>
             <field name="numbercall">-1</field>
             <field name="doall" eval="False"/>
-            <field name="model">oomusic.folder</field>
-            <field name="function">cron_build_image_cache</field>
-            <field name="args">()</field>
+            <field name="model_id" ref="oomusic.model_oomusic_folder"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_build_image_cache()</field>
         </record>
     </data>
 </odoo>
