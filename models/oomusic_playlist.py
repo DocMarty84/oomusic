@@ -106,17 +106,20 @@ class MusicPlaylistLine(models.Model):
     playing = fields.Boolean('Playing', default=False)
     track_id = fields.Many2one('oomusic.track', 'Track', required=True, ondelete='cascade')
     track_number = fields.Char(
-        'Track #', related='track_id.track_number', readonly=True)
+        'Track #', related='track_id.track_number', readonly=True, related_sudo=False)
     album_id = fields.Many2one(
-        'oomusic.album', 'Album', related='track_id.album_id', readonly=True)
+        'oomusic.album', 'Album', related='track_id.album_id', readonly=True, related_sudo=False)
     artist_id = fields.Many2one(
-        'oomusic.artist', 'Artist', related='track_id.artist_id', readonly=True)
+        'oomusic.artist', 'Artist', related='track_id.artist_id', readonly=True, related_sudo=False)
     genre_id = fields.Many2one(
-        'oomusic.genre', 'Genre', related='track_id.genre_id', readonly=True)
-    year = fields.Char('Year', related='track_id.year', readonly=True)
-    duration = fields.Integer('Duration', related='track_id.duration', readonly=True)
-    duration_min = fields.Float('Duration', related='track_id.duration_min', readonly=True)
-    user_id = fields.Many2one('res.users', related='playlist_id.user_id', store=True, index=True)
+        'oomusic.genre', 'Genre', related='track_id.genre_id', readonly=True, related_sudo=False)
+    year = fields.Char('Year', related='track_id.year', readonly=True, related_sudo=False)
+    duration = fields.Integer(
+        'Duration', related='track_id.duration', readonly=True, related_sudo=False)
+    duration_min = fields.Float(
+        'Duration', related='track_id.duration_min', readonly=True, related_sudo=False)
+    user_id = fields.Many2one(
+        'res.users', related='playlist_id.user_id', store=True, index=True, related_sudo=False)
     dummy_field = fields.Boolean('Dummy field')
 
     @api.model
