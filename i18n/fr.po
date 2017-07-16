@@ -73,6 +73,8 @@ msgstr "Artiste de l'album"
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_album_ids
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_genre_album_ids
 #: model:ir.ui.menu,name:oomusic.menu_action_album
+#: model:ir.ui.view,arch_db:oomusic.oomusic_album_view_graph
+#: model:ir.ui.view,arch_db:oomusic.oomusic_album_view_pivot
 #: model:ir.ui.view,arch_db:oomusic.oomusic_album_view_search
 #: model:ir.ui.view,arch_db:oomusic.oomusic_album_view_tree
 #: model:ir.ui.view,arch_db:oomusic.oomusic_artist_view_form
@@ -268,6 +270,7 @@ msgstr "Afficher le Panneau du Lecteur"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line_dummy_field
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_dummy_field
 msgid "Dummy field"
 msgstr "Champ Inutile"
 
@@ -603,9 +606,9 @@ msgstr "Pas d'auto-scan"
 
 #. module: oomusic
 #: code:addons/oomusic/models/oomusic_album.py:49
-#: code:addons/oomusic/models/oomusic_artist.py:88
-#: code:addons/oomusic/models/oomusic_folder.py:278
-#: code:addons/oomusic/models/oomusic_track.py:67
+#: code:addons/oomusic/models/oomusic_artist.py:138
+#: code:addons/oomusic/models/oomusic_folder.py:279
+#: code:addons/oomusic/models/oomusic_track.py:72
 msgid "No current playlist found!"
 msgstr "Aucune liste de lecture courante trouvée !"
 
@@ -824,6 +827,8 @@ msgstr "Piste #"
 #: model:ir.ui.view,arch_db:oomusic.oomusic_playlist_line_view_search
 #: model:ir.ui.view,arch_db:oomusic.oomusic_playlist_line_view_tree
 #: model:ir.ui.view,arch_db:oomusic.oomusic_playlist_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_track_view_graph
+#: model:ir.ui.view,arch_db:oomusic.oomusic_track_view_pivot
 #: model:ir.ui.view,arch_db:oomusic.oomusic_track_view_search
 #: model:ir.ui.view,arch_db:oomusic.oomusic_track_view_tree
 msgid "Tracks"
@@ -974,12 +979,12 @@ msgid "Biography"
 msgstr "Biographie"
 
 #. module: oomusic
-#: code:addons/oomusic/models/oomusic_artist.py:49
+#: code:addons/oomusic/models/oomusic_artist.py:93
 msgid "Biography not found"
 msgstr "Biographie non trouvée"
 
 #. module: oomusic
-#: code:addons/oomusic/static/src/js/browse.js:53
+#: code:addons/oomusic/static/src/js/browse.js:62
 #: model:ir.actions.client,name:oomusic.action_oomusic_browse
 #: model:ir.ui.menu,name:oomusic.menu_action_oomusic_browse
 msgid "Browse Files"
@@ -1017,8 +1022,8 @@ msgstr "Meilleures Pistes"
 
 #. module: oomusic
 #. openerp-web
-#: code:addons/oomusic/static/src/js/browse.js:69
-#: code:addons/oomusic/static/src/js/browse.js:82
+#: code:addons/oomusic/static/src/js/browse.js:78
+#: code:addons/oomusic/static/src/js/browse.js:91
 msgid "\" added to playlist."
 msgstr "\" ajouté à la liste de lecture."
 
@@ -1035,13 +1040,13 @@ msgstr "Date d'Expiration"
 
 #. module: oomusic
 #. openerp-web
-#: code:addons/oomusic/static/src/js/browse.js:69
+#: code:addons/oomusic/static/src/js/browse.js:78
 msgid "Folder \""
 msgstr "Répertoire \""
 
 #. module: oomusic
 #. openerp-web
-#: code:addons/oomusic/static/src/js/browse.js:68
+#: code:addons/oomusic/static/src/js/browse.js:77
 msgid "Folder added"
 msgstr "Répertoire Ajouté"
 
@@ -1081,13 +1086,13 @@ msgstr "Résultat"
 
 #. module: oomusic
 #. openerp-web
-#: code:addons/oomusic/static/src/js/browse.js:82
+#: code:addons/oomusic/static/src/js/browse.js:91
 msgid "Track \""
 msgstr "Piste \""
 
 #. module: oomusic
 #. openerp-web
-#: code:addons/oomusic/static/src/js/browse.js:81
+#: code:addons/oomusic/static/src/js/browse.js:90
 msgid "Track added"
 msgstr "Piste ajoutée"
 
@@ -1110,3 +1115,33 @@ msgstr "Le hash de l'URL doit être unique!"
 #: model:ir.actions.act_window,help:oomusic.action_genre
 msgid "You will find here all the music genres."
 msgstr "Vous trouverez ici tous les genres musicaux."
+
+#. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_track_view_form
+msgid "Download"
+msgstr "Télécharger"
+
+#. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_track_view_form
+msgid "Download the original file. You should allow pop-up from this URL!"
+msgstr "Télécharger le fichier original. Vous devez autoriser l'affichage des pop-ups pour cette adresse !"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_fm_image
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_fm_image_cache
+msgid "Image"
+msgstr "Image"
+
+#. module: oomusic
+#: model:ir.model.fields,help:oomusic.field_oomusic_artist_fm_image
+#: model:ir.model.fields,help:oomusic.field_oomusic_artist_fm_image_cache
+msgid "Image of the artist, obtained thanks to LastFM."
+msgstr "Image de l'artiste, obtenue depuis LastFM."
+
+#. module: oomusic
+#. openerp-web
+#: code:addons/oomusic/static/src/js/widget.js:40
+#: code:addons/oomusic/static/src/xml/browse.xml:19
+msgid "Preview"
+msgstr "Prévisualiser"
+
