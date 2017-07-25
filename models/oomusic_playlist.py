@@ -22,7 +22,8 @@ class MusicPlaylist(models.Model):
     comment = fields.Char('Comment')
     current = fields.Boolean('Current', default=lambda self: self._default_current())
     public = fields.Boolean('Shared', default=False)
-    playlist_line_ids = fields.One2many('oomusic.playlist.line', 'playlist_id', string='Tracks')
+    playlist_line_ids = fields.One2many(
+        'oomusic.playlist.line', 'playlist_id', string='Tracks', copy=True)
 
     album_id = fields.Many2one(
         'oomusic.album', string='Add Album Tracks', store=False,
