@@ -3,7 +3,7 @@
     <data noupdate="0">
         <record model="ir.config_parameter" id="lastfm_cache_duration">
             <field name="key">oomusic.lastfm_cache_duration</field>
-            <field name="value">14</field>
+            <field name="value">28</field>
         </record>
         <record model="ir.config_parameter" id="lastfm_key">
             <field name="key">oomusic.lastfm_key</field>

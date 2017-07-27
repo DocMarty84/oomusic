@@ -49,10 +49,11 @@ class MusicLastfm(models.Model):
                 if r.status_code == 200:
                     content = r.content
             except:
+                _logger.info("Error while fetching URL \"%s\"...", url)
                 pass
 
             expiry_date = datetime.datetime.utcnow() + datetime.timedelta(days=fm_cache)
-            removal_date = datetime.datetime.utcnow() + datetime.timedelta(days=fm_cache + 7)
+            removal_date = datetime.datetime.utcnow() + datetime.timedelta(days=fm_cache + 14)
 
             # Save in cache
             with self.pool.cursor() as cr:
@@ -79,8 +80,7 @@ class MusicLastfm(models.Model):
     @api.model
     def cron_build_lastfm_cache(self):
         # Build cache for artists
-        query = 'SELECT name from oomusic_artist'
-        self.env.cr.execute(query)
+        self.env.cr.execute('SELECT name from oomusic_artist')
         res = self.env.cr.fetchall()
         artists = {r[0] for r in res}
         for artist in artists:
@@ -91,3 +91,6 @@ class MusicLastfm(models.Model):
             self.get_query(url)
             url = 'https://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist=' + artist
             self.get_query(url, sleep=1.0)
+
+        # Clean-up outdated entries
+        self.search([('removal_date', '<', fields.Datetime.now())]).unlink()
