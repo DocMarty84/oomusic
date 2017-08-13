@@ -21,9 +21,8 @@ class MusicController(http.Controller):
 
     @http.route([
         '/oomusic/trans/<int:track_id>.<string:output_format>',
-        '/oomusic/trans/<int:track_id>_<int:seek>.<string:output_format>',
         ], type='http', auth='user')
-    def trans(self, track_id, output_format, seek=0, **kwargs):
+    def trans(self, track_id, output_format, **kwargs):
         Track = request.env['oomusic.track'].browse([track_id])
         fn_ext = os.path.splitext(Track.path)[1]
 
@@ -32,6 +31,7 @@ class MusicController(http.Controller):
             limit=1,
         )
         if Transcoder:
+            seek = int(kwargs.get('seek', 0))
             generator = Transcoder.transcode(track_id, seek=seek).stdout
             mimetype = Transcoder.output_format.mimetype
         if not Transcoder:

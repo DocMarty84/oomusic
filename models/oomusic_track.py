@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
+from urllib import urlencode
 
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError, MissingError
@@ -84,12 +85,9 @@ class MusicTrack(models.Model):
 
     @api.multi
     def oomusic_play(self, seek=0):
-        res = {}
         if not self:
-            return json.dumps(res)
-
-        res.update(self._oomusic_info(seek=seek))
-        return json.dumps(res)
+            return json.dumps({})
+        return json.dumps(self._oomusic_info(seek=seek))
 
     @api.multi
     def oomusic_star(self):
@@ -101,11 +99,14 @@ class MusicTrack(models.Model):
 
     def _oomusic_info(self, seek=0):
         self.ensure_one()
+        params = {}
+        if seek:
+            params['seek'] = seek
         return {
             'track_id': self.id,
             'title': self.artist_id.name + ' - ' + self.name if self.artist_id else self.name,
             'duration': self.duration,
-            'image': (self.album_id.image_medium or self.artist_id.fm_image or '').replace('\n', ''),
-            'mp3': '/oomusic/trans/' + str(self.id) + ('_%d' % (seek) if seek else '') + '.mp3',
-            'oga': '/oomusic/trans/' + str(self.id) + ('_%d' % (seek) if seek else '') + '.ogg',
+            'image': self.album_id.image_medium or self.artist_id.fm_image or '',
+            'mp3': '/oomusic/trans/{}.mp3{}'.format(self.id, '?' + urlencode(params)),
+            'oga': '/oomusic/trans/{}.ogg{}'.format(self.id, '?' + urlencode(params)),
         }
