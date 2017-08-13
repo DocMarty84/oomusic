@@ -19,6 +19,7 @@
                         <group>
                             <field name="current" readonly="1"/>
                             <field name="public"/>
+                            <field name="norm"/>
                         </group>
                     </group>
                     <group class="oe_edit_only">

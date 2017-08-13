@@ -41,6 +41,12 @@ class MusicConverter(models.Model):
     max_threads = fields.Integer(
         'Max Threads', states={'done': [('readonly', True)], 'cancel': [('readonly', True)]},
         default=cpu_count())
+    norm = fields.Boolean(
+        'Normalize', default=False, readonly=True, states={'draft': [('readonly', False)]},
+        help='Normalize playlist loudness thanks to the EBU R128 normalization. It requires '
+             'FFmpeg >=3.2.1 which includes by default the appropriate library (libebur128).\n'
+             'Transcoding will be significantly slower when activated.'
+    )
     converter_line_ids = fields.One2many(
         'oomusic.converter.line', 'converter_id', string='Tracks', readonly=True, copy=True,
         states={'draft': [('readonly', False)]})
@@ -211,9 +217,10 @@ class MusicConverterLine(models.Model):
                 except OSError:
                     pass
 
-                # Avoid upsampling, except for VBR
+                # Avoid upsampling, except for VBR and normalization
                 if (
                         fn_ext[1:] == transcoder.output_format.name and
+                        not new_self.converter_id.norm and
                         '-q:a' not in transcoder.command and (
                             not new_self.converter_id.bitrate or
                             new_self.converter_id.bitrate >= new_self.track_id.bitrate
@@ -222,7 +229,9 @@ class MusicConverterLine(models.Model):
                     copyfile(new_self.track_id.path, fn)
                 else:
                     outdata = transcoder.transcode(
-                        new_self.track_id.id, bitrate=new_self.converter_id.bitrate).stdout
+                        new_self.track_id.id, bitrate=new_self.converter_id.bitrate,
+                        norm=new_self.converter_id.norm
+                    ).stdout
                     fn_out = fn_base + '.' + transcoder.output_format.name
                     with open(fn_out + '.tmp', 'wb') as outfile:
                         for d in outdata:

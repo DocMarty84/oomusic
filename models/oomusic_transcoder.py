@@ -22,6 +22,7 @@ class MusicTranscoder(models.Model):
         - "%i": input file
         - "%s": start from this seek time
         - "%b": birate for output file
+        - "%n": extra parameter for normaliation
         '''
     )
     bitrate = fields.Integer(
@@ -43,7 +44,7 @@ class MusicTranscoder(models.Model):
         before playing.'''
     )
 
-    def transcode(self, track_id, bitrate=0, seek=0):
+    def transcode(self, track_id, bitrate=0, seek=0, norm=0):
         '''
         Method used to transcode a track. It takes in charge the replacement of the specific
         keywords of the command, and returns the subprocess executed. The subprocess output is
@@ -59,10 +60,13 @@ class MusicTranscoder(models.Model):
         self.ensure_one()
 
         Track = self.env['oomusic.track'].browse([track_id])
-        cmd = self.command\
-            .replace('%s', '%s' % (str(datetime.timedelta(seconds=seek))))\
-            .replace('%b', '%d' % (bitrate or self.bitrate))
-        cmd = cmd.split(' ')
+        cmd = (
+            self.command
+                .replace('%s', '%s' % (str(datetime.timedelta(seconds=seek))))
+                .replace('%b', '%d' % (bitrate or self.bitrate))
+                .replace('%n', '-af loudnorm=I=-18' if norm else '')
+        )
+        cmd = [c for c in cmd.split(' ') if c]
         cmd[cmd.index('%i')] = Track.path
 
         proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=open(os.devnull, 'w'))

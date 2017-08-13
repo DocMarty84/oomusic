@@ -32,7 +32,8 @@ class MusicController(http.Controller):
         )
         if Transcoder:
             seek = int(kwargs.get('seek', 0))
-            generator = Transcoder.transcode(track_id, seek=seek).stdout
+            norm = int(kwargs.get('norm', 0))
+            generator = Transcoder.transcode(track_id, seek=seek, norm=norm).stdout
             mimetype = Transcoder.output_format.mimetype
         if not Transcoder:
             _logger.warning('Could not find converter from "%s" to "%s"', fn_ext[1:], output_format)

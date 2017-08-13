@@ -22,13 +22,18 @@ class MusicPlaylist(models.Model):
     comment = fields.Char('Comment')
     current = fields.Boolean('Current', default=lambda self: self._default_current())
     public = fields.Boolean('Shared', default=False)
+    norm = fields.Boolean(
+        'Normalize', default=False,
+        help='Normalize playlist loudness thanks to the EBU R128 normalization. It requires '
+             'FFmpeg >=3.2.1 which includes by default the appropriate library (libebur128).\n'
+             'Transcoding will be significantly slower when activated, implying larger gaps between'
+             ' songs.'
+    )
     playlist_line_ids = fields.One2many(
         'oomusic.playlist.line', 'playlist_id', string='Tracks', copy=True)
-
     album_id = fields.Many2one(
         'oomusic.album', string='Add Album Tracks', store=False,
         help='Encoding help. When selected, the associated album tracks are added to the playlist.')
-
     artist_id = fields.Many2one(
         'oomusic.artist', string='Add Artist Tracks', store=False,
         help='Encoding help. When selected, the associated artist tracks are added to the playlist.')
@@ -167,7 +172,7 @@ class MusicPlaylistLine(models.Model):
             self.playlist_id.write({'current': True})
 
         res['playlist_line_id'] = self.id
-        res.update(self.track_id._oomusic_info(seek=seek))
+        res.update(self.track_id._oomusic_info(seek=seek, norm=self.playlist_id.norm))
         return json.dumps(res)
 
     @api.multi

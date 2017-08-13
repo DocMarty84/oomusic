@@ -97,11 +97,12 @@ class MusicTrack(models.Model):
             return
         return
 
-    def _oomusic_info(self, seek=0):
+    def _oomusic_info(self, seek=0, norm=False):
         self.ensure_one()
-        params = {}
-        if seek:
-            params['seek'] = seek
+        params = {
+            'seek': seek,
+            'norm': 1 if norm else 0,
+        }
         return {
             'track_id': self.id,
             'title': self.artist_id.name + ' - ' + self.name if self.artist_id else self.name,

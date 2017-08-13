@@ -32,6 +32,7 @@
                         <group>
                             <field name="dest_folder"/>
                             <field name="max_threads"/>
+                            <field name="norm"/>
                         </group>
                     </group>
                     <group class="oe_edit_only" attrs="{'invisible': [('state', '!=', 'draft')]}">

@@ -3,7 +3,7 @@
     <data noupdate="0">
         <record id="oomusic_transcoder_0" model="oomusic.transcoder">
             <field name="name">FFmpeg to MP3</field>
-            <field name="command">ffmpeg -ss %s -i %i -map 0:0 -b:a %bk -v 0 -f mp3 -</field>
+            <field name="command">ffmpeg -v 0 -ss %s -i %i -map 0:0 -b:a %bk %n -f mp3 -</field>
             <field name="bitrate">320</field>
             <field name="sequence">10</field>
             <field name="input_formats" eval="[(6, 0, [
@@ -17,7 +17,7 @@
         </record>
         <record id="oomusic_transcoder_1" model="oomusic.transcoder">
             <field name="name">FFmpeg to Opus</field>
-            <field name="command">ffmpeg -ss %s -i %i -map 0:0 -b:a %bk -v 0 -f opus -</field>
+            <field name="command">ffmpeg -v 0 -ss %s -i %i -map 0:0 -b:a %bk %n -f opus -</field>
             <field name="bitrate">128</field>
             <field name="sequence">20</field>
             <field name="input_formats" eval="[(6, 0, [
@@ -31,7 +31,7 @@
         </record>
         <record id="oomusic_transcoder_2" model="oomusic.transcoder">
             <field name="name">FFmpeg to Vorbis</field>
-            <field name="command">ffmpeg -ss %s -i %i -map 0:0 -b:a %bk -v 0 -f ogg -</field>
+            <field name="command">ffmpeg -v 0 -ss %s -i %i -map 0:0 -b:a %bk %n -f ogg -</field>
             <field name="bitrate">128</field>
             <field name="sequence">30</field>
             <field name="input_formats" eval="[(6, 0, [
@@ -45,7 +45,7 @@
         </record>
         <record id="oomusic_transcoder_3" model="oomusic.transcoder">
             <field name="name">FFmpeg to MP3 (VBR)</field>
-            <field name="command">ffmpeg -ss %s -i %i -map 0:0 -q:a %b -v 0 -f mp3 -</field>
+            <field name="command">ffmpeg -v 0 -ss %s -i %i -map 0:0 -q:a %b %n -f mp3 -</field>
             <field name="bitrate">1</field>
             <field name="sequence">40</field>
             <field name="input_formats" eval="[(6, 0, [
@@ -59,7 +59,7 @@
         </record>
         <record id="oomusic_transcoder_4" model="oomusic.transcoder">
             <field name="name">FFmpeg to Vorbis (VBR)</field>
-            <field name="command">ffmpeg -ss %s -i %i -map 0:0 -q:a %b -v 0 -f ogg -</field>
+            <field name="command">ffmpeg -v 0 -ss %s -i %i -map 0:0 -q:a %b %n -f ogg -</field>
             <field name="bitrate">5</field>
             <field name="sequence">40</field>
             <field name="input_formats" eval="[(6, 0, [
