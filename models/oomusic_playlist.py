@@ -153,7 +153,7 @@ class MusicPlaylistLine(models.Model):
         return super(MusicPlaylistLine, self).unlink()
 
     @api.multi
-    def oomusic_play(self, seek=0):
+    def oomusic_set_current(self):
         res = {}
         if not self.id:
             return json.dumps(res)
@@ -177,6 +177,13 @@ class MusicPlaylistLine(models.Model):
             playlists.write({'current': False})
             playlists.playlist_line_ids.write({'playing': False})
             self.playlist_id.write({'current': True})
+        return json.dumps(res)
+
+    @api.multi
+    def oomusic_play(self, seek=0):
+        res = {}
+        if not self:
+            return json.dumps(res)
 
         res['playlist_line_id'] = self.id
         res.update(self.track_id._oomusic_info(seek=seek, norm=self.playlist_id.norm))
