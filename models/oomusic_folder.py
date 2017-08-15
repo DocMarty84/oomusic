@@ -27,7 +27,8 @@ class MusicFolder(models.Model):
     )
     last_scan = fields.Datetime('Last Scanned')
     last_scan_duration = fields.Integer('Scan Duration (s)')
-    parent_id = fields.Many2one('oomusic.folder', string='Parent Folder', ondelete='cascade')
+    parent_id = fields.Many2one(
+        'oomusic.folder', string='Parent Folder', index=True, ondelete='cascade')
     child_ids = fields.One2many('oomusic.folder', 'parent_id', string='Child Folders')
     user_id = fields.Many2one(
         'res.users', string='User', index=True, required=True, ondelete='cascade',

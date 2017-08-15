@@ -41,9 +41,9 @@ class MusicTrack(models.Model):
     last_play = fields.Datetime('Last Played', index=True)
     last_modification = fields.Integer('Last Modification')
     root_folder_id = fields.Many2one(
-        'oomusic.folder', string='Root Folder', required=True, ondelete='cascade')
+        'oomusic.folder', string='Root Folder', index=True, required=True, ondelete='cascade')
     folder_id = fields.Many2one(
-        'oomusic.folder', string='Folder', required=True, ondelete='cascade')
+        'oomusic.folder', string='Folder', index=True, required=True, ondelete='cascade')
 
     user_id = fields.Many2one(
         'res.users', string='User', index=True, required=True, ondelete='cascade',

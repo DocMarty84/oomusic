@@ -155,11 +155,14 @@ class MusicPlaylistLine(models.Model):
     @api.multi
     def oomusic_play(self, seek=0):
         res = {}
-        if not self:
+        if not self.id:
             return json.dumps(res)
 
         # Update playing status and stats
-        self.playlist_id.playlist_line_ids.write({'playing': False})
+        self.env.cr.execute(
+            '''UPDATE oomusic_playlist_line
+               SET playing = False
+               WHERE playlist_id = %s''', (self.playlist_id.id,))
         self.write({'playing': True})
         self.track_id.write({
             'last_play': fields.Datetime.now(),
@@ -167,6 +170,10 @@ class MusicPlaylistLine(models.Model):
         })
         if not self.playlist_id.current:
             playlists = self.env['oomusic.playlist'].search([('current', '=', True)])
+            self.env.cr.execute(
+                '''UPDATE oomusic_playlist_line
+                   SET playing = False
+                   WHERE playlist_id in %s''', (tuple(playlists.ids),))
             playlists.write({'current': False})
             playlists.playlist_line_ids.write({'playing': False})
             self.playlist_id.write({'current': True})
@@ -189,12 +196,14 @@ class MusicPlaylistLine(models.Model):
         # Search for matching line, play first if end of list
         if shuffle:
             return self.oomusic_shuffle()
-        for i in xrange(0, len(lines)):
-            if lines[i].id == self.id:
-                if i > 0:
-                    return lines[i-1].oomusic_play()
-                else:
-                    return lines[len(lines)-1].oomusic_play()
+        try:
+            idx = lines._ids.index(self._ids[0])
+            if idx > 0:
+                return lines[idx-1].oomusic_play()
+            else:
+                return lines[len(lines)-1].oomusic_play()
+        except ValueError:
+            pass
         return json.dumps(res)
 
     @api.multi
@@ -211,12 +220,14 @@ class MusicPlaylistLine(models.Model):
         # Search for matching line, play last if beginning of list
         if shuffle:
             return self.oomusic_shuffle()
-        for i in xrange(0, len(lines)):
-            if lines[i].id == self.id:
-                if i < (len(lines) - 1):
-                    return lines[i+1].oomusic_play()
-                else:
-                    return lines[0].oomusic_play()
+        try:
+            idx = lines._ids.index(self._ids[0])
+            if idx < (len(lines) - 1):
+                return lines[idx+1].oomusic_play()
+            else:
+                return lines[0].oomusic_play()
+        except ValueError:
+            pass
         return json.dumps(res)
 
     def oomusic_shuffle(self):

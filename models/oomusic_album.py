@@ -16,7 +16,8 @@ class MusicAlbum(models.Model):
     artist_id = fields.Many2one('oomusic.artist', 'Artist')
     genre_id = fields.Many2one('oomusic.genre', 'Genre')
     year = fields.Char('Year', index=True)
-    folder_id = fields.Many2one('oomusic.folder', 'Folder', required=True, ondelete='cascade')
+    folder_id = fields.Many2one(
+        'oomusic.folder', 'Folder', index=True, required=True, ondelete='cascade')
     user_id = fields.Many2one(
         'res.users', string='User', index=True, required=True, ondelete='cascade',
         default=lambda self: self.env.user
