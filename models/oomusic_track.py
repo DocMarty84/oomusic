@@ -110,4 +110,5 @@ class MusicTrack(models.Model):
             'image': self.album_id.image_medium or self.artist_id.fm_image or '',
             'mp3': '/oomusic/trans/{}.mp3{}'.format(self.id, '?' + urlencode(params)),
             'oga': '/oomusic/trans/{}.ogg{}'.format(self.id, '?' + urlencode(params)),
+            'opus': '/oomusic/trans/{}.opus{}'.format(self.id, '?' + urlencode(params)),
         }

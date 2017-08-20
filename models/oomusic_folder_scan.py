@@ -23,10 +23,19 @@ class MusicFolderScan(models.TransientModel):
     _description = 'Music Folder scan log'
 
     ALLOWED_FILE_EXTENSIONS = {
-        'mp3',
-        'flac',
-        'ogg',
         'aac',
+        'caf',
+        'flac',
+        'm4a',
+        'mp3',
+        'mp4',
+        'mpc',
+        'oga',
+        'ogg',
+        'opus',
+        'wav',
+        'weba',
+        'webm',
     }
 
     FIELDS_TO_CLEAN = {

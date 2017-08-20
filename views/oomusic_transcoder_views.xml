@@ -13,7 +13,7 @@
                         <field name="buffer_size"/>
                     </group>
                     <group>
-                        <field name="input_formats" widget="many2many_tags"/>
+                        <field name="black_formats" widget="many2many_tags"/>
                         <field name="output_format"/>
                     </group>
                 </sheet>

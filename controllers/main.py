@@ -26,16 +26,16 @@ class MusicController(http.Controller):
         Track = request.env['oomusic.track'].browse([track_id])
         fn_ext = os.path.splitext(Track.path)[1]
 
-        Transcoder = request.env['oomusic.transcoder'].search(
-            [('input_formats.name', '=', fn_ext[1:]), ('output_format.name', '=', output_format)],
-            limit=1,
-        )
+        Transcoder = request.env['oomusic.transcoder'].search([
+            ('output_format.name', '=', output_format)
+        ]).filtered(lambda r: fn_ext[1:] not in r.mapped('black_formats').mapped('name'))
+        Transcoder = Transcoder[0] if Transcoder else False
         if Transcoder:
             seek = int(kwargs.get('seek', 0))
             norm = int(kwargs.get('norm', 0))
             generator = Transcoder.transcode(track_id, seek=seek, norm=norm).stdout
             mimetype = Transcoder.output_format.mimetype
-        if not Transcoder:
+        else:
             _logger.warning('Could not find converter from "%s" to "%s"', fn_ext[1:], output_format)
             return http.send_file(Track.path)
 

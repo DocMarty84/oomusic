@@ -30,8 +30,9 @@ class MusicTranscoder(models.Model):
         help='''Default bitrate or quality (for VBR). Can be changed if necessary when the
         transcoding function is called.'''
     )
-    input_formats = fields.Many2many(
-        'oomusic.format', string='Input Formats', required=True, index=True,
+    black_formats = fields.Many2many(
+        'oomusic.format', string='Blacklisted Formats', index=True,
+        help='Input formats which cannot be converted using this transcoder.'
     )
     output_format = fields.Many2one('oomusic.format', string='Output Format', required=True)
     buffer_size = fields.Integer(

@@ -4,37 +4,54 @@
         <record id="oomusic_format_aac" model="oomusic.format">
             <field name="name">aac</field>
             <field name="mimetype">audio/aac</field>
-            <field name="browser_support" eval="False"></field>
+        </record>
+        <record id="oomusic_format_caf" model="oomusic.format">
+            <field name="name">caf</field>
+            <field name="mimetype">audio/x-caf</field>
         </record>
         <record id="oomusic_format_flac" model="oomusic.format">
             <field name="name">flac</field>
             <field name="mimetype">audio/flac</field>
-            <field name="browser_support" eval="False"></field>
         </record>
         <record id="oomusic_format_m4a" model="oomusic.format">
             <field name="name">m4a</field>
             <field name="mimetype">audio/mp4</field>
-            <field name="browser_support" eval="False"></field>
         </record>
         <record id="oomusic_format_mp3" model="oomusic.format">
             <field name="name">mp3</field>
             <field name="mimetype">audio/mpeg</field>
-            <field name="browser_support" eval="True"></field>
+        </record>
+        <record id="oomusic_format_mp4" model="oomusic.format">
+            <field name="name">mp4</field>
+            <field name="mimetype">audio/mp4</field>
         </record>
         <record id="oomusic_format_mpc" model="oomusic.format">
             <field name="name">mpc</field>
             <field name="mimetype">audio/x-musepack</field>
-            <field name="browser_support" eval="False"></field>
+        </record>
+        <record id="oomusic_format_oga" model="oomusic.format">
+            <field name="name">oga</field>
+            <field name="mimetype">audio/ogg</field>
         </record>
         <record id="oomusic_format_ogg" model="oomusic.format">
             <field name="name">ogg</field>
             <field name="mimetype">audio/ogg</field>
-            <field name="browser_support" eval="True"></field>
+        </record>
+        <record id="oomusic_format_opus" model="oomusic.format">
+            <field name="name">opus</field>
+            <field name="mimetype">audio/ogg</field>
+        </record>
+        <record id="oomusic_format_wav" model="oomusic.format">
+            <field name="name">wav</field>
+            <field name="mimetype">audio/wav</field>
+        </record>
+        <record id="oomusic_format_weba" model="oomusic.format">
+            <field name="name">weba</field>
+            <field name="mimetype">audio/weba</field>
         </record>
         <record id="oomusic_format_webm" model="oomusic.format">
             <field name="name">webm</field>
             <field name="mimetype">audio/webm</field>
-            <field name="browser_support" eval="True"></field>
         </record>
     </data>
 </odoo>

@@ -231,13 +231,13 @@ var Panel = Widget.extend({
         // not seeked. If the user has previewed a track of has seeked, we do not use the cache.
         if (self.user_seek || !data_json.playlist_line_id) {
             this.sound = new Howl({
-                src: [data_json.oga, data_json.mp3],
+                src: [data_json.opus, data_json.oga, data_json.mp3],
                 html5: true,
             });
         } else {
             if (!this.cache_sound[data_json.playlist_line_id]) {
                 this.cache_sound[data_json.playlist_line_id] = new Howl({
-                    src: [data_json.oga, data_json.mp3],
+                    src: [data_json.opus, data_json.oga, data_json.mp3],
                     html5: true,
                 });
             }
@@ -371,7 +371,7 @@ var Panel = Widget.extend({
                 self.cache_data[data_json.playlist_line_id] = res;
                 if (!self.cache_sound[data_json.playlist_line_id]) {
                     self.cache_sound[data_json.playlist_line_id] = new Howl({
-                        src: [data_json.oga, data_json.mp3],
+                        src: [data_json.opus, data_json.oga, data_json.mp3],
                         html5: true,
                     });
                 }
