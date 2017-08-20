@@ -345,9 +345,13 @@ var Panel = Widget.extend({
         this.$el.find('.oom_current_time').replaceWith(current_time_html);
 
         // Update Progress Bar every 1 %
-        var current_progress = Math.round((
-            (this.user_seek + this.sound.seek())/this.duration
-        ) * 100);
+        var current_progress = 100;
+        if (this.duration !== 0) {
+            var current_progress = Math.round((
+                (this.user_seek + this.sound.seek())/this.duration
+            ) * 100);
+        }
+
         if (this.current_progress !== current_progress) {
             this.$el.find('.oom_progress_bar')
                 .css('width', String(current_progress) + '%')
