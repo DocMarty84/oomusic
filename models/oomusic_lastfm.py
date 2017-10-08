@@ -36,7 +36,7 @@ class MusicLastfm(models.Model):
         if not fm_key:
             return
 
-        url = url_fix(url + '&api_key=' + fm_key + '&format=json')
+        url = url_fix(url + '&api_key=' + fm_key + '&format=json').encode('utf-8')
         url_hash = hashlib.sha1(url).hexdigest()
 
         new_cr = self.pool.cursor()

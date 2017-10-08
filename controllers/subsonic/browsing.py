@@ -4,7 +4,7 @@ from lxml import etree
 
 from odoo import http
 from odoo.http import request
-from common import SubsonicREST
+from .common import SubsonicREST
 
 
 class MusicSubsonicBrowsing(http.Controller):
@@ -117,7 +117,7 @@ class MusicSubsonicBrowsing(http.Controller):
         # For some mysterious reason, in this particular route, the xml declaration should be made
         # with double quotes instead of simple quotes.
         response =\
-            '<?xml version="1.0" encoding="UTF-8"?>\n'\
+            b'<?xml version="1.0" encoding="UTF-8"?>\n'\
             + etree.tostring(root, encoding='UTF-8', pretty_print=True)
         return request.make_response(response)
 

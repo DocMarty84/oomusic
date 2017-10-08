@@ -3,7 +3,7 @@
 import base64
 import json
 import logging
-import urllib2
+import urllib.request
 
 from odoo import fields, models, api, tools, _
 from odoo.exceptions import UserError
@@ -61,7 +61,7 @@ class MusicArtist(models.Model):
                 _logger.debug("Retrieving image for artist %s...", artist.name)
                 for image in req_json['artist']['image']:
                     if image['size'] == 'large':
-                        image_content = urllib2.urlopen(image['#text'], timeout=5).read()
+                        image_content = urllib.request.urlopen(image['#text'], timeout=5).read()
                         resized_images = tools.image_get_resized_images(
                             base64.b64encode(image_content),
                             return_big=False, return_medium=True, return_small=False)

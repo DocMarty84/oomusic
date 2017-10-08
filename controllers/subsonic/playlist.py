@@ -4,7 +4,7 @@ from lxml import etree
 
 from odoo import http
 from odoo.http import request
-from common import SubsonicREST, API_VERSION_LIST
+from .common import SubsonicREST, API_VERSION_LIST
 
 
 class MusicSubsonicPlaylist(http.Controller):

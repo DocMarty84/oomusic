@@ -215,7 +215,7 @@ class MusicFolderScan(models.TransientModel):
         query = "SELECT path, id, last_modification FROM oomusic_folder WHERE user_id = %s;"
         self.env.cr.execute(query, params)
         res = self.env.cr.fetchall()
-        cache['folder'] = {r[0]: (r[1], r[2]) for r in res}
+        cache['folder'] = {r[0]: (r[1], r[2] or 0) for r in res}
 
         query = "SELECT name, id FROM oomusic_genre WHERE user_id = %s;"
         self.env.cr.execute(query, params)

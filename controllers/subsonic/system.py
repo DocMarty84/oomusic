@@ -3,7 +3,7 @@
 from lxml import etree
 
 from odoo import http
-from common import SubsonicREST
+from .common import SubsonicREST
 
 
 class MusicSubsonicSystem(http.Controller):

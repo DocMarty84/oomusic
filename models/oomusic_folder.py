@@ -110,7 +110,7 @@ class MusicFolder(models.Model):
             for f in files:
                 for n in accepted_names:
                     if n in f.lower():
-                        with open(os.path.join(folder.path, f), 'r') as img:
+                        with open(os.path.join(folder.path, f), 'rb') as img:
                             folder.image_folder = base64.b64encode(img.read())
                             break
 

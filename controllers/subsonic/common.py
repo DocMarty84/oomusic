@@ -78,7 +78,7 @@ class SubsonicREST():
                 ('Access-Control-Allow-Origin', '*'),
             ])
         else:
-            response = '<?xml version="1.0" encoding="UTF-8"?>\n'\
+            response = b'<?xml version="1.0" encoding="UTF-8"?>\n'\
                 + etree.tostring(root, encoding='UTF-8', pretty_print=True)
             return request.make_response(response)
 

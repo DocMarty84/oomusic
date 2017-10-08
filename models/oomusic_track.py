@@ -2,7 +2,7 @@
 
 import json
 import os
-from urllib import urlencode
+from urllib.parse import urlencode
 
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError, MissingError
@@ -117,7 +117,7 @@ class MusicTrack(models.Model):
             ),
             'duration': self.duration,
             'image': (
-                self.album_id.image_medium or self.artist_id.fm_image or ''
+                (self.album_id.image_medium or self.artist_id.fm_image or b'').decode('utf-8')
                 if not self.env.context.get('test_mode')
                 else 'TEST'
             ),

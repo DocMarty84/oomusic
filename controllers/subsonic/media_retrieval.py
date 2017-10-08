@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
+import base64
 import imghdr
 import logging
 import os
-import StringIO
+from io import BytesIO
 
 from lxml import etree
 from werkzeug.wrappers import Response
@@ -12,7 +13,7 @@ from werkzeug.wsgi import wrap_file
 from odoo import http
 from odoo.exceptions import AccessError
 from odoo.http import request
-from common import SubsonicREST
+from .common import SubsonicREST
 
 _logger = logging.getLogger(__name__)
 
@@ -139,8 +140,8 @@ class MusicSubsonicMediaRetrieval(http.Controller):
         else:
             return rest.make_error(code='10', message='Required int parameter "id" is not present')
 
-        image = folder.image_medium or 'R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='
-        image_stream = StringIO.StringIO(image.decode('base64'))
+        image = folder.image_medium or b'R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='
+        image_stream = BytesIO(base64.b64decode(image))
         image_ext = '.' + (imghdr.what(image_stream) or 'png')
         return http.send_file(image_stream, filename=folderId + image_ext)
 
@@ -174,7 +175,7 @@ class MusicSubsonicMediaRetrieval(http.Controller):
 
         user = request.env['res.users'].search([('login', '=', username)])
 
-        image = user.partner_id.image_medium or 'R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='
-        image_stream = StringIO.StringIO(image.decode('base64'))
+        image = user.partner_id.image_medium or b'R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='
+        image_stream = BytesIO(base64.b64decode(image))
         image_ext = '.' + (imghdr.what(image_stream) or 'png')
         return http.send_file(image_stream, filename=str(user.id) + image_ext)

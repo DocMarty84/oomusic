@@ -6,7 +6,7 @@ from lxml import etree
 
 from odoo import http
 from odoo.http import request
-from common import SubsonicREST
+from .common import SubsonicREST
 
 
 def _uniquify_list(seq):
