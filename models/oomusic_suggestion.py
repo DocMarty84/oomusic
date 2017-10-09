@@ -32,7 +32,7 @@ class MusicSuggestion(models.TransientModel):
     @api.depends('name_tracks')
     def _compute_track_recently_added(self):
         self.track_recently_added = self.env['oomusic.track'].search(
-            [], order='create_date desc', limit=10)
+            [], order='id desc', limit=10)
 
     @api.depends('name_tracks')
     def _compute_track_random(self):
@@ -48,7 +48,7 @@ class MusicSuggestion(models.TransientModel):
     @api.depends('name_albums')
     def _compute_album_recently_added(self):
         self.album_recently_added = self.env['oomusic.album'].search(
-            [], order='create_date desc', limit=10)
+            [], order='id desc', limit=10)
 
     @api.depends('name_albums')
     def _compute_album_random(self):
