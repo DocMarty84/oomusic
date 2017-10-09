@@ -111,15 +111,16 @@
                                 <div>
                                     <field name="artist_id"/>
                                 </div>
-
-                                <div class="oe_kanban_bottom_right">
-                                    <field name="star" widget="priority"/>
-                                    <button name="action_add_to_playlist" string="Add To Current Playlist"
-                                        class="btn btn-default btn-xs fa fa-plus" type="object"
-                                        attrs="{'invisible': [('in_playlist','=', True)]}"/>
-                                </div>
-                                <div>
-                                    <field name="genre_id"/>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <field name="genre_id"/>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <field name="star" widget="priority"/>
+                                        <button name="action_add_to_playlist" string="Add To Current Playlist"
+                                            class="btn btn-default btn-xs fa fa-plus" type="object"
+                                            attrs="{'invisible': [('in_playlist','=', True)]}"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
