@@ -65,13 +65,13 @@ class MusicPlaylist(models.Model):
             self.playlist_line_ids += playlist_line
 
     @api.onchange('album_id')
-    def _onhange_album_id(self):
+    def _onchange_album_id(self):
         self._add_tracks(self.album_id.track_ids, onchange=True)
         self.album_id = False
         return {}
 
     @api.onchange('artist_id')
-    def _onhange_artist_id(self, onchange=True):
+    def _onchange_artist_id(self, onchange=True):
         self._add_tracks(self.artist_id.track_ids, onchange=True)
         self.artist_id = False
         return {}

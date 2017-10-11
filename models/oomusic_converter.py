@@ -109,26 +109,26 @@ class MusicConverter(models.Model):
             self.converter_line_ids += converter_line
 
     @api.onchange('album_id')
-    def _onhange_album_id(self):
+    def _onchange_album_id(self):
         self._add_tracks(self.album_id.track_ids, onchange=True)
         self.album_id = False
         return {}
 
     @api.onchange('artist_id')
-    def _onhange_artist_id(self, onchange=True):
+    def _onchange_artist_id(self, onchange=True):
         self._add_tracks(self.artist_id.track_ids, onchange=True)
         self.artist_id = False
         return {}
 
     @api.onchange('playlist_id')
-    def _onhange_playlist_id(self, onchange=True):
+    def _onchange_playlist_id(self, onchange=True):
         self._add_tracks(
             self.playlist_id.mapped('playlist_line_ids').mapped('track_id'), onchange=True)
         self.playlist_id = False
         return {}
 
     @api.onchange('transcoder_id')
-    def _onhange_transcoder_id(self):
+    def _onchange_transcoder_id(self):
         self.bitrate = self.transcoder_id.bitrate
 
     @api.multi
