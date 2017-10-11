@@ -7,8 +7,6 @@ import odoo
 from odoo.tests import common
 
 
-@odoo.tests.common.at_install(True)
-@odoo.tests.common.post_install(True)
 class TestOomusicCommon(common.TransactionCase):
 
     def setUp(self):
@@ -16,9 +14,12 @@ class TestOomusicCommon(common.TransactionCase):
 
         self.AlbumObj = self.env['oomusic.album']
         self.ArtistObj = self.env['oomusic.artist']
+        self.ConverterObj = self.env['oomusic.converter']
         self.FolderScanObj = self.env['oomusic.folder.scan']
         self.FolderObj = self.env['oomusic.folder']
         self.GenreObj = self.env['oomusic.genre']
+        self.PlaylistLineObj = self.env['oomusic.playlist.line']
+        self.PlaylistObj = self.env['oomusic.playlist']
         self.TrackObj = self.env['oomusic.track']
 
         self.cleanUp()

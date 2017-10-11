@@ -24,17 +24,17 @@ class TestOomusicFolderScan(test_common.TestOomusicCommon):
             set(['Song1', 'Song2', 'Song3', 'Song4', 'Song5', 'Song6'])
         )
         ref_data = {
-            'Song1': (u'Artist1', u'Album1', u'Genre1', u'2001'),
-            'Song2': (u'Artist1', u'Album1', u'Genre1', u'2001'),
-            'Song3': (u'Artist1', u'Album2', u'Genre2', u'2002'),
-            'Song4': (u'Artist1', u'Album2', u'Genre2', u'2002'),
-            'Song5': (u'Artist2', u'Album3', u'Genre3', u'2003'),
-            'Song6': (u'Artist2', u'Album3', u'Genre3', u'2003'),
+            'Song1': (u'01', u'Artist1', u'Album1', u'Genre1', u'2001'),
+            'Song2': (u'02', u'Artist1', u'Album1', u'Genre1', u'2001'),
+            'Song3': (u'01', u'Artist1', u'Album2', u'Genre2', u'2002'),
+            'Song4': (u'02', u'Artist1', u'Album2', u'Genre2', u'2002'),
+            'Song5': (u'01', u'Artist2', u'Album3', u'Genre3', u'2003'),
+            'Song6': (u'02', u'Artist2', u'Album3', u'Genre3', u'2003'),
         }
         for Track in Tracks:
             self.assertEqual(
                 ref_data[Track.name],
-                (Track.artist_id.name, Track.album_id.name, Track.genre_id.name, Track.year)
+                (Track.track_number, Track.artist_id.name, Track.album_id.name, Track.genre_id.name, Track.year)
             )
 
         # Verify the music.album data.

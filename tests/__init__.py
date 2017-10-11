@@ -1,3 +1,7 @@
 # -*- coding: utf-8 -*-
-from . import test_common
+from . import test_album
+from . import test_artist
+from . import test_converter
 from . import test_folder_scan
+from . import test_folder
+from . import test_playlist

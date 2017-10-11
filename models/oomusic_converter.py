@@ -3,8 +3,10 @@
 import multiprocessing.dummy as mp
 from multiprocessing import cpu_count
 import os
+import random
 from shutil import copyfile, move
 from tempfile import gettempdir
+from time import sleep
 
 from odoo import fields, models, api
 
@@ -202,7 +204,11 @@ class MusicConverterLine(models.Model):
     def convert(self):
         with api.Environment.manage():
             with self.pool.cursor() as cr:
-                new_self = self.with_env(self.env(cr))
+                if not self.env.context.get('test_mode'):
+                    new_self = self.with_env(self.env(cr))
+                else:
+                    new_self = self
+                    sleep(random.random())
                 # In case we manually canceled the job between line selection and conversion
                 if new_self.state != 'waiting':
                     return
