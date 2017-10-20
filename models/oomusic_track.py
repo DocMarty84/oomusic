@@ -105,10 +105,16 @@ class MusicTrack(models.Model):
         }
         return {
             'track_id': self.id,
-            'title': self.artist_id.name + ' - ' + self.name if self.artist_id else self.name,
+            'title': (
+                u'{} - {}'.format(self.artist_id.name, self.name) if self.artist_id else self.name
+            ),
             'duration': self.duration,
-            'image': self.album_id.image_medium or self.artist_id.fm_image or '',
-            'mp3': '/oomusic/trans/{}.mp3{}'.format(self.id, '?' + urlencode(params)),
-            'oga': '/oomusic/trans/{}.ogg{}'.format(self.id, '?' + urlencode(params)),
-            'opus': '/oomusic/trans/{}.opus{}'.format(self.id, '?' + urlencode(params)),
+            'image': (
+                self.album_id.image_medium or self.artist_id.fm_image or ''
+                if not self.env.context.get('test_mode')
+                else 'TEST'
+            ),
+            'mp3': '/oomusic/trans/{}.mp3?{}'.format(self.id, urlencode(params)),
+            'oga': '/oomusic/trans/{}.ogg?{}'.format(self.id, urlencode(params)),
+            'opus': '/oomusic/trans/{}.opus?{}'.format(self.id, urlencode(params)),
         }
