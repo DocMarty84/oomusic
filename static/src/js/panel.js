@@ -130,10 +130,12 @@ var Panel = Widget.extend({
         this.$el.find('.oom_play').closest('li').show();
     },
 
-    stop: function (play_now) {
+    stop: function (play_now, keep_loaded) {
         var self = this;
-        if (this.sound) {
+        if (this.sound && keep_loaded) {
             this.sound.stop();
+        } else {
+            this._clearCache();
         }
         this._clearProgress();
         this.lastTrack()
@@ -457,7 +459,7 @@ var Panel = Widget.extend({
 
     _onEnded: function () {
         if (this.repeat) {
-            this.stop(true);
+            this.stop(true, true);
         } else {
             this.next(this.current_playlist_line_id);
         }
