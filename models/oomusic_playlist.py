@@ -3,8 +3,8 @@
 import json
 import random
 
-from odoo import fields, models, api
-from odoo.exceptions import MissingError
+from odoo import fields, models, api, _
+from odoo.exceptions import MissingError, ValidationError
 
 
 class MusicPlaylist(models.Model):
@@ -28,6 +28,11 @@ class MusicPlaylist(models.Model):
              'FFmpeg >=3.2.1 which includes by default the appropriate library (libebur128).\n'
              'Transcoding will be significantly slower when activated, implying larger gaps between'
              ' songs.'
+    )
+    raw = fields.Boolean(
+        'No Transcoding', default=False,
+        help='Do not transcode audio files. It decreases the server load, '
+             'at the cost of a higher network usage.'
     )
     playlist_line_ids = fields.One2many(
         'oomusic.playlist.line', 'playlist_id', string='Tracks', copy=True)
@@ -75,6 +80,15 @@ class MusicPlaylist(models.Model):
         self._add_tracks(self.artist_id.track_ids, onchange=True)
         self.artist_id = False
         return {}
+
+    @api.constrains('norm', 'raw')
+    def _check_norm_raw(self):
+        for playlist in self:
+            if playlist.norm and playlist.raw:
+                raise ValidationError(_(
+                    "'Normalize' and 'No Transcoding' are mutually exclusive options. Please "
+                    "activate only one of the two options."
+                ))
 
     @api.multi
     def action_purge(self):
@@ -186,7 +200,10 @@ class MusicPlaylistLine(models.Model):
             return json.dumps(res)
 
         res['playlist_line_id'] = self.id
-        res.update(self.track_id._oomusic_info(seek=seek, norm=self.playlist_id.norm))
+        track_info = self.track_id._oomusic_info(
+            seek=seek, norm=self.playlist_id.norm, raw=self.playlist_id.raw
+        )
+        res.update(track_info)
         return json.dumps(res)
 
     @api.multi

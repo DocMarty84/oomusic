@@ -41,5 +41,13 @@
             <field name="output_format" ref="oomusic.oomusic_format_ogg"></field>
             <field name="black_formats" eval="[(6, 0, [])]"></field>
         </record>
+        <record id="oomusic_transcoder_99" model="oomusic.transcoder">
+            <field name="name">FFmpeg RAW</field>
+            <field name="command">ffmpeg -v 0 -ss %s -i %i -map 0:0 -c:a copy -f %f -</field>
+            <field name="bitrate">10000</field>
+            <field name="sequence">990</field>
+            <field name="output_format" ref="oomusic.oomusic_format_raw"></field>
+            <field name="black_formats" eval="[(6, 0, [])]"></field>
+        </record>
     </data>
 </odoo>

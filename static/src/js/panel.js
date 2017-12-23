@@ -65,7 +65,7 @@ var Panel = Widget.extend({
         // ========================================================================================
 
         setInterval(this._infUpdateProgress.bind(this), 1000);
-        setInterval(this._infCheckStuck.bind(this), 1500);
+        setInterval(this._infCheckStuck.bind(this), 3000);
         setInterval(this._infLoadNext.bind(this), 5000);
 
         this.appendTo(web_client.$el);
@@ -220,8 +220,12 @@ var Panel = Widget.extend({
         var params = params || {};
 
         // Stop potential playing sound
+        // We keep the sound in cache for Firefox when transcoding is activated. For some unknown
+        // reason, this causes issues:
+        // - in Chrome, the next sound fails to load properly in all cases
+        // - in Firefox, seek() is never reset to zero
         if (this.sound) {
-            if (/Firefox/.test(Howler._navigator.userAgent)) {
+            if (/Firefox/.test(Howler._navigator.userAgent) && this.sound._src.match('raw=0')) {
                 this.sound.stop();
             } else {
                 this.sound.unload();
@@ -231,15 +235,15 @@ var Panel = Widget.extend({
 
         // Create Howler sound. We use the cache if the track comes from a playlist and the user has
         // not seeked. If the user has previewed a track of has seeked, we do not use the cache.
-        if (self.user_seek || !data_json.playlist_line_id) {
+        if (data_json.src && (self.user_seek || !data_json.playlist_line_id)) {
             this.sound = new Howl({
-                src: [data_json.opus, data_json.oga, data_json.mp3],
+                src: data_json.src,
                 html5: true,
             });
-        } else {
+        } else if (data_json.src) {
             if (!this.cache_sound[data_json.playlist_line_id]) {
                 this.cache_sound[data_json.playlist_line_id] = new Howl({
-                    src: [data_json.opus, data_json.oga, data_json.mp3],
+                    src: data_json.src,
                     html5: true,
                 });
             }
@@ -375,9 +379,9 @@ var Panel = Widget.extend({
                 var data_json = JSON.parse(res);
                 self.next_playlist_line_id = data_json.playlist_line_id;
                 self.cache_data[data_json.playlist_line_id] = res;
-                if (!self.cache_sound[data_json.playlist_line_id]) {
+                if (data_json.src && !self.cache_sound[data_json.playlist_line_id]) {
                     self.cache_sound[data_json.playlist_line_id] = new Howl({
-                        src: [data_json.opus, data_json.oga, data_json.mp3],
+                        src: data_json.src,
                         html5: true,
                     });
                 }

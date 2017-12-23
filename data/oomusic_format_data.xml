@@ -53,5 +53,9 @@
             <field name="name">webm</field>
             <field name="mimetype">audio/webm</field>
         </record>
+        <record id="oomusic_format_raw" model="oomusic.format">
+            <field name="name">raw</field>
+            <field name="mimetype">audio</field>
+        </record>
     </data>
 </odoo>

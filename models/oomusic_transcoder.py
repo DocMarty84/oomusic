@@ -66,6 +66,7 @@ class MusicTranscoder(models.Model):
                 .replace('%s', '%s' % (str(datetime.timedelta(seconds=seek))))
                 .replace('%b', '%d' % (bitrate or self.bitrate))
                 .replace('%n', '-af loudnorm=I=-18' if norm else '')
+                .replace('%f', '%s' % os.path.splitext(Track.path)[1][1:])
         )
         cmd = [c for c in cmd.split(' ') if c]
         cmd[cmd.index('%i')] = Track.path

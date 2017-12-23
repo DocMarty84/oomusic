@@ -15,11 +15,12 @@
                         <group>
                             <field name="name"/>
                             <field name="comment"/>
+                            <field name="current" readonly="1"/>
                         </group>
                         <group>
-                            <field name="current" readonly="1"/>
                             <field name="public"/>
                             <field name="norm"/>
+                            <field name="raw"/>
                         </group>
                     </group>
                     <group class="oe_edit_only">

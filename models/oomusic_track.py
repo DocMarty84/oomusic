@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
+import os
 from urllib import urlencode
 
 from odoo import fields, models, api, _
@@ -97,12 +98,18 @@ class MusicTrack(models.Model):
             return
         return
 
-    def _oomusic_info(self, seek=0, norm=False):
+    def _oomusic_info(self, seek=0, norm=False, raw=False):
         self.ensure_one()
         params = {
             'seek': seek,
             'norm': 1 if norm else 0,
+            'raw': 1,
         }
+        raw_src = ['/oomusic/trans/{}.{}?{}'.format(
+            self.id, os.path.splitext(self.path)[1][1:], urlencode(params)
+        )] if raw else []
+
+        params['raw'] = 0
         return {
             'track_id': self.id,
             'title': (
@@ -114,7 +121,8 @@ class MusicTrack(models.Model):
                 if not self.env.context.get('test_mode')
                 else 'TEST'
             ),
-            'mp3': '/oomusic/trans/{}.mp3?{}'.format(self.id, urlencode(params)),
-            'oga': '/oomusic/trans/{}.ogg?{}'.format(self.id, urlencode(params)),
-            'opus': '/oomusic/trans/{}.opus?{}'.format(self.id, urlencode(params)),
+            'src': raw_src + [
+                '/oomusic/trans/{}.{}?{}'.format(self.id, ext, urlencode(params))
+                for ext in ['opus', 'ogg', 'mp3']
+            ],
         }

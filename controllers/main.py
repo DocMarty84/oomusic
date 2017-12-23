@@ -26,13 +26,26 @@ class MusicController(http.Controller):
         Track = request.env['oomusic.track'].browse([track_id])
         fn_ext = os.path.splitext(Track.path)[1]
 
-        Transcoder = request.env['oomusic.transcoder'].search([
-            ('output_format.name', '=', output_format)
-        ]).filtered(lambda r: fn_ext[1:] not in r.mapped('black_formats').mapped('name'))
+        # Get kwargs
+        seek = int(kwargs.get('seek', 0))
+        norm = int(kwargs.get('norm', 0))
+        raw = int(kwargs.get('raw', 0))
+
+        # Stream the file.
+        # - if raw is activated and the file is not seeked, simply send the file
+        # - if raw is activated and the file is seeked, use a specific transcoder
+        # - In other cases, search for an appropriate transcoder
+        if raw and not seek:
+            return http.send_file(Track.path)
+        elif raw and seek:
+            Transcoder = request.env.ref('oomusic.oomusic_transcoder_99')
+        else:
+            Transcoder = request.env['oomusic.transcoder'].search([
+                ('output_format.name', '=', output_format)
+            ]).filtered(lambda r: fn_ext[1:] not in r.mapped('black_formats').mapped('name'))
         Transcoder = Transcoder[0] if Transcoder else False
+
         if Transcoder:
-            seek = int(kwargs.get('seek', 0))
-            norm = int(kwargs.get('norm', 0))
             generator = Transcoder.transcode(track_id, seek=seek, norm=norm).stdout
             mimetype = Transcoder.output_format.mimetype
         else:
