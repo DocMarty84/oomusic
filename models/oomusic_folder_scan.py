@@ -306,8 +306,11 @@ class MusicFolderScan(models.TransientModel):
         return cache
 
     def _get_tags(self, file_path):
+        _logger.debug("Scanning file \"%s\"", file_path)
         try:
             song = tag.File(file_path)
+            if not song:
+                raise
         except:
             _logger.warning('Error while opening file "%s"', file_path)
             return False, {}
