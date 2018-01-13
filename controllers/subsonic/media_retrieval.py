@@ -10,6 +10,7 @@ from werkzeug.wrappers import Response
 from werkzeug.wsgi import wrap_file
 
 from odoo import http
+from odoo.exceptions import AccessError
 from odoo.http import request
 from common import SubsonicREST
 
@@ -108,12 +109,31 @@ class MusicSubsonicMediaRetrieval(http.Controller):
         folderId = kwargs.get('id')
         if folderId:
             try:
+                found = False
                 if 'al-' in folderId:
                     folder = request.env['oomusic.album'].browse([int(folderId.split('-')[-1])])
                 else:
                     folder = request.env['oomusic.folder'].browse([int(folderId.split('-')[-1])])
-                if not folder.exists():
-                    return rest.make_error(code='70', message='Folder not found')
+                if folder.exists():
+                    try:
+                        folder.check_access_rights('read')
+                        folder.check_access_rule('read')
+                        found = True
+                    except AccessError:
+                        pass
+                if not found:
+                    track = request.env['oomusic.track'].browse([int(folderId.split('-')[-1])])
+                    if track.exists():
+                        try:
+                            track.check_access_rights('read')
+                            track.check_access_rule('read')
+                            folder = track.folder_id
+                            found = True
+                        except AccessError:
+                            pass
+
+                if not found:
+                    return rest.make_error(code='70', message='Cover art not found')
             except:
                 folder = request.env['oomusic.folder']
         else:
