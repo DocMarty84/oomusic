@@ -96,9 +96,9 @@
                 <field name="path"/>
 
                 <filter string="Added Today" name="filter_added_today"
-                    domain="[('create_date', '&gt;=', time.strftime('%%Y-%%m-%%d''))]"/>
+                    domain="[('create_date', '&gt;=', time.strftime('%%Y-%%m-%%d'))]"/>
                 <filter string="Added This Month" name="filter_added_this_month"
-                    domain="[('create_date', '&gt;=', time.strftime('%%Y-%%m-01''))]"/>
+                    domain="[('create_date', '&gt;=', time.strftime('%%Y-%%m-01'))]"/>
                 <filter string="Favorite" name="filter_favorite"
                     domain="[('star', '=', '1')]"/>
             </search>

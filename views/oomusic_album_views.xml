@@ -78,7 +78,7 @@
                 <filter string="Released This Year" name="filter_released_this_year"
                     domain="[('year', '=', time.strftime('%%Y'))]"/>
                 <filter string="Added This Month" name="filter_added_this_month"
-                    domain="[('create_date', '&gt;=', time.strftime('%%Y-%%m-01''))]"/>
+                    domain="[('create_date', '&gt;=', time.strftime('%%Y-%%m-01'))]"/>
                 <filter string="Favorite" name="filter_favorite"
                     domain="[('star', '=', '1')]"/>
 
