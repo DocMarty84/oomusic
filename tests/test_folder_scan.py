@@ -82,7 +82,7 @@ class TestOomusicFolderScan(test_common.TestOomusicCommon):
         for Track in Tracks:
             song = taglib.File(Track.path)
             new_tag = new_tags[Track.name]
-            for k, v in new_tag.iteritems():
+            for k, v in new_tag.items():
                 song.tags[k] = [v]
             song.save()
             os.utime(Track.path, None)

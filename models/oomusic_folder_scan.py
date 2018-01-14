@@ -323,7 +323,7 @@ class MusicFolderScan(models.TransientModel):
                 song_tags = song.tags or {}
 
             song_tags = {
-                k.upper(): v for k, v in song_tags.iteritems()
+                k.upper(): v for k, v in song_tags.items()
             }
             return song, song_tags
 
@@ -502,7 +502,7 @@ class MusicFolderScan(models.TransientModel):
                     vals = {f: '' for f in self.FIELDS_TO_CLEAN}
                     vals.update({
                         self.MAP_ID3_FIELD[k]: v[0]
-                        for k, v in song_tags.iteritems()
+                        for k, v in song_tags.items()
                         if v and k in self.MAP_ID3_FIELD.keys()
                     })
 

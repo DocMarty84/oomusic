@@ -58,7 +58,7 @@ class MusicSubsonicBrowsing(http.Controller):
         indexes_dict = rest.build_dict_indexes_folder(folder)
 
         # List of folders
-        for k, v in sorted(indexes_dict.iteritems()):
+        for k, v in sorted(indexes_dict.items()):
             xml_index = rest.make_Index(k)
             xml_indexes.append(xml_index)
             for child in v:
@@ -144,7 +144,7 @@ class MusicSubsonicBrowsing(http.Controller):
         indexes_dict = rest.build_dict_indexes_artists(artists)
 
         # List of artists
-        for k, v in sorted(indexes_dict.iteritems()):
+        for k, v in sorted(indexes_dict.items()):
             xml_index = rest.make_IndexID3(k)
             xml_artists.append(xml_index)
             for artist in v:
