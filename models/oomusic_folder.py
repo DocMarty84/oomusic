@@ -133,6 +133,10 @@ class MusicFolder(models.Model):
 
             folder.image_big = resized_images['image']
 
+            # Avoid useless save in cache
+            if resized_images['image'] == folder.image_big_cache:
+                continue
+
             # Save in cache
             with self.pool.cursor() as cr:
                 new_self = self.with_env(self.env(cr=cr))
@@ -156,6 +160,10 @@ class MusicFolder(models.Model):
 
             folder.image_medium = resized_images['image_medium']
 
+            # Avoid useless save in cache
+            if resized_images['image_medium'] == folder.image_medium_cache:
+                continue
+
             # Save in cache
             with self.pool.cursor() as cr:
                 new_self = self.with_env(self.env(cr))
@@ -178,6 +186,10 @@ class MusicFolder(models.Model):
                 continue
 
             folder.image_small = resized_images['image_small']
+
+            # Avoid useless save in cache
+            if resized_images['image_small'] == folder.image_small_cache:
+                continue
 
             # Save in cache
             with self.pool.cursor() as cr:
