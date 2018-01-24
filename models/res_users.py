@@ -23,4 +23,3 @@ class ResUsers(models.Model):
         self.env['oomusic.folder'].search(
             [('root', '=', True), ('user_id', 'in', self.ids)]).unlink()
         super(ResUsers, self).unlink()
-        raise
