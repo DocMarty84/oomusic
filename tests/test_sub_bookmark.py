@@ -10,7 +10,7 @@ class TestOomusicSubBookmark(test_sub_common.TestOomusicSubCommon):
         Test getBookmarks method
         '''
         self.env2.cr.release()
-        res = self.url_open('/rest/getBookmarks.view' + self.cred).read()
+        res = self.url_open('/rest/getBookmarks.view' + self.cred).content.decode('utf-8')
         res_clean = ''.join(res.split('\n')[2:][:-2])
         self.assertEqual(res_clean, '  <bookmarks/>')
         self.cleanUp()
@@ -20,16 +20,16 @@ class TestOomusicSubBookmark(test_sub_common.TestOomusicSubCommon):
         Test actionBookmark method
         '''
         self.env2.cr.release()
-        res = self.url_open('/rest/createBookmark.view' + self.cred).read()
+        res = self.url_open('/rest/createBookmark.view' + self.cred).content.decode('utf-8')
         res_clean = ''.join(res.split('\n')[2:][:-2])
         self.assertEqual(res_clean, '')
-        res = self.url_open('/rest/deleteBookmark.view' + self.cred).read()
+        res = self.url_open('/rest/deleteBookmark.view' + self.cred).content.decode('utf-8')
         res_clean = ''.join(res.split('\n')[2:][:-2])
         self.assertEqual(res_clean, '')
-        res = self.url_open('/rest/getPlayQueue.view' + self.cred).read()
+        res = self.url_open('/rest/getPlayQueue.view' + self.cred).content.decode('utf-8')
         res_clean = ''.join(res.split('\n')[2:][:-2])
         self.assertEqual(res_clean, '')
-        res = self.url_open('/rest/savePlayQueue.view' + self.cred).read()
+        res = self.url_open('/rest/savePlayQueue.view' + self.cred).content.decode('utf-8')
         res_clean = ''.join(res.split('\n')[2:][:-2])
         self.assertEqual(res_clean, '')
         self.cleanUp()

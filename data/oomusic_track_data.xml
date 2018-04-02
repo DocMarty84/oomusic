@@ -8,7 +8,7 @@
             <field name="state">code</field>
             <field name="code">
 if env.context.get('active_ids'):
-    Track = model.browse(context['active_ids'])
+    Track = model.browse(env.context['active_ids'])
     Track.action_add_to_playlist()
             </field>
         </record>

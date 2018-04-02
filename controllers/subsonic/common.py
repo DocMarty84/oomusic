@@ -7,6 +7,7 @@ import logging
 import mimetypes
 import os
 
+from collections import OrderedDict
 from lxml import etree
 
 from . import xml2json
@@ -108,7 +109,7 @@ class SubsonicREST():
             ''', (self.login,))
             if request.env.cr.rowcount:
                 password = request.env.cr.fetchone()[0]
-                if hashlib.md5(password + self.salt).hexdigest() == self.token:
+                if hashlib.md5((password + self.salt).encode('utf-8')).hexdigest() == self.token:
                     uid = request.session.authenticate(request.session.db, self.login, password)
             else:
                 return False, self.make_error('30')
@@ -344,6 +345,7 @@ class SubsonicREST():
             JOIN oomusic_track AS t ON g.id = t.genre_id
             WHERE g.user_id = %s
             GROUP BY g.name, g.id
+            ORDER BY g.id
         ''', (request.env.user.id,))
         res_tracks = request.env.cr.fetchall()
 
@@ -353,10 +355,11 @@ class SubsonicREST():
             JOIN oomusic_album AS a ON g.id = a.genre_id
             WHERE g.user_id = %s
             GROUP BY g.name, g.id
+            ORDER BY g.id
         ''', (request.env.user.id,))
         res_albums = request.env.cr.fetchall()
 
-        data = {}
+        data = OrderedDict()
         for r in res_tracks + res_albums:
             data.setdefault(r[0], {})
         for r in res_tracks:

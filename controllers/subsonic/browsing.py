@@ -35,7 +35,7 @@ class MusicSubsonicBrowsing(http.Controller):
         ifModifiedSince = kwargs.get('ifModifiedSince')
         if ifModifiedSince:
             try:
-                ifModifiedSince = int(ifModifiedSince) / 1000
+                ifModifiedSince = int(ifModifiedSince) // 1000
             except:
                 return rest.make_error(code='0', message='Invalid timestamp')
 

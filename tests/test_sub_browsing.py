@@ -12,7 +12,7 @@ class TestOomusicSubBrowsing(test_sub_common.TestOomusicSubCommon):
         Test getMusicFolders method
         '''
         self.env2.cr.release()
-        res = self.url_open('/rest/getMusicFolders.view' + self.cred).read()
+        res = self.url_open('/rest/getMusicFolders.view' + self.cred).content.decode('utf-8')
         res_clean = ''.join(res.split('\n')[2:][:-2])
         self.assertEqual(
             res_clean,
@@ -31,7 +31,7 @@ class TestOomusicSubBrowsing(test_sub_common.TestOomusicSubCommon):
         self.env2.cr.release()
 
         # No params
-        res = self.url_open('/rest/getIndexes.view' + self.cred).read()
+        res = self.url_open('/rest/getIndexes.view' + self.cred).content.decode('utf-8')
         res_clean = ''.join(res.split('\n')[2:][:-2])
         data = {
             'f1_last': folders[0].last_modification*1000,
@@ -52,7 +52,7 @@ class TestOomusicSubBrowsing(test_sub_common.TestOomusicSubCommon):
 
         # params: musicFolderId (artist)
         url = '/rest/getIndexes.view' + self.cred + '&musicFolderId={}'.format(folders[1].id)
-        res = self.url_open(url).read()
+        res = self.url_open(url).content.decode('utf-8')
         res_clean = ''.join(res.split('\n')[2:][:-2])
         data = {
             'f1_last': folders[1].last_modification*1000,
@@ -73,7 +73,7 @@ class TestOomusicSubBrowsing(test_sub_common.TestOomusicSubCommon):
 
         # params: musicFolderId (album)
         url = '/rest/getIndexes.view' + self.cred + '&musicFolderId={}'.format(folders[2].id)
-        res = self.url_open(url).read()
+        res = self.url_open(url).content.decode('utf-8')
         res_clean = ''.join(res.split('\n')[2:][:-2])
         data = {
             'f1_last': folders[2].last_modification*1000,
@@ -120,7 +120,7 @@ class TestOomusicSubBrowsing(test_sub_common.TestOomusicSubCommon):
 
         # params: musicFolderId (artist)
         url = '/rest/getMusicDirectory.view' + self.cred + '&id={}'.format(folders[1].id)
-        res = self.url_open(url).read()
+        res = self.url_open(url).content.decode('utf-8')
         res_clean = ''.join(res.split('\n')[2:][:-2])
         data = {
             'f1_id': folders[1].id,
@@ -159,7 +159,7 @@ class TestOomusicSubBrowsing(test_sub_common.TestOomusicSubCommon):
 
         # params: musicFolderId (album)
         url = '/rest/getMusicDirectory.view' + self.cred + '&id={}'.format(folders[2].id)
-        res = self.url_open(url).read()
+        res = self.url_open(url).content.decode('utf-8')
         res_clean = ''.join(res.split('\n')[2:][:-2])
         data = {
             'f1_id': folders[2].id,
@@ -208,7 +208,7 @@ class TestOomusicSubBrowsing(test_sub_common.TestOomusicSubCommon):
 
         # params: musicFolderId (artist)
         url = '/rest/getGenres.view' + self.cred
-        res = self.url_open(url).read()
+        res = self.url_open(url).content.decode('utf-8')
         res_clean = ''.join(res.split('\n')[2:][:-2])
         data = {
             'g1_name': genres[0].name,
@@ -219,8 +219,8 @@ class TestOomusicSubBrowsing(test_sub_common.TestOomusicSubCommon):
             res_clean,
             '  <genres>'
             '    <genre songCount="2" albumCount="1">{g1_name}</genre>'
-            '    <genre songCount="2" albumCount="1">{g3_name}</genre>'
             '    <genre songCount="2" albumCount="1">{g2_name}</genre>'
+            '    <genre songCount="2" albumCount="1">{g3_name}</genre>'
             '  </genres>'.format(**data)
         )
         self.cleanUp()

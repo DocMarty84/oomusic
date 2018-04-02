@@ -47,7 +47,7 @@ class MusicLastfm(models.Model):
                 time.sleep(sleep)
                 r = requests.get(url, timeout=3.0)
                 if r.status_code == 200:
-                    content = r.content
+                    content = r.content.decode('utf-8')
             except:
                 _logger.info("Error while fetching URL \"%s\"...", url)
                 pass
