@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import json
+
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError
 
@@ -52,3 +54,9 @@ class MusicAlbum(models.Model):
             playlist.action_purge()
         for album in self:
             playlist._add_tracks(album.track_ids)
+
+    def _lastfm_album_getinfo(self):
+        self.ensure_one()
+        url = 'https://ws.audioscrobbler.com/2.0/?method=album.getinfo&artist='\
+            + self.artist_id.name + '&album=' + self.name
+        return json.loads(self.env['oomusic.lastfm'].get_query(url))

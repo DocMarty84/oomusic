@@ -126,3 +126,9 @@ class MusicTrack(models.Model):
                 for ext in ['opus', 'ogg', 'mp3']
             ],
         }
+
+    def _lastfm_track_getsimilar(self, count=50):
+        self.ensure_one()
+        url = 'https://ws.audioscrobbler.com/2.0/?method=track.getsimilar&artist='\
+            + self.artist_id.name + '&track=' + self.name + '&limit=' + str(count)
+        return json.loads(self.env['oomusic.lastfm'].get_query(url))

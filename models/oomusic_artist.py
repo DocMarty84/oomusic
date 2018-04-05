@@ -55,8 +55,7 @@ class MusicArtist(models.Model):
                 continue
 
             resized_images = {'image_medium': False}
-            url = 'https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=' + artist.name
-            req_json = json.loads(self.env['oomusic.lastfm'].get_query(url))
+            req_json = artist._lastfm_artist_getinfo()
             try:
                 _logger.debug("Retrieving image for artist %s...", artist.name)
                 for image in req_json['artist']['image']:
@@ -85,8 +84,7 @@ class MusicArtist(models.Model):
 
     def _compute_fm_getinfo(self):
         for artist in self:
-            url = 'https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=' + artist.name
-            req_json = json.loads(self.env['oomusic.lastfm'].get_query(url))
+            req_json = artist._lastfm_artist_getinfo()
             try:
                 artist.fm_getinfo_bio = req_json['artist']['bio']['summary'].replace('\n', '<br/>')
             except KeyError:
@@ -101,8 +99,7 @@ class MusicArtist(models.Model):
         tracks = {(t['artist_id'][0], t['name'].lower()): t['id'] for t in tracks}
 
         for artist in self:
-            url = 'https://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=' + artist.name
-            req_json = json.loads(self.env['oomusic.lastfm'].get_query(url))
+            req_json = artist._lastfm_artist_gettoptracks()
             try:
                 t_tracks = [
                     tracks[(artist.id, t['name'].lower())]
@@ -116,8 +113,7 @@ class MusicArtist(models.Model):
 
     def _compute_fm_getsimilar(self):
         for artist in self:
-            url = 'https://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist=' + artist.name
-            req_json = json.loads(self.env['oomusic.lastfm'].get_query(url))
+            req_json = artist._lastfm_artist_getsimilar()
             try:
                 s_artists = self.env['oomusic.artist']
                 for s_artist in req_json['similarartists']['artist']:
@@ -147,3 +143,18 @@ class MusicArtist(models.Model):
         for i in xrange(0, len(artists)):
             artist = artists[i].with_context(build_cache=True, prefetch_fields=False)
             artist._compute_fm_image()
+
+    def _lastfm_artist_getinfo(self):
+        self.ensure_one()
+        url = 'https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=' + self.name
+        return json.loads(self.env['oomusic.lastfm'].get_query(url))
+
+    def _lastfm_artist_getsimilar(self):
+        self.ensure_one()
+        url = 'https://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist=' + self.name
+        return json.loads(self.env['oomusic.lastfm'].get_query(url))
+
+    def _lastfm_artist_gettoptracks(self):
+        self.ensure_one()
+        url = 'https://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=' + self.name
+        return json.loads(self.env['oomusic.lastfm'].get_query(url))

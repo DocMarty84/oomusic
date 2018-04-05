@@ -440,8 +440,7 @@ class SubsonicREST():
             list_artist_info.append(bio)
 
         # Extra info
-        url = 'https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=' + artist.name
-        req_json = json.loads(request.env['oomusic.lastfm'].get_query(url))
+        req_json = artist._lastfm_artist_getinfo()
 
         if 'artist' in req_json and 'mbid' in req_json['artist']:
             mbid = etree.Element('musicBrainzId')
@@ -514,10 +513,7 @@ class SubsonicREST():
 
     def make_AlbumInfo2(self, album):
         elem_album_info = etree.Element('albumInfo')
-
-        url = 'https://ws.audioscrobbler.com/2.0/?method=album.getinfo&artist='\
-            + album.artist_id.name + '&album=' + album.name
-        req_json = json.loads(request.env['oomusic.lastfm'].get_query(url))
+        req_json = album._lastfm_album_getinfo()
 
         if 'album' in req_json and 'wiki' in req_json['album'] and 'summary' in req_json['album']['wiki']:
             notes = etree.Element('notes')
@@ -556,10 +552,7 @@ class SubsonicREST():
 
     def make_SimilarSongs2(self, track, count=50, tag_name='similarSongs2'):
         elem_song_similar = etree.Element(tag_name)
-
-        url = 'https://ws.audioscrobbler.com/2.0/?method=track.getsimilar&artist='\
-            + track.artist_id.name + '&track=' + track.name + '&limit=' + str(count)
-        req_json = json.loads(request.env['oomusic.lastfm'].get_query(url))
+        req_json = track._lastfm_track_getsimilar(count=count)
 
         try:
             s_tracks = request.env['oomusic.track']
