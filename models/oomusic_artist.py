@@ -17,8 +17,8 @@ class MusicArtist(models.Model):
     _order = 'name'
 
     name = fields.Char('Artist', index=True)
-    track_ids = fields.One2many('oomusic.track', 'artist_id', string='Tracks')
-    album_ids = fields.One2many('oomusic.album', 'artist_id', string='Albums')
+    track_ids = fields.One2many('oomusic.track', 'artist_id', string='Tracks', readonly=True)
+    album_ids = fields.One2many('oomusic.album', 'artist_id', string='Albums', readonly=True)
     user_id = fields.Many2one(
         'res.users', string='User', index=True, required=True, ondelete='cascade',
         default=lambda self: self.env.user

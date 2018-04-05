@@ -34,13 +34,13 @@ class MusicTrack(models.Model):
     encoded_by = fields.Char('Encoder')
 
     # File data
-    duration = fields.Integer('Duration')
-    duration_min = fields.Float('Duration')
-    bitrate = fields.Integer('Bitrate')
-    path = fields.Char('Path', required=True, index=True)
-    play_count = fields.Integer('Play Count', default=0)
-    last_play = fields.Datetime('Last Played', index=True)
-    last_modification = fields.Integer('Last Modification')
+    duration = fields.Integer('Duration', readonly=True)
+    duration_min = fields.Float('Duration', readonly=True)
+    bitrate = fields.Integer('Bitrate', readonly=True)
+    path = fields.Char('Path', required=True, index=True, readonly=True)
+    play_count = fields.Integer('Play Count', default=0, readonly=True)
+    last_play = fields.Datetime('Last Played', index=True, readonly=True)
+    last_modification = fields.Integer('Last Modification', readonly=True)
     root_folder_id = fields.Many2one(
         'oomusic.folder', string='Root Folder', index=True, required=True, ondelete='cascade')
     folder_id = fields.Many2one(

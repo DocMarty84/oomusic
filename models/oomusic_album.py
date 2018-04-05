@@ -14,7 +14,7 @@ class MusicAlbum(models.Model):
     create_date = fields.Datetime(index=True)
 
     name = fields.Char('Album', index=True)
-    track_ids = fields.One2many('oomusic.track', 'album_id', 'Tracks')
+    track_ids = fields.One2many('oomusic.track', 'album_id', 'Tracks', readonly=True)
     artist_id = fields.Many2one('oomusic.artist', 'Artist')
     genre_id = fields.Many2one('oomusic.genre', 'Genre')
     year = fields.Char('Year', index=True)

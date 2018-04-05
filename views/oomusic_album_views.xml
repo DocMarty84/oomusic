@@ -23,8 +23,8 @@
                     <group>
                         <group>
                             <field name="year"/>
-                            <field name="artist_id"/>
-                            <field name="genre_id"/>
+                            <field name="artist_id" options="{'no_create': True}"/>
+                            <field name="genre_id" options="{'no_create': True}"/>
                         </group>
                         <group>
                             <field name="star" widget="priority"/>

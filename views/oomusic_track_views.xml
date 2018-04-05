@@ -23,10 +23,10 @@
                     </div>
                     <group>
                         <group>
-                            <field name="artist_id"/>
-                            <field name="album_id"/>
+                            <field name="artist_id" options="{'no_create': True}"/>
+                            <field name="album_id" options="{'no_create': True}"/>
                             <field name="year"/>
-                            <field name="genre_id"/>
+                            <field name="genre_id" options="{'no_create': True}"/>
                         </group>
                         <group>
                             <field name="star" widget="priority"/>
@@ -39,10 +39,10 @@
                     </group>
                     <group>
                         <group>
-                            <field name="album_artist_id"/>
+                            <field name="album_artist_id" options="{'no_create': True}"/>
                             <field name="description"/>
                             <field name="composer"/>
-                            <field name="performer_id"/>
+                            <field name="performer_id" options="{'no_create': True}"/>
                             <field name="copyright"/>
                             <field name="contact"/>
                             <field name="encoded_by"/>
