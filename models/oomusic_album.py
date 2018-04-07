@@ -10,6 +10,7 @@ class MusicAlbum(models.Model):
     _name = 'oomusic.album'
     _description = 'Music Album'
     _order = 'year desc, name'
+    _inherit = ['oomusic.download.mixin']
 
     create_date = fields.Datetime(index=True)
 

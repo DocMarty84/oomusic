@@ -24,6 +24,7 @@ Music Collection
         'views/oomusic_album_views.xml',
         'views/oomusic_artist_views.xml',
         'views/oomusic_converter_views.xml',
+        'views/oomusic_download_views.xml',
         'views/oomusic_folder_views.xml',
         'views/oomusic_genre_views.xml',
         'views/oomusic_playlist_views.xml',

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="oomusic_download_view_form" model="ir.ui.view">
+        <field name="name">oomusic.download.form</field>
+        <field name="model">oomusic.download</field>
+        <field name="arch" type="xml">
+            <form string="Download Link">
+                <sheet>
+                    <group>
+                        <field name="url" readonly="1"/>
+                        <field name="note"/>
+                        <field name="expiration_date"/>
+                        <field name="flatten"/>
+                        <field name="min_delay"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="oomusic_download_view_tree" model="ir.ui.view">
+        <field name="name">oomusic.download.tree</field>
+        <field name="model">oomusic.download</field>
+        <field name="priority">10</field>
+        <field name="arch" type="xml">
+            <tree string="Download Links" decoration-danger="expired == True" create="false">
+                <field name="expired" invisible="1"/>
+                <field name="url" readonly="1"/>
+                <field name="note"/>
+                <field name="expiration_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="oomusic_download_view_tree_main" model="ir.ui.view">
+        <field name="name">oomusic.download.tree.main</field>
+        <field name="model">oomusic.download</field>
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <tree string="Download Links" decoration-danger="expired == True" create="false" editable="bottom">
+                <field name="expired" invisible="1"/>
+                <field name="url" readonly="1"/>
+                <field name="note"/>
+                <field name="expiration_date"/>
+                <field name="flatten"/>
+                <field name="min_delay"/>
+                <field name="res_model" groups="base.group_no_one"/>
+                <field name="res_id" groups="base.group_no_one"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_download" model="ir.actions.act_window">
+        <field name="name">Download Links</field>
+        <field name="res_model">oomusic.download</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('oomusic_download_view_tree_main')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('oomusic_download_view_form')})]"/>
+        <field name="help" type="html">
+            <p>
+                You can define download links for tracks, albums, artists, genres and playlists.
+            </p>
+        </field>
+    </record>
+
+    <!-- Third Level Menu -->
+    <menuitem id="menu_action_download" parent="menu_oomusic_config" action="action_download" sequence="20"/>
+</odoo>

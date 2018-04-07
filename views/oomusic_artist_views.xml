@@ -9,6 +9,8 @@
                 <header>
                     <button name="action_add_to_playlist" string="Add To Current Playlist" class="btn-primary" type="object"/>
                     <button name="action_add_to_playlist" string="Replace Current Playlist" type="object" context="{'purge': True}"/>
+                    <button name="action_download" string="Download" type="object"
+                        help="Download the track(s). You should allow pop-up from this URL!"/>
                 </header>
                 <sheet>
                     <field name="fm_image" widget="image" class="oe_avatar"/>
@@ -76,6 +78,11 @@
                                     <field name="name"/>
                                 </tree>
                             </field>
+                        </page>
+                        <page string="Download Links">
+                            <field name="download_ids"/>
+                            <button name="action_create_download_link" string="Create Link"
+                                icon="fa-plus" type="object"/>
                         </page>
                     </notebook>
                 </sheet>

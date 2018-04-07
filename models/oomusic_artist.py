@@ -15,6 +15,7 @@ class MusicArtist(models.Model):
     _name = 'oomusic.artist'
     _description = 'Music Artist'
     _order = 'name'
+    _inherit = ['oomusic.download.mixin']
 
     name = fields.Char('Artist', index=True)
     track_ids = fields.One2many('oomusic.track', 'artist_id', string='Tracks', readonly=True)

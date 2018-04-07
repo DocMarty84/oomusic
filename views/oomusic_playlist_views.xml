@@ -9,6 +9,8 @@
                 <header>
                     <button name="action_current" string="Set As Current" type="object" attrs="{'invisible': [('current', '=', True)]}"/>
                     <button name="action_purge" string="Purge" type="object"/>
+                    <button name="action_download" string="Download" type="object"
+                        help="Download the track(s). You should allow pop-up from this URL!"/>
                 </header>
                 <sheet>
                     <group>
@@ -31,17 +33,26 @@
                             <field name="artist_id"/>
                         </group>
                     </group>
-                    <field name="playlist_line_ids">
-                        <tree string="Tracks" editable="bottom" decoration-success="playing == True" decoration-bf="playing == True" class="playlist_form">
-                            <field name="playing" invisible="1"/>
-                            <field name="sequence" widget="handle"/>
-                            <field name="dummy_field" widget="oomusic_play"/>
-                            <field name="track_id"/>
-                            <field name="artist_id"/>
-                            <field name="album_id"/>
-                            <field name="duration_min" widget="float_time"/>
-                       </tree>
-                   </field>
+                    <notebook>
+                        <page string="Tracks">
+                            <field name="playlist_line_ids">
+                                <tree string="Tracks" editable="bottom" decoration-success="playing == True" decoration-bf="playing == True" class="playlist_form">
+                                    <field name="playing" invisible="1"/>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="dummy_field" widget="oomusic_play"/>
+                                    <field name="track_id"/>
+                                    <field name="artist_id"/>
+                                    <field name="album_id"/>
+                                    <field name="duration_min" widget="float_time"/>
+                               </tree>
+                           </field>
+                       </page>
+                       <page string="Download Links">
+                           <field name="download_ids"/>
+                           <button name="action_create_download_link" string="Create Link"
+                               icon="fa-plus" type="object" context="{'default_flatten': True}"/>
+                       </page>
+                   </notebook>
                 </sheet>
             </form>
         </field>

@@ -6,6 +6,10 @@
         <field name="model">oomusic.genre</field>
         <field name="arch" type="xml">
             <form string="Genre">
+                <header>
+                    <button name="action_download" string="Download" type="object"
+                        help="Download the track(s). You should allow pop-up from this URL!"/>
+                </header>
                 <sheet>
                     <h1>
                         <field name="name"/>
@@ -32,6 +36,11 @@
                                     <field name="artist_id"/>
                                 </tree>
                             </field>
+                        </page>
+                        <page string="Download Links">
+                            <field name="download_ids"/>
+                            <button name="action_create_download_link" string="Create Link"
+                                icon="fa-plus" type="object"/>
                         </page>
                     </notebook>
                 </sheet>

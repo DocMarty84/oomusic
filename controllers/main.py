@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
 import logging
 import os
 
+from werkzeug.exceptions import abort, Forbidden
 from werkzeug.wrappers import Response
 from werkzeug.wsgi import wrap_file
 
-from odoo import http
+from odoo import http, fields, _
 from odoo.http import request
 
 _logger = logging.getLogger(__name__)
@@ -14,10 +16,36 @@ _logger = logging.getLogger(__name__)
 
 class MusicController(http.Controller):
 
-    @http.route(['/oomusic/down/<int:track_id>'], type='http', auth='user')
-    def down(self, track_id, **kwargs):
-        Track = request.env['oomusic.track'].browse([track_id])
-        return http.send_file(Track.path, as_attachment=True)
+    @http.route(['/oomusic/down'], auth='public', type='http')
+    def down(self, **kwargs):
+        down = request.env['oomusic.download'].sudo().search([
+            ('access_token', '=', kwargs['token']),
+            ('expiration_date', '>=', fields.Date.today()),
+        ], limit=1)
+        if not down:
+            abort(404)
+
+        # Set a minimum delay between link access to avoid overload
+        now = datetime.now()
+        access_date = fields.Datetime.from_string(down.access_date)
+        if access_date and (now - access_date).seconds < down.min_delay:
+            raise Forbidden(_('Too many requests received. Please try again in a few minutes.'))
+        down._update_access_date(fields.Datetime.to_string(now))
+
+        # Get the ZIP file
+        obj_sudo = request.env[down.res_model].sudo().browse(down.res_id)
+        tracks = obj_sudo._get_track_ids()
+        return http.send_file(
+            tracks._build_zip(flatten=down.flatten, name=kwargs['token']), as_attachment=True)
+
+    @http.route(['/oomusic/down_user'], auth='user', type='http')
+    def down_user(self, **kwargs):
+        obj = request.env[kwargs['model']].browse(int(kwargs['id']))
+        if not obj.exists():
+            abort(404)
+        tracks = obj._get_track_ids()
+        flatten = bool(int(kwargs.get('flatten', '0')))
+        return http.send_file(tracks._build_zip(flatten=flatten), as_attachment=True)
 
     @http.route([
         '/oomusic/trans/<int:track_id>.<string:output_format>',

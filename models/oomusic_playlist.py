@@ -10,6 +10,7 @@ from odoo.exceptions import MissingError, ValidationError
 class MusicPlaylist(models.Model):
     _name = 'oomusic.playlist'
     _description = 'Music Playlist'
+    _inherit = ['oomusic.download.mixin']
 
     def _default_current(self):
         return not bool(self.env['oomusic.playlist'].search([('current', '=', True)]))
@@ -68,6 +69,9 @@ class MusicPlaylist(models.Model):
 
         if onchange:
             self.playlist_line_ids += playlist_line
+
+    def _get_track_ids(self):
+        return self.playlist_line_ids.mapped('track_id')
 
     @api.onchange('album_id')
     def _onchange_album_id(self):

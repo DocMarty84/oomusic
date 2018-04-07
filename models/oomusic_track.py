@@ -1,8 +1,13 @@
 # -*- coding: utf-8 -*-
 
+from hashlib import sha1
 import json
 import os
+from shutil import copyfile
+from tempfile import gettempdir
+from time import sleep
 from urllib.parse import urlencode
+from zipfile import ZipFile
 
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError, MissingError
@@ -12,6 +17,7 @@ class MusicTrack(models.Model):
     _name = 'oomusic.track'
     _description = 'Music Track'
     _order = 'album_id, disc, track_number_int, track_number'
+    _inherit = ['oomusic.download.mixin']
 
     create_date = fields.Datetime(index=True)
 
@@ -60,6 +66,39 @@ class MusicTrack(models.Model):
     )
     dummy_field = fields.Boolean('Dummy field')
 
+    def _get_track_ids(self):
+        return self
+
+    def _build_zip(self, flatten=False, name=False):
+        # Name is build using track ids, to avoid creating the same archive twice
+        name = '-'.join([str(id) for id in self.mapped('id')]) + ('-1' if flatten else '-0')
+        name = sha1(name.encode('utf-8')).hexdigest()
+        tmp_dir = gettempdir()
+        z_name = os.path.join(tmp_dir, '{}.zip'.format(name))
+
+        # If file exists return it instead of creating a new archive
+        if os.path.isfile(z_name):
+            return z_name
+
+        # Create the ZIP file
+        seq = 1
+        with ZipFile(z_name, 'w') as z_file:
+            base_arcname = '{:0%sd}-{}' % len(str(len(self)))
+            for track in self:
+                if flatten:
+                    arcname = base_arcname.format(seq, os.path.split(track.path)[1])
+                    path = os.path.join(tmp_dir, arcname)
+                    copyfile(track.path, path)
+                    z_file.write(path, arcname=arcname)
+                    os.remove(path)
+                    seq += 1
+                else:
+                    path = track.path
+                    arcname = track.path.replace(track.root_folder_id.path, '')
+                    z_file.write(path, arcname=arcname)
+        sleep(0.2)
+        return z_name
+
     @api.multi
     def write(self, vals):
         res = super(MusicTrack, self).write(vals)
@@ -75,14 +114,6 @@ class MusicTrack(models.Model):
         if self.env.context.get('purge'):
             playlist.action_purge()
         playlist._add_tracks(self)
-
-    @api.multi
-    def action_download(self):
-        return {
-            'type': 'ir.actions.act_url',
-            'url': '/oomusic/down/{}'.format(self.id),
-            'target': 'new',
-        }
 
     @api.multi
     def oomusic_play(self, seek=0):
