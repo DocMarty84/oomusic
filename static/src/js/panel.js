@@ -253,16 +253,10 @@ var Panel = Widget.extend({
         // Create Howler sound. We use the cache if the track comes from a playlist and the user has
         // not seeked. If the user has previewed a track of has seeked, we do not use the cache.
         if (data_json.src && (self.user_seek || !data_json.playlist_line_id)) {
-            this.sound = new Howl({
-                src: data_json.src,
-                html5: true,
-            });
+            this.sound = self._newHowl(data_json)
         } else if (data_json.src) {
             if (!this.cache_sound[data_json.playlist_line_id]) {
-                this.cache_sound[data_json.playlist_line_id] = new Howl({
-                    src: data_json.src,
-                    html5: true,
-                });
+                this.cache_sound[data_json.playlist_line_id] = self._newHowl(data_json)
             }
             this.sound = this.cache_sound[data_json.playlist_line_id];
         }
@@ -275,14 +269,6 @@ var Panel = Widget.extend({
         } else {
             this.$el.find('.oom_pause').closest('li').hide();
             this.$el.find('.oom_play').closest('li').show();
-        }
-
-        // Define the ended event. For some unknown reason, Howler won't fire the 'end' event, so we
-        // directly listen on the media node.
-        if (this.sound && this.sound._sounds[0]) {
-            this.sound._sounds[0]._node.onended = function () {
-                self._onEnded();
-            };
         }
 
         // Reset next sound
@@ -356,6 +342,17 @@ var Panel = Widget.extend({
         this.cache_data = {};
     },
 
+    _newHowl: function (data_json) {
+        var self = this;
+        return new Howl({
+            src: data_json.src,
+            html5: true,
+            onend: function () {
+                self._onEnded();
+            }
+        });
+    },
+
     _infUpdateProgress: function () {
         if (!this.sound || !this.sound.playing()) {
             return;
@@ -403,10 +400,7 @@ var Panel = Widget.extend({
                 self.next_playlist_line_id = data_json.playlist_line_id;
                 self.cache_data[data_json.playlist_line_id] = res;
                 if (data_json.src && !self.cache_sound[data_json.playlist_line_id]) {
-                    self.cache_sound[data_json.playlist_line_id] = new Howl({
-                        src: data_json.src,
-                        html5: true,
-                    });
+                    self.cache_sound[data_json.playlist_line_id] = self._newHowl(data_json)
                 }
             });
     },
