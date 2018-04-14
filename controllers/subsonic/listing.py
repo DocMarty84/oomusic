@@ -121,9 +121,7 @@ class MusicSubsonicListing(http.Controller):
                 xml_folder = rest.make_Child_folder(folder, tag_name='album')
                 xml_folder_list.append(xml_folder)
 
-        return request.make_response(
-            etree.tostring(root, xml_declaration=True, encoding='UTF-8', pretty_print=True)
-        )
+        return rest.make_response(root)
 
     @http.route(['/rest/getAlbumList2.view'], type='http', auth='public', csrf=False, methods=['GET', 'POST'])
     def getAlbumList2(self, **kwargs):

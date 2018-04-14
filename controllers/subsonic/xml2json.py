@@ -10,13 +10,13 @@ http://www.xml.com/pub/a/2006/05/31/converting-between-xml-and-json.html
 Rewritten to a command line utility by Hay Kranen < github.com/hay >
 
 XML                              JSON
-<e/>                             "e": null
+<e/>                             "e": {}
 <e>text</e>                      "e": "text"
-<e name="value" />               "e": { "@name": "value" }
-<e name="value">text</e>         "e": { "@name": "value", "#text": "text" }
+<e name="value" />               "e": { "name": "value" }
+<e name="value">text</e>         "e": { "name": "value", "value": "text" }
 <e> <a>text</a ><b>text</b> </e> "e": { "a": "text", "b": "text" }
 <e> <a>text</a> <a>text</a> </e> "e": { "a": ["text", "text"] }
-<e> text <a>text</a> </e>        "e": { "#text": "text", "a": "text" }
+<e> text <a>text</a> </e>        "e": { "value": "text", "a": "text" }
 
 This is very similar to the mapping used for Yahoo Web Services
 (http://developer.yahoo.com/common/json.html#xml).
@@ -36,7 +36,11 @@ R. White, 2006 November 6
 import xml.etree.cElementTree as ET
 import json, optparse, sys, os
 
-def elem_to_internal(elem,strip=1):
+# List of tags which might need to be set in a list
+LIST_TAGS = ['album', 'artist', 'child', 'genre', 'index', 'musicFolder', 'playlist']
+
+
+def elem_to_internal(elem, strip=1, level=0):
 
     """Convert an Element into an internal dictionary (not JSON!)."""
 
@@ -44,9 +48,10 @@ def elem_to_internal(elem,strip=1):
     for key, value in elem.attrib.items():
         d[key] = value
 
+    level += 1
     # loop over subelements to merge them
     for subelem in elem:
-        v = elem_to_internal(subelem,strip=strip)
+        v = elem_to_internal(subelem, strip=strip, level=level)
         tag = subelem.tag
         value = v[tag]
         try:
@@ -57,7 +62,10 @@ def elem_to_internal(elem,strip=1):
             d[tag] = [d[tag], value]
         except KeyError:
             # add a new non-list entry
-            d[tag] = value
+            if tag in LIST_TAGS and level > 1:
+                d[tag] = [value]
+            else:
+                d[tag] = value
     text = elem.text
     tail = elem.tail
     if strip:
@@ -69,11 +77,11 @@ def elem_to_internal(elem,strip=1):
         d['#tail'] = tail
 
     if d:
-        # use #text element if other attributes exist
-        if text: d["#text"] = text
+        # use value element if other attributes exist
+        if text: d["value"] = text
     else:
         # text is the value if no attributes
-        d = text or None
+        d = text or {}
     return {elem.tag: d}
 
 

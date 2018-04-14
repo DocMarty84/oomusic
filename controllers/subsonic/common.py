@@ -2,7 +2,6 @@
 
 import binascii
 import hashlib
-import json
 import logging
 import mimetypes
 import os
@@ -223,12 +222,13 @@ class SubsonicREST():
             elem_track.set('artist', track.artist_id.name)
         if track.track_number:
             try:
-                int(track.track_number)
-                elem_track.set('track', track.track_number)
+                track_number = track.track_number.split('/')[0]
+                int(track_number)
+                elem_track.set('track', track_number)
             except:
                 pass
         if track.year:
-            elem_track.set('year', track.year)
+            elem_track.set('year', track.year[:4])
         if track.genre_id:
             elem_track.set('genre', track.genre_id.name)
 
@@ -242,7 +242,12 @@ class SubsonicREST():
             elem_track.set('playCount', str(track.play_count))
         if API_VERSION_LIST[self.version_client] >= API_VERSION_LIST['1.8.0']:
             if track.disc:
-                elem_track.set('discNumber', track.disc)
+                try:
+                    disc = track.disc.split('/')[0]
+                    int(disc)
+                    elem_track.set('discNumber', disc)
+                except:
+                    pass
             elem_track.set('created', track.create_date.replace(' ', 'T') + 'Z')
             if track.star == '1':
                 elem_track.set('starred', track.write_date.replace(' ', 'T') + 'Z')
@@ -276,12 +281,17 @@ class SubsonicREST():
             if track.artist_id.name:
                 elem_directory.set('artist', track.artist_id.name)
             if track.year:
-                elem_directory.set('year', track.year)
+                elem_directory.set('year', track.year[:4])
             if track.genre_id.name:
                 elem_directory.set('genre', track.genre_id.name)
             if API_VERSION_LIST[self.version_client] >= API_VERSION_LIST['1.8.0']:
                 if track.disc:
-                    elem_directory.set('discNumber', track.disc)
+                    try:
+                        disc = track.disc.split('/')[0]
+                        int(disc)
+                        elem_directory.set('discNumber', disc)
+                    except:
+                        pass
                 if track.album_id:
                     elem_directory.set('albumId', str(track.album_id.id))
                 if track.artist_id:
@@ -421,7 +431,7 @@ class SubsonicREST():
 
         if API_VERSION_LIST[self.version_client] >= API_VERSION_LIST['1.10.2']:
             if album.year:
-                elem_album.set('year', album.year)
+                elem_album.set('year', album.year[:4])
             if album.genre_id:
                 elem_album.set('genre', album.genre_id.name)
 

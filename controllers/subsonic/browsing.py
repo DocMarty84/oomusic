@@ -114,12 +114,7 @@ class MusicSubsonicBrowsing(http.Controller):
         xml_genres = rest.make_Genres()
         root.append(xml_genres)
 
-        # For some mysterious reason, in this particular route, the xml declaration should be made
-        # with double quotes instead of simple quotes.
-        response =\
-            b'<?xml version="1.0" encoding="UTF-8"?>\n'\
-            + etree.tostring(root, encoding='UTF-8', pretty_print=True)
-        return request.make_response(response)
+        return rest.make_response(root)
 
     @http.route(['/rest/getArtists.view'], type='http', auth='public', csrf=False, methods=['GET', 'POST'])
     def getArtists(self, **kwargs):
