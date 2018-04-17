@@ -140,10 +140,12 @@ class MusicArtist(models.Model):
 
     @api.model
     def cron_build_image_cache(self):
-        artists = self.search([])
-        for i in xrange(0, len(artists)):
-            artist = artists[i].with_context(build_cache=True, prefetch_fields=False)
+        artists = self.search([]).with_context(build_cache=True, prefetch_fields=False)
+        step = 50
+        for i in range(0, len(artists), step):
+            artist = artists[i:i+step]
             artist._compute_fm_image()
+            self.invalidate_cache()
 
     def _lastfm_artist_getinfo(self):
         self.ensure_one()

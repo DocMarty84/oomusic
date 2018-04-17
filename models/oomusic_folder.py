@@ -276,14 +276,15 @@ class MusicFolder(models.Model):
 
     @api.model
     def cron_build_image_cache(self):
-        # Do not loop on folders to avoid prefetching image_folder for all elements. This won't work
-        # since the size of prefetched data will be larger than the maximum cache size (I guess).
-        folders = self.search([])
-        for i in xrange(0, len(folders)):
-            folder = folders[i].with_context(build_cache=True, prefetch_fields=False)
+        # Do not loop on the complete recordset to avoid hitting memory limit.
+        folders = self.search([]).with_context(build_cache=True, prefetch_fields=False)
+        step = 50
+        for i in range(0, len(folders), step):
+            folder = folders[i:i+step]
             folder._compute_image_big()
             folder._compute_image_medium()
             folder._compute_image_small()
+            self.invalidate_cache()
 
     @api.multi
     def action_add_to_playlist(self):

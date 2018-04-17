@@ -122,6 +122,7 @@ class SubsonicREST():
 
     def build_dict_indexes_folder(self, folder):
         indexes_dict = {}
+        num_list = [str(x) for x in range(10)]
         for child in folder.child_ids:
             name = os.path.basename(child.path)
             if name[:4] in [e + ' ' for e in IGNORED_ARTICLES if len(e) == 3]:
@@ -130,7 +131,7 @@ class SubsonicREST():
                 index = name[3:][0]
             else:
                 index = name[0].upper()
-            if index in map(str, xrange(10)):
+            if index in num_list:
                 index = '#'
             elif not index.isalnum():
                 index = '?'
@@ -142,6 +143,7 @@ class SubsonicREST():
 
     def build_dict_indexes_artists(self, artists):
         indexes_dict = {}
+        num_list = [str(x) for x in range(10)]
         for artist in artists:
             name = artist.name
             if name[:4] in [e + ' ' for e in IGNORED_ARTICLES if len(e) == 3]:
@@ -150,7 +152,7 @@ class SubsonicREST():
                 index = name[3:][0]
             else:
                 index = name[0].upper()
-            if index in map(str, xrange(10)):
+            if index in num_list:
                 index = '#'
             elif not index.isalnum():
                 index = '?'
