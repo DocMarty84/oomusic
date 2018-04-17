@@ -60,18 +60,18 @@ class MusicArtist(models.Model):
             try:
                 _logger.debug("Retrieving image for artist %s...", artist.name)
                 for image in req_json['artist']['image']:
-                    if image['size'] == 'large':
+                    if image['size'] == 'large' and image['#text']:
                         image_content = urllib.request.urlopen(image['#text'], timeout=5).read()
                         resized_images = tools.image_get_resized_images(
                             base64.b64encode(image_content),
                             return_big=False, return_medium=True, return_small=False)
                         break
-            except:
-                _logger.warning('Error with image for artist "%s"', artist.name)
-                continue
+            except KeyError:
+                _logger.info('No image found for artist "%s" (id: %s)', artist.name, artist.id)
 
             # Avoid doing a write is nothing has to be done
             if not resized_images['image_medium'] and not artist.fm_image_cache:
+                _logger.info('No image found for artist "%s" (id: %s)', artist.name, artist.id)
                 continue
 
             artist.fm_image = resized_images['image_medium']
@@ -90,7 +90,7 @@ class MusicArtist(models.Model):
                 artist.fm_getinfo_bio = req_json['artist']['bio']['summary'].replace('\n', '<br/>')
             except KeyError:
                 artist.fm_getinfo_bio = _('Biography not found')
-                _logger.info("Could not find biography of \"%s\"!", artist.name)
+                _logger.info('Biography not found for artist "%s" (id: %s)', artist.name, artist.id)
 
     def _compute_fm_gettoptracks(self):
         # Create a global cache dict for all artists to avoid multiple search calls.
@@ -109,8 +109,8 @@ class MusicArtist(models.Model):
                 ]
                 artist.fm_gettoptracks_track_ids = t_tracks[:10]
             except KeyError:
-                _logger.info("Could not find top tracks of \"%s\"!", artist.name)
-                pass
+                _logger.info(
+                    'Top tracks not found for artist "%s" (id: %s)', artist.name, artist.id)
 
     def _compute_fm_getsimilar(self):
         for artist in self:
@@ -125,8 +125,8 @@ class MusicArtist(models.Model):
                         break
                 artist.fm_getsimilar_artist_ids = s_artists.ids
             except KeyError:
-                _logger.info("Could not find simialar artists \"%s\"!", artist.name)
-                pass
+                _logger.info(
+                    'Similar artists not found for artist "%s" (id: %s)', artist.name, artist.id)
 
     @api.multi
     def action_add_to_playlist(self):

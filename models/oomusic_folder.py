@@ -128,7 +128,10 @@ class MusicFolder(models.Model):
                 resized_images = tools.image_get_resized_images(
                     folder.image_folder, return_big=True, return_medium=False, return_small=False)
             except:
-                _logger.warning('Error with image in folder "%s"', folder.path)
+                _logger.warning(
+                    'Error with image in folder "%s" (id: %s)', folder.path, folder.id,
+                    exc_info=True
+                )
                 continue
 
             folder.image_big = resized_images['image']
@@ -155,7 +158,10 @@ class MusicFolder(models.Model):
                 resized_images = tools.image_get_resized_images(
                     folder.image_folder, return_big=False, return_medium=True, return_small=False)
             except:
-                _logger.warning('Error with image in folder "%s"', folder.path)
+                _logger.warning(
+                    'Error with image in folder "%s" (id: %s)', folder.path, folder.id,
+                    exc_info=True
+                )
                 continue
 
             folder.image_medium = resized_images['image_medium']
@@ -182,7 +188,10 @@ class MusicFolder(models.Model):
                 resized_images = tools.image_get_resized_images(
                     folder.image_folder, return_big=False, return_medium=False, return_small=True)
             except:
-                _logger.warning('Error with image in folder "%s"', folder.path)
+                _logger.warning(
+                    'Error with image in folder "%s" (id: %s)', folder.path, folder.id,
+                    exc_info=True
+                )
                 continue
 
             folder.image_small = resized_images['image_small']
@@ -272,7 +281,10 @@ class MusicFolder(models.Model):
             try:
                 self.env['oomusic.folder.scan']._scan_folder(folder.id)
             except:
-                continue
+                _logger.exception(
+                    'Error while scanning folder "%s" (id: %s)', folder.path, folder.id,
+                    exc_info=True
+                )
 
     @api.model
     def cron_build_image_cache(self):

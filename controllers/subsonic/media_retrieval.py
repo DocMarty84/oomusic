@@ -136,6 +136,8 @@ class MusicSubsonicMediaRetrieval(http.Controller):
                 if not found:
                     return rest.make_error(code='70', message='Cover art not found')
             except:
+                _logger.warning(
+                    'An error occurred while searching for folderId %s', folderId, exc_info=True)
                 folder = request.env['oomusic.folder']
         else:
             return rest.make_error(code='10', message='Required int parameter "id" is not present')

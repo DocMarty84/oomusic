@@ -312,7 +312,7 @@ class MusicFolderScan(models.TransientModel):
             if not song:
                 raise
         except:
-            _logger.warning('Error while opening file "%s"', file_path)
+            _logger.warning('Error while opening file "%s"', file_path, exc_info=True)
             return False, {}
         if tag.__name__ == 'taglib':
             return song, song.tags

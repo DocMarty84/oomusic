@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import logging
 from lxml import etree
 
 from odoo import http
 from odoo.http import request
 from .common import SubsonicREST
+
+_logger = logging.getLogger(__name__)
 
 
 class MusicSubsonicBrowsing(http.Controller):
@@ -36,7 +39,9 @@ class MusicSubsonicBrowsing(http.Controller):
         if ifModifiedSince:
             try:
                 ifModifiedSince = int(ifModifiedSince) // 1000
-            except:
+            except ValueError:
+                _logger.warn(
+                    'Could not convert param "ifModifiedSince" %s to integer', ifModifiedSince)
                 return rest.make_error(code='0', message='Invalid timestamp')
 
         musicFolderId = kwargs.get('musicFolderId')

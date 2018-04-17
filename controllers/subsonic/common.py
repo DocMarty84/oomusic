@@ -5,6 +5,7 @@ import hashlib
 import logging
 import mimetypes
 import os
+from pprint import pformat
 
 from collections import OrderedDict
 from lxml import etree
@@ -227,8 +228,11 @@ class SubsonicREST():
                 track_number = track.track_number.split('/')[0]
                 int(track_number)
                 elem_track.set('track', track_number)
-            except:
-                pass
+            except ValueError:
+                _logger.warn(
+                    'Could not convert track number %s of track id %s to integer',
+                    track.track_number, track.id
+                )
         if track.year:
             elem_track.set('year', track.year[:4])
         if track.genre_id:
@@ -248,8 +252,11 @@ class SubsonicREST():
                     disc = track.disc.split('/')[0]
                     int(disc)
                     elem_track.set('discNumber', disc)
-                except:
-                    pass
+                except ValueError:
+                    _logger.warn(
+                        'Could not convert disc number %s of track id %s to integer',
+                        track.disc, track.id
+                    )
             elem_track.set('created', track.create_date.replace(' ', 'T') + 'Z')
             if track.star == '1':
                 elem_track.set('starred', track.write_date.replace(' ', 'T') + 'Z')
@@ -292,8 +299,11 @@ class SubsonicREST():
                         disc = track.disc.split('/')[0]
                         int(disc)
                         elem_directory.set('discNumber', disc)
-                    except:
-                        pass
+                    except ValueError:
+                        _logger.warn(
+                            'Could not convert disc number %s of track id %s to integer',
+                            track.disc, track.id
+                        )
                 if track.album_id:
                     elem_directory.set('albumId', str(track.album_id.id))
                 if track.artist_id:
@@ -580,7 +590,10 @@ class SubsonicREST():
                 elem_song = self.make_Child_track(s_track, tag_name='song')
                 elem_song_similar.append(elem_song)
         except:
-            pass
+            _logger.warning(
+                'An error occurred while searching similar songs. json contains:\n%s',
+                pformat(req_json), exc_info=True
+            )
 
         return elem_song_similar
 
