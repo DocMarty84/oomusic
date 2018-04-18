@@ -44,6 +44,7 @@ class MusicTrack(models.Model):
     duration_min = fields.Float('Duration', readonly=True)
     bitrate = fields.Integer('Bitrate', readonly=True)
     path = fields.Char('Path', required=True, index=True, readonly=True)
+    size = fields.Float('File Size (MiB)', readonly=True)
     play_count = fields.Integer('Play Count', default=0, readonly=True)
     last_play = fields.Datetime('Last Played', index=True, readonly=True)
     last_modification = fields.Integer('Last Modification', readonly=True)

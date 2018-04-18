@@ -524,6 +524,7 @@ class MusicFolderScan(models.TransientModel):
                         else:
                             vals['bitrate'] = 0
                     vals['duration_min'] = float(vals['duration']) / 60
+                    vals['size'] = (os.path.getsize(fn_path) or 0.0) / (1024.0*1024.0)
                     vals['path'] = fn_path
                     vals['last_modification'] = mtime
                     vals['root_folder_id'] = folder_id

@@ -21,13 +21,35 @@
                         </h1>
                     </div>
                     <group>
-                        <field name="path"/>
-                        <field name="exclude_autoscan"/>
-                    </group>
-                    <group>
-                        <field name="last_scan" readonly="1"/>
-                        <field name="last_scan_duration" readonly="1" groups="base.group_no_one"/>
-                        <field name="locked" groups="base.group_no_one"/>
+                        <group>
+                            <field name="path"/>
+                            <field name="exclude_autoscan"/>
+                            <field name="last_scan" readonly="1"/>
+                            <field name="last_scan_duration" readonly="1" groups="base.group_no_one"/>
+                            <field name="locked" groups="base.group_no_one"/>
+                        </group>
+                        <group>
+                            <label for="root_total_artists" string="Library"/>
+                            <div>
+                                <field name="root_total_artists"/> artists
+                            </div>
+                            <label for="root_total_albums" string=""/>
+                            <div>
+                                <field name="root_total_albums"/> albums
+                            </div>
+                            <label for="root_total_tracks" string=""/>
+                            <div>
+                                <field name="root_total_tracks"/> tracks
+                            </div>
+                            <label for="root_total_duration" string=""/>
+                            <div>
+                                <field name="root_total_duration"/> hours
+                            </div>
+                            <label for="root_total_size" string=""/>
+                            <div>
+                                <field name="root_total_size"/> MiB
+                            </div>
+                        </group>
                     </group>
                 </sheet>
             </form>

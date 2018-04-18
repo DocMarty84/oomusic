@@ -49,6 +49,11 @@ class MusicFolder(models.Model):
         [('0', '0'), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')],
         'Rating', default='0',
     )
+    root_total_artists = fields.Integer('Total Artists', compute='_compute_root_total')
+    root_total_albums = fields.Integer('Total Albums', compute='_compute_root_total')
+    root_total_tracks = fields.Integer('Total Tracks', compute='_compute_root_total')
+    root_total_duration = fields.Integer('Total Duration', compute='_compute_root_total')
+    root_total_size = fields.Integer('Total Size', compute='_compute_root_total')
 
     image_folder = fields.Binary(
         'Folder Image', compute='_compute_image_folder',
@@ -92,6 +97,40 @@ class MusicFolder(models.Model):
             track_ids_in_playlist = folder.track_ids.filtered(lambda r: r.in_playlist is True)
             if folder.track_ids <= track_ids_in_playlist:
                 folder.in_playlist = True
+
+    def _compute_root_total(self):
+        for folder in self.filtered('root'):
+            self.env.cr.execute('''
+                SELECT COUNT(*) OVER()
+                FROM oomusic_artist AS a
+                JOIN oomusic_track AS t ON a.id = t.album_id
+                WHERE a.user_id = %s
+                    AND t.root_folder_id = %s
+                GROUP BY a.id
+            ''', (self.env.user.id, folder.id))
+            res_artists = self.env.cr.fetchall()
+            self.env.cr.execute('''
+                SELECT COUNT(*) OVER()
+                FROM oomusic_album AS a
+                JOIN oomusic_track AS t ON a.id = t.album_id
+                WHERE a.user_id = %s
+                    AND t.root_folder_id = %s
+                GROUP BY a.id
+            ''', (self.env.user.id, folder.id))
+            res_albums = self.env.cr.fetchall()
+            self.env.cr.execute('''
+                SELECT COUNT(t.id), SUM(duration_min)/60.0, SUM(size)
+                FROM oomusic_track AS t
+                WHERE t.user_id = %s
+                    AND t.root_folder_id = %s
+            ''', (self.env.user.id, folder.id))
+            res_tracks = self.env.cr.fetchall()
+
+            folder.root_total_artists = res_artists[0][0] if res_artists else 0
+            folder.root_total_albums = res_albums[0][0] if res_albums else 0
+            folder.root_total_tracks = res_tracks[0][0] if res_tracks else 0
+            folder.root_total_duration = res_tracks[0][1] if res_tracks else 0
+            folder.root_total_size = res_tracks[0][2] if res_tracks else 0
 
     def _compute_image_folder(self):
         accepted_names = ['folder', 'cover', 'front']
