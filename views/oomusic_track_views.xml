@@ -19,27 +19,26 @@
                     <div class="oe_title">
                         <h1>
                             <field name="name"/>
+                            <span>&amp;nbsp;</span>
+                            <field name="star" widget="priority"/>
                         </h1>
                     </div>
+                    <h3>
+                        <span>Song Infos</span>
+                    </h3>
                     <group>
                         <group>
                             <field name="artist_id" options="{'no_create': True}"/>
+                            <field name="album_artist_id" options="{'no_create': True}"/>
                             <field name="album_id" options="{'no_create': True}"/>
                             <field name="year"/>
                             <field name="genre_id" options="{'no_create': True}"/>
-                        </group>
-                        <group>
-                            <field name="star" widget="priority"/>
-                            <field name="rating"/>
-                            <field name="duration_min" widget="float_time"/>
                             <field name="track_number"/>
                             <field name="track_total"/>
                             <field name="disc"/>
                         </group>
-                    </group>
-                    <group>
                         <group>
-                            <field name="album_artist_id" options="{'no_create': True}"/>
+                            <field name="duration_min" widget="float_time"/>
                             <field name="description"/>
                             <field name="composer"/>
                             <field name="performer_id" options="{'no_create': True}"/>
@@ -47,16 +46,24 @@
                             <field name="contact"/>
                             <field name="encoded_by"/>
                         </group>
+                    </group>
+                    <h3>
+                        <span>File Infos</span>
+                    </h3>
+                    <group>
                         <group>
+                            <field name="rating" widget="priority"/>
                             <field name="play_count"/>
                             <field name="last_play"/>
-                            <field name="bitrate"/>
                             <field name="last_modification" groups="base.group_no_one"/>
+                        </group>
+                        <group>
+                            <field name="bitrate"/>
+                            <field name="size"/>
                         </group>
                     </group>
                     <group>
                         <field name="path"/>
-                        <field name="size"/>
                     </group>
                     <notebook>
                        <page string="Download Links">
