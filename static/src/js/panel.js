@@ -51,6 +51,7 @@ var Panel = Widget.extend({
         this.duration = 1;
         this.user_seek = 0;
         this.sound_seek = 0;
+        this.sound_seek_last_played = 0;
 
         // ========================================================================================
         // Bus events
@@ -479,7 +480,13 @@ var Panel = Widget.extend({
     },
 
     _onEnded: function () {
-        if (this.repeat) {
+        // It might happen that the song stops playing for no apparent reason, then switch to the
+        // next one. Try to mitigate this by checking that it ended no more than 10 seconds before
+        // the end.
+        if (this.duration - this.user_seek - this.sound_seek_last_played > 10) {
+            this._clearCache();
+            this.playSeek(Math.floor(this.user_seek + this.sound_seek_last_played));
+        } else if (this.repeat) {
             this.stop(true, true);
         } else {
             this.next(this.current_playlist_line_id);
