@@ -5,6 +5,7 @@ import imghdr
 import json
 import logging
 import os
+from psycopg2 import OperationalError
 from random import sample
 
 from odoo import fields, models, api, tools, _
@@ -183,9 +184,16 @@ class MusicFolder(models.Model):
             # Save in cache
             with self.pool.cursor() as cr:
                 new_self = self.with_env(self.env(cr=cr))
-                new_self.env['oomusic.folder'].browse(folder.id).sudo().write({
-                    'image_big_cache': resized_images['image'],
-                })
+                try:
+                    new_self.env['oomusic.folder'].browse(folder.id).sudo().write({
+                        'image_big_cache': resized_images['image'],
+                    })
+                except OperationalError:
+                    _logger.warning(
+                        'Error when writing image cache for folder id: %s', folder.id,
+                        exc_info=True
+                    )
+                    continue
 
     @api.depends('image_folder')
     def _compute_image_medium(self):
@@ -213,9 +221,16 @@ class MusicFolder(models.Model):
             # Save in cache
             with self.pool.cursor() as cr:
                 new_self = self.with_env(self.env(cr))
-                new_self.env['oomusic.folder'].browse(folder.id).sudo().write({
-                    'image_medium_cache': resized_images['image_medium'],
-                })
+                try:
+                    new_self.env['oomusic.folder'].browse(folder.id).sudo().write({
+                        'image_medium_cache': resized_images['image_medium'],
+                    })
+                except OperationalError:
+                    _logger.warning(
+                        'Error when writing image cache for folder id: %s', folder.id,
+                        exc_info=True
+                    )
+                    continue
 
     @api.depends('image_folder')
     def _compute_image_small(self):
@@ -243,9 +258,16 @@ class MusicFolder(models.Model):
             # Save in cache
             with self.pool.cursor() as cr:
                 new_self = self.with_env(self.env(cr=cr))
-                new_self.env['oomusic.folder'].browse(folder.id).sudo().write({
-                    'image_small_cache': resized_images['image_small'],
-                })
+                try:
+                    new_self.env['oomusic.folder'].browse(folder.id).sudo().write({
+                        'image_small_cache': resized_images['image_small'],
+                    })
+                except OperationalError:
+                    _logger.warning(
+                        'Error when writing image cache for folder id: %s', folder.id,
+                        exc_info=True
+                    )
+                    continue
 
     def _set_image_big(self):
         for folder in self:
