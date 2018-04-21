@@ -9,6 +9,7 @@
             <field name="interval_number">1</field>
             <field name="interval_type">months</field>
             <field name="numbercall">-1</field>
+            <field name="nextcall" eval="((datetime.now() + timedelta(days=4)).replace(hour=4, minute=20, second=0)).strftime('%Y-%m-%d %H:%M:%S')" />
             <field name="doall" eval="False"/>
             <field name="model_id" ref="oomusic.model_oomusic_artist"/>
             <field name="state">code</field>

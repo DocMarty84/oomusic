@@ -3,6 +3,7 @@
 import base64
 import json
 import logging
+from random import sample
 import urllib.request
 
 from odoo import fields, models, api, tools, _
@@ -69,9 +70,8 @@ class MusicArtist(models.Model):
             except KeyError:
                 _logger.info('No image found for artist "%s" (id: %s)', artist.name, artist.id)
 
-            # Avoid doing a write is nothing has to be done
-            if not resized_images['image_medium'] and not artist.fm_image_cache:
-                _logger.info('No image found for artist "%s" (id: %s)', artist.name, artist.id)
+            # Avoid useless save in cache
+            if resized_images['image_medium'] == artist.fm_image_cache:
                 continue
 
             artist.fm_image = resized_images['image_medium']
@@ -140,10 +140,15 @@ class MusicArtist(models.Model):
 
     @api.model
     def cron_build_image_cache(self):
-        artists = self.search([]).with_context(build_cache=True, prefetch_fields=False)
-        step = 50
-        for i in range(0, len(artists), step):
-            artist = artists[i:i+step]
+        # Build a random sample of 500 artists to compute the images for. Every 50, the cache is
+        # flushed.
+        size_sample = 500
+        size_step = 50
+        artists = self.search([]).with_context(prefetch_fields=False)
+        artists_sample = sample(artists.ids, min(size_sample, len(artists)))
+        artists = self.browse(artists_sample).with_context(build_cache=True, prefetch_fields=False)
+        for i in range(0, len(artists), size_step):
+            artist = artists[i:i+size_step]
             artist._compute_fm_image()
             self.invalidate_cache()
 

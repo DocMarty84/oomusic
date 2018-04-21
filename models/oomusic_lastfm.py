@@ -3,6 +3,7 @@
 import datetime
 import hashlib
 import logging
+from random import sample
 import time
 
 import requests
@@ -32,7 +33,7 @@ class MusicLastfm(models.Model):
         # Get LastFM key and cache duration
         ConfigParam = self.env['ir.config_parameter'].sudo()
         fm_key = ConfigParam.get_param('oomusic.lastfm_key')
-        fm_cache = int(ConfigParam.get_param('oomusic.lastfm_cache', 14))
+        fm_cache = int(ConfigParam.get_param('oomusic.lastfm_cache', 112))
         if not fm_key:
             return
 
@@ -78,11 +79,12 @@ class MusicLastfm(models.Model):
 
     @api.model
     def cron_build_lastfm_cache(self):
-        # Build cache for artists
+        # Build cache for artists. Limit to 200 artists chosen randomly to avoid running for
+        # unexpectedly long periods of time.
         self.env.cr.execute('SELECT name from oomusic_artist')
         res = self.env.cr.fetchall()
         artists = {r[0] for r in res}
-        for artist in artists:
+        for artist in sample(artists, min(200, len(artists))):
             _logger.debug("Gettting LastFM cache for artist \"%s\"...", artist)
             url = 'https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=' + artist
             self.get_query(url)

@@ -5,6 +5,7 @@ import imghdr
 import json
 import logging
 import os
+from random import sample
 
 from odoo import fields, models, api, tools, _
 from odoo.exceptions import UserError
@@ -327,11 +328,15 @@ class MusicFolder(models.Model):
 
     @api.model
     def cron_build_image_cache(self):
-        # Do not loop on the complete recordset to avoid hitting memory limit.
-        folders = self.search([]).with_context(build_cache=True, prefetch_fields=False)
-        step = 50
-        for i in range(0, len(folders), step):
-            folder = folders[i:i+step]
+        # Build a random sample of 500 folders to compute the images for. Every 50, the cache is
+        # flushed.
+        size_sample = 500
+        size_step = 50
+        folders = self.search([]).with_context(prefetch_fields=False)
+        folders_sample = sample(folders.ids, min(size_sample, len(folders)))
+        folders = self.browse(folders_sample).with_context(build_cache=True, prefetch_fields=False)
+        for i in range(0, len(folders), size_step):
+            folder = folders[i:i+size_step]
             folder._compute_image_big()
             folder._compute_image_medium()
             folder._compute_image_small()
