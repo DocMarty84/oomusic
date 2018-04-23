@@ -23,6 +23,7 @@
                             <field name="public"/>
                             <field name="norm"/>
                             <field name="raw"/>
+                            <field name="audio"/>
                         </group>
                     </group>
                     <group class="oe_edit_only">

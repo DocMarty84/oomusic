@@ -347,7 +347,7 @@ var Panel = Widget.extend({
         var self = this;
         return new Howl({
             src: data_json.src,
-            html5: true,
+            html5: data_json.audio === 'web' ? false : true,
             onend: function () {
                 self._onEnded();
             }

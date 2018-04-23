@@ -35,6 +35,13 @@ class MusicPlaylist(models.Model):
         help='Do not transcode audio files. It decreases the server load, '
              'at the cost of a higher network usage.'
     )
+    audio = fields.Selection(
+        [('html', 'HTML5 Audio'), ('web', 'Web Audio API')], 'Audio API', default='html',
+        help='API used for audio playback.\n'
+             '- HTML5 Audio: no need to download the full file before starting the playback.\n'
+             '- Web Audio API: need to download the full file before starting the playback. More \n'
+             'reliable than HTML5, but longer gaps between tracks.'
+    )
     playlist_line_ids = fields.One2many(
         'oomusic.playlist.line', 'playlist_id', string='Tracks', copy=True)
     album_id = fields.Many2one(
@@ -84,6 +91,10 @@ class MusicPlaylist(models.Model):
         self._add_tracks(self.artist_id.track_ids, onchange=True)
         self.artist_id = False
         return {}
+
+    @api.onchange('audio')
+    def _onchange_audio(self):
+        self.raw = True if self.audio == 'web' else False
 
     @api.constrains('norm', 'raw')
     def _check_norm_raw(self):
@@ -204,6 +215,7 @@ class MusicPlaylistLine(models.Model):
             return json.dumps(res)
 
         res['playlist_line_id'] = self.id
+        res['audio'] = self.playlist_id.audio
         track_info = self.track_id._oomusic_info(
             seek=seek, norm=self.playlist_id.norm, raw=self.playlist_id.raw
         )
