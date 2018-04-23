@@ -21,7 +21,7 @@ class MusicPlaylist(models.Model):
         default=lambda self: self.env.user
     )
     comment = fields.Char('Comment')
-    current = fields.Boolean('Current', default=lambda self: self._default_current())
+    current = fields.Boolean('Current', default=lambda self: self._default_current(), copy=False)
     public = fields.Boolean('Shared', default=False)
     norm = fields.Boolean(
         'Normalize', default=False,
