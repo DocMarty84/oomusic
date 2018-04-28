@@ -20,7 +20,6 @@
                             <field name="current" readonly="1"/>
                         </group>
                         <group>
-                            <field name="public"/>
                             <field name="norm"/>
                             <field name="raw"/>
                             <field name="audio"/>

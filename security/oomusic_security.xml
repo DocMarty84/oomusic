@@ -31,10 +31,10 @@
         <field name="domain_force">[('user_id', '=', user.id)]</field>
     </record>
     <record id="oomusic_playlist" model="ir.rule">
-        <field name="name">oomusic.playlist: see own and public playlists</field>
+        <field name="name">oomusic.playlist: see own playlists</field>
         <field name="model_id" ref="model_oomusic_playlist"/>
         <field name="groups" eval="[(4, ref('base.group_user'))]"/>
-        <field name="domain_force">['|', ('user_id', '=', user.id), ('public', '=', True)]</field>
+        <field name="domain_force">[('user_id', '=', user.id)]</field>
     </record>
     <record id="oomusic_track" model="ir.rule">
         <field name="name">oomusic.track: see own tracks</field>

@@ -22,7 +22,6 @@ class MusicPlaylist(models.Model):
     )
     comment = fields.Char('Comment')
     current = fields.Boolean('Current', default=lambda self: self._default_current(), copy=False)
-    public = fields.Boolean('Shared', default=False)
     norm = fields.Boolean(
         'Normalize', default=False,
         help='Normalize playlist loudness thanks to the EBU R128 normalization. It requires '
