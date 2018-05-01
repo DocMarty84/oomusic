@@ -48,7 +48,7 @@ class MusicDownload(models.Model):
         default=lambda self: self.env.user
     )
 
-    @api.depends('res_model', 'res_id', 'access_token', 'flatten')
+    @api.depends('access_token')
     def _compute_url(self):
         base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
         for down in self:

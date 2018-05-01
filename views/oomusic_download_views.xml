@@ -6,8 +6,9 @@
         <field name="arch" type="xml">
             <form string="Download Link">
                 <sheet>
+                    <field name="access_token" invisible="1"/>
                     <group>
-                        <field name="url" readonly="1"/>
+                        <field name="url"/>
                         <field name="note"/>
                         <field name="expiration_date"/>
                         <field name="flatten"/>
