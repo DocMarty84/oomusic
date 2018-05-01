@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0\n"
+"Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-03 07:30+0000\n"
-"PO-Revision-Date: 2018-03-03 07:30+0000\n"
+"POT-Creation-Date: 2018-05-01 15:57+0000\n"
+"PO-Revision-Date: 2018-05-01 15:57+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -17,21 +17,51 @@ msgstr ""
 
 #. module: oomusic
 #. openerp-web
-#: code:addons/oomusic/static/src/js/browse.js:78
-#: code:addons/oomusic/static/src/js/browse.js:91
+#: code:addons/oomusic/static/src/js/browse.js:86
+#: code:addons/oomusic/static/src/js/browse.js:102
 #, python-format
 msgid "\" added to playlist."
 msgstr ""
 
 #. module: oomusic
-#: code:addons/oomusic/models/oomusic_playlist.py:88
+#: code:addons/oomusic/models/oomusic_playlist.py:102
 #, python-format
 msgid "'Normalize' and 'No Transcoding' are mutually exclusive options. Please activate only one of the two options."
 msgstr ""
 
 #. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_album_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_artist_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_track_view_form
+msgid "<span>&amp;nbsp;</span>"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_track_view_form
+msgid "<span>File Infos</span>"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_track_view_form
+msgid "<span>Song Infos</span>"
+msgstr ""
+
+#. module: oomusic
 #: model:ir.actions.act_window,help:oomusic.action_converter
 msgid "A converter is used to perform batch conversion of the..."
+msgstr ""
+
+#. module: oomusic
+#: model:ir.model.fields,help:oomusic.field_oomusic_playlist_audio
+msgid "API used for audio playback.\n"
+"- HTML5 Audio: no need to download the full file before starting the playback.\n"
+"- Web Audio API: need to download the full file before starting the playback. More \n"
+"reliable than HTML5, but longer gaps between tracks."
+msgstr ""
+
+#. module: oomusic
+#: model:ir.model.fields,help:oomusic.field_oomusic_download_access_token
+msgid "Access token to access the files"
 msgstr ""
 
 #. module: oomusic
@@ -186,6 +216,11 @@ msgid "At least one playlist is required. You can easily add the tracks to the p
 msgstr ""
 
 #. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_audio
+msgid "Audio API"
+msgstr ""
+
+#. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album_image_big
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_image_big
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_image_big_cache
@@ -198,14 +233,14 @@ msgid "Biography"
 msgstr ""
 
 #. module: oomusic
-#: code:addons/oomusic/models/oomusic_artist.py:93
+#: code:addons/oomusic/models/oomusic_artist.py:100
 #, python-format
 msgid "Biography not found"
 msgstr ""
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track_bitrate
-msgid "Bitrate"
+msgid "Bitrate (kbps)"
 msgstr ""
 
 #. module: oomusic
@@ -221,7 +256,7 @@ msgstr ""
 
 #. module: oomusic
 #. openerp-web
-#: code:addons/oomusic/static/src/js/browse.js:62
+#: code:addons/oomusic/static/src/js/browse.js:67
 #: model:ir.actions.client,name:oomusic.action_oomusic_browse
 #: model:ir.ui.menu,name:oomusic.menu_action_oomusic_browse
 #, python-format
@@ -266,6 +301,7 @@ msgstr ""
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_comment
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_download_note
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_comment
 msgid "Comment"
 msgstr ""
@@ -311,7 +347,16 @@ msgstr ""
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album_create_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track_create_date
-msgid "Create date"
+msgid "Create Date"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_album_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_artist_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_genre_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_playlist_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_track_view_form
+msgid "Create Link"
 msgstr ""
 
 #. module: oomusic
@@ -319,6 +364,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_create_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_create_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line_create_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_download_create_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_create_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_scan_create_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_format_create_uid
@@ -336,6 +382,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_create_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_create_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line_create_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_download_create_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_create_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_scan_create_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_format_create_date
@@ -392,6 +439,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_display_name
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_display_name
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line_display_name
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_download_display_name
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_download_mixin_display_name
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_display_name
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_scan_display_name
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_format_display_name
@@ -418,19 +467,71 @@ msgid "Do not transcode audio files. It decreases the server load, at the cost o
 msgstr ""
 
 #. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_download_res_id
+msgid "Document"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_download_res_model
+msgid "Document Model"
+msgstr ""
+
+#. module: oomusic
 #: selection:oomusic.converter,state:0
 #: selection:oomusic.converter.line,state:0
 msgid "Done"
 msgstr ""
 
 #. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_album_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_artist_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_genre_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_playlist_view_form
 #: model:ir.ui.view,arch_db:oomusic.oomusic_track_view_form
 msgid "Download"
 msgstr ""
 
 #. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_download_view_form
+msgid "Download Link"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.actions.act_window,name:oomusic.action_download
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_album_download_ids
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_download_ids
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_download_mixin_download_ids
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_genre_download_ids
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_download_ids
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_download_ids
+#: model:ir.ui.menu,name:oomusic.menu_action_download
+#: model:ir.ui.view,arch_db:oomusic.oomusic_album_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_artist_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_download_view_tree
+#: model:ir.ui.view,arch_db:oomusic.oomusic_download_view_tree_main
+#: model:ir.ui.view,arch_db:oomusic.oomusic_genre_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_playlist_view_form
 #: model:ir.ui.view,arch_db:oomusic.oomusic_track_view_form
-msgid "Download the original file. You should allow pop-up from this URL!"
+msgid "Download Links"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.model,name:oomusic.model_oomusic_download_mixin
+msgid "Download Mixin"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.model,name:oomusic.model_oomusic_download
+msgid "Download links"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_album_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_artist_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_genre_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_playlist_view_form
+#: model:ir.ui.view,arch_db:oomusic.oomusic_track_view_form
+msgid "Download the track(s). You should allow pop-up from this URL!"
 msgstr ""
 
 #. module: oomusic
@@ -491,6 +592,16 @@ msgid "Exclude this folder from the automatized scheduled scan. Useful if the fo
 msgstr ""
 
 #. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_download_expiration_date
+msgid "Expiration Date"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_download_expired
+msgid "Expired"
+msgstr ""
+
+#. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_lastfm_expiry_date
 msgid "Expiry Date"
 msgstr ""
@@ -507,6 +618,16 @@ msgid "Favorite"
 msgstr ""
 
 #. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_track_size
+msgid "File Size (MiB)"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_download_flatten
+msgid "Flatten"
+msgstr ""
+
+#. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album_folder_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track_folder_id
 #: model:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form
@@ -515,7 +636,7 @@ msgstr ""
 
 #. module: oomusic
 #. openerp-web
-#: code:addons/oomusic/static/src/js/browse.js:78
+#: code:addons/oomusic/static/src/js/browse.js:86
 #, python-format
 msgid "Folder \""
 msgstr ""
@@ -538,7 +659,7 @@ msgstr ""
 
 #. module: oomusic
 #. openerp-web
-#: code:addons/oomusic/static/src/js/browse.js:77
+#: code:addons/oomusic/static/src/js/browse.js:85
 #, python-format
 msgid "Folder added"
 msgstr ""
@@ -596,6 +717,11 @@ msgid "Group By"
 msgstr ""
 
 #. module: oomusic
+#: selection:oomusic.playlist,audio:0
+msgid "HTML5 Audio"
+msgstr ""
+
+#. module: oomusic
 #. openerp-web
 #: code:addons/oomusic/static/src/xml/panel.xml:66
 #: selection:oomusic.album,star:0
@@ -611,6 +737,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line_id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_download_id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_download_mixin_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_scan_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_format_id
@@ -622,6 +750,16 @@ msgstr ""
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder_id
 msgid "ID"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.model.fields,help:oomusic.field_oomusic_download_res_id
+msgid "Identifier of the downloaded object"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.model.fields,help:oomusic.field_oomusic_download_flatten
+msgid "If activated, all tracks will be in the root folder of the ZIP file."
 msgstr ""
 
 #. module: oomusic
@@ -675,6 +813,11 @@ msgid "Input formats which cannot be converted using this transcoder."
 msgstr ""
 
 #. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_download_access_date
+msgid "Last Access Date"
+msgstr ""
+
+#. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_last_modification
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track_last_modification
 msgid "Last Modification"
@@ -685,6 +828,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist___last_update
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter___last_update
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line___last_update
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_download___last_update
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_download_mixin___last_update
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder___last_update
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_scan___last_update
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_format___last_update
@@ -715,6 +860,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_write_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line_write_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_write_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_download_write_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_scan_write_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_write_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_format_write_uid
@@ -733,6 +879,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_write_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line_write_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_write_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_download_write_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_scan_write_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_write_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_format_write_date
@@ -760,6 +907,7 @@ msgstr ""
 
 #. module: oomusic
 #: model:ir.ui.menu,name:oomusic.menu_oomusic_library
+#: model:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form
 msgid "Library"
 msgstr ""
 
@@ -781,8 +929,28 @@ msgid "Medium-sized image"
 msgstr ""
 
 #. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form
+msgid "MiB"
+msgstr ""
+
+#. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_format_mimetype
 msgid "Mimetype"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_download_min_delay
+msgid "Minimum Delay"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.model.fields,help:oomusic.field_oomusic_download_min_delay
+msgid "Minimum delay in seconds between consecutive accesses."
+msgstr ""
+
+#. module: oomusic
+#: model:ir.model.fields,help:oomusic.field_oomusic_download_res_model_id
+msgid "Model of the followed resource"
 msgstr ""
 
 #. module: oomusic
@@ -883,10 +1051,10 @@ msgid "No auto-scan"
 msgstr ""
 
 #. module: oomusic
-#: code:addons/oomusic/models/oomusic_album.py:50
-#: code:addons/oomusic/models/oomusic_artist.py:138
-#: code:addons/oomusic/models/oomusic_folder.py:292
-#: code:addons/oomusic/models/oomusic_track.py:74
+#: code:addons/oomusic/models/oomusic_album.py:53
+#: code:addons/oomusic/models/oomusic_artist.py:143
+#: code:addons/oomusic/models/oomusic_folder.py:371
+#: code:addons/oomusic/models/oomusic_track.py:114
 #, python-format
 msgid "No current playlist found!"
 msgstr ""
@@ -938,13 +1106,6 @@ msgid "Path"
 msgstr ""
 
 #. module: oomusic
-#. openerp-web
-#: code:addons/oomusic/static/src/js/widget.js:23
-#, python-format
-msgid "Play"
-msgstr ""
-
-#. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track_play_count
 msgid "Play Count"
 msgstr ""
@@ -980,7 +1141,6 @@ msgstr ""
 
 #. module: oomusic
 #. openerp-web
-#: code:addons/oomusic/static/src/js/widget.js:40
 #: code:addons/oomusic/static/src/xml/browse.xml:19
 #, python-format
 msgid "Preview"
@@ -1017,6 +1177,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion_track_recently_added
 #: model:ir.ui.view,arch_db:oomusic.oomusic_suggestion_view_form
 msgid "Recently Added"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_download_res_model_id
+msgid "Related Document Model"
 msgstr ""
 
 #. module: oomusic
@@ -1067,6 +1232,16 @@ msgid "Scan Duration (s)"
 msgstr ""
 
 #. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_download_access_token
+msgid "Security Token"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.model.fields,help:oomusic.field_oomusic_download_url
+msgid "Send this URL to your contacts so they will download the tracks."
+msgstr ""
+
+#. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line_sequence
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line_sequence
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder_sequence
@@ -1091,11 +1266,6 @@ msgstr ""
 #. module: oomusic
 #: model:ir.actions.act_window,help:oomusic.action_folder
 msgid "Set-up the music directories to scan."
-msgstr ""
-
-#. module: oomusic
-#: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_public
-msgid "Shared"
 msgstr ""
 
 #. module: oomusic
@@ -1145,6 +1315,11 @@ msgid "Suggestions"
 msgstr ""
 
 #. module: oomusic
+#: model:ir.model.fields,help:oomusic.field_oomusic_download_expiration_date
+msgid "The link will be deactivated after this date."
+msgstr ""
+
+#. module: oomusic
 #: model:ir.ui.view,arch_db:oomusic.oomusic_converter_view_form
 msgid "The track conversion will automatically start within a few minutes."
 msgstr ""
@@ -1166,6 +1341,12 @@ msgid "Title"
 msgstr ""
 
 #. module: oomusic
+#: code:addons/oomusic/controllers/main.py:32
+#, python-format
+msgid "Too many requests received. Please try again in a few minutes."
+msgstr ""
+
+#. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_root
 msgid "Top Level Folder"
 msgstr ""
@@ -1177,6 +1358,27 @@ msgid "Top Tracks"
 msgstr ""
 
 #. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_root_total_albums
+msgid "Total Albums"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_root_total_artists
+msgid "Total Artists"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_root_total_duration
+msgid "Total Duration"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_root_total_size
+msgid "Total Size"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_root_total_tracks
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track_track_total
 msgid "Total Tracks"
 msgstr ""
@@ -1190,7 +1392,7 @@ msgstr ""
 
 #. module: oomusic
 #. openerp-web
-#: code:addons/oomusic/static/src/js/browse.js:91
+#: code:addons/oomusic/static/src/js/browse.js:102
 #, python-format
 msgid "Track \""
 msgstr ""
@@ -1205,7 +1407,7 @@ msgstr ""
 
 #. module: oomusic
 #. openerp-web
-#: code:addons/oomusic/static/src/js/browse.js:90
+#: code:addons/oomusic/static/src/js/browse.js:101
 #, python-format
 msgid "Track added"
 msgstr ""
@@ -1265,6 +1467,7 @@ msgid "Turn shuffle on"
 msgstr ""
 
 #. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_download_url
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_lastfm_url
 msgid "URL"
 msgstr ""
@@ -1284,6 +1487,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_user_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line_user_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_user_id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_download_user_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder_user_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_genre_user_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line_user_id
@@ -1300,6 +1504,11 @@ msgstr ""
 #. module: oomusic
 #: selection:oomusic.converter.line,state:0
 msgid "Waiting"
+msgstr ""
+
+#. module: oomusic
+#: selection:oomusic.playlist,audio:0
+msgid "Web Audio API"
 msgstr ""
 
 #. module: oomusic
@@ -1326,6 +1535,11 @@ msgstr ""
 #: model:ir.actions.act_window,help:oomusic.action_current_playlist
 msgid "You can create your first playlist from the \"Playlists\" menu, and set it as\n"
 "                \"Current\" so the tracks will appear here."
+msgstr ""
+
+#. module: oomusic
+#: model:ir.actions.act_window,help:oomusic.action_download
+msgid "You can define download links for tracks, albums, artists, genres and playlists."
 msgstr ""
 
 #. module: oomusic
@@ -1378,5 +1592,60 @@ msgstr ""
 msgid "Your music wil be automatically organized by album and artist in the corresponding\n"
 "                menu. Scanning a directory is usually quite fast, taking around 30 seconds to scan\n"
 "                1,000 files."
+msgstr ""
+
+#. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form
+msgid "albums"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form
+msgid "artists"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form
+msgid "hours"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.actions.server,name:oomusic.oomusic_build_artists_image_cache_ir_actions_server
+#: model:ir.cron,cron_name:oomusic.oomusic_build_artists_image_cache
+#: model:ir.cron,name:oomusic.oomusic_build_artists_image_cache
+msgid "oomusic.build.artists.image.cache"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.actions.server,name:oomusic.oomusic_build_image_cache_ir_actions_server
+#: model:ir.cron,cron_name:oomusic.oomusic_build_image_cache
+#: model:ir.cron,name:oomusic.oomusic_build_image_cache
+msgid "oomusic.build.image.cache"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.actions.server,name:oomusic.oomusic_build_lastfm_cache_ir_actions_server
+#: model:ir.cron,cron_name:oomusic.oomusic_build_lastfm_cache
+#: model:ir.cron,name:oomusic.oomusic_build_lastfm_cache
+msgid "oomusic.build.lastfm.cache"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.actions.server,name:oomusic.oomusic_convert_ir_actions_server
+#: model:ir.cron,cron_name:oomusic.oomusic_convert
+#: model:ir.cron,name:oomusic.oomusic_convert
+msgid "oomusic.convert"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.actions.server,name:oomusic.oomusic_scan_folder_ir_actions_server
+#: model:ir.cron,cron_name:oomusic.oomusic_scan_folder
+#: model:ir.cron,name:oomusic.oomusic_scan_folder
+msgid "oomusic.scan.folder"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form
+msgid "tracks"
 msgstr ""
 

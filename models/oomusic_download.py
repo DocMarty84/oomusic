@@ -29,7 +29,7 @@ class MusicDownload(models.Model):
         string='Document', required=True, help='Identifier of the downloaded object')
     access_token = fields.Char(
         'Security Token', index=True, default=lambda s: s._default_access_token(),
-        help='Access token to set the rating of the value')
+        help='Access token to access the files')
     note = fields.Char('Comment')
     flatten = fields.Boolean(
         'Flatten', help='If activated, all tracks will be in the root folder of the ZIP file.')
