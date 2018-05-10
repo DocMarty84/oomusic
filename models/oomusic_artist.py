@@ -146,6 +146,13 @@ class MusicArtist(models.Model):
         for artist in self:
             playlist._add_tracks(artist.track_ids)
 
+    def action_reload_info(self):
+        for artist in self:
+            artist._lastfm_artist_getinfo(force=True)
+            artist._lastfm_artist_getsimilar(force=True)
+            artist._lastfm_artist_gettoptracks(force=True)
+            artist.with_context(build_cache=True)._compute_fm_image()
+
     @api.model
     def cron_build_image_cache(self):
         # Build a random sample of 500 artists to compute the images for. Every 50, the cache is
@@ -160,17 +167,17 @@ class MusicArtist(models.Model):
             artist._compute_fm_image()
             self.invalidate_cache()
 
-    def _lastfm_artist_getinfo(self):
+    def _lastfm_artist_getinfo(self, force=False):
         self.ensure_one()
         url = 'https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=' + self.name
-        return json.loads(self.env['oomusic.lastfm'].get_query(url))
+        return json.loads(self.env['oomusic.lastfm'].get_query(url, force=force))
 
-    def _lastfm_artist_getsimilar(self):
+    def _lastfm_artist_getsimilar(self, force=False):
         self.ensure_one()
         url = 'https://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist=' + self.name
-        return json.loads(self.env['oomusic.lastfm'].get_query(url))
+        return json.loads(self.env['oomusic.lastfm'].get_query(url, force=force))
 
-    def _lastfm_artist_gettoptracks(self):
+    def _lastfm_artist_gettoptracks(self, force=False):
         self.ensure_one()
         url = 'https://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=' + self.name
-        return json.loads(self.env['oomusic.lastfm'].get_query(url))
+        return json.loads(self.env['oomusic.lastfm'].get_query(url, force=force))

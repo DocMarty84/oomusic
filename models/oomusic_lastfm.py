@@ -29,7 +29,7 @@ class MusicLastfm(models.Model):
         ('oomusic_lastfm_name_uniq', 'unique(name)', 'URL hash must be unique!'),
     ]
 
-    def get_query(self, url, sleep=0.0):
+    def get_query(self, url, sleep=0.0, force=False):
         # Get LastFM key and cache duration
         ConfigParam = self.env['ir.config_parameter'].sudo()
         fm_key = ConfigParam.get_param('oomusic.lastfm_key')
@@ -42,7 +42,7 @@ class MusicLastfm(models.Model):
 
         new_cr = self.pool.cursor()
         Lastfm = self.with_env(self.env(cr=new_cr)).search([('name', '=', url_hash)])
-        if not Lastfm or Lastfm.expiry_date < fields.Datetime.now():
+        if force or not Lastfm or Lastfm.expiry_date < fields.Datetime.now():
             content = '{}'
             try:
                 time.sleep(sleep)

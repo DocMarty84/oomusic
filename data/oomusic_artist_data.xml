@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <data>
+        <record id="oomusic_artist_reload_info" model="ir.actions.server">
+            <field name="name">Update LastFM Info</field>
+            <field name="model_id" ref="model_oomusic_artist"/>
+            <field name="binding_model_id" ref="model_oomusic_artist"/>
+            <field name="state">code</field>
+            <field name="code">
+if env.context.get('active_ids'):
+    Artist = model.browse(env.context['active_ids'])
+    Artist.action_reload_info()
+            </field>
+        </record>
+    </data>
     <data noupdate="1">
         <!-- Cron to build image cache -->
         <record id="oomusic_build_artists_image_cache" model="ir.cron">
