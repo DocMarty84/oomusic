@@ -608,6 +608,7 @@ msgstr "Pas d'auto-scan"
 #: code:addons/oomusic/models/oomusic_album.py:53
 #: code:addons/oomusic/models/oomusic_artist.py:143
 #: code:addons/oomusic/models/oomusic_folder.py:371
+#: code:addons/oomusic/models/oomusic_folder.py:374
 #: code:addons/oomusic/models/oomusic_track.py:114
 msgid "No current playlist found!"
 msgstr "Aucune liste de lecture courante trouvée !"
@@ -1589,4 +1590,14 @@ msgstr "pistes"
 #: model:ir.model.fields,help:oomusic.field_oomusic_download_access_token
 msgid "Access token to access the files"
 msgstr "Jeton d'accès aux fichiers"
+
+#. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form
+msgid "Unlock"
+msgstr "Déverrouiller"
+
+#. module: oomusic
+#: model:ir.actions.server,name:oomusic.oomusic_artist_reload_info
+msgid "Update LastFM Info"
+msgstr "Mettre à jour les infos LastFM"
 
