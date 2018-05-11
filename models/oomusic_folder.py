@@ -337,6 +337,9 @@ class MusicFolder(models.Model):
                 )
             self.env['oomusic.folder.scan'].scan_folder_th(folder_id)
 
+    def action_unlock(self):
+        return self.write({'locked': False})
+
     @api.model
     def cron_scan_folder(self):
         for folder in self.search([('root', '=', True), ('exclude_autoscan', '=', False)]):

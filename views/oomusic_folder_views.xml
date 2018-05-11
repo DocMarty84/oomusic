@@ -6,14 +6,19 @@
         <field name="arch" type="xml">
             <form string="Folder">
                 <header>
-                    <button name="action_scan_folder" string="Scan" type="object"/>
+                    <button name="action_scan_folder" string="Scan" type="object"
+                        attrs="{'invisible': [('locked', '=', True)]}"/>
                     <button name="action_scan_folder_full" string="Force Full Scan"
-                        type="object" groups="base.group_no_one"/>
+                        type="object" groups="base.group_no_one"
+                        attrs="{'invisible': [('locked', '=', True)]}"/>
+                    <button name="action_unlock" string="Unlock" type="object"
+                        attrs="{'invisible': [('locked', '=', False)]}"/>
                 </header>
                 <div class="alert alert-danger" role="alert" style="margin-bottom:0px;" attrs="{'invisible': [('locked', '=', False)]}">
                     This folder is being scanned. The music library will be updated progressively.
                 </div>
                 <sheet>
+                    <field name="locked" invisible="1"/>
                     <field name="user_id" invisible="1"/>
                     <div class="oe_title">
                         <h1>
@@ -26,7 +31,6 @@
                             <field name="exclude_autoscan"/>
                             <field name="last_scan" readonly="1"/>
                             <field name="last_scan_duration" readonly="1" groups="base.group_no_one"/>
-                            <field name="locked" groups="base.group_no_one"/>
                         </group>
                         <group>
                             <label for="root_total_artists" string="Library"/>
