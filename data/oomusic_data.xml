@@ -9,5 +9,9 @@
             <field name="key">oomusic.lastfm_key</field>
             <field name="value">48a48a2bc9c6fc3b4a7df96ef51c6a0f</field>
         </record>
+        <record model="ir.config_parameter" id="features">
+            <field name="key">oomusic.fm_info</field>
+            <field name="value">auto</field>
+        </record>
     </data>
 </odoo>

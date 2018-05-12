@@ -34,8 +34,9 @@ class MusicLastfm(models.Model):
         ConfigParam = self.env['ir.config_parameter'].sudo()
         fm_key = ConfigParam.get_param('oomusic.lastfm_key')
         fm_cache = int(ConfigParam.get_param('oomusic.lastfm_cache', 112))
+        fm_info = ConfigParam.get_param('oomusic.fm_info', 'auto')
         if not fm_key:
-            return
+            return '{}'
 
         url = url_fix(url + '&api_key=' + fm_key + '&format=json').encode('utf-8')
         url_hash = hashlib.sha1(url).hexdigest()
@@ -44,6 +45,11 @@ class MusicLastfm(models.Model):
         Lastfm = self.with_env(self.env(cr=new_cr)).search([('name', '=', url_hash)])
         if force or not Lastfm or Lastfm.expiry_date < fields.Datetime.now():
             content = '{}'
+            if fm_info == 'manual' and not force:
+                Lastfm.env.cr.rollback()
+                Lastfm.env.cr.close()
+                content = Lastfm.content or content
+                return content
             try:
                 time.sleep(sleep)
                 r = requests.get(url, timeout=3.0)
