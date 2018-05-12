@@ -169,6 +169,7 @@ msgstr "Droit d'Auteur"
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album_create_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_create_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings_create_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_create_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line_create_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_download_create_uid
@@ -187,6 +188,7 @@ msgstr "Créé par"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_create_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings_create_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_create_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line_create_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_download_create_date
@@ -232,6 +234,7 @@ msgstr "Disque"
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album_display_name
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_display_name
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings_display_name
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_display_name
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line_display_name
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_download_display_name
@@ -373,6 +376,7 @@ msgstr "J'aime !"
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_download_id
@@ -427,6 +431,7 @@ msgstr "Dernière Modification"
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album___last_update
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist___last_update
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings___last_update
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter___last_update
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line___last_update
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_download___last_update
@@ -459,6 +464,7 @@ msgstr "Analysés Dernièrement"
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album_write_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_write_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings_write_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line_write_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_write_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_download_write_uid
@@ -478,6 +484,7 @@ msgstr "Dernière Mise-à-jour par"
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album_write_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_write_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings_write_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line_write_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_write_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_download_write_date
@@ -607,7 +614,6 @@ msgstr "Pas d'auto-scan"
 #. module: oomusic
 #: code:addons/oomusic/models/oomusic_album.py:53
 #: code:addons/oomusic/models/oomusic_artist.py:143
-#: code:addons/oomusic/models/oomusic_folder.py:371
 #: code:addons/oomusic/models/oomusic_folder.py:374
 #: code:addons/oomusic/models/oomusic_track.py:114
 msgid "No current playlist found!"
@@ -1167,6 +1173,7 @@ msgid "Blacklisted Formats"
 msgstr "Formats sur liste noire"
 
 #. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_config_settings_view_form
 #: model:ir.ui.view,arch_db:oomusic.oomusic_converter_view_form
 msgid "Cancel"
 msgstr "Annuler"
@@ -1600,4 +1607,75 @@ msgstr "Déverrouiller"
 #: model:ir.actions.server,name:oomusic.oomusic_artist_reload_info
 msgid "Update LastFM Info"
 msgstr "Mettre à jour les infos LastFM"
+
+#. module: oomusic
+#: model:ir.model.fields,help:oomusic.field_oomusic_config_settings_cron
+msgid "Activate automatic folder scan and image cache mechanism"
+msgstr "Activer l'analyse automatique des répertoires et le mécanisme de cache d'image"
+
+#. module: oomusic
+#: selection:oomusic.config.settings,cron:0
+msgid "Active"
+msgstr "Actif"
+
+#. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_config_settings_view_form
+msgid "Apply"
+msgstr "Appliquer"
+
+#. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_config_settings_view_form
+msgid "Configure OOMusic"
+msgstr "Configurer OOMusic"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings_view
+msgid "Default Views"
+msgstr "Vues par défaut"
+
+#. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_config_settings_view_form
+msgid "Features"
+msgstr "Fonctionnalités"
+
+#. module: oomusic
+#: selection:oomusic.config.settings,fm_info:0
+msgid "Fetched automatically"
+msgstr "Récupérées Automatiquement"
+
+#. module: oomusic
+#: selection:oomusic.config.settings,fm_info:0
+msgid "Fetched manually"
+msgstr "Récupérées Manuellement"
+
+#. module: oomusic
+#: selection:oomusic.config.settings,cron:0
+msgid "Inactive"
+msgstr "Inactif"
+
+#. module: oomusic
+#: selection:oomusic.config.settings,view:0
+msgid "Kanban, with thumbnails"
+msgstr "Kanban, avec miniatures"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings_fm_info
+msgid "LastFM Info"
+msgstr "Infos LastFM"
+
+#. module: oomusic
+#: selection:oomusic.config.settings,view:0
+msgid "List, without thumbnails"
+msgstr "Liste, sans miniatures"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings_cron
+msgid "Scheduled Actions"
+msgstr "Actions Planifiées"
+
+#. module: oomusic
+#: model:ir.actions.act_window,name:oomusic.action_oomusic_config_settings
+#: model:ir.ui.menu,name:oomusic.menu_stock_general_settings
+msgid "Settings"
+msgstr "Paramètres"
 
