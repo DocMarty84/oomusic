@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-11 20:35+0000\n"
-"PO-Revision-Date: 2018-05-11 20:35+0000\n"
+"POT-Creation-Date: 2018-05-12 21:26+0000\n"
+"PO-Revision-Date: 2018-05-12 21:26+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -65,10 +65,20 @@ msgid "Access token to access the files"
 msgstr ""
 
 #. module: oomusic
+#: model:ir.model.fields,help:oomusic.field_oomusic_config_settings_cron
+msgid "Activate automatic folder scan and image cache mechanism"
+msgstr ""
+
+#. module: oomusic
 #. openerp-web
 #: code:addons/oomusic/static/src/xml/panel.xml:60
 #, python-format
 msgid "Activate repeat"
+msgstr ""
+
+#. module: oomusic
+#: selection:oomusic.config.settings,cron:0
+msgid "Active"
 msgstr ""
 
 #. module: oomusic
@@ -149,6 +159,11 @@ msgstr ""
 #: model:ir.ui.view,arch_db:oomusic.oomusic_artist_view_form
 #: model:ir.ui.view,arch_db:oomusic.oomusic_genre_view_form
 msgid "Albums"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_config_settings_view_form
+msgid "Apply"
 msgstr ""
 
 #. module: oomusic
@@ -269,6 +284,7 @@ msgid "Buffer Size (KB)"
 msgstr ""
 
 #. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_config_settings_view_form
 #: model:ir.ui.view,arch_db:oomusic.oomusic_converter_view_form
 msgid "Cancel"
 msgstr ""
@@ -317,6 +333,11 @@ msgid "Configuration"
 msgstr ""
 
 #. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_config_settings_view_form
+msgid "Configure OOMusic"
+msgstr ""
+
+#. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track_contact
 msgid "Contact"
 msgstr ""
@@ -362,6 +383,7 @@ msgstr ""
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album_create_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_create_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings_create_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_create_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line_create_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_download_create_uid
@@ -380,6 +402,7 @@ msgstr ""
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_create_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings_create_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_create_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line_create_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_download_create_date
@@ -414,6 +437,11 @@ msgid "Deactivate repeat"
 msgstr ""
 
 #. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings_view
+msgid "Default Views"
+msgstr ""
+
+#. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_transcoder_bitrate
 msgid "Default bitrate or quality (for VBR). Can be changed if necessary when the\n"
 "        transcoding function is called."
@@ -437,6 +465,7 @@ msgstr ""
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album_display_name
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_display_name
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings_display_name
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_display_name
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line_display_name
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_download_display_name
@@ -618,6 +647,21 @@ msgid "Favorite"
 msgstr ""
 
 #. module: oomusic
+#: model:ir.ui.view,arch_db:oomusic.oomusic_config_settings_view_form
+msgid "Features"
+msgstr ""
+
+#. module: oomusic
+#: selection:oomusic.config.settings,fm_info:0
+msgid "Fetched automatically"
+msgstr ""
+
+#. module: oomusic
+#: selection:oomusic.config.settings,fm_info:0
+msgid "Fetched manually"
+msgstr ""
+
+#. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track_size
 msgid "File Size (MiB)"
 msgstr ""
@@ -735,6 +779,7 @@ msgstr ""
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_download_id
@@ -808,8 +853,18 @@ msgid "In Current Playlist"
 msgstr ""
 
 #. module: oomusic
+#: selection:oomusic.config.settings,cron:0
+msgid "Inactive"
+msgstr ""
+
+#. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_transcoder_black_formats
 msgid "Input formats which cannot be converted using this transcoder."
+msgstr ""
+
+#. module: oomusic
+#: selection:oomusic.config.settings,view:0
+msgid "Kanban, with thumbnails"
 msgstr ""
 
 #. module: oomusic
@@ -826,6 +881,7 @@ msgstr ""
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album___last_update
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist___last_update
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings___last_update
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter___last_update
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line___last_update
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_download___last_update
@@ -858,6 +914,7 @@ msgstr ""
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album_write_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_write_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings_write_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line_write_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_write_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_download_write_uid
@@ -877,6 +934,7 @@ msgstr ""
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album_write_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist_write_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings_write_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line_write_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_write_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_download_write_date
@@ -899,6 +957,11 @@ msgid "LastFM Cache Management"
 msgstr ""
 
 #. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings_fm_info
+msgid "LastFM Info"
+msgstr ""
+
+#. module: oomusic
 #. openerp-web
 #: code:addons/oomusic/static/src/js/tour.js:15
 #, python-format
@@ -909,6 +972,11 @@ msgstr ""
 #: model:ir.ui.menu,name:oomusic.menu_oomusic_library
 #: model:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form
 msgid "Library"
+msgstr ""
+
+#. module: oomusic
+#: selection:oomusic.config.settings,view:0
+msgid "List, without thumbnails"
 msgstr ""
 
 #. module: oomusic
@@ -1053,7 +1121,6 @@ msgstr ""
 #. module: oomusic
 #: code:addons/oomusic/models/oomusic_album.py:53
 #: code:addons/oomusic/models/oomusic_artist.py:143
-#: code:addons/oomusic/models/oomusic_folder.py:371
 #: code:addons/oomusic/models/oomusic_folder.py:374
 #: code:addons/oomusic/models/oomusic_track.py:114
 #, python-format
@@ -1233,6 +1300,11 @@ msgid "Scan Duration (s)"
 msgstr ""
 
 #. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings_cron
+msgid "Scheduled Actions"
+msgstr ""
+
+#. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_download_access_token
 msgid "Security Token"
 msgstr ""
@@ -1267,6 +1339,12 @@ msgstr ""
 #. module: oomusic
 #: model:ir.actions.act_window,help:oomusic.action_folder
 msgid "Set-up the music directories to scan."
+msgstr ""
+
+#. module: oomusic
+#: model:ir.actions.act_window,name:oomusic.action_oomusic_config_settings
+#: model:ir.ui.menu,name:oomusic.menu_stock_general_settings
+msgid "Settings"
 msgstr ""
 
 #. module: oomusic
@@ -1639,6 +1717,11 @@ msgstr ""
 #: model:ir.cron,cron_name:oomusic.oomusic_build_lastfm_cache
 #: model:ir.cron,name:oomusic.oomusic_build_lastfm_cache
 msgid "oomusic.build.lastfm.cache"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.model,name:oomusic.model_oomusic_config_settings
+msgid "oomusic.config.settings"
 msgstr ""
 
 #. module: oomusic
