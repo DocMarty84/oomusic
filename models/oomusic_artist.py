@@ -70,6 +70,12 @@ class MusicArtist(models.Model):
                         break
             except KeyError:
                 _logger.info('No image found for artist "%s" (id: %s)', artist.name, artist.id)
+            except urllib.error.HTTPError:
+                _logger.info(
+                    'HTTPError when retrieving image for artist "%s" (id: %s). '
+                    'Forcing LastFM info refresh.', artist.name, artist.id
+                )
+                artist._lastfm_artist_getinfo(force=True)
 
             # Avoid useless save in cache
             if resized_images['image_medium'] == artist.fm_image_cache:
