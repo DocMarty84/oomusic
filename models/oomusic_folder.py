@@ -41,6 +41,7 @@ class MusicFolder(models.Model):
         'Locked', default=False,
         help='When a folder is being scanned, it is flagged as "locked". It might be necessary to '
         'unlock it manually if scanning has failed or has been interrupted.')
+    use_tags = fields.Boolean('Use ID3 Tags', default=True)
 
     path_name = fields.Char('Folder Name', compute='_compute_path_name')
     in_playlist = fields.Boolean('In Current Playlist', compute='_compute_in_playlist')

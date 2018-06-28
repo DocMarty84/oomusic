@@ -18,6 +18,7 @@
                     This folder is being scanned. The music library will be updated progressively.
                 </div>
                 <sheet>
+                    <field name="id" invisible="1"/>
                     <field name="locked" invisible="1"/>
                     <field name="user_id" invisible="1"/>
                     <div class="oe_title">
@@ -29,6 +30,7 @@
                         <group>
                             <field name="path"/>
                             <field name="exclude_autoscan"/>
+                            <field name="use_tags" attrs="{'readonly': [('id', '!=', False)]}"/>
                             <field name="last_scan" readonly="1"/>
                             <field name="last_scan_duration" readonly="1" groups="base.group_no_one"/>
                         </group>

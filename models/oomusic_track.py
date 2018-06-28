@@ -16,7 +16,7 @@ from odoo.exceptions import UserError, MissingError
 class MusicTrack(models.Model):
     _name = 'oomusic.track'
     _description = 'Music Track'
-    _order = 'album_id, disc, track_number_int, track_number'
+    _order = 'album_id, disc, track_number_int, track_number, path'
     _inherit = ['oomusic.download.mixin']
 
     create_date = fields.Datetime(index=True)

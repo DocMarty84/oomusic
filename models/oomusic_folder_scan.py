@@ -500,11 +500,12 @@ class MusicFolderScan(models.TransientModel):
                     if song is False:
                         continue
                     vals = {f: '' for f in self.FIELDS_TO_CLEAN}
-                    vals.update({
-                        self.MAP_ID3_FIELD[k]: v[0]
-                        for k, v in song_tags.items()
-                        if v and k in self.MAP_ID3_FIELD.keys()
-                    })
+                    if Folder.use_tags:
+                        vals.update({
+                            self.MAP_ID3_FIELD[k]: v[0]
+                            for k, v in song_tags.items()
+                            if v and k in self.MAP_ID3_FIELD.keys()
+                        })
 
                     # Create new album, artist or genre, and update the cache
                     cache = self._create_related(vals, cache, rootdir)
