@@ -3,7 +3,7 @@
 from odoo import api, fields, models
 
 
-class OomusicConfigSettings(models.TransientModel):
+class MusicConfigSettings(models.TransientModel):
     _name = 'oomusic.config.settings'
     _inherit = 'res.config.settings'
 
@@ -22,7 +22,7 @@ class OomusicConfigSettings(models.TransientModel):
 
     @api.model
     def get_values(self):
-        res = super(OomusicConfigSettings, self).get_values()
+        res = super(MusicConfigSettings, self).get_values()
         cron = (
             self.env.ref('oomusic.oomusic_scan_folder') +
             self.env.ref('oomusic.oomusic_build_artists_image_cache') +
@@ -39,7 +39,7 @@ class OomusicConfigSettings(models.TransientModel):
         return res
 
     def set_values(self):
-        super(OomusicConfigSettings, self).set_values()
+        super(MusicConfigSettings, self).set_values()
         # Activate/deactive ir.cron
         (
             self.env.ref('oomusic.oomusic_scan_folder') +
