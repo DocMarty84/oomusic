@@ -10,7 +10,7 @@ class MusicAlbum(models.Model):
     _name = 'oomusic.album'
     _description = 'Music Album'
     _order = 'year desc, name'
-    _inherit = ['oomusic.download.mixin']
+    _inherit = ['oomusic.download.mixin', 'oomusic.preference.mixin']
 
     create_date = fields.Datetime(index=True)
 
@@ -25,13 +25,16 @@ class MusicAlbum(models.Model):
         'res.users', string='User', index=True, required=True, ondelete='cascade',
         default=lambda self: self.env.user
     )
-    in_playlist = fields.Boolean('In Current Playlist')
+    in_playlist = fields.Boolean(
+    'In Current Playlist', compute='_compute_in_playlist', inverse='_inverse_in_playlist',
+    search='_search_in_playlist')
 
     star = fields.Selection(
-        [('0', 'Normal'), ('1', 'I Like It!')], 'Favorite', default='0')
+        [('0', 'Normal'), ('1', 'I Like It!')], 'Favorite',
+        compute='_compute_star', inverse='_inverse_star', search='_search_star')
     rating = fields.Selection(
         [('0', '0'), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')],
-        'Rating', default='0',
+        'Rating', compute='_compute_rating', inverse='_inverse_rating', search='_search_rating'
     )
 
     image_folder = fields.Binary('Folder Image', related='folder_id.image_folder')

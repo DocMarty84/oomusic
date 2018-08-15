@@ -17,7 +17,7 @@ class MusicArtist(models.Model):
     _name = 'oomusic.artist'
     _description = 'Music Artist'
     _order = 'name'
-    _inherit = ['oomusic.download.mixin']
+    _inherit = ['oomusic.download.mixin', 'oomusic.preference.mixin']
 
     name = fields.Char('Artist', index=True)
     track_ids = fields.One2many('oomusic.track', 'artist_id', string='Tracks', readonly=True)
@@ -28,10 +28,11 @@ class MusicArtist(models.Model):
     )
 
     star = fields.Selection(
-        [('0', 'Normal'), ('1', 'I Like It!')], 'Favorite', default='0')
+        [('0', 'Normal'), ('1', 'I Like It!')], 'Favorite',
+        compute='_compute_star', inverse='_inverse_star', search='_search_star')
     rating = fields.Selection(
         [('0', '0'), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')],
-        'Rating', default='0',
+        'Rating', compute='_compute_rating', inverse='_inverse_rating', search='_search_rating'
     )
 
     fm_image = fields.Binary(

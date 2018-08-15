@@ -26,8 +26,9 @@ class MusicSuggestion(models.TransientModel):
 
     @api.depends('name_tracks')
     def _compute_track_last_played(self):
-        self.track_last_played = self.env['oomusic.track'].search(
-            [('play_count', '>', 0)], order='last_play desc', limit=10)
+        self.track_last_played = self.env['oomusic.preference'].search(
+            [('play_count', '>', 0), ('res_model', '=', 'oomusic.track')],
+            order='last_play desc', limit=10).mapped('res_id')
 
     @api.depends('name_tracks')
     def _compute_track_recently_added(self):

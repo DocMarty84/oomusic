@@ -76,11 +76,16 @@ class MusicSubsonicListing(http.Controller):
             folders = FolderObj.search(domain, order='create_date desc')
 
         elif list_type == 'recent':
-            q_select = ' SELECT folder_id FROM oomusic_track '
-            q_where = ' WHERE user_id = %s and last_play is not NULL ' % (request.env.user.id)
+            q_select = '''
+                SELECT t.folder_id FROM oomusic_track t
+                JOIN oomusic_preference AS p ON t.id = p.res_id
+            '''
+            q_where = '''
+                WHERE p.user_id = %s AND p.last_play IS NOT NULL AND p.res_model = \'oomusic.track\'
+            ''' % (request.env.user.id)
             if folderId:
-                q_where += ' and root_folder_id = %s ' % (folderId)
-            q_order = ' ORDER BY last_play desc;'
+                q_where += 'AND t.root_folder_id = %s ' % (folderId)
+            q_order = 'ORDER BY p.last_play desc;'
             query = q_select + q_where + q_order
             request.env.cr.execute(query)
             res = request.env.cr.fetchall()
@@ -89,11 +94,16 @@ class MusicSubsonicListing(http.Controller):
             folders = FolderObj.browse(folder_ids)
 
         elif list_type == 'frequent':
-            q_select = ' SELECT folder_id FROM oomusic_track '
-            q_where = ' WHERE user_id = %s and play_count > 0 ' % (request.env.user.id)
+            q_select = '''
+                SELECT t.folder_id FROM oomusic_track t
+                JOIN oomusic_preference AS p ON t.id = p.res_id
+            '''
+            q_where = '''
+                WHERE p.user_id = %s AND p.play_count > 0 AND p.res_model = \'oomusic.track\'
+            ''' % (request.env.user.id)
             if folderId:
-                q_where += ' and root_folder_id = %s ' % (folderId)
-            q_order = ' ORDER BY play_count desc;'
+                q_where += 'AND t.root_folder_id = %s ' % (folderId)
+            q_order = 'ORDER BY p.play_count desc;'
             query = q_select + q_where + q_order
             request.env.cr.execute(query)
             res = request.env.cr.fetchall()
@@ -191,11 +201,16 @@ class MusicSubsonicListing(http.Controller):
             albums = AlbumObj.search(domain, order='create_date desc')
 
         elif list_type == 'recent':
-            q_select = ' SELECT album_id FROM oomusic_track '
-            q_where = ' WHERE user_id = %s and last_play is not NULL ' % (request.env.user.id)
+            q_select = '''
+                SELECT t.album_id FROM oomusic_track t
+                JOIN oomusic_preference AS p ON t.id = p.res_id
+            '''
+            q_where = '''
+                WHERE p.user_id = %s AND p.last_play IS NOT NULL AND p.res_model = \'oomusic.track\'
+            ''' % (request.env.user.id)
             if folderId:
-                q_where += ' and root_folder_id = %s ' % (folderId)
-            q_order = ' ORDER BY last_play desc;'
+                q_where += 'AND t.root_folder_id = %s ' % (folderId)
+            q_order = 'ORDER BY p.last_play desc;'
             query = q_select + q_where + q_order
             request.env.cr.execute(query)
             res = request.env.cr.fetchall()
@@ -204,11 +219,16 @@ class MusicSubsonicListing(http.Controller):
             albums = AlbumObj.browse(album_ids)
 
         elif list_type == 'frequent':
-            q_select = ' SELECT album_id FROM oomusic_track '
-            q_where = ' WHERE user_id = %s and play_count > 0 ' % (request.env.user.id)
+            q_select = '''
+                SELECT t.album_id FROM oomusic_track t
+                JOIN oomusic_preference AS p ON t.id = p.res_id
+            '''
+            q_where = '''
+                WHERE p.user_id = %s AND p.play_count > 0 AND p.res_model = \'oomusic.track\'
+            ''' % (request.env.user.id)
             if folderId:
-                q_where += ' and root_folder_id = %s ' % (folderId)
-            q_order = ' ORDER BY play_count desc;'
+                q_where += 'AND t.root_folder_id = %s ' % (folderId)
+            q_order = 'ORDER BY p.play_count desc;'
             query = q_select + q_where + q_order
             request.env.cr.execute(query)
             res = request.env.cr.fetchall()

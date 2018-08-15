@@ -17,7 +17,7 @@ class MusicTrack(models.Model):
     _name = 'oomusic.track'
     _description = 'Music Track'
     _order = 'album_id, disc, track_number_int, track_number, path'
-    _inherit = ['oomusic.download.mixin']
+    _inherit = ['oomusic.download.mixin', 'oomusic.preference.mixin']
 
     create_date = fields.Datetime(index=True)
 
@@ -45,8 +45,12 @@ class MusicTrack(models.Model):
     bitrate = fields.Integer('Bitrate (kbps)', readonly=True)
     path = fields.Char('Path', required=True, index=True, readonly=True)
     size = fields.Float('File Size (MiB)', readonly=True)
-    play_count = fields.Integer('Play Count', default=0, readonly=True)
-    last_play = fields.Datetime('Last Played', index=True, readonly=True)
+    play_count = fields.Integer(
+        'Play Count', readonly=True,
+        compute='_compute_play_count', inverse='_inverse_play_count', search='_search_play_count')
+    last_play = fields.Datetime(
+        'Last Played', readonly=True,
+        compute='_compute_last_play', inverse='_inverse_last_play', search='_search_last_play')
     last_modification = fields.Integer('Last Modification', readonly=True)
     root_folder_id = fields.Many2one(
         'oomusic.folder', string='Root Folder', index=True, required=True, ondelete='cascade')
@@ -57,13 +61,15 @@ class MusicTrack(models.Model):
         'res.users', string='User', index=True, required=True, ondelete='cascade',
         default=lambda self: self.env.user
     )
-    playlist_line_ids = fields.One2many('oomusic.playlist.line', 'track_id', 'Playlist Line')
-    in_playlist = fields.Boolean('In Current Playlist')
+    in_playlist = fields.Boolean(
+        'In Current Playlist', compute='_compute_in_playlist', inverse='_inverse_in_playlist',
+        search='_search_in_playlist')
     star = fields.Selection(
-        [('0', 'Normal'), ('1', 'I Like It!')], 'Favorite', default='0')
+        [('0', 'Normal'), ('1', 'I Like It!')], 'Favorite',
+        compute='_compute_star', inverse='_inverse_star', search='_search_star')
     rating = fields.Selection(
         [('0', '0'), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')],
-        'Rating', default='0',
+        'Rating', compute='_compute_rating', inverse='_inverse_rating', search='_search_rating'
     )
     dummy_field = fields.Boolean('Dummy field')
 

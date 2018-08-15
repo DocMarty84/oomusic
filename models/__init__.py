@@ -2,6 +2,7 @@
 
 # oomusic_download must be first since will inherit from it
 from . import oomusic_download
+from . import oomusic_preference
 from . import oomusic_album
 from . import oomusic_artist
 from . import oomusic_config_settings

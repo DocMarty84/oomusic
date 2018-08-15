@@ -123,14 +123,16 @@ class MusicPlaylist(models.Model):
 
         # Reset 'in_playlist' field. Done with SQL for faster execution.
         self.env.cr.execute('''
-            UPDATE oomusic_track SET in_playlist = false
+            UPDATE oomusic_preference SET in_playlist = false
             WHERE user_id = %s
                 AND in_playlist = true
+                AND res_model = 'oomusic.track'
             ''', (self.env.uid, ))
         self.env.cr.execute('''
-            UPDATE oomusic_album SET in_playlist = false
+            UPDATE oomusic_preference SET in_playlist = false
             WHERE user_id = %s
                 AND in_playlist = true
+                AND res_model = 'oomusic.album'
             ''', (self.env.uid, ))
 
         # Recompute 'in_playlist' field
