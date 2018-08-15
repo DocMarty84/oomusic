@@ -361,24 +361,33 @@ class SubsonicREST():
         return elem_genres
 
     def _get_genres_data(self):
-        request.env.cr.execute('''
-            SELECT g.name, count(t.id)
-            FROM oomusic_genre AS g
-            JOIN oomusic_track AS t ON g.id = t.genre_id
-            WHERE g.user_id = %s
-            GROUP BY g.name, g.id
-            ORDER BY g.id
-        ''', (request.env.user.id,))
+        folder_sharing = (
+            'inactive' if request.env.ref('oomusic.oomusic_track').sudo().perm_read else 'active'
+        )
+        query = [
+            'SELECT g.name, count(t.id)',
+            'FROM oomusic_genre AS g',
+            'JOIN oomusic_track AS t ON g.id = t.genre_id',
+            'WHERE g.user_id = {}'.format(request.env.user.id),
+            'GROUP BY g.name, g.id',
+            'ORDER BY g.id',
+        ]
+        if folder_sharing == 'active':
+            del query[3]
+        request.env.cr.execute(' '.join(query))
         res_tracks = request.env.cr.fetchall()
 
-        request.env.cr.execute('''
-            SELECT g.name, count(a.id)
-            FROM oomusic_genre AS g
-            JOIN oomusic_album AS a ON g.id = a.genre_id
-            WHERE g.user_id = %s
-            GROUP BY g.name, g.id
-            ORDER BY g.id
-        ''', (request.env.user.id,))
+        query = [
+            'SELECT g.name, count(a.id)',
+            'FROM oomusic_genre AS g',
+            'JOIN oomusic_album AS a ON g.id = a.genre_id',
+            'WHERE g.user_id = {}'.format(request.env.user.id),
+            'GROUP BY g.name, g.id',
+            'ORDER BY g.id',
+        ]
+        if folder_sharing == 'active':
+            del query[3]
+        request.env.cr.execute(' '.join(query))
         res_albums = request.env.cr.fetchall()
 
         data = OrderedDict()

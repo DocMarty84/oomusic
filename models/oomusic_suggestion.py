@@ -37,9 +37,13 @@ class MusicSuggestion(models.TransientModel):
 
     @api.depends('name_tracks')
     def _compute_track_random(self):
-        params = (self.env.uid, )
-        query = "SELECT id FROM oomusic_track WHERE user_id = %s;"
-        self.env.cr.execute(query, params)
+        folder_sharing = (
+            'inactive' if self.env.ref('oomusic.oomusic_track').sudo().perm_read else 'active'
+        )
+        query = 'SELECT id FROM oomusic_track '
+        if folder_sharing == 'inactive':
+            query += 'WHERE user_id = {}'.format(self.env.uid)
+        self.env.cr.execute(query)
         res = self.env.cr.fetchall()
         if not res:
             return
@@ -53,9 +57,13 @@ class MusicSuggestion(models.TransientModel):
 
     @api.depends('name_albums')
     def _compute_album_random(self):
-        params = (self.env.uid, )
-        query = "SELECT id FROM oomusic_album WHERE user_id = %s;"
-        self.env.cr.execute(query, params)
+        folder_sharing = (
+            'inactive' if self.env.ref('oomusic.oomusic_track').sudo().perm_read else 'active'
+        )
+        query = 'SELECT id FROM oomusic_album '
+        if folder_sharing == 'inactive':
+            query += 'WHERE user_id = {}'.format(self.env.uid)
+        self.env.cr.execute(query)
         res = self.env.cr.fetchall()
         if not res:
             return

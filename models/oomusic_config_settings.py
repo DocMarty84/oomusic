@@ -19,6 +19,10 @@ class MusicConfigSettings(models.TransientModel):
         ('auto', 'Fetched automatically'),
         ('manual', 'Fetched manually'),
     ], string='LastFM Info')
+    folder_sharing = fields.Selection([
+        ('inactive', 'Inactive (user specific)'),
+        ('active', 'Active (shared amongst all users)'),
+    ], string='Folder Sharing')
 
     @api.model
     def get_values(self):
@@ -33,8 +37,16 @@ class MusicConfigSettings(models.TransientModel):
             self.env.ref('oomusic.action_album') +
             self.env.ref('oomusic.action_artist')
         ).mapped('view_mode')
+        folder_sharing = (
+            self.env.ref('oomusic.oomusic_album') +
+            self.env.ref('oomusic.oomusic_artist') +
+            self.env.ref('oomusic.oomusic_folder') +
+            self.env.ref('oomusic.oomusic_genre') +
+            self.env.ref('oomusic.oomusic_track')
+        ).mapped('perm_read')
         res['cron'] = 'active' if all([c for c in cron]) else 'inactive'
         res['view'] = 'tree' if all([v.split(',')[0] == 'tree' for v in view]) else 'kanban'
+        res['folder_sharing'] = 'inactive' if all([c for c in folder_sharing]) else 'active'
         res['fm_info'] = self.env['ir.config_parameter'].sudo().get_param('oomusic.fm_info', 'auto')
         return res
 
@@ -56,5 +68,30 @@ class MusicConfigSettings(models.TransientModel):
             view_mode_artist = 'kanban,tree,form'
         self.env.ref('oomusic.action_album').write({'view_mode': view_mode_album})
         self.env.ref('oomusic.action_artist').write({'view_mode': view_mode_artist})
+        # Set folder sharing
+        (
+            self.env.ref('oomusic.oomusic_album') +
+            self.env.ref('oomusic.oomusic_artist') +
+            self.env.ref('oomusic.oomusic_folder') +
+            self.env.ref('oomusic.oomusic_genre') +
+            self.env.ref('oomusic.oomusic_track')
+        ).write({'perm_read': bool(self.folder_sharing == 'inactive')})
+        if self.folder_sharing == 'inactive':
+            self.env.cr.execute('''
+                DELETE
+                FROM oomusic_playlist_line
+                WHERE id IN
+                (
+                    SELECT pl.id
+                    FROM oomusic_playlist_line AS pl
+                    JOIN oomusic_track AS t ON t.id = pl.track_id
+                    WHERE t.user_id != pl.user_id
+                )
+            ''')
+            self.env.cr.execute('''
+                DELETE
+                FROM oomusic_preference
+                WHERE user_id != res_user_id
+            ''')
         # Set LastFM Info
         self.env['ir.config_parameter'].sudo().set_param('oomusic.fm_info', self.fm_info)

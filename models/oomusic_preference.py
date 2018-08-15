@@ -126,7 +126,7 @@ class MusicPreferenceMixin(models.AbstractModel):
 
     def _search_pref(self, field, operator, value):
         pref = self.env['oomusic.preference'].search([
-            (field, operator, value), ('res_model', '=', self._name)
+            (field, operator, value), ('res_model', '=', self._name), ('user_id', '=', self.env.uid)
         ])
         return [('id', 'in', pref.mapped('res_id'))]
 

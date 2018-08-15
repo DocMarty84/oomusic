@@ -10,6 +10,9 @@
                         <button string="Apply" type="object" name="execute" class="oe_highlight"/>
                         <button string="Cancel" type="object" name="cancel" class="oe_link" special="cancel"/>
                     </header>
+                    <group string="Folders">
+                        <field name="folder_sharing" widget="radio"/>
+                    </group>
                     <group string="Features">
                         <field name="cron" widget="radio"/>
                         <field name="view" widget="radio"/>

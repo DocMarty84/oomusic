@@ -102,31 +102,41 @@ class MusicFolder(models.Model):
                 folder.in_playlist = True
 
     def _compute_root_total(self):
+        folder_sharing = (
+            'inactive' if self.env.ref('oomusic.oomusic_track').sudo().perm_read else 'active'
+        )
         for folder in self.filtered('root'):
-            self.env.cr.execute('''
-                SELECT COUNT(*) OVER()
-                FROM oomusic_artist AS a
-                JOIN oomusic_track AS t ON a.id = t.album_id
-                WHERE a.user_id = %s
-                    AND t.root_folder_id = %s
-                GROUP BY a.id
-            ''', (self.env.user.id, folder.id))
+            query_1 = [
+                'SELECT COUNT(*) OVER()',
+                'FROM oomusic_artist AS a',
+                'JOIN oomusic_track AS t ON a.id = t.artist_id',
+                'WHERE t.root_folder_id = {}'.format(folder.id),
+                'AND a.user_id = {}'.format(self.env.user.id),
+                'GROUP BY a.id',
+            ]
+            query_2 = [
+                'SELECT COUNT(*) OVER()',
+                'FROM oomusic_album AS a',
+                'JOIN oomusic_track AS t ON a.id = t.album_id',
+                'WHERE t.root_folder_id = {}'.format(folder.id),
+                'AND a.user_id = {}'.format(self.env.user.id),
+                'GROUP BY a.id',
+            ]
+            query_3 = [
+                'SELECT COUNT(t.id), SUM(duration_min)/60.0, SUM(size)',
+                'FROM oomusic_track AS t',
+                'WHERE t.root_folder_id = {}'.format(folder.id),
+                'AND t.user_id = {}'.format(self.env.user.id),
+            ]
+            if folder_sharing == 'active':
+                del query_1[4]
+                del query_2[4]
+                del query_3[3]
+            self.env.cr.execute(' '.join(query_1))
             res_artists = self.env.cr.fetchall()
-            self.env.cr.execute('''
-                SELECT COUNT(*) OVER()
-                FROM oomusic_album AS a
-                JOIN oomusic_track AS t ON a.id = t.album_id
-                WHERE a.user_id = %s
-                    AND t.root_folder_id = %s
-                GROUP BY a.id
-            ''', (self.env.user.id, folder.id))
+            self.env.cr.execute(' '.join(query_2))
             res_albums = self.env.cr.fetchall()
-            self.env.cr.execute('''
-                SELECT COUNT(t.id), SUM(duration_min)/60.0, SUM(size)
-                FROM oomusic_track AS t
-                WHERE t.user_id = %s
-                    AND t.root_folder_id = %s
-            ''', (self.env.user.id, folder.id))
+            self.env.cr.execute(' '.join(query_3))
             res_tracks = self.env.cr.fetchall()
 
             folder.root_total_artists = res_artists[0][0] if res_artists else 0
@@ -331,7 +341,7 @@ class MusicFolder(models.Model):
                 new_self = self.with_env(self.env(cr=cr))
                 folders =\
                     new_self.env['oomusic.folder'].search([('id', 'child_of', folder_id)]) | self
-                folders.write({'last_modification': 0})
+                folders.sudo().write({'last_modification': 0})
                 cr.execute(
                     'UPDATE oomusic_track SET last_modification = 0 WHERE root_folder_id = %s',
                     (folder_id,)
