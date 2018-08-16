@@ -35,7 +35,7 @@ class TestOomusicSubCommon(common.HttpCase):
         self.Folder = self.env2['oomusic.folder'].create({
             'path': os.path.join(os.path.dirname(os.path.realpath(__file__)), 'folder_scan_test')
         })
-        self.FolderScanObj.with_context(test_mode=True)._scan_folder(self.Folder.id)
+        self.FolderScanObj._scan_folder(self.Folder.id)
 
     def cleanUp(self):
         shutil.rmtree(

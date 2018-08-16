@@ -50,10 +50,11 @@ class TestOomusicDownloadController(test_sub_common.TestOomusicSubCommon):
             ('res_model', '=', track._name), ('res_id', '=', track.id)
         ])
         self.assertEqual(len(link), 1)
+        link.env.cr.commit()
         res = self.url_open(link.url)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(
-            hashlib.sha1(res.content).hexdigest(), 'f68ef46f1a49e27c038f2b29930d0652ad058b2a')
+            hashlib.sha1(res.content).hexdigest(), '330bf44ff359028dd0ddf71ac55352514ba1cb4e')
 
         # Too many accesses
         res = self.url_open(link.url)
