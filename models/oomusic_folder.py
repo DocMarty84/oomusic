@@ -379,6 +379,16 @@ class MusicFolder(models.Model):
             playlist._add_tracks(folder.track_ids)
 
     @api.multi
+    def action_add_to_playlist_recursive(self):
+        playlist = self.env['oomusic.playlist'].search([('current', '=', True)], limit=1)
+        if not playlist:
+            raise UserError(_('No current playlist found!'))
+        if self.env.context.get('purge'):
+            playlist.action_purge()
+        tracks = self.env['oomusic.track'].search([('folder_id', 'child_of', self.ids)])
+        playlist._add_tracks(tracks)
+
+    @api.multi
     def oomusic_browse(self):
         res = {}
         if self.root or self.parent_id:

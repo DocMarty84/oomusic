@@ -13,6 +13,7 @@ var Browse = Widget.extend({
     events: {
         'click .oom_folder': '_onClickFolder',
         'click .fa-plus': '_onClickAddFolder',
+        'click .fa-plus-square': '_onClickAddFolderRecursive',
         'click .oom_track': '_onClickAddTrack',
         'click .fa-play': '_onClickPreview',
     },
@@ -78,6 +79,23 @@ var Browse = Widget.extend({
         return this._rpc({
                 model: 'oomusic.folder',
                 method: 'action_add_to_playlist',
+                args: [$(ev.target).parent().data('id')],
+            })
+            .then(function () {
+                self.do_notify(
+                    _t('Folder added'),
+                    _t('Folder "') + $(ev.target).parent().text().trim() + _t('" added to playlist.'),
+                    false
+                );
+            });
+    },
+
+    _onClickAddFolderRecursive: function (ev) {
+        ev.stopPropagation();
+        var self = this;
+        return this._rpc({
+                model: 'oomusic.folder',
+                method: 'action_add_to_playlist_recursive',
                 args: [$(ev.target).parent().data('id')],
             })
             .then(function () {
