@@ -105,6 +105,13 @@ class MusicPlaylist(models.Model):
                 ))
 
     @api.multi
+    def unlink(self):
+        track_ids = self.playlist_line_ids.mapped('track_id')
+        res = super(MusicPlaylist, self).unlink()
+        track_ids.write({'in_playlist': False})
+        return res
+
+    @api.multi
     def action_purge(self):
         self.mapped('playlist_line_ids').unlink()
 
