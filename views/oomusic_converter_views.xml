@@ -52,7 +52,7 @@
                             <field name="track_number"/>
                             <field name="artist_id"/>
                             <field name="album_id"/>
-                            <field name="duration_min" widget="float_time"/>
+                            <field name="duration_min" widget="float_time" sum="Total"/>
                         </tree>
                     </field>
                 </sheet>

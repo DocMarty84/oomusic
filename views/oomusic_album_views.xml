@@ -45,7 +45,7 @@
                                     <field name="dummy_field" widget="oomusic_play"/>
                                     <field name="track_number"/>
                                     <field name="name"/>
-                                    <field name="duration_min" widget="float_time"/>
+                                    <field name="duration_min" widget="float_time" sum="Total"/>
                                 </tree>
                             </field>
                         </page>
