@@ -73,6 +73,33 @@ class MusicTrack(models.Model):
     )
     dummy_field = fields.Boolean('Dummy field')
 
+    def _search_play_count(self, operator, value):
+        res = super(MusicTrack, self)._search_play_count(operator, value)
+        # Special case when we are searching for tracks never played. In this case, these tracks
+        # might not have a corresponding record in oomusic.preference. So we need to manually add
+        # the missing ids.
+        if operator == '=' and value == 0:
+            res = [('id', 'in', res[0][2] + self._get_no_preference())]
+        return res
+
+    def _search_rating(self, operator, value):
+        res = super(MusicTrack, self)._search_rating(operator, value)
+        # Special case when we are searching for tracks with zero rating. In this case, these tracks
+        # might not have a corresponding record in oomusic.preference. So we need to manually add
+        # the missing ids.
+        if operator == '=' and value == 0:
+            res = [('id', 'in', res[0][2] + self._get_no_preference())]
+        return res
+
+    def _get_no_preference(self):
+        all_ids = set(self.search([]).ids)
+        missing_ids = {
+            t['res_id'] for t in self.env['oomusic.preference'].search([
+                ('res_model', '=', 'oomusic.track')
+            ]).read(['res_id'])
+        }
+        return list(all_ids - missing_ids)
+
     def _get_track_ids(self):
         return self
 

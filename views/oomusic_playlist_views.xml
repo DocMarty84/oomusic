@@ -28,9 +28,14 @@
                     <group class="oe_edit_only">
                         <group>
                             <field name="album_id"/>
+                            <field name="artist_id"/>
                         </group>
                         <group>
-                            <field name="artist_id"/>
+                            <label for="smart_playlist"/>
+                            <div>
+                                <field name="smart_playlist_qty" nolabel="1"/>
+                                <field name="smart_playlist"/>
+                            </div>
                         </group>
                     </group>
                     <notebook>

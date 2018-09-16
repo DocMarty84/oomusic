@@ -49,6 +49,18 @@ class MusicPlaylist(models.Model):
     artist_id = fields.Many2one(
         'oomusic.artist', string='Add Artist Tracks', store=False,
         help='Encoding help. When selected, the associated artist tracks are added to the playlist.')
+    smart_playlist = fields.Selection([
+        ('rnd', 'Random Tracks'),
+        ('played', 'Already Played'),
+        ('not_played', 'Never Played'),
+        ('most_played', 'Most Played'),
+        ('last_listened', 'Last Listened'),
+        ('recent', 'Recent'),
+        ('favorite', 'Favorites'),
+        ('best_rated', 'Best Rated'),
+        ('worst_rated', 'Worst Rated'),
+    ], 'Smart Playlist')
+    smart_playlist_qty = fields.Integer('Quantity To Add', default=20)
 
     def _add_tracks(self, tracks, onchange=False):
         # Set starting sequence
@@ -95,6 +107,16 @@ class MusicPlaylist(models.Model):
     def _onchange_audio(self):
         self.raw = True if self.audio == 'web' else False
 
+    @api.onchange('smart_playlist')
+    def _onchange_smart_playlist(self):
+        if not self.smart_playlist:
+            return
+        if self.smart_playlist_qty < 1:
+            self.smart_playlist_qty = 20
+        tracks = getattr(self, '_smart_{}'.format(self.smart_playlist))()
+        self._add_tracks(tracks, onchange=True)
+        self.smart_playlist = False
+
     @api.constrains('norm', 'raw')
     def _check_norm_raw(self):
         for playlist in self:
@@ -137,6 +159,85 @@ class MusicPlaylist(models.Model):
 
         # Recompute 'in_playlist' field
         self.playlist_line_ids.mapped('track_id').write({'in_playlist': True})
+
+    def _smart_rnd(self):
+        current_tracks = self.playlist_line_ids.mapped('track_id')
+        folder_sharing = (
+            'inactive' if self.env.ref('oomusic.oomusic_track').sudo().perm_read else 'active'
+        )
+        query = 'SELECT id FROM oomusic_track '
+        if current_tracks:
+            query += 'WHERE id NOT IN %s' % (tuple(current_tracks.ids + [0]),)
+        if folder_sharing == 'inactive':
+            query += '{} user_id = {}'.format(
+                'WHERE' if not current_tracks else 'AND', self.env.uid)
+        self.env.cr.execute(query)
+        res = self.env.cr.fetchall()
+        if not res:
+            return self.env['oomusic.track']
+
+        track_ids = random.sample([r[0] for r in res], min(self.smart_playlist_qty, len(res)))
+        return self.env['oomusic.track'].browse(track_ids)
+
+    def _smart_played(self):
+        current_tracks = self.playlist_line_ids.mapped('track_id')
+        return self.env['oomusic.track'].search([
+            ('play_count', '>', 0), ('id', 'not in', current_tracks.ids)
+        ], limit=self.smart_playlist_qty)
+
+    def _smart_not_played(self):
+        current_tracks = self.playlist_line_ids.mapped('track_id')
+        return self.env['oomusic.track'].search([
+            ('play_count', '=', 0), ('id', 'not in', current_tracks.ids)
+        ], limit=self.smart_playlist_qty)
+
+    def _smart_most_played(self):
+        # order on a non-stored field is not supported, even if there is a search method. Therefore,
+        # we directly search on oomusic.preference.
+        current_tracks = self.playlist_line_ids.mapped('track_id')
+        res_ids = [p['res_id'] for p in self.env['oomusic.preference'].search([
+            ('play_count', '>', 0),
+            ('res_model', '=', 'oomusic.track'),
+            ('res_id', 'not in', current_tracks.ids),
+        ], limit=self.smart_playlist_qty, order='play_count DESC').read(['res_id'])]
+        return self.env['oomusic.track'].browse(res_ids)
+
+    def _smart_last_listened(self):
+        current_tracks = self.playlist_line_ids.mapped('track_id')
+        res_ids = [p['res_id'] for p in self.env['oomusic.preference'].search([
+            ('last_play', '!=', False),
+            ('res_model', '=', 'oomusic.track'),
+            ('res_id', 'not in', current_tracks.ids),
+        ], limit=self.smart_playlist_qty, order='last_play DESC').read(['res_id'])]
+        return self.env['oomusic.track'].browse(res_ids)
+
+    def _smart_recent(self):
+        current_tracks = self.playlist_line_ids.mapped('track_id')
+        return self.env['oomusic.track'].search([
+            ('id', 'not in', current_tracks.ids)
+        ], limit=self.smart_playlist_qty,
+        order='create_date DESC, ' + self.env['oomusic.track']._order)
+
+    def _smart_favorite(self):
+        current_tracks = self.playlist_line_ids.mapped('track_id')
+        return self.env['oomusic.track'].search([
+            ('star', '=', '1'), ('id', 'not in', current_tracks.ids)
+        ], limit=self.smart_playlist_qty)
+
+    def _smart_best_rated(self):
+        current_tracks = self.playlist_line_ids.mapped('track_id')
+        res_ids = [p['res_id'] for p in self.env['oomusic.preference'].search([
+            ('res_model', '=', 'oomusic.track'),
+            ('res_id', 'not in', current_tracks.ids),
+        ], limit=self.smart_playlist_qty, order='rating DESC').read(['res_id'])]
+        return self.env['oomusic.track'].browse(res_ids)
+
+    def _smart_worst_rated(self):
+        current_tracks = self.playlist_line_ids.mapped('track_id')
+        return self.env['oomusic.track'].search([
+            ('id', 'not in', current_tracks.ids)
+        ], limit=self.smart_playlist_qty,
+        order='rating, ' + self.env['oomusic.track']._order)
 
 
 class MusicPlaylistLine(models.Model):

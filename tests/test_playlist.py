@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
+import time
 
 from . import test_common
 
@@ -149,5 +150,133 @@ class TestOomusicPlaylist(test_common.TestOomusicCommon):
         res = json.loads(playlist1.playlist_line_ids[0].with_context(test_mode=True).oomusic_last_track())
         track = playlist2.playlist_line_ids[0].track_id
         self.assertEqual(res['track_id'], track.id)
+
+        self.cleanUp()
+
+    def test_30_smart_playlist(self):
+        '''
+        Test smart playlists
+        '''
+        self.FolderScanObj.with_context(test_mode=True)._scan_folder(self.Folder.id)
+
+        playlist = self.PlaylistObj.create({'name': 'crotte'})
+        album1 = self.AlbumObj.search([('name', '=', 'Album1')])
+        album1.track_ids[0].oomusic_star()
+        album1.track_ids[1].rating = '5'
+
+        # rnd
+        playlist.smart_playlist = 'rnd'
+        playlist._onchange_smart_playlist()
+        self.assertEqual(
+            set(playlist.mapped('playlist_line_ids').mapped('track_id').mapped('name')),
+            set(['Song1', 'Song2', 'Song3', 'Song4', 'Song5', 'Song6'])
+        )
+        playlist.invalidate_cache()
+        playlist.action_purge()
+        playlist.invalidate_cache()
+
+        # Prepare the 'played' part
+        playlist.album_id = album1
+        playlist._onchange_album_id()
+        playlist.playlist_line_ids[0].with_context(test_mode=True).oomusic_set_current()
+        playlist.playlist_line_ids[0].with_context(test_mode=True).oomusic_set_current()
+        time.sleep(2)
+        playlist.playlist_line_ids[1].with_context(test_mode=True).oomusic_set_current()
+        playlist.invalidate_cache()
+        playlist.action_purge()
+        playlist.invalidate_cache()
+
+        # played
+        playlist.smart_playlist = 'played'
+        playlist._onchange_smart_playlist()
+        self.assertEqual(
+            set(playlist.mapped('playlist_line_ids').mapped('track_id').mapped('name')),
+            set(['Song1', 'Song2'])
+        )
+        playlist.invalidate_cache()
+        playlist.action_purge()
+        playlist.invalidate_cache()
+
+        # not_played
+        playlist.smart_playlist = 'not_played'
+        playlist._onchange_smart_playlist()
+        self.assertEqual(
+            set(playlist.mapped('playlist_line_ids').mapped('track_id').mapped('name')),
+            set(['Song3', 'Song4', 'Song5', 'Song6'])
+        )
+        playlist.invalidate_cache()
+        playlist.action_purge()
+        playlist.invalidate_cache()
+
+        # most_played
+        playlist.smart_playlist = 'most_played'
+        playlist.smart_playlist_qty = 1
+        playlist._onchange_smart_playlist()
+        self.assertEqual(
+            playlist.mapped('playlist_line_ids').mapped('track_id').mapped('name'),
+            ['Song1']
+        )
+        playlist.invalidate_cache()
+        playlist.action_purge()
+        playlist.invalidate_cache()
+
+        # last_listened
+        playlist.smart_playlist = 'last_listened'
+        playlist.smart_playlist_qty = 1
+        playlist._onchange_smart_playlist()
+        self.assertEqual(
+            playlist.mapped('playlist_line_ids').mapped('track_id').mapped('name'),
+            ['Song2']
+        )
+        playlist.invalidate_cache()
+        playlist.action_purge()
+        playlist.invalidate_cache()
+
+        # recent
+        playlist.smart_playlist = 'recent'
+        playlist.smart_playlist_qty = 20
+        playlist._onchange_smart_playlist()
+        self.assertEqual(
+            set(playlist.mapped('playlist_line_ids').mapped('track_id').mapped('name')),
+            set(['Song1', 'Song2', 'Song3', 'Song4', 'Song5', 'Song6'])
+        )
+        playlist.invalidate_cache()
+        playlist.action_purge()
+        playlist.invalidate_cache()
+
+        # favorite
+        playlist.smart_playlist = 'favorite'
+        playlist._onchange_smart_playlist()
+        self.assertEqual(
+            set(playlist.mapped('playlist_line_ids').mapped('track_id').mapped('name')),
+            set(['Song1'])
+        )
+        playlist.invalidate_cache()
+        playlist.action_purge()
+        playlist.invalidate_cache()
+
+        # best_rated
+        playlist.smart_playlist = 'best_rated'
+        playlist.smart_playlist_qty = 1
+        playlist._onchange_smart_playlist()
+        self.assertEqual(
+            set(playlist.mapped('playlist_line_ids').mapped('track_id').mapped('name')),
+            set(['Song2'])
+        )
+        playlist.invalidate_cache()
+        playlist.action_purge()
+        playlist.invalidate_cache()
+
+        # best_rated
+        playlist.smart_playlist = 'worst_rated'
+        playlist.smart_playlist_qty = 5
+        playlist._onchange_smart_playlist()
+        self.assertEqual(
+            set(playlist.mapped('playlist_line_ids').mapped('track_id').mapped('name')),
+            set(['Song1', 'Song3', 'Song4', 'Song5', 'Song6'])
+        )
+        playlist.invalidate_cache()
+        playlist.action_purge()
+        playlist.invalidate_cache()
 
         self.cleanUp()
