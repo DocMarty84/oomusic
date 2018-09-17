@@ -17,6 +17,7 @@
                         <group>
                             <field name="name"/>
                             <field name="comment"/>
+                            <field name="dynamic"/>
                             <field name="current" readonly="1"/>
                         </group>
                         <group>
@@ -34,15 +35,19 @@
                             <label for="smart_playlist"/>
                             <div>
                                 <field name="smart_playlist_qty" nolabel="1"/>
-                                <field name="smart_playlist"/>
+                                <field name="smart_playlist" attrs="{'required': [('dynamic', '=', True)]}"/>
                             </div>
                         </group>
                     </group>
                     <notebook>
                         <page string="Tracks">
                             <field name="playlist_line_ids">
-                                <tree string="Tracks" editable="bottom" decoration-success="playing == True" decoration-bf="playing == True" class="playlist_form">
+                                <tree string="Tracks" editable="bottom" class="playlist_form"
+                                    decoration-success="playing == True"
+                                    decoration-bf="playing == True"
+                                    decoration-muted="last_play != False and playing == False">
                                     <field name="playing" invisible="1"/>
+                                    <field name="last_play" invisible="1"/>
                                     <field name="sequence" widget="handle"/>
                                     <field name="dummy_field" widget="oomusic_play"/>
                                     <field name="track_id"/>
@@ -96,8 +101,12 @@
         <field name="name">oomusic.playlist.line.tree</field>
         <field name="model">oomusic.playlist.line</field>
         <field name="arch" type="xml">
-            <tree string="Tracks" decoration-success="playing == True" decoration-bf="playing == True" class="playlist">
+            <tree string="Tracks" class="playlist"
+                decoration-success="playing == True"
+                decoration-bf="playing == True"
+                decoration-muted="last_play != False and playing == False">
                 <field name="playing" invisible="1"/>
+                <field name="last_play" invisible="1"/>
                 <field name="sequence" widget="handle"/>
                 <field name="track_id"/>
                 <field name="track_number"/>

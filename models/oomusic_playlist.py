@@ -49,6 +49,9 @@ class MusicPlaylist(models.Model):
     artist_id = fields.Many2one(
         'oomusic.artist', string='Add Artist Tracks', store=False,
         help='Encoding help. When selected, the associated artist tracks are added to the playlist.')
+    dynamic = fields.Boolean(
+        'Dynamic', default=False,
+        help='If activated, tracks will be automatically added based on the Smart Playlist.')
     smart_playlist = fields.Selection([
         ('rnd', 'Random Tracks'),
         ('played', 'Already Played'),
@@ -115,7 +118,8 @@ class MusicPlaylist(models.Model):
             self.smart_playlist_qty = 20
         tracks = getattr(self, '_smart_{}'.format(self.smart_playlist))()
         self._add_tracks(tracks, onchange=True)
-        self.smart_playlist = False
+        if not self.dynamic:
+            self.smart_playlist = False
 
     @api.constrains('norm', 'raw')
     def _check_norm_raw(self):
@@ -239,6 +243,28 @@ class MusicPlaylist(models.Model):
         ], limit=self.smart_playlist_qty,
         order='rating, ' + self.env['oomusic.track']._order)
 
+    def _update_dynamic(self):
+        for playlist in self.filtered('dynamic'):
+            if playlist.smart_playlist_qty != 1:
+                playlist.smart_playlist_qty = 1
+
+            # Add a track
+            tracks = getattr(self, '_smart_{}'.format(playlist.smart_playlist))()
+            playlist._add_tracks(tracks)
+
+            # Resequence if user did not play the last track
+            played = playlist.playlist_line_ids.filtered('last_play')
+            max_seq_last_play = max(x['sequence'] for x in played.read(['sequence']))
+            min_seq_not_play = min(
+                x['sequence'] for x in (playlist.playlist_line_ids - played).read(['sequence']))
+            if max_seq_last_play > min_seq_not_play:
+                offset = 0
+                for i, line in enumerate(played):
+                    line.write({'sequence': i})
+                    offset = i + 1
+                for i, line in enumerate(playlist.playlist_line_ids - played):
+                    line.write({'sequence': i + offset})
+
 
 class MusicPlaylistLine(models.Model):
     _name = 'oomusic.playlist.line'
@@ -264,6 +290,7 @@ class MusicPlaylistLine(models.Model):
         'Duration', related='track_id.duration_min', readonly=True, related_sudo=False)
     user_id = fields.Many2one(
         'res.users', related='playlist_id.user_id', store=True, index=True, related_sudo=False)
+    last_play = fields.Datetime('Last Played', readonly=True)
     dummy_field = fields.Boolean('Dummy field')
 
     @api.model
@@ -292,29 +319,31 @@ class MusicPlaylistLine(models.Model):
 
     @api.multi
     def oomusic_set_current(self):
+        now = fields.Datetime.now()
         res = {}
         if not self.id:
             return json.dumps(res)
 
-        # Update playing status and stats
+        # Make sure all other playlists are not set as current
+        if not self.playlist_id.current:
+            self.playlist_id.action_current()
+
+        # Update playing status and stats of the current playlist
         self.env.cr.execute(
             '''UPDATE oomusic_playlist_line
                SET playing = False
-               WHERE playlist_id = %s''', (self.playlist_id.id,))
-        self.write({'playing': True})
+               WHERE user_id = %s''', (self.env.user.id,))
+        self.write({
+            'last_play': now if self.playlist_id.dynamic else False,
+            'playing': True,
+        })
         self.track_id.write({
-            'last_play': fields.Datetime.now(),
+            'last_play': now,
             'play_count': self.track_id.play_count + 1,
         })
-        if not self.playlist_id.current:
-            playlists = self.env['oomusic.playlist'].search([('current', '=', True)])
-            self.env.cr.execute(
-                '''UPDATE oomusic_playlist_line
-                   SET playing = False
-                   WHERE playlist_id in %s''', (tuple(playlists.ids),))
-            playlists.write({'current': False})
-            playlists.playlist_line_ids.write({'playing': False})
-            self.playlist_id.write({'current': True})
+
+        # Specific case of a dynamic playlist
+        self.playlist_id._update_dynamic()
         return json.dumps(res)
 
     @api.multi

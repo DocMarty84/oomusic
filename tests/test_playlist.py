@@ -280,3 +280,29 @@ class TestOomusicPlaylist(test_common.TestOomusicCommon):
         playlist.invalidate_cache()
 
         self.cleanUp()
+
+    def test_40_dynamic_playlist(self):
+        '''
+        Test dynamic playlists
+        '''
+        self.FolderScanObj.with_context(test_mode=True)._scan_folder(self.Folder.id)
+
+        playlist = self.PlaylistObj.create({
+            'name': 'crotte',
+            'smart_playlist': 'rnd',
+            'smart_playlist_qty': 3,
+            'dynamic': True,
+        })
+        playlist._onchange_smart_playlist()
+
+        # There should be 3 tracks
+        self.assertEqual(len(playlist.playlist_line_ids), 3)
+
+        # A track is automatically added when playing
+        playlist.playlist_line_ids[0].with_context(test_mode=True).oomusic_set_current()
+        self.assertEqual(len(playlist.playlist_line_ids), 4)
+
+        # When playing the last track, it should be moved at second position
+        last_track = playlist.playlist_line_ids[3].track_id
+        playlist.playlist_line_ids[3].with_context(test_mode=True).oomusic_set_current()
+        self.assertEqual(last_track, playlist.playlist_line_ids[1].track_id)
