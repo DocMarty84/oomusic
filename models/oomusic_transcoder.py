@@ -5,6 +5,7 @@ import os
 import subprocess
 
 from odoo import fields, models
+from odoo.tools import OrderedSet
 
 
 class MusicTranscoder(models.Model):
@@ -73,3 +74,8 @@ class MusicTranscoder(models.Model):
 
         proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=open(os.devnull, 'w'))
         return proc
+
+    def _get_browser_output_formats(self):
+        return OrderedSet(self.search([
+            ('output_format', 'in', ['opus', 'ogg', 'mp3'])
+        ]).mapped('output_format.name'))

@@ -188,7 +188,7 @@ class MusicTrack(models.Model):
             ),
             'src': raw_src + [
                 '/oomusic/trans/{}.{}?{}'.format(self.id, ext, urlencode(params))
-                for ext in ['opus', 'ogg', 'mp3']
+                for ext in self.env['oomusic.transcoder']._get_browser_output_formats()
             ],
         }
 
