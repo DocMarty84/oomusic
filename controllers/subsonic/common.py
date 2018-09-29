@@ -214,7 +214,7 @@ class SubsonicREST():
             transcodedSuffix='mp3',
             duration=str(track.duration),
             bitRate=str(track.bitrate),
-            path=os.path.basename(track.path),
+            path=track.path.replace(track.root_folder_id.path + os.sep, ''),
         )
 
         if track.name:
