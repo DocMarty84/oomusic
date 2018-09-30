@@ -4,6 +4,7 @@ import base64
 import imghdr
 import json
 import logging
+from mutagen import File
 import os
 from psycopg2 import OperationalError
 from random import sample
@@ -168,6 +169,26 @@ class MusicFolder(models.Model):
 
                 if folder.image_folder:
                     break
+
+            # Try to find an embedded cover art
+            try:
+                track = folder.track_ids[:1]
+                track_ext = os.path.splitext(track.path)[1].lower() if track else ''
+                song = File(track.path) if track else False
+                if song:
+                    data = False
+                    if track_ext == '.mp3' and song.tags.getall('APIC'):
+                        data = song.tags.getall('APIC')[0].data
+                    elif track_ext == '.flac' and song.pictures:
+                        data = song.pictures[0].data
+                    elif track_ext == '.mp4' and song.get('covr'):
+                        data = song['covr'][0]
+                    if data:
+                        folder.image_folder = base64.b64encode(data)
+            except:
+                _logger.debug(
+                    "Error while getting embedded cover art of %s", track.path, exc_info=1)
+                pass
 
     @api.depends('image_folder')
     def _compute_image_big(self):
