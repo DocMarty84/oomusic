@@ -237,6 +237,8 @@ class SubsonicREST():
             elem_track.set('year', track.year[:4])
         if track.genre_id:
             elem_track.set('genre', track.genre_id.name)
+        if track.folder_id.image_medium:
+            elem_track.set('coverArt', str(track.folder_id.id))
 
         if API_VERSION_LIST[self.version_client] >= API_VERSION_LIST['1.4.0']:
             elem_track.set('isVideo', 'false')
