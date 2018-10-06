@@ -7,7 +7,7 @@ class MusicPreference(models.Model):
     _name = 'oomusic.preference'
     _rec_name = 'res_model'
     _order = 'id'
-    _description = 'User preference'
+    _description = 'User Preferences'
 
     res_model_id = fields.Many2one(
         'ir.model', 'Related Document Model', ondelete='cascade',
