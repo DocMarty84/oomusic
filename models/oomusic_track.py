@@ -163,18 +163,18 @@ class MusicTrack(models.Model):
             return
         return
 
-    def _oomusic_info(self, seek=0, norm=False, raw=False):
+    def _oomusic_info(self, seek=0, mode='standard'):
         self.ensure_one()
         params = {
             'seek': seek,
-            'norm': 1 if norm else 0,
-            'raw': 1,
+            'mode': mode,
         }
         raw_src = ['/oomusic/trans/{}.{}?{}'.format(
             self.id, os.path.splitext(self.path)[1][1:], urlencode(params)
-        )] if raw else []
+        )] if mode == 'raw' else []
 
-        params['raw'] = 0
+        # Even if the audio mode is raw, we still fall back on the regular transcoded modes
+        params['mode'] = 'standard' if mode == 'raw' else mode
         return {
             'track_id': self.id,
             'title': (

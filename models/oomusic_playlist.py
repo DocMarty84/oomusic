@@ -3,8 +3,8 @@
 import json
 import random
 
-from odoo import fields, models, api, _
-from odoo.exceptions import MissingError, ValidationError
+from odoo import fields, models, api
+from odoo.exceptions import MissingError
 
 
 class MusicPlaylist(models.Model):
@@ -22,17 +22,17 @@ class MusicPlaylist(models.Model):
     )
     comment = fields.Char('Comment')
     current = fields.Boolean('Current', default=lambda self: self._default_current(), copy=False)
-    norm = fields.Boolean(
-        'Normalize', default=False,
-        help='Normalize playlist loudness thanks to the EBU R128 normalization. It requires '
-             'FFmpeg >=3.2.1 which includes by default the appropriate library (libebur128).\n'
+    audio_mode = fields.Selection(
+        [('standard', 'Standard'), ('raw', 'No Transcoding'), ('norm', 'Normalize')],
+        'Audio Mode', default='standard',
+        help='- Standard: regular transcoding of the files.\n'
+             '- No Transcoding: do not transcode audio files. It decreases the server load, '
+             'at the cost of a higher network usage.\n'
+             '- Normalize: normalize playlist loudness thanks to the EBU R128 normalization. It '
+             'requires FFmpeg >=3.2.1 which includes by default the appropriate library '
+             '(libebur128).\n'
              'Transcoding will be significantly slower when activated, implying larger gaps between'
              ' songs.'
-    )
-    raw = fields.Boolean(
-        'No Transcoding', default=False,
-        help='Do not transcode audio files. It decreases the server load, '
-             'at the cost of a higher network usage.'
     )
     audio = fields.Selection(
         [('html', 'HTML5 Audio'), ('web', 'Web Audio API')], 'Audio API', default='html',
@@ -108,7 +108,7 @@ class MusicPlaylist(models.Model):
 
     @api.onchange('audio')
     def _onchange_audio(self):
-        self.raw = True if self.audio == 'web' else False
+        self.audio_mode = 'raw' if self.audio == 'web' else 'standard'
 
     @api.onchange('smart_playlist')
     def _onchange_smart_playlist(self):
@@ -120,15 +120,6 @@ class MusicPlaylist(models.Model):
         self._add_tracks(tracks, onchange=True)
         if not self.dynamic:
             self.smart_playlist = False
-
-    @api.constrains('norm', 'raw')
-    def _check_norm_raw(self):
-        for playlist in self:
-            if playlist.norm and playlist.raw:
-                raise ValidationError(_(
-                    "'Normalize' and 'No Transcoding' are mutually exclusive options. Please "
-                    "activate only one of the two options."
-                ))
 
     @api.multi
     def unlink(self):
@@ -354,9 +345,7 @@ class MusicPlaylistLine(models.Model):
 
         res['playlist_line_id'] = self.id
         res['audio'] = self.playlist_id.audio
-        track_info = self.track_id._oomusic_info(
-            seek=seek, norm=self.playlist_id.norm, raw=self.playlist_id.raw
-        )
+        track_info = self.track_id._oomusic_info(seek=seek, mode=self.playlist_id.audio_mode)
         res.update(track_info)
         return json.dumps(res)
 

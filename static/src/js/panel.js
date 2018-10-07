@@ -243,7 +243,7 @@ var Panel = Widget.extend({
         // - in Chrome, the next sound fails to load properly in all cases
         // - in Firefox, seek() is never reset to zero
         if (this.sound) {
-            if (/Firefox/.test(Howler._navigator.userAgent) && this.sound._src.match('raw=0')) {
+            if (/Firefox/.test(Howler._navigator.userAgent) && this.sound._src.match('mode=raw')) {
                 this.sound.stop();
             } else {
                 this.sound.unload();

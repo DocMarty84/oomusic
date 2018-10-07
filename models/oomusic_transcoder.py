@@ -46,7 +46,7 @@ class MusicTranscoder(models.Model):
         before playing.'''
     )
 
-    def transcode(self, track_id, bitrate=0, seek=0, norm=0):
+    def transcode(self, track_id, bitrate=0, seek=0, norm=False):
         '''
         Method used to transcode a track. It takes in charge the replacement of the specific
         keywords of the command, and returns the subprocess executed. The subprocess output is

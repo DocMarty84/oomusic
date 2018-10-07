@@ -21,8 +21,7 @@
                             <field name="current" readonly="1"/>
                         </group>
                         <group>
-                            <field name="norm"/>
-                            <field name="raw"/>
+                            <field name="audio_mode"/>
                             <field name="audio"/>
                         </group>
                     </group>

@@ -56,16 +56,15 @@ class MusicController(http.Controller):
 
         # Get kwargs
         seek = int(kwargs.get('seek', 0))
-        norm = int(kwargs.get('norm', 0))
-        raw = int(kwargs.get('raw', 0))
+        mode = kwargs.get('mode', 'standard')
 
         # Stream the file.
         # - if raw is activated and the file is not seeked, simply send the file
         # - if raw is activated and the file is seeked, use a specific transcoder
         # - In other cases, search for an appropriate transcoder
-        if raw and not seek:
+        if  mode == 'raw' and not seek:
             return http.send_file(Track.path)
-        elif raw and seek:
+        elif mode == 'raw' and seek:
             Transcoder = request.env.ref('oomusic.oomusic_transcoder_99')
         else:
             Transcoder = request.env['oomusic.transcoder'].search([
@@ -74,7 +73,8 @@ class MusicController(http.Controller):
         Transcoder = Transcoder[0] if Transcoder else False
 
         if Transcoder:
-            generator = Transcoder.transcode(track_id, seek=seek, norm=norm).stdout
+            generator = Transcoder.transcode(
+                track_id, seek=seek, norm=True if mode == 'norm' else False).stdout
             mimetype = Transcoder.output_format.mimetype
         else:
             _logger.warning('Could not find converter from "%s" to "%s"', fn_ext[1:], output_format)

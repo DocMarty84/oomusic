@@ -87,7 +87,7 @@ class TestOomusicPlaylist(test_common.TestOomusicCommon):
         artist2 = self.ArtistObj.search([('name', '=', 'Artist2')])
 
         playlist1.artist_id = artist1
-        playlist1.raw = True
+        playlist1.audio_mode = 'raw'
         playlist1._onchange_artist_id()
         playlist2.artist_id = artist2
         playlist2._onchange_artist_id()
@@ -113,22 +113,22 @@ class TestOomusicPlaylist(test_common.TestOomusicCommon):
         src[1] = src[1].split('&')
         src[1].sort()
         self.assertEqual(src[0], '/oomusic/trans/{}.mp3'.format(track.id))
-        self.assertEqual(src[1], [u'norm=0', u'raw=1', u'seek=0'])
+        self.assertEqual(src[1], [u'mode=raw', u'seek=0'])
         src = res['src'][1].split('?')
         src[1] = src[1].split('&')
         src[1].sort()
         self.assertEqual(src[0], '/oomusic/trans/{}.opus'.format(track.id))
-        self.assertEqual(src[1], [u'norm=0', u'raw=0', u'seek=0'])
+        self.assertEqual(src[1], [u'mode=standard', u'seek=0'])
         src = res['src'][2].split('?')
         src[1] = src[1].split('&')
         src[1].sort()
         self.assertEqual(src[0], '/oomusic/trans/{}.ogg'.format(track.id))
-        self.assertEqual(src[1], [u'norm=0', u'raw=0', u'seek=0'])
+        self.assertEqual(src[1], [u'mode=standard', u'seek=0'])
         src = res['src'][3].split('?')
         src[1] = src[1].split('&')
         src[1].sort()
         self.assertEqual(src[0], u'/oomusic/trans/{}.mp3'.format(track.id))
-        self.assertEqual(src[1], [u'norm=0', u'raw=0', u'seek=0'])
+        self.assertEqual(src[1], [u'mode=standard', u'seek=0'])
 
         # oomusic_next
         res = json.loads(playlist1.playlist_line_ids[0].with_context(test_mode=True).oomusic_next())
