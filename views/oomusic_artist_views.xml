@@ -121,7 +121,7 @@
                     <t t-name="kanban-box">
                         <div class="oe_kanban_global_click oom_artist_kanban_main">
                             <div class="oom_artist_kanban_image">
-                                <img t-att-src="kanban_image('oomusic.artist', 'fm_image', record.id.raw_value)"/>
+                                <img t-att-src="kanban_image('oomusic.artist', 'fm_image', record.id.raw_value)" t-att-title="record.value" t-att-alt="record.value"/>
                             </div>
                             <div class="oom_artist_kanban_name">
                                 <strong>
