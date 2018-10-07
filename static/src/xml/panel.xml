@@ -8,10 +8,10 @@
             <div>
                 <div>
                     <!-- Progress bar -->
-                    <div class="oom_progress progress">
+                    <div class="oom_progress progress" style="height:18px">
                         <div class="oom_progress_bar progress-bar progress-bar-striped"
                             role="progressbar" aria-valuenow="0"
-                            aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                            aria-valuemin="0" aria-valuemax="100" style="width:0%;height:18px">
                         </div>
                     </div>
                     <!-- Duration and Title-->
@@ -21,49 +21,48 @@
                         <t t-call="oomusic.Duration"/>
                     </div>
                 </div>
-                <div class="oom_control_buttons">
-                    <ul class="oom_controls">
-                        <li><a class="oom_previous btn btn-default" tabindex="1">
-                            <span class="fa fa-step-backward"></span>
-                        </a></li>
-                        <li><a class="oom_play btn btn-default" tabindex="1">
-                            <span class="fa fa-play"></span>
-                        </a></li>
-                        <li><a class="oom_pause btn btn-default" tabindex="1">
-                            <span class="fa fa-pause"></span>
-                        </a></li>
-                        <li><a class="oom_next btn btn-default" tabindex="1">
-                            <span class="fa fa-step-forward"></span>
-                        </a></li>
-                        <li><a class="oom_stop btn btn-default" tabindex="1">
-                            <span class="fa fa-stop"></span>
-                        </a></li>
-                        <li>
-                        </li>
-                    </ul>
-                    <ul class="oom_volume_toggles">
-                        <li>
-                            <div class="oom_volume_bar">
-                                <input type="range" min="0" max="100" value="100" class="oom_volume"/>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+                <ul class="oom_controls">
+                    <li><a class="oom_previous btn btn-lg" tabindex="1">
+                        <span class="fa fa-step-backward"></span>
+                    </a></li>
+                    <li><a class="oom_play btn btn-lg" tabindex="1">
+                        <span class="fa fa-play"></span>
+                    </a></li>
+                    <li><a class="oom_pause btn btn-lg" tabindex="1">
+                        <span class="fa fa-pause"></span>
+                    </a></li>
+                    <li><a class="oom_next btn btn-lg" tabindex="1">
+                        <span class="fa fa-step-forward"></span>
+                    </a></li>
+                    <li><a class="oom_stop btn btn-lg" tabindex="1">
+                        <span class="fa fa-stop"></span>
+                    </a></li>
+                    <li>
+                    </li>
+                </ul>
+
+                <ul class="oom_volume_toggles">
+                    <li>
+                        <div class="oom_volume_bar">
+                            <input type="range" min="0" max="100" value="100" class="oom_volume"/>
+                        </div>
+                    </li>
+                </ul>
 
                 <ul class="oom_toggles">
-                    <li><a class="oom_shuffle btn btn-default btn-xs" tabindex="1" title="Turn shuffle on">
+                    <li><a class="oom_shuffle btn btn-sm" tabindex="1" title="Turn shuffle on">
                         <span class="fa fa-random"></span>
                     </a></li>
-                    <li><a class="oom_shuffle_off btn btn-default btn-xs" tabindex="1" title="Turn shuffle off">
+                    <li><a class="oom_shuffle_off btn btn-sm" tabindex="1" title="Turn shuffle off">
                         <span class="fa fa-arrow-right"></span>
                     </a></li>
-                    <li><a class="oom_repeat btn btn-default btn-xs" tabindex="1" title="Activate repeat">
+                    <li><a class="oom_repeat btn btn-sms" tabindex="1" title="Activate repeat">
                         <span class="fa fa-repeat"></span>
                     </a></li>
-                    <li><a class="oom_repeat_off btn btn-default btn-xs" tabindex="1" title="Deactivate repeat">
+                    <li><a class="oom_repeat_off btn btn-sm" tabindex="1" title="Deactivate repeat">
                         <span class="fa fa-arrow-down"></span>
                     </a></li>
-                    <li><a class="oom_star btn btn-default btn-xs" tabindex="1" title="I Like It!">
+                    <li><a class="oom_star btn btn-sm" tabindex="1" title="I Like It!">
                         <span class="fa fa-star"></span>
                     </a></li>
                 </ul>

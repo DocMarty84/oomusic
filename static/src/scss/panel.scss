@@ -20,8 +20,6 @@ $background_color_1: #F0EEEE;
     }
 
     .oom_time_holder {
-        margin-top: -18px;
-
         .oom_title {
             text-align: center;
         }
@@ -37,47 +35,38 @@ $background_color_1: #F0EEEE;
         }
     }
 
-    .oom_control_buttons {
+    .oom_controls {
         position: absolute;
         left: 50%;
-        width: 240px;
-        margin-left: -120px;
-        bottom: 42px;
+        padding: 0;
+        margin-left: -180px;
 
-        .oom_controls {
-            position: absolute;
-            padding: 0;
-
-            li {
-                display: inline;
-            }
+        li {
+            display: inline-block;
         }
+    }
 
-        .oom_volume_toggles {
-            list-style: none outside none;
-            position: absolute;
-            left: 180px;
-            padding: 0;
+    .oom_volume_toggles {
+        position: absolute;
+        left: 50%;
+        padding: 0;
 
-            li {
-                display: inline;
+        li {
+            display: inline;
 
-                .oom_volume_bar {
-                    position: absolute;
-                    width: 60px;
-                    top: 10px;
-                }
+            .oom_volume_bar {
+                position: absolute;
+                width: 60px;
+                top: 10px;
             }
         }
     }
 
     .oom_toggles {
-        list-style-type: none;
-        padding: 0;
         position: absolute;
-        bottom: 4px;
         left: 50%;
-        margin-left: 145px;
+        padding: 6px;
+        margin-left: 80px;
 
         li {
             display: inline-block;
