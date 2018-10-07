@@ -5,13 +5,13 @@ input[type=range] {
 	&:focus {
 		outline: none;
 		&::-webkit-slider-runnable-track {
-			background: @odoo-brand-primary;
+			background: $o-brand-odoo;
 		}
 		&::-ms-fill-lower {
-			background: @odoo-brand-primary;
+			background: $o-brand-odoo;
 		}
 		&::-ms-fill-upper {
-			background: @odoo-brand-primary;
+			background: $o-brand-odoo;
 		}
 	}
 	&::-webkit-slider-runnable-track {
@@ -19,7 +19,7 @@ input[type=range] {
 		height: 5px;
 		cursor: pointer;
 		box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-		background: @odoo-brand-primary;
+		background: $o-brand-odoo;
 		border-radius: 1.3px;
 		border: 0.2px solid #010101;
 	}
@@ -39,7 +39,7 @@ input[type=range] {
 		height: 5px;
 		cursor: pointer;
 		box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-		background: @odoo-brand-primary;
+		background: $o-brand-odoo;
 		border-radius: 1.3px;
 		border: 0.2px solid #010101;
 	}
@@ -61,13 +61,13 @@ input[type=range] {
 		color: transparent;
 	}
 	&::-ms-fill-lower {
-		background: @odoo-brand-primary;
+		background: $o-brand-odoo;
 		border: 0.2px solid #010101;
 		border-radius: 2.6px;
 		box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
 	}
 	&::-ms-fill-upper {
-		background: @odoo-brand-primary;
+		background: $o-brand-odoo;
 		border: 0.2px solid #010101;
 		border-radius: 2.6px;
 		box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;

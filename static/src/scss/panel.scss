@@ -1,4 +1,4 @@
-@background_color_1: #F0EEEE;
+$background_color_1: #F0EEEE;
 
 .oom_panel {
     height: 90px;
@@ -7,12 +7,12 @@
     right: 0px;
     left: 0px;
     overflow: hidden;
-    background-color: @background_color_1;
+    background-color: $background_color_1;
     z-index: 100;
     box-shadow: 2px 2px 3px rgba(0,0,0,.4), 0px 0px 5px rgba(0,0,0,.8);
 
     .oom_albumart {
-        background-color: @background_color_1;
+        background-color: $background_color_1;
         float: left;
         width: 90px;
         height: 90px;

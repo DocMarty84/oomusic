@@ -3,10 +3,10 @@
     <data>
         <template id="assets_backend" name="account assets" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
-                <link rel="stylesheet" href="/oomusic/static/src/less/browse.less"/>
-                <link rel="stylesheet" href="/oomusic/static/src/less/oomusic.less"/>
-                <link rel="stylesheet" href="/oomusic/static/src/less/panel.less"/>
-                <link rel="stylesheet" href="/oomusic/static/src/less/volume.less"/>
+                <link rel="stylesheet" href="/oomusic/static/src/scss/browse.scss"/>
+                <link rel="stylesheet" href="/oomusic/static/src/scss/oomusic.scss"/>
+                <link rel="stylesheet" href="/oomusic/static/src/scss/panel.scss"/>
+                <link rel="stylesheet" href="/oomusic/static/src/scss/volume.scss"/>
 
                 <script type="text/javascript" src="/oomusic/static/lib/howler.js"></script>
                 <script type="text/javascript" src="/oomusic/static/src/js/browse.js"></script>
