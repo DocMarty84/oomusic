@@ -9,20 +9,20 @@ class MusicSuggestion(models.TransientModel):
     _name = 'oomusic.suggestion'
     _description = 'Music Suggestion page'
 
-    name_tracks = fields.Char('Name', default='Tracks')
-    name_albums = fields.Char('Name', default='Albums')
+    name_tracks = fields.Char('Name Tracks', default='Tracks')
+    name_albums = fields.Char('Name Albums', default='Albums')
 
     track_last_played = fields.Many2many(
         'oomusic.track', string='Last Played', compute='_compute_track_last_played')
     track_recently_added = fields.Many2many(
-        'oomusic.track', string='Recently Added', compute='_compute_track_recently_added')
+        'oomusic.track', string='Recently Added Tracks', compute='_compute_track_recently_added')
     track_random = fields.Many2many(
-        'oomusic.track', string='Random', compute='_compute_track_random')
+        'oomusic.track', string='Random Tracks', compute='_compute_track_random')
 
     album_recently_added = fields.Many2many(
-        'oomusic.album', string='Recently Added', compute='_compute_album_recently_added')
+        'oomusic.album', string='Recently Added Albums', compute='_compute_album_recently_added')
     album_random = fields.Many2many(
-        'oomusic.album', string='Random', compute='_compute_album_random')
+        'oomusic.album', string='Random Albums', compute='_compute_album_random')
 
     @api.depends('name_tracks')
     def _compute_track_last_played(self):

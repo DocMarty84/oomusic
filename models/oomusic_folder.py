@@ -63,24 +63,24 @@ class MusicFolder(models.Model):
         'Folder Image', compute='_compute_image_folder',
         help='This field holds the image used as image for the folder, limited to 1024x1024px.')
     image_big = fields.Binary(
-        'Big-sized image', compute='_compute_image_big', inverse='_set_image_big',
+        'Big-sized Image', compute='_compute_image_big', inverse='_set_image_big',
         help='Image of the folder. It is automatically resized as a 1024x1024px image, with aspect '
         'ratio preserved.')
     image_big_cache = fields.Binary(
-        'Big-sized image', attachment=True,
+        'Cache Of Big-sized Image', attachment=True,
         help='Image of the folder. It is automatically resized as a 1024x1024px image, with aspect '
         'ratio preserved.')
     image_medium = fields.Binary(
-        'Medium-sized image', compute='_compute_image_medium', inverse='_set_image_medium',
+        'Medium-sized Image', compute='_compute_image_medium', inverse='_set_image_medium',
         help='Image of the folder.')
     image_medium_cache = fields.Binary(
-        'Medium-sized image', attachment=True,
+        'Cache Of Medium-sized Image', attachment=True,
         help='Image of the folder')
     image_small = fields.Binary(
         'Small-sized image', compute='_compute_image_small', inverse='_set_image_small',
         help='Image of the folder.')
     image_small_cache = fields.Binary(
-        'Small-sized image', attachment=True,
+        'Cache Of Small-sized Image', attachment=True,
         help='Image of the folder, used in Kanban view')
 
     _sql_constraints = [

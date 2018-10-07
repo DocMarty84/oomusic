@@ -39,7 +39,7 @@ class MusicArtist(models.Model):
         'Image', compute='_compute_fm_image',
         help='Image of the artist, obtained thanks to LastFM.')
     fm_image_cache = fields.Binary(
-        'Image', attachment=True,
+        'Cache Of Image', attachment=True,
         help='Image of the artist, obtained thanks to LastFM.')
     fm_getinfo_bio = fields.Char('Biography', compute='_compute_fm_getinfo')
     fm_gettoptracks_track_ids = fields.Many2many(

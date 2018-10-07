@@ -29,7 +29,7 @@ class MusicTrack(models.Model):
     disc = fields.Char('Disc')
     year = fields.Char('Year')
     track_number = fields.Char('Track #')
-    track_number_int = fields.Integer('Track #')
+    track_number_int = fields.Integer('Track # (int)')
     track_total = fields.Char('Total Tracks')
     genre_id = fields.Many2one('oomusic.genre', string='Genre')
     description = fields.Char('Description')
@@ -41,7 +41,7 @@ class MusicTrack(models.Model):
 
     # File data
     duration = fields.Integer('Duration', readonly=True)
-    duration_min = fields.Float('Duration', readonly=True)
+    duration_min = fields.Float('Duration (min)', readonly=True)
     bitrate = fields.Integer('Bitrate (kbps)', readonly=True)
     path = fields.Char('Path', required=True, index=True, readonly=True)
     size = fields.Float('File Size (MiB)', readonly=True)

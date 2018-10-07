@@ -36,10 +36,10 @@ class MusicAlbum(models.Model):
     )
 
     image_folder = fields.Binary('Folder Image', related='folder_id.image_folder')
-    image_big = fields.Binary("Big-sized image", related='folder_id.image_big')
-    image_medium = fields.Binary("Medium-sized image", related='folder_id.image_medium')
-    image_small = fields.Binary("Small-sized image", related='folder_id.image_small')
-    image_small_cache = fields.Binary("Small-sized image", related='folder_id.image_small_cache')
+    image_big = fields.Binary("Big-sized Image", related='folder_id.image_big')
+    image_medium = fields.Binary("Medium-sized Image", related='folder_id.image_medium')
+    image_small = fields.Binary("Small-sized Image", related='folder_id.image_small')
+    image_small_cache = fields.Binary("Cache Of Small-sized Image", related='folder_id.image_small_cache')
 
     def _compute_in_playlist(self):
         playlist = self.env['oomusic.playlist'].search([

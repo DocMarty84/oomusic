@@ -196,7 +196,7 @@ class MusicConverterLine(models.Model):
     artist_id = fields.Many2one(
         'oomusic.artist', 'Artist', related='track_id.artist_id', readonly=True, related_sudo=False)
     duration_min = fields.Float(
-        'Duration', related='track_id.duration_min', readonly=True, related_sudo=False)
+        'Duration (min)', related='track_id.duration_min', readonly=True, related_sudo=False)
     user_id = fields.Many2one(
         'res.users', related='converter_id.user_id', store=True, index=True, related_sudo=False)
     dummy_field = fields.Boolean('Dummy field')

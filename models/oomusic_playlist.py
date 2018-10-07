@@ -254,7 +254,7 @@ class MusicPlaylistLine(models.Model):
     duration = fields.Integer(
         'Duration', related='track_id.duration', readonly=True, related_sudo=False)
     duration_min = fields.Float(
-        'Duration', related='track_id.duration_min', readonly=True, related_sudo=False)
+        'Duration (min)', related='track_id.duration_min', readonly=True, related_sudo=False)
     user_id = fields.Many2one(
         'res.users', related='playlist_id.user_id', store=True, index=True, related_sudo=False)
     last_play = fields.Datetime('Last Played', readonly=True)
