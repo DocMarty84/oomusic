@@ -4,7 +4,7 @@
         <!-- Default playlist for root user -->
         <record id="oomusic_my_playlist" model="oomusic.playlist">
             <field name="name">My Playlist</field>
-            <field name="user_id" ref="base.user_root"/>
+            <field name="user_id" ref="base.user_admin"/>
             <field name="current" eval="True"/>
         </record>
     </data>
