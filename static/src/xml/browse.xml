@@ -11,14 +11,14 @@
         </t>
         <t t-foreach="widget.folder_data[widget.folder_id].child_ids" t-as="child">
             <a class="list-group-item oom_folder" t-att-data-id="child.id">
-                <i class="fa fa-plus" aria-hidden="true" title="Add To Current Playlist"></i>
-                <i class="fa fa-plus-square" aria-hidden="true" title="Add Recursively To Current Playlist"></i>
+                <i class="fa fa-plus" title="Add To Current Playlist"></i>
+                <i class="fa fa-plus-square" title="Add Recursively To Current Playlist"></i>
                 <t t-esc="child.name"/>
             </a>
         </t>
         <t t-foreach="widget.folder_data[widget.folder_id].track_ids" t-as="track">
             <a class="list-group-item oom_track" t-att-data-id="track.id" title="Add To Current Playlist">
-                <i class="fa fa-play" aria-hidden="true" title="Preview"></i> <t t-esc="track.name"/>
+                <i class="fa fa-play" title="Preview"></i> <t t-esc="track.name"/>
             </a>
         </t>
     </div>
