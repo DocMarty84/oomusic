@@ -7,7 +7,11 @@ var tour = require('web_tour.tour');
 var _t = core._t;
 
 tour.register('oomusic_tour', [{
-    trigger: '.o_menu_entry_lvl_2[data-menu-xmlid="oomusic.menu_action_folder"], .oe_menu_leaf[data-menu-xmlid="oomusic.menu_action_folder"]',
+    trigger: '.o_menu_header_lvl_1[data-menu-xmlid="oomusic.menu_oomusic_config"]',
+    content: _t('Explore the configuration'),
+    position: 'bottom',
+}, {
+    trigger: '.o_menu_entry_lvl_2[data-menu-xmlid="oomusic.menu_action_folder"]',
     content: _t('Add your first music folder <b>here</b>'),
     position: 'bottom',
 }, {
