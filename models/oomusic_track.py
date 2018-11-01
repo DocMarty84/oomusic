@@ -137,7 +137,7 @@ class MusicTrack(models.Model):
     def write(self, vals):
         res = super(MusicTrack, self).write(vals)
         if 'in_playlist' in vals:
-            self.mapped('album_id')._compute_in_playlist()
+            self.mapped('album_id')._inverse_in_playlist()
         return res
 
     @api.multi

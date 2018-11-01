@@ -43,11 +43,11 @@ class MusicAlbum(models.Model):
     image_small = fields.Binary("Small-sized image", related='folder_id.image_small')
     image_small_cache = fields.Binary("Small-sized image", related='folder_id.image_small_cache')
 
-    def _compute_in_playlist(self):
+    def _inverse_in_playlist(self):
         for album in self:
             in_playlist = all(t.in_playlist for t in album.track_ids)
             if album.in_playlist != in_playlist:
-                album.in_playlist = in_playlist
+                album._set_pref({'in_playlist': in_playlist})
 
     @api.multi
     def action_add_to_playlist(self):
