@@ -150,8 +150,7 @@ class MusicArtist(models.Model):
             raise UserError(_('No current playlist found!'))
         if self.env.context.get('purge'):
             playlist.action_purge()
-        for artist in self:
-            playlist._add_tracks(artist.track_ids)
+        playlist._add_tracks(self.mapped('track_ids'))
 
     def action_reload_info(self):
         for artist in self:

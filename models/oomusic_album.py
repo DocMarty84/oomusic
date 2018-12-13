@@ -25,9 +25,7 @@ class MusicAlbum(models.Model):
         'res.users', string='User', index=True, required=True, ondelete='cascade',
         default=lambda self: self.env.user
     )
-    in_playlist = fields.Boolean(
-    'In Current Playlist', compute='_compute_in_playlist', inverse='_inverse_in_playlist',
-    search='_search_in_playlist')
+    in_playlist = fields.Boolean('In Current Playlist', compute='_compute_in_playlist')
 
     star = fields.Selection(
         [('0', 'Normal'), ('1', 'I Like It!')], 'Favorite',
@@ -43,11 +41,13 @@ class MusicAlbum(models.Model):
     image_small = fields.Binary("Small-sized image", related='folder_id.image_small')
     image_small_cache = fields.Binary("Small-sized image", related='folder_id.image_small_cache')
 
-    def _inverse_in_playlist(self):
-        for album in self:
-            in_playlist = all(t.in_playlist for t in album.track_ids)
-            if album.in_playlist != in_playlist:
-                album._set_pref({'in_playlist': in_playlist})
+    def _compute_in_playlist(self):
+        playlist = self.env['oomusic.playlist'].search([
+            ('current', '=', True)
+        ], limit=1).with_context(prefetch_fields=False)
+        for album in (self & playlist.playlist_line_ids.mapped('album_id')):
+            if all([t.in_playlist for t in album.track_ids]):
+                album.in_playlist = True
 
     @api.multi
     def action_add_to_playlist(self):
@@ -56,8 +56,7 @@ class MusicAlbum(models.Model):
             raise UserError(_('No current playlist found!'))
         if self.env.context.get('purge'):
             playlist.action_purge()
-        for album in self:
-            playlist._add_tracks(album.track_ids)
+        playlist._add_tracks(self.mapped('track_ids'))
 
     def _lastfm_album_getinfo(self):
         self.ensure_one()

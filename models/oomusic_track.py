@@ -62,8 +62,7 @@ class MusicTrack(models.Model):
         default=lambda self: self.env.user
     )
     in_playlist = fields.Boolean(
-        'In Current Playlist', compute='_compute_in_playlist', inverse='_inverse_in_playlist',
-        search='_search_in_playlist')
+        'In Current Playlist', compute='_compute_in_playlist')
     star = fields.Selection(
         [('0', 'Normal'), ('1', 'I Like It!')], 'Favorite',
         compute='_compute_star', inverse='_inverse_star', search='_search_star')
@@ -72,6 +71,13 @@ class MusicTrack(models.Model):
         'Rating', compute='_compute_rating', inverse='_inverse_rating', search='_search_rating'
     )
     dummy_field = fields.Boolean('Dummy field')
+
+    def _compute_in_playlist(self):
+        playlist = self.env['oomusic.playlist'].search([
+            ('current', '=', True)
+        ], limit=1).with_context(prefetch_fields=False)
+        for track in (self & playlist.playlist_line_ids.mapped('track_id')):
+            track.in_playlist = True
 
     def _search_play_count(self, operator, value):
         res = super(MusicTrack, self)._search_play_count(operator, value)
@@ -132,13 +138,6 @@ class MusicTrack(models.Model):
                     z_file.write(path, arcname=arcname)
         sleep(0.2)
         return z_name
-
-    @api.multi
-    def write(self, vals):
-        res = super(MusicTrack, self).write(vals)
-        if 'in_playlist' in vals:
-            self.mapped('album_id')._inverse_in_playlist()
-        return res
 
     @api.multi
     def action_add_to_playlist(self):

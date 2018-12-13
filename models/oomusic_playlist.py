@@ -122,13 +122,6 @@ class MusicPlaylist(models.Model):
             self.smart_playlist = False
 
     @api.multi
-    def unlink(self):
-        track_ids = self.mapped('playlist_line_ids.track_id')
-        res = super(MusicPlaylist, self).unlink()
-        track_ids.write({'in_playlist': False})
-        return res
-
-    @api.multi
     def action_purge(self):
         self.mapped('playlist_line_ids').unlink()
 
@@ -137,23 +130,6 @@ class MusicPlaylist(models.Model):
         self.ensure_one()
         self.env['oomusic.playlist'].search([]).write({'current': False})
         self.current = True
-
-        # Reset 'in_playlist' field. Done with SQL for faster execution.
-        self.env.cr.execute('''
-            UPDATE oomusic_preference SET in_playlist = false
-            WHERE user_id = %s
-                AND in_playlist = true
-                AND res_model = 'oomusic.track'
-            ''', (self.env.uid, ))
-        self.env.cr.execute('''
-            UPDATE oomusic_preference SET in_playlist = false
-            WHERE user_id = %s
-                AND in_playlist = true
-                AND res_model = 'oomusic.album'
-            ''', (self.env.uid, ))
-
-        # Recompute 'in_playlist' field
-        self.playlist_line_ids.mapped('track_id').write({'in_playlist': True})
 
     def _smart_rnd(self):
         current_tracks = self.playlist_line_ids.mapped('track_id')
@@ -283,30 +259,6 @@ class MusicPlaylistLine(models.Model):
         'res.users', related='playlist_id.user_id', store=True, index=True, related_sudo=False)
     last_play = fields.Datetime('Last Played', readonly=True)
     dummy_field = fields.Boolean('Dummy field')
-
-    @api.model
-    def create(self, vals):
-        playlist_line = super(MusicPlaylistLine, self).create(vals)
-        if playlist_line.playlist_id.current:
-            playlist_line.track_id.write({'in_playlist': True})
-        return playlist_line
-
-    @api.multi
-    def write(self, vals):
-        if 'track_id' in vals:
-            self.filtered(lambda r: r.playlist_id.current)\
-                .mapped('track_id').write({'in_playlist': False})
-        res = super(MusicPlaylistLine, self).write(vals)
-        if 'track_id' in vals:
-            self.filtered(lambda r: r.playlist_id.current)\
-                .mapped('track_id').write({'in_playlist': True})
-        return res
-
-    @api.multi
-    def unlink(self):
-        self.filtered(lambda r: r.playlist_id.current)\
-            .mapped('track_id').write({'in_playlist': False})
-        return super(MusicPlaylistLine, self).unlink()
 
     @api.multi
     def oomusic_set_current(self):

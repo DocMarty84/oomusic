@@ -95,11 +95,12 @@ class MusicFolder(models.Model):
             else:
                 folder.path_name = folder.path.split(os.sep)[-1]
 
-    @api.depends('track_ids.in_playlist')
     def _compute_in_playlist(self):
-        for folder in self:
-            track_ids_in_playlist = folder.track_ids.filtered(lambda r: r.in_playlist is True)
-            if folder.track_ids <= track_ids_in_playlist:
+        playlist = self.env['oomusic.playlist'].search([
+            ('current', '=', True)
+        ], limit=1).with_context(prefetch_fields=False)
+        for folder in (self & playlist.playlist_line_ids.mapped('track_id.folder_id')):
+            if all([t.in_playlist for t in folder.track_ids]):
                 folder.in_playlist = True
 
     def _compute_root_total(self):
@@ -409,8 +410,7 @@ class MusicFolder(models.Model):
             raise UserError(_('No current playlist found!'))
         if self.env.context.get('purge'):
             playlist.action_purge()
-        for folder in self:
-            playlist._add_tracks(folder.track_ids)
+        playlist._add_tracks(self.mapped('track_ids'))
 
     @api.multi
     def action_add_to_playlist_recursive(self):

@@ -25,7 +25,6 @@ class MusicPreference(models.Model):
     )
     play_count = fields.Integer('Play Count', default=0, readonly=True)
     last_play = fields.Datetime('Last Played', index=True, readonly=True)
-    in_playlist = fields.Boolean('In Current Playlist')
     star = fields.Selection(
         [('0', 'Normal'), ('1', 'I Like It!')], 'Favorite', default='0')
     rating = fields.Selection(
@@ -66,18 +65,6 @@ class MusicPreferenceMixin(models.AbstractModel):
 
     def _search_last_play(self, operator, value):
         return self._search_pref('last_play', operator, value)
-
-    @api.depends('pref_ids')
-    def _compute_in_playlist(self):
-        for obj in self:
-            obj.in_playlist = obj._get_pref('in_playlist')
-
-    def _inverse_in_playlist(self):
-        for obj in self:
-            obj._set_pref({'in_playlist': obj.in_playlist})
-
-    def _search_in_playlist(self, operator, value):
-        return self._search_pref('in_playlist', operator, value)
 
     @api.depends('pref_ids')
     def _compute_star(self):
