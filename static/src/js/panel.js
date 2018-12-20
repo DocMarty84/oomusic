@@ -37,7 +37,7 @@ var Panel = Widget.extend({
 
         this._super.apply(this, arguments);
 
-        this.shown = false;
+        this.shown = true;
         this.sound = undefined;
         this.cache_data = {};
         this.cache_sound = {};
