@@ -53,6 +53,7 @@ class MusicFolder(models.Model):
         [('0', '0'), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')],
         'Rating', default='0',
     )
+    root_preview = fields.Text('Preview Folder Content', compute='_compute_root_preview')
     root_total_artists = fields.Integer('Total Artists', compute='_compute_root_total')
     root_total_albums = fields.Integer('Total Albums', compute='_compute_root_total')
     root_total_tracks = fields.Integer('Total Tracks', compute='_compute_root_total')
@@ -102,6 +103,32 @@ class MusicFolder(models.Model):
         for folder in (self & playlist.playlist_line_ids.mapped('track_id.folder_id')):
             if all([t.in_playlist for t in folder.track_ids]):
                 folder.in_playlist = True
+
+    @api.depends('path')
+    def _compute_root_preview(self):
+        ALLOWED_FILE_EXTENSIONS = self.env['oomusic.folder.scan'].ALLOWED_FILE_EXTENSIONS
+        for folder in self.filtered(lambda f: f.root and f.path):
+            i = 0
+            fn_paths = ''
+            for rootdir, dirnames, filenames in os.walk(folder.path):
+                ii = 0
+                for fn in filenames:
+                    # Check file extension
+                    fn_ext = fn.split('.')[-1]
+                    if fn_ext and fn_ext.lower() not in ALLOWED_FILE_EXTENSIONS:
+                        continue
+
+                    fn_paths += '{}\n'.format(os.path.join(rootdir.replace(folder.path, ''), fn))
+                    i += 1
+                    ii += 1
+                    if ii > 3:
+                        fn_paths += '...\n'
+                        break
+                if i > 30:
+                    break
+            if not fn_paths:
+                fn_paths = _('No track found')
+            folder.root_preview = fn_paths
 
     def _compute_root_total(self):
         folder_sharing = (
