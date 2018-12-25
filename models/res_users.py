@@ -9,7 +9,7 @@ class ResUsers(models.Model):
     @api.model
     def create(self, vals):
         User = super(ResUsers, self).create(vals)
-        self.env['oomusic.playlist'].create({
+        self.env['oomusic.playlist'].sudo().create({
             'name': _("My Playlist"),
             'user_id': User.id,
             'current': True,
@@ -20,6 +20,6 @@ class ResUsers(models.Model):
     def unlink(self):
         # Manually unlink the root folder to trigger the deletion of all children and tracks. This
         # is really necessary, but performance-wise this has a major impact.
-        self.env['oomusic.folder'].search(
+        self.env['oomusic.folder'].sudo().search(
             [('root', '=', True), ('user_id', 'in', self.ids)]).unlink()
         super(ResUsers, self).unlink()
