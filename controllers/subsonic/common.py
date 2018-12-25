@@ -11,6 +11,7 @@ from collections import OrderedDict
 from lxml import etree
 
 from . import xml2json
+from odoo import fields
 from odoo.exceptions import AccessError
 from odoo.http import request
 
@@ -62,6 +63,10 @@ class SubsonicREST():
 
         ctx = request.env['res.users']._crypt_context()
         self.version_server = '1.16.0' if ctx.identify('') == 'plaintext' else '1.12.0'
+
+    def _dt_to_string(self, dt):
+        dt_string = fields.Datetime.to_string(dt)
+        return dt_string.replace(' ', 'T') + 'Z'
 
     def make_response(self, root):
         if self.format == 'json':
@@ -193,7 +198,7 @@ class SubsonicREST():
 
         if API_VERSION_LIST[self.version_client] >= API_VERSION_LIST['1.10.2']:
             if folder.star == '1':
-                elem_artist.set('starred', folder.write_date.replace(' ', 'T') + 'Z')
+                elem_artist.set('starred', self._dt_to_string(folder.write_date))
 
         if API_VERSION_LIST[self.version_client] >= API_VERSION_LIST['1.13.0']:
             if folder.rating and folder.rating != '0':
@@ -260,9 +265,9 @@ class SubsonicREST():
                         'Could not convert disc number %s of track id %s to integer',
                         track.disc, track.id
                     )
-            elem_track.set('created', track.create_date.replace(' ', 'T') + 'Z')
+            elem_track.set('created', self._dt_to_string(track.create_date))
             if track.star == '1':
-                elem_track.set('starred', track.write_date.replace(' ', 'T') + 'Z')
+                elem_track.set('starred', self._dt_to_string(track.write_date))
             elem_track.set('albumId', str(track.album_id.id))
             elem_track.set('artistId', str(track.artist_id.id))
             elem_track.set('type', 'music')
@@ -324,7 +329,7 @@ class SubsonicREST():
             elem_directory.set('playCount', str(sum(folder.track_ids.mapped('play_count'))))
 
         if API_VERSION_LIST[self.version_client] >= API_VERSION_LIST['1.8.0']:
-            elem_directory.set('created', folder.create_date.replace(' ', 'T') + 'Z')
+            elem_directory.set('created', self._dt_to_string(folder.create_date))
 
         return elem_directory
 
@@ -339,7 +344,7 @@ class SubsonicREST():
 
         if API_VERSION_LIST[self.version_client] >= API_VERSION_LIST['1.10.2']:
             if folder.star == '1':
-                elem_directory.set('starred', folder.write_date.replace(' ', 'T') + 'Z')
+                elem_directory.set('starred', self._dt_to_string(folder.write_date))
 
         if API_VERSION_LIST[self.version_client] >= API_VERSION_LIST['1.13.0']:
             if folder.rating and folder.rating != '0':
@@ -431,7 +436,7 @@ class SubsonicREST():
         )
 
         if artist.star == '1':
-            elem_artist.set('starred', artist.write_date.replace(' ', 'T') + 'Z')
+            elem_artist.set('starred', self._dt_to_string(artist.write_date))
 
         return elem_artist
 
@@ -442,7 +447,7 @@ class SubsonicREST():
             name=album.name,
             songCount=str(len(album.track_ids)),
             duration=str(sum(album.track_ids.mapped('duration'))),
-            created=album.create_date.replace(' ', 'T') + 'Z',
+            created=self._dt_to_string(album.create_date),
         )
 
         if album.artist_id:
@@ -451,7 +456,7 @@ class SubsonicREST():
         if album.image_medium:
             elem_album.set('coverArt', str(album.folder_id.id))
         if album.star == '1':
-            elem_album.set('starred', album.write_date.replace(' ', 'T') + 'Z')
+            elem_album.set('starred', self._dt_to_string(album.write_date))
 
         if API_VERSION_LIST[self.version_client] >= API_VERSION_LIST['1.10.2']:
             if album.year:
@@ -673,7 +678,7 @@ class SubsonicREST():
 
         if API_VERSION_LIST[self.version_client] >= API_VERSION_LIST['1.14.0']:
             elem_user.set('videoConversionRole', 'false')
-            elem_user.set('avatarLastChanged', user.write_date.replace(' ', 'T') + 'Z')
+            elem_user.set('avatarLastChanged', self._dt_to_string(user.write_date))
 
         folders = request.env['oomusic.folder'].search([
             ('user_id', '=', user.id), ('root', '=', True)
@@ -708,14 +713,14 @@ class SubsonicREST():
                 'duration',
                 str(sum(playlist.playlist_line_ids.mapped('track_id').mapped('duration')))
             )
-            elem_playlist.set('created', playlist.create_date.replace(' ', 'T') + 'Z')
+            elem_playlist.set('created', self._dt_to_string(playlist.create_date))
 
             elem_allowed_user = etree.Element('allowedUser')
             elem_allowed_user.text = playlist.user_id.login
             elem_playlist.append(elem_allowed_user)
 
         if API_VERSION_LIST[self.version_client] >= API_VERSION_LIST['1.13.0']:
-            elem_playlist.set('changed', playlist.write_date.replace(' ', 'T') + 'Z')
+            elem_playlist.set('changed', self._dt_to_string(playlist.write_date))
 
         return elem_playlist
 

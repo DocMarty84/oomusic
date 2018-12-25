@@ -3,8 +3,14 @@
 import shutil
 import os
 
+from odoo import fields
 from odoo.api import Environment
 from odoo.tests import common
+
+
+def _dt_to_string(dt):
+    dt_string = fields.Datetime.to_string(dt)
+    return dt_string.replace(' ', 'T') + 'Z'
 
 
 class TestOomusicSubCommon(common.HttpCase):

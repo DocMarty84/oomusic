@@ -85,7 +85,7 @@ class TestOomusicSubBrowsing(test_sub_common.TestOomusicSubCommon):
             't1_num': tracks[4].track_number,
             't1_year': tracks[4].year,
             't1_genre': tracks[4].genre_id.name,
-            't1_create': tracks[4].create_date.replace(' ', 'T') + 'Z',
+            't1_create': test_sub_common._dt_to_string(tracks[4].create_date),
             't1_album_id': tracks[4].album_id.id,
             't1_artist_id': tracks[4].artist_id.id,
             't2_id': tracks[5].id,
@@ -96,7 +96,7 @@ class TestOomusicSubBrowsing(test_sub_common.TestOomusicSubCommon):
             't2_num': tracks[5].track_number,
             't2_year': tracks[5].year,
             't2_genre': tracks[5].genre_id.name,
-            't2_create': tracks[5].create_date.replace(' ', 'T') + 'Z',
+            't2_create': test_sub_common._dt_to_string(tracks[5].create_date),
             't2_album_id': tracks[5].album_id.id,
             't2_artist_id': tracks[5].artist_id.id,
         }
@@ -136,7 +136,7 @@ class TestOomusicSubBrowsing(test_sub_common.TestOomusicSubCommon):
             'f2_album_id': albums[2].id,
             'f2_artist_id': albums[2].artist_id.id,
             'f2_parent': folders[1].id,
-            'f2_create': folders[2].create_date.replace(' ', 'T') + 'Z',
+            'f2_create': test_sub_common._dt_to_string(folders[2].create_date),
             'f3_id': folders[3].id,
             'f3_path': folders[3].path,
             'f3_name': os.path.basename(folders[3].path),
@@ -147,7 +147,7 @@ class TestOomusicSubBrowsing(test_sub_common.TestOomusicSubCommon):
             'f3_album_id': albums[1].id,
             'f3_artist_id': albums[1].artist_id.id,
             'f3_parent': folders[1].id,
-            'f3_create': folders[3].create_date.replace(' ', 'T') + 'Z',
+            'f3_create': test_sub_common._dt_to_string(folders[3].create_date),
         }
         self.assertEqual(
             res_clean,
@@ -174,7 +174,7 @@ class TestOomusicSubBrowsing(test_sub_common.TestOomusicSubCommon):
             't1_num': tracks[4].track_number,
             't1_year': tracks[4].year,
             't1_genre': tracks[4].genre_id.name,
-            't1_create': tracks[4].create_date.replace(' ', 'T') + 'Z',
+            't1_create': test_sub_common._dt_to_string(tracks[4].create_date),
             't1_album_id': tracks[4].album_id.id,
             't1_artist_id': tracks[4].artist_id.id,
             't2_id': tracks[5].id,
@@ -186,7 +186,7 @@ class TestOomusicSubBrowsing(test_sub_common.TestOomusicSubCommon):
             't2_num': tracks[5].track_number,
             't2_year': tracks[5].year,
             't2_genre': tracks[5].genre_id.name,
-            't2_create': tracks[5].create_date.replace(' ', 'T') + 'Z',
+            't2_create': test_sub_common._dt_to_string(tracks[5].create_date),
             't2_album_id': tracks[5].album_id.id,
             't2_artist_id': tracks[5].artist_id.id,
         }
