@@ -39,7 +39,10 @@ class MusicPreferenceMixin(models.AbstractModel):
 
     pref_ids = fields.One2many(
         'oomusic.preference', 'res_id', string='User Preferences',
-        domain=lambda self: [('res_model', '=', self._name), ('user_id', '=', self.env.user.id)],
+        domain=lambda self: [
+            ('res_model', '=', self._name),
+            ('user_id', '=', self.env.context.get('default_user_id', self.env.user.id))
+        ],
         auto_join=True)
 
     @api.depends('pref_ids')
@@ -116,6 +119,18 @@ class MusicPreferenceMixin(models.AbstractModel):
             (field, operator, value), ('res_model', '=', self._name), ('user_id', '=', self.env.uid)
         ])
         return [('id', 'in', pref.mapped('res_id'))]
+
+    def write(self, vals):
+        # When calling write, a `check_access_rule('write')` is performed even if we don't really
+        # write on `self`. This is for example the case for the fields defined in
+        # `oomusic.preference`.
+        # When the library is shared, this triggers an AccessError if the user is not the owner
+        # of the object.
+        new_self = self
+        if any([k in {'play_count', 'last_play', 'star', 'rating'} for k in vals.keys()]):
+            self.check_access_rule('read')
+            new_self = self.sudo().with_context(default_user_id=self.env.user.id)
+        return super(MusicPreferenceMixin, new_self).write(vals)
 
     def unlink(self):
         """ When removing a record, its preferences should be deleted too. """
