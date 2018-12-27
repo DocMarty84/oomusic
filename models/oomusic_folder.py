@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import base64
+from datetime import datetime as dt
+from dateutil.relativedelta import relativedelta
 import imghdr
 import json
 import logging
@@ -30,6 +32,7 @@ class MusicFolder(models.Model):
     )
     last_scan = fields.Datetime('Last Scanned')
     last_scan_duration = fields.Integer('Scan Duration (s)')
+    last_commit = fields.Datetime('Last Commit')
     parent_id = fields.Many2one(
         'oomusic.folder', string='Parent Folder', index=True, ondelete='cascade')
     child_ids = fields.One2many('oomusic.folder', 'parent_id', string='Child Folders')
@@ -439,6 +442,19 @@ class MusicFolder(models.Model):
             folder._compute_image_medium()
             folder._compute_image_small()
             self.invalidate_cache()
+
+    @api.model
+    def cron_unlock_folder(self):
+        domain = [
+            ('root', '=', True),
+            ('locked', '=', True),
+            ('last_commit', '<', dt.now() - relativedelta(seconds=300)),
+        ]
+        folders = self.search(domain)
+        if folders:
+            _logger.warning(
+                'The following folders seem locked for no reason: %s. Unlocking.', folders.ids)
+            folders.action_unlock()
 
     @api.multi
     def action_add_to_playlist(self):

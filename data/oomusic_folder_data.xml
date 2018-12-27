@@ -30,5 +30,20 @@
             <field name="state">code</field>
             <field name="code">model.cron_build_image_cache()</field>
         </record>
+
+        <!-- Cron to unlock folders -->
+        <record id="oomusic_unlock_folder" model="ir.cron">
+            <field name="name">oomusic.unlock.folder</field>
+            <field name="active" eval="True"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">10</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model_id" ref="oomusic.model_oomusic_folder"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_unlock_folder()</field>
+        </record>
+
     </data>
 </odoo>

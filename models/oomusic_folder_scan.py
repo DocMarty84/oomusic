@@ -97,7 +97,10 @@ class MusicFolderScan(models.TransientModel):
                 "\"%s\" is locked! It probably means that a scan is ongoing.", Folder.path)
             res = False
         else:
-            Folder.write({'locked': True})
+            Folder.write({
+                'last_commit': dt.now(),
+                'locked': True,
+            })
             res = True
 
         self.env.cr.commit()
@@ -563,6 +566,10 @@ class MusicFolderScan(models.TransientModel):
                         self._write_cache_write(cache_write)
                         cache_write = self._build_cache_write()
                         time_commit = dt.now()
+                        Folder.write({
+                            'last_commit': time_commit,
+                            'locked': True,
+                        })
 
                         # Commit and close the transaction
                         if not self.env.context.get('test_mode'):
@@ -584,6 +591,7 @@ class MusicFolderScan(models.TransientModel):
                 Folder.write({
                     'last_scan': fields.Datetime.now(),
                     'last_scan_duration': round((dt.now() - time_start).total_seconds()),
+                    'last_commit': dt.now(),
                     'locked': False,
                 })
             if not self.env.context.get('test_mode'):
