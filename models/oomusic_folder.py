@@ -43,6 +43,11 @@ class MusicFolder(models.Model):
         help='When a folder is being scanned, it is flagged as "locked". It might be necessary to '
         'unlock it manually if scanning has failed or has been interrupted.')
     use_tags = fields.Boolean('Use ID3 Tags', default=True)
+    tag_analysis = fields.Selection([
+        ('taglib', 'Taglib'), ('mutagen', 'Mutagen')
+        ], 'File Analysis', default='taglib', required=True,
+        help='Choose Mutagen for better compatibility with remote mounting points, such as rclone.'
+    )
 
     path_name = fields.Char('Folder Name', compute='_compute_path_name')
     in_playlist = fields.Boolean('In Current Playlist', compute='_compute_in_playlist')

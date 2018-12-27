@@ -8,10 +8,11 @@ import threading
 # Pytaglib and Mutagen are supported for tag reading. Pytaglib is preferred as it seems less likely
 # to send an exception in case of incorrect file.
 try:
-    import taglib as tag
+    import taglib
 except ImportError:
-    import mutagen as tag
-    from mutagen.easyid3 import EasyID3
+    taglib = None
+import mutagen
+from mutagen.easyid3 import EasyID3
 
 from odoo import fields, models, api
 
@@ -305,7 +306,8 @@ class MusicFolderScan(models.TransientModel):
 
         return cache
 
-    def _get_tags(self, file_path):
+    def _get_tags(self, file_path, tag=taglib):
+        tag = tag or mutagen
         _logger.debug("Scanning file \"%s\"", file_path)
         try:
             song = tag.File(file_path)
@@ -458,6 +460,10 @@ class MusicFolderScan(models.TransientModel):
             MusicTrack = self.env['oomusic.track']
 
             Folder = MusicFolder.browse([folder_id])
+            if Folder.tag_analysis == 'taglib' and taglib:
+                tag = taglib
+            else:
+                tag = mutagen
 
             # Clean-up the DB before actual scan
             self._clean_directory(Folder.path, Folder.user_id.id)
@@ -496,7 +502,7 @@ class MusicFolderScan(models.TransientModel):
                         continue
 
                     # Get tags
-                    song, song_tags = self._get_tags(os.path.join(rootdir, fn))
+                    song, song_tags = self._get_tags(os.path.join(rootdir, fn), tag=tag)
                     if song is False:
                         continue
                     vals = {f: '' for f in self.FIELDS_TO_CLEAN}

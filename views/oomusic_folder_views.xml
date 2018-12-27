@@ -32,6 +32,7 @@
                             <field name="path"/>
                             <field name="exclude_autoscan"/>
                             <field name="use_tags" attrs="{'readonly': [('id', '!=', False)]}"/>
+                            <field name="tag_analysis"/>
                             <field name="last_scan" readonly="1"/>
                             <field name="last_scan_duration" readonly="1" groups="base.group_no_one"/>
                         </group>
