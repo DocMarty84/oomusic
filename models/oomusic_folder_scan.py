@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import datetime
+from datetime import datetime as dt
 import logging
 import os
 import threading
@@ -438,13 +438,13 @@ class MusicFolderScan(models.TransientModel):
           of an existing record.
         During the scan, any new album or artists will be created as well.
 
-        There is an arbitrary commit every 1000 tracks, which should allow a regular update of the
-        database.
+        There is an arbitrary commit every 1000 tracks or 2 minutes, which should allow a regular
+        update of the database.
 
         :param int folder_id: ID of the folder to scan
         '''
         with api.Environment.manage():
-            time_start = datetime.datetime.now()
+            time_start = dt.now()
             # As this function is in a new thread, open a new cursor because the existing one may be
             # closed
             if not self.env.context.get('test_mode'):
@@ -482,6 +482,7 @@ class MusicFolderScan(models.TransientModel):
             i = len(cache['track'].keys())
 
             # Start scanning
+            time_commit = time_start
             for rootdir, dirnames, filenames in os.walk(Folder.path):
                 _logger.debug("Scanning folder \"%s\"...", rootdir)
 
@@ -555,12 +556,13 @@ class MusicFolderScan(models.TransientModel):
                     # Update writing cache
                     cache_write = self._update_cache_write(vals, cache_write)
 
-                    # Commit every 1000 tracks
+                    # Commit every 1000 tracks or 2 minutes
                     i = i + 1
-                    if i % 1000 == 0:
+                    if i % 1000 == 0 or (dt.now() - time_commit).total_seconds() > 120:
                         # Empty cache_write, so user already sees the album-related additional info
                         self._write_cache_write(cache_write)
                         cache_write = self._build_cache_write()
+                        time_commit = dt.now()
 
                         # Commit and close the transaction
                         if not self.env.context.get('test_mode'):
@@ -581,8 +583,7 @@ class MusicFolderScan(models.TransientModel):
                     self._clean_tags(Folder.user_id.id)
                 Folder.write({
                     'last_scan': fields.Datetime.now(),
-                    'last_scan_duration': round(
-                        (datetime.datetime.now() - time_start).total_seconds()),
+                    'last_scan_duration': round((dt.now() - time_start).total_seconds()),
                     'locked': False,
                 })
             if not self.env.context.get('test_mode'):

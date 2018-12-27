@@ -112,6 +112,7 @@ class MusicFolder(models.Model):
     @api.depends('path')
     def _compute_root_preview(self):
         ALLOWED_FILE_EXTENSIONS = self.env['oomusic.folder.scan'].ALLOWED_FILE_EXTENSIONS
+        time_start = dt.now()
         for folder in self.filtered(lambda f: f.root and f.path):
             i = 0
             fn_paths = ''
@@ -126,10 +127,10 @@ class MusicFolder(models.Model):
                     fn_paths += '{}\n'.format(os.path.join(rootdir.replace(folder.path, ''), fn))
                     i += 1
                     ii += 1
-                    if ii > 3:
+                    if ii > 3 or (dt.now() - time_start).total_seconds() > 2:
                         fn_paths += '...\n'
                         break
-                if i > 30:
+                if i > 30 or (dt.now() - time_start).total_seconds() > 2:
                     break
             if not fn_paths:
                 fn_paths = _('No track found')
