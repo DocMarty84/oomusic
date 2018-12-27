@@ -13,3 +13,4 @@ access_oomusic_converter,oomusic.converter,model_oomusic_converter,base.group_us
 access_oomusic_converter_line,oomusic.converter.line,model_oomusic_converter_line,base.group_user,1,1,1,1
 access_oomusic_track,oomusic.track,model_oomusic_track,base.group_user,1,1,0,0
 access_oomusic_transcoder,oomusic.transcoder,model_oomusic_transcoder,base.group_user,1,0,0,0
+access_oomusic_transcoder_system,oomusic.transcoder,model_oomusic_transcoder,base.group_system,1,1,1,1
