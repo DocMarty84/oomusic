@@ -118,7 +118,7 @@ class SubsonicREST():
                 if hashlib.md5((password + self.salt).encode('utf-8')).hexdigest() == self.token:
                     uid = request.session.authenticate(request.session.db, self.login, password)
             else:
-                return False, self.make_error('30')
+                return False, self.make_error('41')
 
         if uid:
             root = etree.Element('subsonic-response', status='ok', version=self.version_server)
