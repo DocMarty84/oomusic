@@ -1,6 +1,8 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_oomusic_album,oomusic.album,model_oomusic_album,base.group_user,1,1,0,0
 access_oomusic_artist,oomusic.artist,model_oomusic_artist,base.group_user,1,1,0,0
+access_oomusic_bandsintown,oomusic.bandsintown,model_oomusic_bandsintown,base.group_user,1,1,1,1
+access_oomusic_bandsintown_event,oomusic.bandsintown.event,model_oomusic_bandsintown_event,base.group_user,1,1,0,0
 access_oomusic_download,oomusic.download,model_oomusic_download,base.group_user,1,1,1,1
 access_oomusic_folder,oomusic.folder,model_oomusic_folder,base.group_user,1,1,1,1
 access_oomusic_format,oomusic.format,model_oomusic_format,base.group_user,1,0,0,0

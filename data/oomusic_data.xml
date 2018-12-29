@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="0">
+        <record model="ir.config_parameter" id="bandsintown_key">
+            <field name="key">oomusic.bandsintown_key</field>
+            <field name="value">e7501181de9b09dba0a0d5e7a268b05f</field>
+        </record>
         <record model="ir.config_parameter" id="lastfm_cache_duration">
             <field name="key">oomusic.lastfm_cache_duration</field>
             <field name="value">112</field>
@@ -9,8 +13,8 @@
             <field name="key">oomusic.lastfm_key</field>
             <field name="value">48a48a2bc9c6fc3b4a7df96ef51c6a0f</field>
         </record>
-        <record model="ir.config_parameter" id="features">
-            <field name="key">oomusic.fm_info</field>
+        <record model="ir.config_parameter" id="ext_info">
+            <field name="key">oomusic.ext_info</field>
             <field name="value">auto</field>
         </record>
     </data>

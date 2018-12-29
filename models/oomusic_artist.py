@@ -46,6 +46,13 @@ class MusicArtist(models.Model):
         'oomusic.track', string='Top Tracks', compute='_compute_fm_gettoptracks')
     fm_getsimilar_artist_ids = fields.Many2many(
         'oomusic.artist', string='Similar Artists', compute='_compute_fm_getsimilar')
+    bit_follow = fields.Selection([
+        ('normal', 'Not Followed'),
+        ('done', 'Followed')
+        ], 'Follow Events', compute='_compute_bit_follow', inverse='_inverse_bit_follow',
+        search='_search_bit_follow')
+    bit_event_ids = fields.One2many(
+        'oomusic.bandsintown.event', 'artist_id', string='Events', readonly=True)
 
     _sql_constraints = [
         ('oomusic_artist_name_uniq', 'unique(name, user_id)', 'Artist name must be unique!'),
@@ -150,12 +157,16 @@ class MusicArtist(models.Model):
             playlist.action_purge()
         playlist._add_tracks(self.mapped('track_ids'))
 
-    def action_reload_info(self):
+    def action_reload_fm_info(self):
         for artist in self:
             artist._lastfm_artist_getinfo(force=True)
             artist._lastfm_artist_getsimilar(force=True)
             artist._lastfm_artist_gettoptracks(force=True)
             artist.with_context(build_cache=True)._compute_fm_image()
+
+    def action_reload_bit_info(self):
+        for artist in self:
+            artist._bandsintown_artist_getevents(force=True)
 
     @api.model
     def cron_build_image_cache(self):
@@ -185,3 +196,10 @@ class MusicArtist(models.Model):
         self.ensure_one()
         url = 'https://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=' + self.name
         return json.loads(self.env['oomusic.lastfm'].get_query(url, force=force))
+
+    def _bandsintown_artist_getevents(self, force=False):
+        self.ensure_one()
+        url = 'https://rest.bandsintown.com/artists/{}/events'.format(self.name)
+        cache = {}
+        cache[(self.id, self.name)] = self.env['oomusic.bandsintown'].get_query(url, force=force)
+        self.env['oomusic.bandsintown.event'].sudo()._create_from_cache(cache)

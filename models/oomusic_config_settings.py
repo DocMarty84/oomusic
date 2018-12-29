@@ -16,10 +16,10 @@ class MusicConfigSettings(models.TransientModel):
         ('kanban', 'Kanban, with thumbnails'),
         ('tree', 'List, without thumbnails'),
     ], string='Default Views')
-    fm_info = fields.Selection([
+    ext_info = fields.Selection([
         ('auto', 'Fetched automatically'),
         ('manual', 'Fetched manually'),
-    ], string='LastFM Info')
+    ], string='LastFM and Events Info')
     folder_sharing = fields.Selection([
         ('inactive', 'Inactive (user specific)'),
         ('active', 'Active (shared amongst all users)'),
@@ -49,7 +49,8 @@ class MusicConfigSettings(models.TransientModel):
         res['cron'] = 'active' if all([c for c in cron]) else 'inactive'
         res['view'] = 'tree' if all([v.split(',')[0] == 'tree' for v in view]) else 'kanban'
         res['folder_sharing'] = 'inactive' if all([c for c in folder_sharing]) else 'active'
-        res['fm_info'] = self.env['ir.config_parameter'].sudo().get_param('oomusic.fm_info', 'auto')
+        res['ext_info'] = (
+            self.env['ir.config_parameter'].sudo().get_param('oomusic.ext_info', 'auto'))
         res['version'] = version
         return res
 
@@ -60,6 +61,7 @@ class MusicConfigSettings(models.TransientModel):
             self.env.ref('oomusic.oomusic_scan_folder') +
             self.env.ref('oomusic.oomusic_build_artists_image_cache') +
             self.env.ref('oomusic.oomusic_build_image_cache') +
+            self.env.ref('oomusic.oomusic_build_bandsintown_cache') +
             self.env.ref('oomusic.oomusic_build_lastfm_cache')
         ).write({'active': bool(self.cron == 'active')})
         # Set view order
@@ -75,6 +77,7 @@ class MusicConfigSettings(models.TransientModel):
         (
             self.env.ref('oomusic.oomusic_album') +
             self.env.ref('oomusic.oomusic_artist') +
+            self.env.ref('oomusic.oomusic_bandsintown_event') +
             self.env.ref('oomusic.oomusic_folder') +
             self.env.ref('oomusic.oomusic_genre') +
             self.env.ref('oomusic.oomusic_track')
@@ -97,4 +100,4 @@ class MusicConfigSettings(models.TransientModel):
                 WHERE user_id != res_user_id
             ''')
         # Set LastFM Info
-        self.env['ir.config_parameter'].sudo().set_param('oomusic.fm_info', self.fm_info)
+        self.env['ir.config_parameter'].sudo().set_param('oomusic.ext_info', self.ext_info)

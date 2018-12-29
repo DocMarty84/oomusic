@@ -15,6 +15,9 @@
                 <sheet>
                     <field name="fm_image" widget="image" class="oe_avatar"/>
                     <div class="oe_title">
+                        <div class="oe_right">
+                            <field name="bit_follow" widget="state_selection"/>
+                        </div>
                         <h1>
                             <field name="name"/>
                             <span>&amp;nbsp;</span>
@@ -75,6 +78,11 @@
                                     <field name="name"/>
                                 </tree>
                             </field>
+                        </page>
+                        <page string="Events">
+                            <field name="bit_event_ids"/>
+                            <button name="action_reload_bit_info" string="Update Events"
+                                icon="fa-refresh" type="object"/>
                         </page>
                         <page string="Download Links">
                             <field name="download_ids"/>

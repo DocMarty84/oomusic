@@ -16,7 +16,7 @@
                     <group string="Features">
                         <field name="cron" widget="radio"/>
                         <field name="view" widget="radio"/>
-                        <field name="fm_info" widget="radio"/>
+                        <field name="ext_info" widget="radio"/>
                     </group>
                     <group>
                         <field name="version"/>

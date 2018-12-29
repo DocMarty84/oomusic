@@ -31,6 +31,10 @@ class MusicPreference(models.Model):
         [('0', '0'), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')],
         'Rating', default='0',
     )
+    bit_follow = fields.Selection([
+        ('normal', 'Not Followed'),
+        ('done', 'Followed')
+        ], 'Follow Events', default='normal')
 
 
 class MusicPreferenceMixin(models.AbstractModel):
@@ -93,6 +97,18 @@ class MusicPreferenceMixin(models.AbstractModel):
     def _search_rating(self, operator, value):
         return self._search_pref('rating', operator, value)
 
+    @api.depends('pref_ids')
+    def _compute_bit_follow(self):
+        for obj in self:
+            obj.bit_follow = obj._get_pref('bit_follow') or 'normal'
+
+    def _inverse_bit_follow(self):
+        for obj in self:
+            obj._set_pref({'bit_follow': obj.bit_follow})
+
+    def _search_bit_follow(self, operator, value):
+        return self._search_pref('bit_follow', operator, value)
+
     def _get_pref(self, field):
         return self.pref_ids[field]
 
@@ -126,8 +142,9 @@ class MusicPreferenceMixin(models.AbstractModel):
         # `oomusic.preference`.
         # When the library is shared, this triggers an AccessError if the user is not the owner
         # of the object.
+        fields = {'play_count', 'last_play', 'star', 'rating', 'bit_follow'}
         new_self = self
-        if any([k in {'play_count', 'last_play', 'star', 'rating'} for k in vals.keys()]):
+        if any([k in fields for k in vals.keys()]):
             self.check_access_rule('read')
             new_self = self.sudo().with_context(default_user_id=self.env.user.id)
         return super(MusicPreferenceMixin, new_self).write(vals)

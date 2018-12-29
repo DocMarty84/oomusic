@@ -5,6 +5,7 @@ from . import oomusic_download
 from . import oomusic_preference
 from . import oomusic_album
 from . import oomusic_artist
+from . import oomusic_bandsintown
 from . import oomusic_config_settings
 from . import oomusic_converter
 from . import oomusic_folder

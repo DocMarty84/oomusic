@@ -12,6 +12,12 @@
         <field name="groups" eval="[(4, ref('base.group_user'))]"/>
         <field name="domain_force">[('user_id', '=', user.id)]</field>
     </record>
+    <record id="oomusic_bandsintown_event" model="ir.rule">
+        <field name="name">oomusic.bandsintown.event: see own events</field>
+        <field name="model_id" ref="model_oomusic_bandsintown_event"/>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="domain_force">[('user_id', '=', user.id)]</field>
+    </record>
     <record id="oomusic_converter" model="ir.rule">
         <field name="name">oomusic.converter: see own converters</field>
         <field name="model_id" ref="model_oomusic_converter"/>
