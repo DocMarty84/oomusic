@@ -35,11 +35,16 @@ class MusicAlbum(models.Model):
         'Rating', compute='_compute_rating', inverse='_inverse_rating', search='_search_rating'
     )
 
-    image_folder = fields.Binary('Folder Image', related='folder_id.image_folder')
-    image_big = fields.Binary("Big-sized Image", related='folder_id.image_big')
-    image_medium = fields.Binary("Medium-sized Image", related='folder_id.image_medium')
-    image_small = fields.Binary("Small-sized Image", related='folder_id.image_small')
-    image_small_cache = fields.Binary("Cache Of Small-sized Image", related='folder_id.image_small_cache')
+    image_folder = fields.Binary(
+        'Folder Image', related='folder_id.image_folder', related_sudo=False)
+    image_big = fields.Binary(
+        'Big-sized Image', related='folder_id.image_big', related_sudo=False)
+    image_medium = fields.Binary(
+        'Medium-sized Image', related='folder_id.image_medium', related_sudo=False)
+    image_small = fields.Binary(
+        'Small-sized Image', related='folder_id.image_small', related_sudo=False)
+    image_small_cache = fields.Binary(
+        'Cache Of Small-sized Image', related='folder_id.image_small_cache', related_sudo=False)
 
     def _compute_in_playlist(self):
         playlist = self.env['oomusic.playlist'].search([
