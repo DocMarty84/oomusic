@@ -5,7 +5,7 @@
         <field name="name">oomusic.artist.form</field>
         <field name="model">oomusic.artist</field>
         <field name="arch" type="xml">
-            <form string="Artist">
+            <form string="Artist" create="0">
                 <header>
                     <button name="action_add_to_playlist" string="Add To Current Playlist" class="btn-primary" type="object"/>
                     <button name="action_add_to_playlist" string="Replace Current Playlist" type="object" context="{'purge': True}"/>
@@ -91,7 +91,7 @@
         <field name="name">oomusic.artist.tree</field>
         <field name="model">oomusic.artist</field>
         <field name="arch" type="xml">
-            <tree string="Artists">
+            <tree string="Artists" create="0">
                 <field name="name"/>
             </tree>
         </field>

@@ -5,7 +5,7 @@
         <field name="name">oomusic.album.form</field>
         <field name="model">oomusic.album</field>
         <field name="arch" type="xml">
-            <form string="Album">
+            <form string="Album" create="0">
                 <header>
                     <button name="action_add_to_playlist" string="Add To Current Playlist" class="btn-primary"
                         type="object" attrs="{'invisible': [('in_playlist','=', True)]}"/>
@@ -64,7 +64,7 @@
         <field name="name">oomusic.album.tree</field>
         <field name="model">oomusic.album</field>
         <field name="arch" type="xml">
-            <tree string="Albums">
+            <tree string="Albums" create="0">
                 <field name="in_playlist" invisible="1"/>
                 <button name="action_add_to_playlist" string="Add To Current Playlist"
                     icon="fa-plus"  type="object"

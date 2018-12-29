@@ -5,7 +5,7 @@
         <field name="name">oomusic.suggestion.form</field>
         <field name="model">oomusic.suggestion</field>
         <field name="arch" type="xml">
-            <form string="Suggestion">
+            <form string="Suggestion" create="0" edit="0">
                 <h1>
                     <field name="name_albums" readonly="1"/>
                 </h1>

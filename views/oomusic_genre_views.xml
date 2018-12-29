@@ -5,7 +5,7 @@
         <field name="name">oomusic.genre.form</field>
         <field name="model">oomusic.genre</field>
         <field name="arch" type="xml">
-            <form string="Genre">
+            <form string="Genre" create="0">
                 <header>
                     <button name="action_download" string="Download" type="object"
                         help="Download the track(s). You should allow pop-up from this URL!"/>
@@ -52,7 +52,7 @@
         <field name="name">oomusic.genre.tree</field>
         <field name="model">oomusic.genre</field>
         <field name="arch" type="xml">
-            <tree string="Genres">
+            <tree string="Genres" create="0">
                 <field name="name"/>
             </tree>
         </field>
