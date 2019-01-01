@@ -33,6 +33,7 @@ Music Collection
         'views/oomusic_track_views.xml',
         'views/oomusic_suggestion_views.xml',
         'views/oomusic_transcoder_views.xml',
+        'views/res_users.xml',
         'views/oomusic.xml',
 
         'data/oomusic_data.xml',

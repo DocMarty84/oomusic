@@ -24,7 +24,7 @@
         <field name="name">oomusic.bandsintown.event.tree</field>
         <field name="model">oomusic.bandsintown.event</field>
         <field name="arch" type="xml">
-            <tree string="Events" create="0">
+            <tree string="Events" create="0" limit="10000">
                 <field name="bit_follow" invisible="1"/>
                 <field name="date_event"/>
                 <field name="artist_id"/>

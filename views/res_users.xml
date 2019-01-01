@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="oomusic_res_users_preferences_inherit" model="ir.ui.view">
+            <field name="name">OOMusic User Preferences</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+            <field name="arch" type="xml">
+                <group name="preferences" position="after">
+                    <group string="Events Location">
+                        <group>
+                            <field name="latitude" digits="[42, 16]" readonly="0"/>
+                            <label for="longitude"/>
+                            <div>
+                                <field name="longitude" digits="[42, 16]" readonly="0"/>
+                                <widget name="oomusic_geolocate"/>
+                            </div>
+                        </group>
+                        <group>
+                            <field name="max_distance" readonly="0"/>
+                        </group>
+                    </group>
+                </group>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -4,7 +4,9 @@ import datetime
 import hashlib
 import json
 import logging
+import operator as op
 import time
+from math import asin, cos, radians, sin, sqrt
 from random import sample
 
 import requests
@@ -14,6 +16,14 @@ from odoo import api, fields, models
 
 _logger = logging.getLogger(__name__)
 
+SYMBOL_NAME_MAP = {
+    '<': 'lt',
+    '<=': 'le',
+    '=': 'eq',
+    '!=': 'ne',
+    '>=': 'ge',
+    '>': 'gt',
+}
 
 class MusicBandsintown(models.Model):
     _name = 'oomusic.bandsintown'
@@ -118,6 +128,11 @@ class MusicBandsintownEvent(models.Model):
     location = fields.Char('Location')
     latitude = fields.Char('Latitude')
     longitude = fields.Char('Longitude')
+    distance = fields.Float(
+        'Distance From Location',
+        compute='_compute_distance', search='_search_distance', compute_sudo=False,
+        help='The current location can be set in your preferences (from the top right menu)'
+    )
     active = fields.Boolean(default=True)
     artist_id = fields.Many2one('oomusic.artist', 'Artist', ondelete='cascade')
     user_id = fields.Many2one(
@@ -126,6 +141,45 @@ class MusicBandsintownEvent(models.Model):
 
     def name_get(self):
         return [(r.id, '{}, {} ({})'.format(r.artist_id.name, r.country, r.city)) for r in self]
+
+    def _compute_distance(self):
+        def haversine(p1, p2):
+            # Mean earth radius - https://en.wikipedia.org/wiki/Earth_radius#Mean_radius
+            AVG_EARTH_RADIUS_KM = 6371.0088
+
+            # Convert latitudes/longitudes from decimal degrees to radians
+            lat1, lng1, lat2, lng2 = map(radians, (p1[0], p1[1], p2[0], p2[1]))
+
+            # Compute haversine
+            lat = lat2 - lat1
+            lng = lng2 - lng1
+            d = sin(lat * 0.5) ** 2 + cos(lat1) * cos(lat2) * sin(lng * 0.5) ** 2
+            return 2 * AVG_EARTH_RADIUS_KM * asin(sqrt(d))
+
+        loc_user = (self.env.user.latitude, self.env.user.longitude)
+        for event in self.filtered(lambda r: r.latitude and r.longitude):
+            loc_event = (float(event.latitude), float(event.longitude))
+            event.distance = haversine(loc_user, loc_event)
+
+    def _search_distance(self, operator, value):
+        if operator not in SYMBOL_NAME_MAP:
+            return [('id', 'in', self.search([]).ids)]
+        event_ids = [
+            event['id'] for event in self.search([]).read(['id', 'distance'])
+            if getattr(op, SYMBOL_NAME_MAP[operator])(event['distance'], value)
+        ]
+        return [('id', 'in', event_ids)]
+
+    def _search(self, args, offset=0, limit=None, order=None, count=False, access_rights_uid=None):
+        event_ids = super(MusicBandsintownEvent, self)._search(
+            args, offset=offset, limit=limit, order=order, count=count,
+            access_rights_uid=access_rights_uid)
+        if self.env.user.max_distance:
+            event_ids = [
+                event['id'] for event in self.browse(event_ids).read(['id', 'distance'])
+                if event['distance'] <= self.env.user.max_distance
+            ]
+        return event_ids
 
     def _create_from_cache(self, cache):
         self.env.cr.execute('SELECT name from oomusic_bandsintown_event')
