@@ -32,11 +32,11 @@ class TestOomusicConverter(test_common.TestOomusicCommon):
             conv.show_waiting,
         )
         data_ref = (
-            fields.Date.today(),
+            fields.Date.to_string(fields.Date.context_today(conv)),
             self.env.user,
             u'draft',
             self.env.ref('oomusic.oomusic_transcoder_0'),
-            os.path.join(gettempdir(), 'koozic', fields.Date.today()),
+            os.path.join(gettempdir(), 'koozic', fields.Date.to_string(fields.Date.context_today(conv))),
             cpu_count(),
             False,
             0.0,

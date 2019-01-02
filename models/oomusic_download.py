@@ -62,8 +62,8 @@ class MusicDownload(models.Model):
             down.expired = bool(down.expiration_date < fields.Date.today())
 
     def _update_access_date(self, date):
-        with self.pool.cursor() as cr:
-            cr.execute('UPDATE oomusic_download SET access_date = %s', (date,))
+        self.write({'access_date': date})
+        self.env.cr.commit()
 
 
 class MusicDownloadMixin(models.AbstractModel):

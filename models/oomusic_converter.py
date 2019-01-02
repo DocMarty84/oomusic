@@ -22,7 +22,10 @@ class MusicConverter(models.Model):
             return transcoder.id
         return self.env['oomusic.transcoder'].search([], limit=1).id
 
-    name = fields.Char('Name', required="1", default=fields.Date.today, copy=False)
+    name = fields.Char(
+        'Name', required="1", copy=False,
+        default=lambda s: fields.Date.to_string(fields.Date.context_today(s)),
+    )
     user_id = fields.Many2one(
         'res.users', string='User', index=True, required=True, ondelete='cascade',
         default=lambda self: self.env.user
@@ -39,7 +42,10 @@ class MusicConverter(models.Model):
         'Bitrate/Quality', readonly=True, states={'draft': [('readonly', False)]}, default=0)
     dest_folder = fields.Char(
         'Destination Folder', readonly=True, states={'draft': [('readonly', False)]}, required=True,
-        default=lambda s: os.path.join(gettempdir(), 'koozic', fields.Date.today()))
+        default=lambda s: os.path.join(
+            gettempdir(), 'koozic', fields.Date.to_string(fields.Date.context_today(s))
+        )
+    )
     max_threads = fields.Integer(
         'Max Threads', states={'done': [('readonly', True)], 'cancel': [('readonly', True)]},
         default=cpu_count())

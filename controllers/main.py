@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
 import logging
 import os
 
@@ -26,11 +25,10 @@ class MusicController(http.Controller):
             abort(404)
 
         # Set a minimum delay between link access to avoid overload
-        now = datetime.now()
-        access_date = fields.Datetime.from_string(down.access_date)
-        if access_date and (now - access_date).seconds < down.min_delay:
+        now = fields.Datetime.now()
+        if down.access_date and (now - down.access_date).seconds < down.min_delay:
             raise Forbidden(_('Too many requests received. Please try again in a few minutes.'))
-        down._update_access_date(fields.Datetime.to_string(now))
+        down._update_access_date(now)
 
         # Get the ZIP file
         obj_sudo = request.env[down.res_model].sudo().browse(down.res_id)
