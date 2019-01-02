@@ -24,4 +24,4 @@ class MusicGenre(models.Model):
 
     def _compute_artist_ids(self):
         for genre in self:
-            genre.artist_ids = genre.album_ids.mapped('artist_id').sorted(lambda r: r.name)
+            genre.artist_ids = genre.album_ids.mapped('artist_id')

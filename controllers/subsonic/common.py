@@ -326,7 +326,8 @@ class SubsonicREST():
                 elem_directory.set('averageRating', folder.rating)
 
         if API_VERSION_LIST[self.version_client] >= API_VERSION_LIST['1.14.0']:
-            elem_directory.set('playCount', str(sum(folder.track_ids.mapped('play_count'))))
+            play_counts = [t['play_count'] for t in folder.track_ids.read(['play_count'])]
+            elem_directory.set('playCount', str(sum(play_counts)))
 
         if API_VERSION_LIST[self.version_client] >= API_VERSION_LIST['1.8.0']:
             elem_directory.set('created', self._dt_to_string(folder.create_date))
@@ -352,7 +353,8 @@ class SubsonicREST():
                 elem_directory.set('averageRating', folder.rating)
 
         if API_VERSION_LIST[self.version_client] >= API_VERSION_LIST['1.14.0']:
-            elem_directory.set('playCount', str(sum(folder.track_ids.mapped('play_count'))))
+            play_counts = [t['play_count'] for t in folder.track_ids.read(['play_count'])]
+            elem_directory.set('playCount', str(sum(play_counts)))
 
         return elem_directory
 
@@ -441,12 +443,13 @@ class SubsonicREST():
         return elem_artist
 
     def make_AlbumID3(self, album):
+        durations = [t['duration'] for t in album.track_ids.read(['duration'])]
         elem_album = etree.Element(
             'album',
             id=str(album.id),
             name=album.name,
             songCount=str(len(album.track_ids)),
-            duration=str(sum(album.track_ids.mapped('duration'))),
+            duration=str(sum(durations)),
             created=self._dt_to_string(album.create_date),
         )
 
@@ -465,7 +468,8 @@ class SubsonicREST():
                 elem_album.set('genre', album.genre_id.name)
 
         if API_VERSION_LIST[self.version_client] >= API_VERSION_LIST['1.14.0']:
-            elem_album.set('playCount', str(sum(album.track_ids.mapped('play_count'))))
+            play_count = [t['play_count'] for t in album.track_ids.read(['play_count'])]
+            elem_album.set('playCount', str(sum(play_count)))
 
         return elem_album
 
@@ -711,7 +715,11 @@ class SubsonicREST():
             elem_playlist.set('songCount', str(len(playlist.playlist_line_ids)))
             elem_playlist.set(
                 'duration',
-                str(sum(playlist.playlist_line_ids.mapped('track_id').mapped('duration')))
+                str(sum(
+                    playlist.playlist_line_ids
+                    .with_context(prefetch_fields=False)
+                    .mapped('track_id.duration')
+                ))
             )
             elem_playlist.set('created', self._dt_to_string(playlist.create_date))
 

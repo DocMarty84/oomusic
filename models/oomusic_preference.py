@@ -118,7 +118,7 @@ class MusicPreferenceMixin(models.AbstractModel):
         pref = self.env['oomusic.preference'].search([
             (field, operator, value), ('res_model', '=', self._name), ('user_id', '=', self.env.uid)
         ])
-        return [('id', 'in', pref.mapped('res_id'))]
+        return [('id', 'in', [p['res_id'] for p in pref.read(['res_id'])])]
 
     def write(self, vals):
         # When calling write, a `check_access_rule('write')` is performed even if we don't really

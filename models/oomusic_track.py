@@ -111,7 +111,7 @@ class MusicTrack(models.Model):
 
     def _build_zip(self, flatten=False, name=False):
         # Name is build using track ids, to avoid creating the same archive twice
-        name = '-'.join([str(id) for id in self.mapped('id')]) + ('-1' if flatten else '-0')
+        name = '-'.join([str(id) for id in self.ids]) + ('-1' if flatten else '-0')
         name = sha1(name.encode('utf-8')).hexdigest()
         tmp_dir = gettempdir()
         z_name = os.path.join(tmp_dir, '{}.zip'.format(name))

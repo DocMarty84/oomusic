@@ -52,7 +52,7 @@ class MusicSubsonicMediaRetrieval(http.Controller):
 
         Transcoder = request.env['oomusic.transcoder'].search([
             ('output_format.name', '=', output_format)
-        ]).filtered(lambda r: fn_ext[1:] not in r.mapped('black_formats').mapped('name'))
+        ]).filtered(lambda r: fn_ext[1:] not in r.mapped('black_formats.name'))
         Transcoder = Transcoder[0] if Transcoder else False
         if Transcoder:
             generator = Transcoder.transcode(int(trackId), bitrate=maxBitRate).stdout

@@ -131,7 +131,9 @@ class MusicConverter(models.Model):
     @api.onchange('playlist_id')
     def _onchange_playlist_id(self, onchange=True):
         self._add_tracks(
-            self.playlist_id.mapped('playlist_line_ids').mapped('track_id'), onchange=True)
+            self.playlist_id
+            .with_context(prefetch_fields=True)
+            .mapped('playlist_line_ids.track_id'), onchange=True)
         self.playlist_id = False
         return {}
 

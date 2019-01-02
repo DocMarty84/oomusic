@@ -134,9 +134,10 @@ class MusicSubsonicBrowsing(http.Controller):
 
         musicFolderId = kwargs.get('musicFolderId')
         if musicFolderId:
-            artists = request.env['oomusic.track'].search([
+            artist_ids = [t['artist_id'] for t in request.env['oomusic.track'].search([
                 ('folder_id', 'child_of', int(musicFolderId))
-            ]).mapped('artist_id')
+            ]).read(['artist_id'])]
+            artists = self.env['oomusic.artist'].browse(artist_ids)
         else:
             artists = request.env['oomusic.artist'].search([])
 

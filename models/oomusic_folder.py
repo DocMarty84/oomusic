@@ -360,7 +360,7 @@ class MusicFolder(models.Model):
             vals['path'] = os.path.normpath(vals['path'])
             folders = self | self.search([('id', 'child_of', self.ids)])
             folders.write({'last_modification': 0})
-            tracks = folders.mapped('track_ids')
+            tracks = self.env['oomusic.track'].search([('folder_id', 'in', folders.ids)])
             tracks.write({'last_modification': 0})
         return super(MusicFolder, self).write(vals)
 
