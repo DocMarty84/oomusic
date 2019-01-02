@@ -85,18 +85,16 @@ class MusicArtist(models.Model):
             artist.fm_image = resized_images['image_medium']
 
             # Save in cache
-            with self.pool.cursor() as cr:
-                new_self = self.with_env(self.env(cr=cr))
-                try:
-                    new_self.env['oomusic.artist'].browse(artist.id).sudo().write({
-                        'fm_image_cache': resized_images['image_medium'],
-                    })
-                except OperationalError:
-                    _logger.warning(
-                        'Error when writing image cache for artist id: %s', artist.id,
-                        exc_info=True
-                    )
-                    continue
+            try:
+                artist.sudo().write({
+                    'fm_image_cache': resized_images['image_medium'],
+                })
+                self.env.cr.commit()
+            except OperationalError:
+                _logger.warning(
+                    'Error when writing image cache for artist id: %s', artist.id,
+                    exc_info=True
+                )
 
     def _compute_fm_getinfo(self):
         for artist in self:

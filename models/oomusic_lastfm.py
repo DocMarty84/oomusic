@@ -41,13 +41,10 @@ class MusicLastfm(models.Model):
         url = url_fix(url + '&api_key=' + fm_key + '&format=json').encode('utf-8')
         url_hash = hashlib.sha1(url).hexdigest()
 
-        new_cr = self.pool.cursor()
-        Lastfm = self.with_env(self.env(cr=new_cr)).search([('name', '=', url_hash)])
+        Lastfm = self.search([('name', '=', url_hash)])
         if force or not Lastfm or Lastfm.expiry_date < fields.Datetime.now():
             content = '{}'
             if fm_info == 'manual' and not force:
-                Lastfm.env.cr.rollback()
-                Lastfm.env.cr.close()
                 content = Lastfm.content or content
                 return content
             try:
@@ -62,25 +59,22 @@ class MusicLastfm(models.Model):
             removal_date = datetime.datetime.utcnow() + datetime.timedelta(days=fm_cache + 14)
 
             # Save in cache
-            with self.pool.cursor() as cr:
-                new_self = Lastfm.with_env(self.env(cr=cr))
-                if not Lastfm:
-                    writer = new_self.create
-                else:
-                    writer = new_self.write
-                writer({
-                    'name': url_hash,
-                    'url': url,
-                    'content': content,
-                    'expiry_date': expiry_date.strftime(DATETIME_FORMAT),
-                    'removal_date': removal_date.strftime(DATETIME_FORMAT),
-                })
+            if not Lastfm:
+                writer = self.create
+            else:
+                writer = self.write
+            writer({
+                'name': url_hash,
+                'url': url,
+                'content': content,
+                'expiry_date': expiry_date.strftime(DATETIME_FORMAT),
+                'removal_date': removal_date.strftime(DATETIME_FORMAT),
+            })
+            self.env.cr.commit()
 
         else:
             content = Lastfm.content or '{}'
 
-        Lastfm.env.cr.rollback()
-        Lastfm.env.cr.close()
         return content
 
     @api.model

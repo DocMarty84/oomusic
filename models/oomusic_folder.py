@@ -251,18 +251,16 @@ class MusicFolder(models.Model):
                 continue
 
             # Save in cache
-            with self.pool.cursor() as cr:
-                new_self = self.with_env(self.env(cr=cr))
-                try:
-                    new_self.env['oomusic.folder'].browse(folder.id).sudo().write({
-                        'image_big_cache': resized_images['image'],
-                    })
-                except OperationalError:
-                    _logger.warning(
-                        'Error when writing image cache for folder id: %s', folder.id,
-                        exc_info=True
-                    )
-                    continue
+            try:
+                folder.sudo().write({
+                    'image_big_cache': resized_images['image'],
+                })
+                self.env.cr.commit()
+            except OperationalError:
+                _logger.warning(
+                    'Error when writing image cache for folder id: %s', folder.id,
+                    exc_info=True
+                )
 
     @api.depends('image_folder')
     def _compute_image_medium(self):
@@ -288,18 +286,16 @@ class MusicFolder(models.Model):
                 continue
 
             # Save in cache
-            with self.pool.cursor() as cr:
-                new_self = self.with_env(self.env(cr))
-                try:
-                    new_self.env['oomusic.folder'].browse(folder.id).sudo().write({
-                        'image_medium_cache': resized_images['image_medium'],
-                    })
-                except OperationalError:
-                    _logger.warning(
-                        'Error when writing image cache for folder id: %s', folder.id,
-                        exc_info=True
-                    )
-                    continue
+            try:
+                folder.sudo().write({
+                    'image_medium_cache': resized_images['image_medium'],
+                })
+                self.env.cr.commit()
+            except OperationalError:
+                _logger.warning(
+                    'Error when writing image cache for folder id: %s', folder.id,
+                    exc_info=True
+                )
 
     @api.depends('image_folder')
     def _compute_image_small(self):
@@ -325,18 +321,16 @@ class MusicFolder(models.Model):
                 continue
 
             # Save in cache
-            with self.pool.cursor() as cr:
-                new_self = self.with_env(self.env(cr=cr))
-                try:
-                    new_self.env['oomusic.folder'].browse(folder.id).sudo().write({
-                        'image_small_cache': resized_images['image_small'],
-                    })
-                except OperationalError:
-                    _logger.warning(
-                        'Error when writing image cache for folder id: %s', folder.id,
-                        exc_info=True
-                    )
-                    continue
+            try:
+                folder.sudo().write({
+                    'image_small_cache': resized_images['image_small'],
+                })
+                self.env.cr.commit()
+            except OperationalError:
+                _logger.warning(
+                    'Error when writing image cache for folder id: %s', folder.id,
+                    exc_info=True
+                )
 
     def _set_image_big(self):
         for folder in self:
@@ -398,15 +392,11 @@ class MusicFolder(models.Model):
         folder_id = self.id
         if folder_id:
             # Set the last modification date to zero so we force scanning all folders and files
-            with self.pool.cursor() as cr:
-                new_self = self.with_env(self.env(cr=cr))
-                folders =\
-                    new_self.env['oomusic.folder'].search([('id', 'child_of', folder_id)]) | self
-                folders.sudo().write({'last_modification': 0})
-                cr.execute(
-                    'UPDATE oomusic_track SET last_modification = 0 WHERE root_folder_id = %s',
-                    (folder_id,)
-                )
+            folders = self.env['oomusic.folder'].search([('id', 'child_of', folder_id)]) | self
+            folders.sudo().write({'last_modification': 0})
+            tracks = self.env['oomusic.track'].search([('root_folder_id', '=', folder_id)])
+            tracks.sudo().write({'last_modification': 0})
+            self.env.cr.commit()
             self.env['oomusic.folder.scan'].scan_folder_th(folder_id)
 
     def action_unlock(self):

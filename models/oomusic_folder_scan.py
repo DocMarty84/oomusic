@@ -75,15 +75,6 @@ class MusicFolderScan(models.TransientModel):
         'TRACKTOTAL':  'track_total',
     }
 
-    def _get_new_cursor(self):
-        '''
-        Method used to get a new cursor.
-
-        :return `self`: new cursor in the environment
-        '''
-        new_cr = self.pool.cursor()
-        return self.with_env(self.env(cr=new_cr))
-
     def _lock_folder(self, folder_id):
         '''
         Check if a folder is locked. If it is not locked, lock it. If it is locked, log an error.
@@ -104,7 +95,6 @@ class MusicFolderScan(models.TransientModel):
             res = True
 
         self.env.cr.commit()
-        self.env.cr.close()
         return res
 
     def _clean_directory(self, path, user_id):
@@ -446,18 +436,17 @@ class MusicFolderScan(models.TransientModel):
 
         :param int folder_id: ID of the folder to scan
         '''
-        with api.Environment.manage():
+        with api.Environment.manage(), self.pool.cursor() as cr:
             time_start = dt.now()
             # As this function is in a new thread, open a new cursor because the existing one may be
             # closed
             if not self.env.context.get('test_mode'):
-                self = self._get_new_cursor()
+                self = self.with_env(self.env(cr))
 
                 # Lock the folder. A new cursor is necessary right after since it is closed
                 # explicitly. If the folder is locked, do nothing
                 if not self._lock_folder(folder_id):
                     return {}
-                self = self._get_new_cursor()
 
             MusicFolder = self.env['oomusic.folder']
             MusicTrack = self.env['oomusic.track']
@@ -473,7 +462,6 @@ class MusicFolderScan(models.TransientModel):
             if not Folder.exists():
                 if not self.env.context.get('test_mode'):
                     self.env.cr.commit()
-                    self.env.cr.close()
                 return {}
 
             # Build the cache
@@ -574,14 +562,6 @@ class MusicFolderScan(models.TransientModel):
                         # Commit and close the transaction
                         if not self.env.context.get('test_mode'):
                             self.env.cr.commit()
-                            self.env.cr.close()
-                            self = self._get_new_cursor()
-
-                        # Create environments with the new cursor, necessary for any DB call since
-                        # the cursor was explicitly closed
-                        MusicFolder = self.env['oomusic.folder']
-                        MusicTrack = self.env['oomusic.track']
-                        Folder = MusicFolder.browse([folder_id])
 
             # Final stuff to write and tags cleaning
             self._write_cache_write(cache_write)
@@ -596,7 +576,6 @@ class MusicFolderScan(models.TransientModel):
                 })
             if not self.env.context.get('test_mode'):
                 self.env.cr.commit()
-                self.env.cr.close()
             _logger.debug("Scan of folder_id \"%s\" completed!", folder_id)
             return {}
 

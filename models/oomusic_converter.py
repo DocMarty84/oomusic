@@ -206,45 +206,44 @@ class MusicConverterLine(models.Model):
     dummy_field = fields.Boolean('Dummy field')
 
     def convert(self):
-        with api.Environment.manage():
-            with self.pool.cursor() as cr:
-                if not self.env.context.get('test_mode'):
-                    new_self = self.with_env(self.env(cr))
-                else:
-                    new_self = self
-                    sleep(random.random())
-                # In case we manually canceled the job between line selection and conversion
-                if new_self.state != 'waiting':
-                    return
-                transcoder = new_self.converter_id.transcoder_id
+        with api.Environment.manage(), self.pool.cursor() as cr:
+            if not self.env.context.get('test_mode'):
+                new_self = self.with_env(self.env(cr))
+            else:
+                new_self = self
+                sleep(random.random())
+            # In case we manually canceled the job between line selection and conversion
+            if new_self.state != 'waiting':
+                return
+            transcoder = new_self.converter_id.transcoder_id
 
-                # Prepare folder and file
-                fn = new_self.track_id.path.replace(
-                    new_self.track_id.root_folder_id.path, new_self.converter_id.dest_folder)
-                fn_base, fn_ext = os.path.splitext(fn)
-                try:
-                    os.makedirs(os.path.dirname(fn))
-                except OSError:
-                    pass
+            # Prepare folder and file
+            fn = new_self.track_id.path.replace(
+                new_self.track_id.root_folder_id.path, new_self.converter_id.dest_folder)
+            fn_base, fn_ext = os.path.splitext(fn)
+            try:
+                os.makedirs(os.path.dirname(fn))
+            except OSError:
+                pass
 
-                # Avoid upsampling, except for VBR and normalization
-                if (
-                        fn_ext[1:] == transcoder.output_format.name and
-                        not new_self.converter_id.norm and
-                        '-q:a' not in transcoder.command and (
-                            not new_self.converter_id.bitrate or
-                            new_self.converter_id.bitrate >= new_self.track_id.bitrate
-                        )
-                ):
-                    copyfile(new_self.track_id.path, fn)
-                else:
-                    outdata = transcoder.transcode(
-                        new_self.track_id.id, bitrate=new_self.converter_id.bitrate,
-                        norm=new_self.converter_id.norm
-                    ).stdout
-                    fn_out = fn_base + '.' + transcoder.output_format.name
-                    with open(fn_out + '.tmp', 'wb') as outfile:
-                        for d in outdata:
-                            outfile.write(d)
-                    move(fn_out + '.tmp', fn_out)
-                new_self.write({'state': 'done'})
+            # Avoid upsampling, except for VBR and normalization
+            if (
+                    fn_ext[1:] == transcoder.output_format.name and
+                    not new_self.converter_id.norm and
+                    '-q:a' not in transcoder.command and (
+                        not new_self.converter_id.bitrate or
+                        new_self.converter_id.bitrate >= new_self.track_id.bitrate
+                    )
+            ):
+                copyfile(new_self.track_id.path, fn)
+            else:
+                outdata = transcoder.transcode(
+                    new_self.track_id.id, bitrate=new_self.converter_id.bitrate,
+                    norm=new_self.converter_id.norm
+                ).stdout
+                fn_out = fn_base + '.' + transcoder.output_format.name
+                with open(fn_out + '.tmp', 'wb') as outfile:
+                    for d in outdata:
+                        outfile.write(d)
+                move(fn_out + '.tmp', fn_out)
+            new_self.write({'state': 'done'})
