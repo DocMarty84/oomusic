@@ -10,7 +10,6 @@ import requests
 from werkzeug.urls import url_fix
 
 from odoo import models, api, fields
-from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT as DATETIME_FORMAT
 
 _logger = logging.getLogger(__name__)
 
@@ -67,8 +66,8 @@ class MusicLastfm(models.Model):
                 'name': url_hash,
                 'url': url,
                 'content': content,
-                'expiry_date': expiry_date.strftime(DATETIME_FORMAT),
-                'removal_date': removal_date.strftime(DATETIME_FORMAT),
+                'expiry_date': expiry_date,
+                'removal_date': removal_date,
             })
             self.env.cr.commit()
 
