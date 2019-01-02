@@ -9,7 +9,6 @@ class TestOomusicSubBookmark(test_sub_common.TestOomusicSubCommon):
         '''
         Test getBookmarks method
         '''
-        self.env2.cr.release()
         res = self.url_open('/rest/getBookmarks.view' + self.cred).content.decode('utf-8')
         res_clean = ''.join(res.split('\n')[2:][:-2])
         self.assertEqual(res_clean, '  <bookmarks/>')
@@ -19,7 +18,6 @@ class TestOomusicSubBookmark(test_sub_common.TestOomusicSubCommon):
         '''
         Test actionBookmark method
         '''
-        self.env2.cr.release()
         res = self.url_open('/rest/createBookmark.view' + self.cred).content.decode('utf-8')
         res_clean = ''.join(res.split('\n')[2:][:-2])
         self.assertEqual(res_clean, '')

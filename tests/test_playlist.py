@@ -66,6 +66,7 @@ class TestOomusicPlaylist(test_common.TestOomusicCommon):
         playlist_line.write({
             'track_id': tracks[1].id
         })
+        tracks.invalidate_cache()
         self.assertEqual(tracks[0].in_playlist, False)
         self.assertEqual(tracks[1].in_playlist, True)
 

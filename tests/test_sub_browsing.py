@@ -11,7 +11,6 @@ class TestOomusicSubBrowsing(test_sub_common.TestOomusicSubCommon):
         '''
         Test getMusicFolders method
         '''
-        self.env2.cr.release()
         res = self.url_open('/rest/getMusicFolders.view' + self.cred).content.decode('utf-8')
         res_clean = ''.join(res.split('\n')[2:][:-2])
         self.assertEqual(
@@ -28,7 +27,6 @@ class TestOomusicSubBrowsing(test_sub_common.TestOomusicSubCommon):
         '''
         tracks = self.TrackObj.search([])
         folders = self.FolderObj.search([])
-        self.env2.cr.release()
 
         # No params
         res = self.url_open('/rest/getIndexes.view' + self.cred).content.decode('utf-8')
@@ -116,7 +114,6 @@ class TestOomusicSubBrowsing(test_sub_common.TestOomusicSubCommon):
         albums = self.AlbumObj.search([])
         tracks = self.TrackObj.search([])
         folders = self.FolderObj.search([])
-        self.env2.cr.release()
 
         # params: musicFolderId (artist)
         url = '/rest/getMusicDirectory.view' + self.cred + '&id={}'.format(folders[1].id)
@@ -204,7 +201,6 @@ class TestOomusicSubBrowsing(test_sub_common.TestOomusicSubCommon):
         Test getGenres method
         '''
         genres = self.GenreObj.search([])
-        self.env2.cr.release()
 
         # params: musicFolderId (artist)
         url = '/rest/getGenres.view' + self.cred

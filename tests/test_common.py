@@ -3,7 +3,6 @@
 import shutil
 import os
 
-import odoo
 from odoo.tests import common
 
 
