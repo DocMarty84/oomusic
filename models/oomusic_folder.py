@@ -373,12 +373,8 @@ class MusicFolder(models.Model):
     @api.multi
     def unlink(self):
         # Remove tracks and albums included in the folders.
-        self.env['oomusic.track'].search([
-            ('folder_id', 'child_of', self.ids), ('user_id', '=', self.env.user.id)
-        ]).sudo().unlink()
-        self.env['oomusic.album'].search([
-            ('folder_id', 'child_of', self.ids), ('user_id', '=', self.env.user.id)
-        ]).sudo().unlink()
+        self.env['oomusic.track'].search([('folder_id', 'child_of', self.ids)]).sudo().unlink()
+        self.env['oomusic.album'].search([('folder_id', 'child_of', self.ids)]).sudo().unlink()
         user_ids = self.mapped('user_id')
         super(MusicFolder, self).unlink()
         for user_id in user_ids:
