@@ -146,25 +146,23 @@ class MusicConverter(models.Model):
     @api.multi
     def action_run(self):
         self.write({'state': 'running'})
-        self.env.cr.execute('''
-            UPDATE oomusic_converter_line SET state = 'waiting' WHERE converter_id IN %s
-        ''', (tuple(self.ids),))
+        self.env['oomusic.converter.line'].search([
+            ('converter_id', 'in', self.ids)
+        ]).write({'state': 'waiting'})
 
     @api.multi
     def action_draft(self):
         self.write({'state': 'draft'})
-        self.env.cr.execute('''
-            UPDATE oomusic_converter_line SET state = 'draft' WHERE converter_id IN %s
-        ''', (tuple(self.ids),))
+        self.env['oomusic.converter.line'].search([
+            ('converter_id', 'in', self.ids)
+        ]).write({'state': 'draft'})
 
     @api.multi
     def action_cancel(self):
         self.write({'state': 'cancel'})
-        self.env.cr.execute('''
-            UPDATE oomusic_converter_line
-            SET state = 'cancel'
-            WHERE converter_id IN %s AND state = 'waiting'
-        ''', (tuple(self.ids),))
+        self.env['oomusic.converter.line'].search([
+            ('converter_id', 'in', self.ids), ('state', '=', 'waiting')
+        ]).write({'state': 'cancel'})
 
     @api.multi
     def action_convert(self):

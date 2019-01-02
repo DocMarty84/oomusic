@@ -272,10 +272,7 @@ class MusicPlaylistLine(models.Model):
             self.playlist_id.action_current()
 
         # Update playing status and stats of the current playlist
-        self.env.cr.execute(
-            '''UPDATE oomusic_playlist_line
-               SET playing = False
-               WHERE user_id = %s''', (self.env.user.id,))
+        self.search([]).write({'playing': False})
         self.write({
             'last_play': now if self.playlist_id.dynamic else False,
             'playing': True,
