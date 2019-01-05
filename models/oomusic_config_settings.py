@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import api, fields, models
+from odoo.release import version
 
 
 class MusicConfigSettings(models.TransientModel):
@@ -23,6 +24,7 @@ class MusicConfigSettings(models.TransientModel):
         ('inactive', 'Inactive (user specific)'),
         ('active', 'Active (shared amongst all users)'),
     ], string='Folder Sharing')
+    version = fields.Char('Version', readonly=True)
 
     @api.model
     def get_values(self):
@@ -48,6 +50,7 @@ class MusicConfigSettings(models.TransientModel):
         res['view'] = 'tree' if all([v.split(',')[0] == 'tree' for v in view]) else 'kanban'
         res['folder_sharing'] = 'inactive' if all([c for c in folder_sharing]) else 'active'
         res['fm_info'] = self.env['ir.config_parameter'].sudo().get_param('oomusic.fm_info', 'auto')
+        res['version'] = version
         return res
 
     def set_values(self):

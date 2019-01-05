@@ -18,6 +18,9 @@
                         <field name="view" widget="radio"/>
                         <field name="fm_info" widget="radio"/>
                     </group>
+                    <group>
+                        <field name="version"/>
+                    </group>
                 </form>
             </field>
         </record>
