@@ -288,7 +288,9 @@ class SubsonicREST():
             path=folder.path,
         )
 
-        if folder.image_medium:
+        # Use of [0] to make sure to fetch the image_medium for this album only, not all albums of
+        # the recordset.
+        if folder.image_medium_cache or folder[0].image_medium:
             elem_directory.set('coverArt', str(folder.id))
 
         if folder.track_ids:
@@ -456,7 +458,9 @@ class SubsonicREST():
         if album.artist_id:
             elem_album.set('artist', album.artist_id.name)
             elem_album.set('artistId', str(album.artist_id.id))
-        if album.image_medium:
+        # Use of [0] to make sure to fetch the image_medium for this album only, not all albums of
+        # the recordset.
+        if album.image_medium_cache or album[0].image_medium:
             elem_album.set('coverArt', str(album.folder_id.id))
         if album.star == '1':
             elem_album.set('starred', self._dt_to_string(album.write_date))
