@@ -532,7 +532,7 @@ class MusicFolderScan(models.TransientModel):
                     if not vals['name']:
                         vals['name'] = fn
                     try:
-                        vals['track_number_int'] = int(vals['track_number'])
+                        vals['track_number_int'] = int(vals['track_number'].split('/')[0])
                     except ValueError:
                         vals['track_number_int'] = 0
 
