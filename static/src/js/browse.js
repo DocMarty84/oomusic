@@ -1,15 +1,15 @@
 odoo.define('oomusic.Browse', function (require) {
 'use strict';
 
+var AbstractAction = require('web.AbstractAction');
 var core = require('web.core');
 var web_client = require('web.web_client');
-var Widget = require('web.Widget');
 
 var QWeb = core.qweb;
 var _t = core._t;
 
 
-var Browse = Widget.extend({
+var Browse = AbstractAction.extend({
     events: {
         'click .oom_folder': '_onClickFolder',
         'click .fa-plus': '_onClickAddFolder',
@@ -55,10 +55,6 @@ var Browse = Widget.extend({
                     _.extend(self.folder_data, tmp_data);
                 });
         }
-    },
-
-    canBeRemoved: function () {
-        return $.when();
     },
 
     //--------------------------------------------------------------------------
