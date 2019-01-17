@@ -95,7 +95,7 @@
         <field name="name">oomusic.playlist.line.tree</field>
         <field name="model">oomusic.playlist.line</field>
         <field name="arch" type="xml">
-            <tree string="Tracks" class="playlist"
+            <tree string="Tracks" js_class="playlist_tree"
                 decoration-success="playing == True"
                 decoration-bf="playing == True"
                 decoration-muted="last_play != False and playing == False">
