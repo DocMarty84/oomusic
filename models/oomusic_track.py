@@ -148,6 +148,13 @@ class MusicTrack(models.Model):
             playlist.action_purge()
         playlist._add_tracks(self)
 
+    def action_play(self):
+        return {
+            'type': 'ir.actions.act_play',
+            'res_model': 'oomusic.track',
+            'res_id': self.id,
+        }
+
     @api.multi
     def oomusic_play(self, seek=0):
         if not self:

@@ -61,7 +61,13 @@ class MusicAlbum(models.Model):
             raise UserError(_('No current playlist found!'))
         if self.env.context.get('purge'):
             playlist.action_purge()
-        playlist._add_tracks(self.mapped('track_ids'))
+        lines = playlist._add_tracks(self.mapped('track_ids'))
+        if self.env.context.get('play') and lines:
+            return {
+                'type': 'ir.actions.act_play',
+                'res_model': 'oomusic.playlist.line',
+                'res_id': lines[0].id,
+            }
 
     def _lastfm_album_getinfo(self):
         self.ensure_one()

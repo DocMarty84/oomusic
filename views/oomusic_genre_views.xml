@@ -20,6 +20,8 @@
                                 <tree string="Artists">
                                     <button name="action_add_to_playlist" string="Add To Current Playlist"
                                         icon="fa-plus" type="object" />
+                                    <button name="action_add_to_playlist" string="Add And Play"
+                                        icon="fa-play" type="object" context="{'play': True}"/>
                                     <field name="name"/>
                                 </tree>
                             </field>
@@ -31,6 +33,9 @@
                                     <button name="action_add_to_playlist" string="Add To Current Playlist"
                                         icon="fa-plus" type="object"
                                         attrs="{'invisible': [('in_playlist','=', True)]}"/>
+                                    <button name="action_add_to_playlist" string="Add And Play"
+                                        icon="fa-play" type="object"
+                                        attrs="{'invisible': [('in_playlist','=', True)]}" context="{'play': True}"/>
                                     <field name="name"/>
                                     <field name="year"/>
                                     <field name="artist_id"/>

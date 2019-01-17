@@ -86,10 +86,11 @@ class MusicPlaylist(models.Model):
                 playlist_line |= playlist_line.new(data)
             else:
                 data['playlist_id'] = self.id
-                playlist_line.create(data)
+                playlist_line |= playlist_line.create(data)
 
         if onchange:
             self.playlist_line_ids += playlist_line
+        return playlist_line
 
     def _get_track_ids(self):
         return self.playlist_line_ids.mapped('track_id')
@@ -359,3 +360,10 @@ class MusicPlaylistLine(models.Model):
             return playlist_line[0].oomusic_play()
         else:
             return json.dumps({})
+
+    def action_play(self):
+        return {
+            'type': 'ir.actions.act_play',
+            'res_model': 'oomusic.playlist.line',
+            'res_id': self.id,
+        }

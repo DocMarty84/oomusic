@@ -449,7 +449,13 @@ class MusicFolder(models.Model):
             raise UserError(_('No current playlist found!'))
         if self.env.context.get('purge'):
             playlist.action_purge()
-        playlist._add_tracks(self.mapped('track_ids'))
+        lines = playlist._add_tracks(self.mapped('track_ids'))
+        if self.env.context.get('play') and lines:
+            return {
+                'type': 'ir.actions.act_play',
+                'res_model': 'oomusic.playlist.line',
+                'res_id': lines[0].id,
+            }
 
     @api.multi
     def action_add_to_playlist_recursive(self):
@@ -459,7 +465,13 @@ class MusicFolder(models.Model):
         if self.env.context.get('purge'):
             playlist.action_purge()
         tracks = self.env['oomusic.track'].search([('folder_id', 'child_of', self.ids)])
-        playlist._add_tracks(tracks)
+        lines = playlist._add_tracks(tracks)
+        if self.env.context.get('play') and lines:
+            return {
+                'type': 'ir.actions.act_play',
+                'res_model': 'oomusic.playlist.line',
+                'res_id': lines[0].id,
+            }
 
     @api.multi
     def oomusic_browse(self):

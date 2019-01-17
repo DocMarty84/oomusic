@@ -12,7 +12,7 @@ ListRenderer.include(/** @lends instance.web.ListView.List# */{
         this._super.apply(this, arguments);
 
         // Listen on 'oomusic_reload' only in specific playlist views
-        if (['playlist', 'playlist_form'].indexOf(this.arch.attrs.class) >= 0) {
+        if (['playlist'].indexOf(this.arch.attrs.class) >= 0) {
             core.bus.on('oomusic_reload', this, this._reloadFromPlay);
         }
     },
@@ -34,7 +34,7 @@ ListRenderer.include(/** @lends instance.web.ListView.List# */{
     },
 
     _renderHeaderCell: function (node) {
-        if (node.attrs.widget === 'oomusic_play' || node.attrs.name === 'action_add_to_playlist') {
+        if (node.attrs.name === 'action_play' || node.attrs.name === 'action_add_to_playlist') {
             return $('<th width=1></th>');
         }
         return this._super.apply(this, arguments);
