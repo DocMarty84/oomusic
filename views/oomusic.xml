@@ -9,6 +9,7 @@
                 <link rel="stylesheet" href="/oomusic/static/src/scss/volume.scss"/>
 
                 <script type="text/javascript" src="/oomusic/static/lib/howler.js"></script>
+                <script type="text/javascript" src="/oomusic/static/src/js/action_manager.js"></script>
                 <script type="text/javascript" src="/oomusic/static/src/js/browse.js"></script>
                 <script type="text/javascript" src="/oomusic/static/src/js/field.js"></script>
                 <script type="text/javascript" src="/oomusic/static/src/js/geolocate.js"></script>
