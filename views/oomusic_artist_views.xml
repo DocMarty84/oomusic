@@ -64,7 +64,7 @@
                         </page>
                         <page string="Tracks">
                             <field name="track_ids">
-                                <tree string="Tracks">
+                                <tree string="Tracks" limit="120">
                                     <field name="in_playlist" invisible="1"/>
                                     <button name="action_add_to_playlist" string="Add To Current Playlist"
                                         icon="fa-plus" type="object"
