@@ -3,8 +3,9 @@
 import json
 import random
 
-from odoo import fields, models, api
+from odoo import api, fields, models
 from odoo.exceptions import MissingError
+from odoo.tools.safe_eval import safe_eval
 
 
 class MusicPlaylist(models.Model):
@@ -62,8 +63,10 @@ class MusicPlaylist(models.Model):
         ('favorite', 'Favorites'),
         ('best_rated', 'Best Rated'),
         ('worst_rated', 'Worst Rated'),
+        ('custom', 'Custom'),
     ], 'Smart Playlist')
     smart_playlist_qty = fields.Integer('Quantity To Add', default=20)
+    smart_custom_domain = fields.Char('Custom Domain')
 
     def _add_tracks(self, tracks, onchange=False):
         # Set starting sequence
@@ -112,17 +115,6 @@ class MusicPlaylist(models.Model):
     def _onchange_audio(self):
         self.audio_mode = 'raw' if self.audio == 'web' else 'standard'
 
-    @api.onchange('smart_playlist')
-    def _onchange_smart_playlist(self):
-        if not self.smart_playlist:
-            return
-        if self.smart_playlist_qty < 1:
-            self.smart_playlist_qty = 20
-        tracks = getattr(self, '_smart_{}'.format(self.smart_playlist))()
-        self._add_tracks(tracks, onchange=True)
-        if not self.dynamic:
-            self.smart_playlist = False
-
     @api.multi
     def action_purge(self):
         self.mapped('playlist_line_ids').unlink()
@@ -132,6 +124,13 @@ class MusicPlaylist(models.Model):
         self.ensure_one()
         self.env['oomusic.playlist'].search([]).write({'current': False})
         self.current = True
+
+    def action_add_to_playlist(self):
+        for playlist in self:
+            if playlist.smart_playlist_qty < 1:
+                playlist.smart_playlist_qty = 20
+            tracks = getattr(self, '_smart_{}'.format(playlist.smart_playlist))()
+            playlist._add_tracks(tracks)
 
     def _smart_rnd(self):
         current_tracks = self.playlist_line_ids.mapped('track_id')
@@ -211,6 +210,16 @@ class MusicPlaylist(models.Model):
             ('id', 'not in', current_tracks.ids)
         ], limit=self.smart_playlist_qty,
         order='rating, ' + self.env['oomusic.track']._order)
+
+    def _smart_custom(self):
+        current_tracks = self.playlist_line_ids.mapped('track_id')
+        tracks = self.env['oomusic.track'].search(
+            [('id', 'not in', current_tracks.ids)] + safe_eval(self.smart_custom_domain)
+        )
+        tracks_list = random.sample(tracks, min(self.smart_playlist_qty, len(tracks)))
+        return self.env['oomusic.track'].browse([
+            t.id for t in tracks_list
+        ])
 
     def _update_dynamic(self):
         for playlist in self.filtered('dynamic'):

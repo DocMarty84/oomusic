@@ -36,8 +36,13 @@
                             <div>
                                 <field name="smart_playlist_qty" nolabel="1"/>
                                 <field name="smart_playlist" attrs="{'required': [('dynamic', '=', True)]}"/>
+                                <button name="action_add_to_playlist" string="Add To Playlist"
+                                        type="object" attrs="{'invisible': [('smart_playlist', '=', False)]}"/>
                             </div>
                         </group>
+                        <field name="smart_custom_domain" widget="domain"
+                               options="{'model': 'oomusic.track'}"
+                               attrs="{'invisible': [('smart_playlist', '!=', 'custom')]}"/>
                     </group>
                     <notebook>
                         <page string="Tracks">
