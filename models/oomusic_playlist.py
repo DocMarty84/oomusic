@@ -79,6 +79,7 @@ class MusicPlaylist(models.Model):
             data = {
                 'sequence': seq,
                 'track_id': track.id,
+                'user_id': self.user_id.id,
             }
             if onchange:
                 # This will keep the line displayed in a (more or less) correct order while they

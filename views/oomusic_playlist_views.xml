@@ -6,6 +6,7 @@
         <field name="model">oomusic.playlist</field>
         <field name="arch" type="xml">
             <form string="Playlist">
+                <field name="user_id" invisible="1"/>
                 <header>
                     <button name="action_current" string="Set As Current" type="object" attrs="{'invisible': [('current', '=', True)]}"/>
                     <button name="action_purge" string="Purge" type="object"/>
@@ -42,6 +43,7 @@
                         <page string="Tracks">
                             <field name="playlist_line_ids">
                                 <tree string="Tracks" editable="bottom">
+                                    <field name="user_id" invisible="1" force_save="1"/>
                                     <field name="sequence" widget="handle"/>
                                     <button name="action_play" string="Play" icon="fa-play" type="object"/>
                                     <field name="track_id"/>

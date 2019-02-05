@@ -48,6 +48,12 @@
         <field name="groups" eval="[(4, ref('base.group_user'))]"/>
         <field name="domain_force">[('user_id', '=', user.id)]</field>
     </record>
+    <record id="oomusic_playlist_line" model="ir.rule">
+        <field name="name">oomusic.playlist.line: see own playlist lines</field>
+        <field name="model_id" ref="model_oomusic_playlist_line"/>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="domain_force">[('user_id', '=', user.id)]</field>
+    </record>
     <record id="oomusic_preference" model="ir.rule">
         <field name="name">oomusic.preference: see own preferences</field>
         <field name="model_id" ref="model_oomusic_preference"/>
