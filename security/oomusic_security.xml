@@ -25,7 +25,7 @@
         <field name="domain_force">[('user_id', '=', user.id)]</field>
     </record>
     <record id="oomusic_download" model="ir.rule">
-        <field name="name">oomusic.folder: see own download links</field>
+        <field name="name">oomusic.download: see own download links</field>
         <field name="model_id" ref="model_oomusic_download"/>
         <field name="groups" eval="[(4, ref('base.group_user'))]"/>
         <field name="domain_force">[('user_id', '=', user.id)]</field>
