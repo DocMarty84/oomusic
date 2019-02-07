@@ -1,9 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime as dt
+import locale
 import logging
 import os
 import threading
+from datetime import datetime as dt
+
+import mutagen
+from mutagen.easyid3 import EasyID3
+
+from odoo import api, fields, models
 
 # Pytaglib and Mutagen are supported for tag reading. Pytaglib is preferred as it seems less likely
 # to send an exception in case of incorrect file.
@@ -11,10 +17,7 @@ try:
     import taglib
 except ImportError:
     taglib = None
-import mutagen
-from mutagen.easyid3 import EasyID3
 
-from odoo import fields, models, api
 
 _logger = logging.getLogger(__name__)
 
@@ -436,6 +439,11 @@ class MusicFolderScan(models.TransientModel):
 
         :param int folder_id: ID of the folder to scan
         '''
+        if locale.getlocale() == (None, None):
+            _logger.warning(
+                "It seems the locale of your system is not set correctly. "
+                + "It might be resolved by setting the system variable LC_ALL to UTF-8."
+            )
         with api.Environment.manage(), self.pool.cursor() as cr:
             time_start = dt.now()
             # As this function is in a new thread, open a new cursor because the existing one may be
