@@ -17,6 +17,7 @@ from odoo.http import request
 
 _logger = logging.getLogger(__name__)
 API_VERSION_LIST = {
+    '1.16.1': 18,
     '1.16.0': 17,
     '1.15.0': 16,
     '1.14.0': 15,
@@ -62,7 +63,7 @@ class SubsonicREST():
         self.callback = args.get('callback', '')
 
         ctx = request.env['res.users']._crypt_context()
-        self.version_server = '1.16.0' if ctx.identify('') == 'plaintext' else '1.12.0'
+        self.version_server = '1.16.1' if ctx.identify('') == 'plaintext' else '1.12.0'
 
     def _dt_to_string(self, dt):
         dt_string = fields.Datetime.to_string(dt)
@@ -204,6 +205,8 @@ class SubsonicREST():
             if folder.rating and folder.rating != '0':
                 elem_artist.set('userRating', folder.rating)
                 elem_artist.set('averageRating', folder.rating)
+
+        # artistImageUrl is not implemented since we don't map folder to artists.
 
         return elem_artist
 
@@ -441,6 +444,14 @@ class SubsonicREST():
 
         if artist.star == '1':
             elem_artist.set('starred', self._dt_to_string(artist.write_date))
+
+        if API_VERSION_LIST[self.version_client] >= API_VERSION_LIST['1.16.1']:
+            req_json = artist._lastfm_artist_getinfo()
+            if 'artist' in req_json and 'image' in req_json['artist']:
+                for image in req_json['artist']['image']:
+                    if image.get('size') == 'extralarge' and image['#text']:
+                        elem_artist.set('artistImageUrl', image['#text'])
+                        break
 
         return elem_artist
 

@@ -17,7 +17,7 @@ class TestOomusicSubCommon(common.HttpCase):
     def setUp(self):
         super(TestOomusicSubCommon, self).setUp()
         login = passw = 'admin'
-        self.cred = '?u={}&p={}&v=1.16.0'.format(login, passw)
+        self.cred = '?u={}&p={}&v=1.16.1'.format(login, passw)
 
         self.AlbumObj = self.env['oomusic.album']
         self.ArtistObj = self.env['oomusic.artist']
