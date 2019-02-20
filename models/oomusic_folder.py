@@ -203,9 +203,10 @@ class MusicFolder(models.Model):
                         with open(os.path.join(folder.path, f), 'rb') as img:
                             folder.image_folder = base64.b64encode(img.read())
                             break
-
                 if folder.image_folder:
                     break
+            if folder.image_folder:
+                continue
 
             # Try to find an embedded cover art
             try:
