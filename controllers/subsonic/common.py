@@ -468,6 +468,8 @@ class SubsonicREST():
             songCount=str(len(album.track_ids)),
             duration=str(sum(durations)),
             created=self._dt_to_string(album.create_date),
+            userRating=album.rating or '0',
+            averageRating=album.rating or '0',
         )
 
         if album.artist_id:
