@@ -65,6 +65,10 @@ class SubsonicREST():
         ctx = request.env['res.users']._crypt_context()
         self.version_server = '1.16.1' if ctx.identify('') == 'plaintext' else '1.12.0'
 
+        # Temporary workaround for https://github.com/ultrasonic/ultrasonic/issues/238
+        if self.version_server == '1.16.1' and self.client == 'Ultrasonic':
+            self.version_server = '1.16.0'
+
     def _dt_to_string(self, dt):
         dt_string = fields.Datetime.to_string(dt)
         return dt_string.replace(' ', 'T') + 'Z'
