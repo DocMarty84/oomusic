@@ -88,6 +88,7 @@ msgstr "Albums"
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album__artist_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist__name
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event__artist_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line__artist_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line__artist_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__artist_id
@@ -162,6 +163,8 @@ msgstr "Droit d'Auteur"
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album__create_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist__create_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown__create_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event__create_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings__create_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter__create_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line__create_uid
@@ -182,6 +185,8 @@ msgstr "Créé par"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist__create_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown__create_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event__create_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings__create_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter__create_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line__create_date
@@ -229,6 +234,8 @@ msgstr "Disque"
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album__display_name
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist__display_name
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown__display_name
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event__display_name
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings__display_name
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter__display_name
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line__display_name
@@ -373,6 +380,8 @@ msgstr "J'aime !"
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album__id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist__id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown__id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event__id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings__id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter__id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line__id
@@ -394,7 +403,6 @@ msgid "ID"
 msgstr "ID"
 
 #. module: oomusic
-#: model:ir.model.fields,help:oomusic.field_oomusic_album__image_small_cache
 #: model:ir.model.fields,help:oomusic.field_oomusic_folder__image_small_cache
 msgid "Image of the folder, used in Kanban view"
 msgstr "Image du répertoire, utilisé dans la vue Kanban"
@@ -430,6 +438,8 @@ msgstr "Dernière Modification"
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album____last_update
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist____last_update
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown____last_update
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event____last_update
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings____last_update
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter____last_update
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line____last_update
@@ -467,6 +477,8 @@ msgstr "Analysés Dernièrement"
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album__write_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist__write_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown__write_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event__write_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings__write_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter__write_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line__write_uid
@@ -488,6 +500,8 @@ msgstr "Dernière Mise-à-jour par"
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album__write_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist__write_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown__write_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event__write_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings__write_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter__write_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line__write_date
@@ -590,7 +604,7 @@ msgid "Music Transcoder"
 msgstr "Encodeur Musical"
 
 #. module: oomusic
-#: code:addons/oomusic/models/res_users.py:13
+#: code:addons/oomusic/models/res_users.py:35
 msgid "My Playlist"
 msgstr "Ma liste de lecture"
 
@@ -609,9 +623,11 @@ msgstr "Pas d'auto-scan"
 
 #. module: oomusic
 #: code:addons/oomusic/models/oomusic_album.py:61
-#: code:addons/oomusic/models/oomusic_artist.py:148
+#: code:addons/oomusic/models/oomusic_artist.py:155
 #: code:addons/oomusic/models/oomusic_folder.py:449
-#: code:addons/oomusic/models/oomusic_folder.py:458
+#: code:addons/oomusic/models/oomusic_folder.py:450
+#: code:addons/oomusic/models/oomusic_folder.py:464
+#: code:addons/oomusic/models/oomusic_folder.py:465
 #: code:addons/oomusic/models/oomusic_track.py:146
 msgid "No current playlist found!"
 msgstr "Aucune liste de lecture courante trouvée !"
@@ -851,6 +867,7 @@ msgstr "Activer lecture aléatoire"
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album__user_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist__user_id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event__user_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter__user_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line__user_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_download__user_id
@@ -968,12 +985,12 @@ msgid "Biography"
 msgstr "Biographie"
 
 #. module: oomusic
-#: code:addons/oomusic/models/oomusic_artist.py:105
+#: code:addons/oomusic/models/oomusic_artist.py:112
 msgid "Biography not found"
 msgstr "Biographie non trouvée"
 
 #. module: oomusic
-#: code:addons/oomusic/static/src/js/browse.js:72
+#: code:addons/oomusic/static/src/js/browse.js:68
 #: model:ir.actions.client,name:oomusic.action_oomusic_browse
 #: model:ir.ui.menu,name:oomusic.menu_action_oomusic_browse
 msgid "Browse Files"
@@ -1012,9 +1029,9 @@ msgstr "Meilleures Pistes"
 
 #. module: oomusic
 #. openerp-web
-#: code:addons/oomusic/static/src/js/browse.js:91
-#: code:addons/oomusic/static/src/js/browse.js:108
-#: code:addons/oomusic/static/src/js/browse.js:124
+#: code:addons/oomusic/static/src/js/browse.js:87
+#: code:addons/oomusic/static/src/js/browse.js:104
+#: code:addons/oomusic/static/src/js/browse.js:120
 msgid "\" added to playlist."
 msgstr "\" ajouté à la liste de lecture."
 
@@ -1025,21 +1042,22 @@ msgid "As soon as a folder is added in your library, the albums and artists are 
 msgstr "Dès qu'un répertoire est ajouté à votre bibliothèque, les albums et les artistes sont organisés ici par genre."
 
 #. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown__expiry_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_lastfm__expiry_date
 msgid "Expiry Date"
 msgstr "Date d'Expiration"
 
 #. module: oomusic
 #. openerp-web
-#: code:addons/oomusic/static/src/js/browse.js:91
-#: code:addons/oomusic/static/src/js/browse.js:108
+#: code:addons/oomusic/static/src/js/browse.js:87
+#: code:addons/oomusic/static/src/js/browse.js:104
 msgid "Folder \""
 msgstr "Répertoire \""
 
 #. module: oomusic
 #. openerp-web
-#: code:addons/oomusic/static/src/js/browse.js:90
-#: code:addons/oomusic/static/src/js/browse.js:107
+#: code:addons/oomusic/static/src/js/browse.js:86
+#: code:addons/oomusic/static/src/js/browse.js:103
 msgid "Folder added"
 msgstr "Répertoire Ajouté"
 
@@ -1051,6 +1069,7 @@ msgid "Genres"
 msgstr "Genres"
 
 #. module: oomusic
+#: model:ir.model.fields,help:oomusic.field_oomusic_album__image_medium_cache
 #: model:ir.model.fields,help:oomusic.field_oomusic_folder__image_medium_cache
 msgid "Image of the folder"
 msgstr "Image du répertoire"
@@ -1061,46 +1080,44 @@ msgid "LastFM Cache Management"
 msgstr "Gestion du Cache LastFM"
 
 #. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown__removal_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_lastfm__removal_date
 msgid "Removal Date"
 msgstr "Date de Suppression"
 
 #. module: oomusic
-#: model_terms:ir.ui.view,arch_db:oomusic.oomusic_album_view_form
-#: model_terms:ir.ui.view,arch_db:oomusic.oomusic_artist_view_form
-#: model_terms:ir.ui.view,arch_db:oomusic.oomusic_track_view_form
-msgid "Replace Current Playlist"
-msgstr "Remplacer la Liste de Lecture Courante"
-
-#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown__content
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_lastfm__content
 msgid "Result"
 msgstr "Résultat"
 
 #. module: oomusic
 #. openerp-web
-#: code:addons/oomusic/static/src/js/browse.js:124
+#: code:addons/oomusic/static/src/js/browse.js:120
 msgid "Track \""
 msgstr "Piste \""
 
 #. module: oomusic
 #. openerp-web
-#: code:addons/oomusic/static/src/js/browse.js:123
+#: code:addons/oomusic/static/src/js/browse.js:119
 msgid "Track added"
 msgstr "Piste ajoutée"
 
 #. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown__url
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_download__url
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_lastfm__url
 msgid "URL"
 msgstr "URL"
 
 #. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown__name
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_lastfm__name
 msgid "URL Hash"
 msgstr "Hash de l'URL"
 
 #. module: oomusic
+#: sql_constraint:oomusic.bandsintown:0
 #: sql_constraint:oomusic.lastfm:0
 msgid "URL hash must be unique!"
 msgstr "Le hash de l'URL doit être unique!"
@@ -1592,6 +1609,7 @@ msgid "Activate automatic folder scan and image cache mechanism"
 msgstr "Activer l'analyse automatique des répertoires et le mécanisme de cache d'image"
 
 #. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event__active
 #: selection:oomusic.config.settings,cron:0
 msgid "Active"
 msgstr "Actif"
@@ -1617,12 +1635,12 @@ msgid "Features"
 msgstr "Fonctionnalités"
 
 #. module: oomusic
-#: selection:oomusic.config.settings,fm_info:0
+#: selection:oomusic.config.settings,ext_info:0
 msgid "Fetched automatically"
 msgstr "Récupérées Automatiquement"
 
 #. module: oomusic
-#: selection:oomusic.config.settings,fm_info:0
+#: selection:oomusic.config.settings,ext_info:0
 msgid "Fetched manually"
 msgstr "Récupérées Manuellement"
 
@@ -1635,11 +1653,6 @@ msgstr "Inactif"
 #: selection:oomusic.config.settings,view:0
 msgid "Kanban, with thumbnails"
 msgstr "Kanban, avec miniatures"
-
-#. module: oomusic
-#: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings__fm_info
-msgid "LastFM Info"
-msgstr "Infos LastFM"
 
 #. module: oomusic
 #: selection:oomusic.config.settings,view:0
@@ -1845,28 +1858,28 @@ msgstr "Standard"
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album__image_big
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__image_big
 msgid "Big-sized Image"
-msgstr ""
+msgstr "Grande image"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__image_big_cache
 msgid "Cache Of Big-sized Image"
-msgstr ""
+msgstr "Cache de la grande image"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist__fm_image_cache
 msgid "Cache Of Image"
-msgstr ""
+msgstr "Cache de l'image"
 
 #. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_album__image_medium_cache
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__image_medium_cache
 msgid "Cache Of Medium-sized Image"
-msgstr ""
+msgstr "Cache de l'image moyenne"
 
 #. module: oomusic
-#: model:ir.model.fields,field_description:oomusic.field_oomusic_album__image_small_cache
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__image_small_cache
 msgid "Cache Of Small-sized Image"
-msgstr ""
+msgstr "Cache de la petite image"
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_folder__tag_analysis
@@ -1878,7 +1891,7 @@ msgstr "Choisissez Mutagen pour une meilleure compatibilité avec les points de 
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line__duration_min
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__duration_min
 msgid "Duration (min)"
-msgstr ""
+msgstr "Durée (min)"
 
 #. module: oomusic
 #. openerp-web
@@ -1894,33 +1907,33 @@ msgstr "Analyse des fichiers"
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__last_commit
 msgid "Last Commit"
-msgstr ""
+msgstr "Dernière validation"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album__image_medium
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__image_medium
 msgid "Medium-sized Image"
-msgstr ""
+msgstr "Image moyenne"
 
 #. module: oomusic
 #: selection:oomusic.folder,tag_analysis:0
 msgid "Mutagen"
-msgstr ""
+msgstr "Mutagen"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion__name_albums
 msgid "Name Albums"
-msgstr ""
+msgstr "Nom des albums"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion__name_tracks
 msgid "Name Tracks"
-msgstr ""
+msgstr "Nom des pistes"
 
 #. module: oomusic
 #: code:addons/oomusic/models/oomusic_folder.py:139
 msgid "No track found"
-msgstr ""
+msgstr "Aucune piste trouvée"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__root_preview
@@ -1945,27 +1958,198 @@ msgstr "Pistes ajoutées récemment"
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album__image_small
 msgid "Small-sized Image"
-msgstr ""
+msgstr "Petite image"
 
 #. module: oomusic
 #: selection:oomusic.folder,tag_analysis:0
 msgid "Taglib"
-msgstr ""
+msgstr "Taglib"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__track_number_int
 msgid "Track # (int)"
-msgstr ""
+msgstr "# de piste (int)"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings__version
 msgid "Version"
-msgstr ""
+msgstr "Version"
 
 #. module: oomusic
 #: model:ir.actions.server,name:oomusic.oomusic_unlock_folder_ir_actions_server
 #: model:ir.cron,cron_name:oomusic.oomusic_unlock_folder
 #: model:ir.cron,name:oomusic.oomusic_unlock_folder
 msgid "oomusic.unlock.folder"
+msgstr ""
+
+#. module: oomusic
+#: model_terms:ir.ui.view,arch_db:oomusic.oomusic_album_view_form
+#: model_terms:ir.ui.view,arch_db:oomusic.oomusic_album_view_kanban
+#: model_terms:ir.ui.view,arch_db:oomusic.oomusic_album_view_tree
+#: model_terms:ir.ui.view,arch_db:oomusic.oomusic_artist_view_form
+#: model_terms:ir.ui.view,arch_db:oomusic.oomusic_genre_view_form
+#: model_terms:ir.ui.view,arch_db:oomusic.oomusic_suggestion_view_form
+msgid "Add And Play"
+msgstr "Ajouter et jouer"
+
+#. module: oomusic
+#: model:ir.model,name:oomusic.model_oomusic_bandsintown
+msgid "BandsInTown Cache Management"
+msgstr "Gestion du cache BandsInTown"
+
+#. module: oomusic
+#: model:ir.model,name:oomusic.model_oomusic_bandsintown_event
+msgid "BandsInTown Events"
+msgstr "Événements BandsInTown"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event__name
+msgid "BandsInTown ID"
+msgstr "ID BandsInTown"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event__city
+msgid "City"
+msgstr "Ville"
+
+#. module: oomusic
+#: model_terms:ir.actions.act_window,help:oomusic.action_bandsintown_event
+msgid "Click on the switch at the top right of the artist page to start following."
+msgstr "Cliquez sur le bouton en haut à droite de la page de l'artiste pour le suivre."
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event__country
+msgid "Country"
+msgstr "Pays"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event__date_event
+#: model_terms:ir.ui.view,arch_db:oomusic.oomusic_bandsintown_event_view_search
+msgid "Date"
+msgstr "Date"
+
+#. module: oomusic
+#: model:ir.model.fields,help:oomusic.field_res_users__max_distance
+msgid "Display events located at this maximum distance from your location. Set to zero to show all events."
+msgstr "Affiche les événements situés à une distance maximale de votre position. Mettre à zéro pour montrer tous les événements."
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event__distance
+msgid "Distance From Location"
+msgstr "Distance depuis la position"
+
+#. module: oomusic
+#: model_terms:ir.ui.view,arch_db:oomusic.oomusic_bandsintown_event_view_form
+msgid "Event"
+msgstr "Événement"
+
+#. module: oomusic
+#: model:ir.actions.act_window,name:oomusic.action_bandsintown_event
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist__bit_event_ids
+#: model:ir.ui.menu,name:oomusic.menu_action_bandsintown_event
+#: model_terms:ir.ui.view,arch_db:oomusic.oomusic_artist_view_form
+#: model_terms:ir.ui.view,arch_db:oomusic.oomusic_bandsintown_event_view_calendar
+#: model_terms:ir.ui.view,arch_db:oomusic.oomusic_bandsintown_event_view_search
+#: model_terms:ir.ui.view,arch_db:oomusic.oomusic_bandsintown_event_view_tree
+msgid "Events"
+msgstr "Événements"
+
+#. module: oomusic
+#: model_terms:ir.ui.view,arch_db:oomusic.oomusic_res_users_preferences_inherit
+msgid "Events Location"
+msgstr "Lieu de l'événement"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_res_users__max_distance
+msgid "Events Maximum Distance (km)"
+msgstr "Distance maximale de l'événement (km)"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist__bit_follow
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event__bit_follow
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_preference__bit_follow
+msgid "Follow Events"
+msgstr "Suivre les événements"
+
+#. module: oomusic
+#: model_terms:ir.ui.view,arch_db:oomusic.oomusic_bandsintown_event_view_search
+#: selection:oomusic.artist,bit_follow:0
+#: selection:oomusic.preference,bit_follow:0
+msgid "Followed"
+msgstr "Suivi"
+
+#. module: oomusic
+#. openerp-web
+#: code:addons/oomusic/static/src/xml/geolocate.xml:5
+msgid "Get my location"
+msgstr "Trouver ma position"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings__ext_info
+msgid "LastFM and Events Info"
+msgstr "Info LastFM et événements"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event__latitude
+#: model:ir.model.fields,field_description:oomusic.field_res_users__latitude
+msgid "Latitude"
+msgstr "Latitude"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event__location
+msgid "Location"
+msgstr "Position"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event__longitude
+#: model:ir.model.fields,field_description:oomusic.field_res_users__longitude
+msgid "Longitude"
+msgstr "Longitude"
+
+#. module: oomusic
+#: selection:oomusic.artist,bit_follow:0
+#: selection:oomusic.preference,bit_follow:0
+msgid "Not Followed"
+msgstr "Non suivi"
+
+#. module: oomusic
+#: model_terms:ir.ui.view,arch_db:oomusic.oomusic_album_view_form
+#: model_terms:ir.ui.view,arch_db:oomusic.oomusic_artist_view_form
+#: model_terms:ir.ui.view,arch_db:oomusic.oomusic_playlist_view_form
+#: model_terms:ir.ui.view,arch_db:oomusic.oomusic_track_view_form
+#: model_terms:ir.ui.view,arch_db:oomusic.oomusic_track_view_tree
+msgid "Play"
+msgstr "Jouer"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event__region
+msgid "Region"
+msgstr "Région"
+
+#. module: oomusic
+#: model:ir.model.fields,help:oomusic.field_oomusic_bandsintown_event__distance
+msgid "The current location can be set in your preferences (from the top right menu)"
+msgstr "La position actuelle peut être définie dans vos préférences (dans le menu supérieur droit)"
+
+#. module: oomusic
+#: model_terms:ir.ui.view,arch_db:oomusic.oomusic_artist_view_form
+msgid "Update Events"
+msgstr "Mettre à jour les événements"
+
+#. module: oomusic
+#: model:ir.actions.server,name:oomusic.oomusic_artist_reload_bit_info
+msgid "Update Events Info"
+msgstr "Mettre à jour les infos de l'événement"
+
+#. module: oomusic
+#: model_terms:ir.actions.act_window,help:oomusic.action_bandsintown_event
+msgid "You will find here the upcoming events of the followed artists."
+msgstr "Vous trouverez ici les événements à venir des artistes suivis."
+
+#. module: oomusic
+#: model:ir.actions.server,name:oomusic.oomusic_build_bandsintown_cache_ir_actions_server
+#: model:ir.cron,cron_name:oomusic.oomusic_build_bandsintown_cache
+#: model:ir.cron,name:oomusic.oomusic_build_bandsintown_cache
+msgid "oomusic.build.bandsintown.cache"
 msgstr ""
 
