@@ -71,11 +71,12 @@ class MusicSubsonicPlaylist(http.Controller):
             return rest.make_error(
                 code='10', message='Required str parameter "name" is not present')
 
-        songId = kwargs.get('songId')
-        if songId:
-            track = request.env['oomusic.track'].browse([int(songId)])
-            if not track.exists():
-                return rest.make_error(code='70', message='Song not found')
+        songId = request.httprequest.values.getlist('songId')
+        track = request.env['oomusic.track'].browse([
+            int(track_id) for track_id in songId
+        ])
+        if track and not track.exists():
+            return rest.make_error(code='70', message='Song not found')
 
         if mode == 'create':
             playlist = PlaylistObj.create({'name': name})
@@ -113,15 +114,22 @@ class MusicSubsonicPlaylist(http.Controller):
         comment = kwargs.get('comment')
         public = kwargs.get('public')
 
-        songIdToAdd = kwargs.get('songIdToAdd')
-        if songIdToAdd:
-            track_add = request.env['oomusic.track'].browse([int(songIdToAdd)])
-            if not track_add.exists():
-                return rest.make_error(code='70', message='Song not found')
+        # We first remove the tracks...
+        songIndexToRemove = [
+            int(idx) for idx in request.httprequest.values.getlist('songIndexToRemove')
+        ]
+        line_ids = request.env['oomusic.playlist.line']
+        for idx in songIndexToRemove:
+            line_ids |= playlist.playlist_line_ids[idx]
+        line_ids.unlink()
 
-        songIndexToRemove = kwargs.get('songIndexToRemove')
-        if songIndexToRemove:
-            playlist.playlist_line_ids[int(songIndexToRemove)].unlink()
+        # ... then add new ones!
+        songIdToAdd = request.httprequest.values.getlist('songIdToAdd')
+        track_add = request.env['oomusic.track'].browse([
+            int(track_id) for track_id in songIdToAdd
+        ])
+        if track_add and not track_add.exists():
+            return rest.make_error(code='70', message='Song not found')
 
         vals = {}
         if name:
