@@ -70,6 +70,10 @@ class MusicTrack(models.Model):
         [('0', '0'), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')],
         'Rating', compute='_compute_rating', inverse='_inverse_rating', search='_search_rating'
     )
+    tag_ids = fields.Many2many(
+        'oomusic.tag', string='Custom Tags',
+        compute='_compute_tag_ids', inverse='_inverse_tag_ids', search='_search_tag_ids'
+    )
 
     def _compute_in_playlist(self):
         playlist = self.env['oomusic.playlist'].search([

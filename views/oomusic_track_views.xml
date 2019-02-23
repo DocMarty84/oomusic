@@ -52,6 +52,7 @@
                     <group>
                         <group>
                             <field name="rating" widget="priority"/>
+                            <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                             <field name="play_count"/>
                             <field name="last_play"/>
                             <field name="last_modification" groups="base.group_no_one"/>
@@ -91,6 +92,7 @@
                 <field name="artist_id"/>
                 <field name="track_number"/>
                 <field name="genre_id"/>
+                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                 <field name="duration_min" widget="float_time"/>
             </tree>
         </field>
@@ -106,6 +108,7 @@
                 <field name="album_id"/>
                 <field name="genre_id"/>
                 <field name="year"/>
+                <field name="tag_ids"/>
                 <field name="duration_min"/>
                 <field name="path"/>
 

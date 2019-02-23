@@ -35,6 +35,7 @@ class MusicPreference(models.Model):
         ('normal', 'Not Followed'),
         ('done', 'Followed')
         ], 'Follow Events', default='normal')
+    tag_ids = fields.Many2many('oomusic.tag', string='Custom Tags')
 
 
 class MusicPreferenceMixin(models.AbstractModel):
@@ -109,6 +110,18 @@ class MusicPreferenceMixin(models.AbstractModel):
     def _search_bit_follow(self, operator, value):
         return self._search_pref('bit_follow', operator, value)
 
+    @api.depends('pref_ids')
+    def _compute_tag_ids(self):
+        for obj in self:
+            obj.tag_ids = obj._get_pref('tag_ids')
+
+    def _inverse_tag_ids(self):
+        for obj in self:
+            obj._set_pref({'tag_ids': [(6, 0, obj.tag_ids.ids)]})
+
+    def _search_tag_ids(self, operator, value):
+        return self._search_pref('tag_ids', operator, value)
+
     def _get_pref(self, field):
         return self.pref_ids[field]
 
@@ -142,7 +155,7 @@ class MusicPreferenceMixin(models.AbstractModel):
         # `oomusic.preference`.
         # When the library is shared, this triggers an AccessError if the user is not the owner
         # of the object.
-        fields = {'play_count', 'last_play', 'star', 'rating', 'bit_follow'}
+        fields = {'play_count', 'last_play', 'star', 'rating', 'bit_follow', 'tag_ids'}
         new_self = self
         if any([k in fields for k in vals.keys()]):
             self.check_access_rule('read')

@@ -22,18 +22,19 @@
                                                 <img t-att-src="kanban_image('oomusic.album', 'image_small', record.id.raw_value)" t-att-title="record.value" t-att-alt="record.value"/>
                                             </div>
                                             <div class="oe_kanban_content">
-                                                <strong>
-                                                    <field name="name"/>
-                                                </strong>
-                                                <div>
-                                                    <field name="year"/>
-                                                </div>
-                                                <div>
-                                                    <field name="artist_id"/>
+                                                <div class="o_kanban_record_top">
+                                                    <div class="o_kanban_record_headings">
+                                                        <strong>
+                                                            <field name="name"/><br/>
+                                                        </strong>
+                                                        <field name="year"/><br/>
+                                                        <field name="artist_id"/><br/>
+                                                        <field name="genre_id"/>
+                                                    </div>
                                                 </div>
                                                 <div class="o_kanban_record_bottom">
                                                     <div class="oe_kanban_bottom_left">
-                                                        <field name="genre_id"/>
+                                                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                                                     </div>
                                                     <div class="oe_kanban_bottom_right">
                                                         <button name="action_add_to_playlist" string="Add To Current Playlist"
@@ -63,18 +64,19 @@
                                                 <img t-att-src="kanban_image('oomusic.album', 'image_small', record.id.raw_value)" t-att-title="record.value" t-att-alt="record.value"/>
                                             </div>
                                             <div class="oe_kanban_content">
-                                                <strong>
-                                                    <field name="name"/>
-                                                </strong>
-                                                <div>
-                                                    <field name="year"/>
-                                                </div>
-                                                <div>
-                                                    <field name="artist_id"/>
+                                                <div class="o_kanban_record_top">
+                                                    <div class="o_kanban_record_headings">
+                                                        <strong>
+                                                            <field name="name"/><br/>
+                                                        </strong>
+                                                        <field name="year"/><br/>
+                                                        <field name="artist_id"/><br/>
+                                                        <field name="genre_id"/>
+                                                    </div>
                                                 </div>
                                                 <div class="o_kanban_record_bottom">
                                                     <div class="oe_kanban_bottom_left">
-                                                        <field name="genre_id"/>
+                                                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                                                     </div>
                                                     <div class="oe_kanban_bottom_right">
                                                         <button name="action_add_to_playlist" string="Add To Current Playlist"

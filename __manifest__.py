@@ -30,6 +30,7 @@ Music Collection
         'views/oomusic_folder_views.xml',
         'views/oomusic_genre_views.xml',
         'views/oomusic_playlist_views.xml',
+        'views/oomusic_tag_views.xml',
         'views/oomusic_track_views.xml',
         'views/oomusic_suggestion_views.xml',
         'views/oomusic_transcoder_views.xml',

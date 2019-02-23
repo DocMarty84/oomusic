@@ -15,6 +15,7 @@ from . import oomusic_genre
 from . import oomusic_lastfm
 from . import oomusic_playlist
 from . import oomusic_suggestion
+from . import oomusic_tag
 from . import oomusic_track
 from . import oomusic_transcoder
 from . import res_users

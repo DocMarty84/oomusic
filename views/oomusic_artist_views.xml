@@ -29,6 +29,7 @@
                     </group>
                     <group>
                         <field name="rating" widget="priority"/>
+                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                     </group>
                     <notebook>
                         <page string="Albums">
@@ -107,6 +108,7 @@
         <field name="arch" type="xml">
             <tree string="Artists" create="0">
                 <field name="name"/>
+                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
             </tree>
         </field>
     </record>
@@ -118,6 +120,7 @@
             <search string="Artists">
                 <field name="name"/>
                 <field name="album_ids"/>
+                <field name="tag_ids"/>
 
                 <filter string="Favorite" name="filter_favorite"
                     domain="[('star', '=', '1')]"/>
@@ -141,6 +144,9 @@
                                 <strong>
                                     <field name="name"/>
                                 </strong>
+                                <t t-if="record.tag_ids.raw_value.length gt 0">
+                                    <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                </t>
                             </div>
                         </div>
                     </t>

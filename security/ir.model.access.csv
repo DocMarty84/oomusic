@@ -13,6 +13,8 @@ access_oomusic_playlist_line,oomusic.playlist.line,model_oomusic_playlist_line,b
 access_oomusic_preference,oomusic.preference,model_oomusic_preference,base.group_user,1,1,1,1
 access_oomusic_converter,oomusic.converter,model_oomusic_converter,base.group_user,1,1,1,1
 access_oomusic_converter_line,oomusic.converter.line,model_oomusic_converter_line,base.group_user,1,1,1,1
+access_oomusic_tag,oomusic.tag,model_oomusic_tag,base.group_user,1,1,1,0
+access_oomusic_tag_system,oomusic.tag,model_oomusic_tag,base.group_system,1,1,1,1
 access_oomusic_track,oomusic.track,model_oomusic_track,base.group_user,1,1,0,0
 access_oomusic_transcoder,oomusic.transcoder,model_oomusic_transcoder,base.group_user,1,0,0,0
 access_oomusic_transcoder_system,oomusic.transcoder,model_oomusic_transcoder,base.group_system,1,1,1,1

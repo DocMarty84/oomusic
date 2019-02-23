@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="oomusic_tag_view_form" model="ir.ui.view">
+        <field name="name">oomusic.tag.form</field>
+        <field name="model">oomusic.tag</field>
+        <field name="arch" type="xml">
+            <form string="Tag" create="0">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="color"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="oomusic_tag_view_tree" model="ir.ui.view">
+        <field name="name">oomusic.tag.tree</field>
+        <field name="model">oomusic.tag</field>
+        <field name="arch" type="xml">
+            <tree string="Tags" create="0" editable="bottom">
+                <field name="name"/>
+                <field name="color"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_tag" model="ir.actions.act_window">
+        <field name="name">Tags</field>
+        <field name="res_model">oomusic.tag</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>
+                You will find here all your tags.
+            </p>
+        </field>
+    </record>
+
+    <!-- Third Level Menu -->
+    <menuitem id="menu_action_tag" parent="menu_oomusic_config" action="action_tag" sequence="40" groups="base.group_no_one"/>
+</odoo>

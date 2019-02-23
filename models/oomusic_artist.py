@@ -53,6 +53,10 @@ class MusicArtist(models.Model):
         search='_search_bit_follow')
     bit_event_ids = fields.One2many(
         'oomusic.bandsintown.event', 'artist_id', string='Events', readonly=True)
+    tag_ids = fields.Many2many(
+        'oomusic.tag', string='Custom Tags',
+        compute='_compute_tag_ids', inverse='_inverse_tag_ids', search='_search_tag_ids'
+    )
 
     _sql_constraints = [
         ('oomusic_artist_name_uniq', 'unique(name, user_id)', 'Artist name must be unique!'),
