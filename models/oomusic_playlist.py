@@ -269,7 +269,6 @@ class MusicPlaylistLine(models.Model):
     user_id = fields.Many2one(
         'res.users', related='playlist_id.user_id', store=True, index=True, related_sudo=False)
     last_play = fields.Datetime('Last Played', readonly=True)
-    dummy_field = fields.Boolean('Dummy field')
 
     @api.multi
     def oomusic_set_current(self):

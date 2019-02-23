@@ -205,7 +205,6 @@ class MusicConverterLine(models.Model):
         'Duration (min)', related='track_id.duration_min', readonly=True, related_sudo=False)
     user_id = fields.Many2one(
         'res.users', related='converter_id.user_id', store=True, index=True, related_sudo=False)
-    dummy_field = fields.Boolean('Dummy field')
 
     def convert(self):
         with api.Environment.manage(), self.pool.cursor() as cr:
