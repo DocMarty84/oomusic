@@ -167,7 +167,7 @@ class TestOomusicPlaylist(test_common.TestOomusicCommon):
 
         # rnd
         playlist.smart_playlist = 'rnd'
-        playlist._onchange_smart_playlist()
+        playlist.action_add_to_playlist()
         self.assertEqual(
             set(playlist.mapped('playlist_line_ids').mapped('track_id').mapped('name')),
             set(['Song1', 'Song2', 'Song3', 'Song4', 'Song5', 'Song6'])
@@ -189,7 +189,7 @@ class TestOomusicPlaylist(test_common.TestOomusicCommon):
 
         # played
         playlist.smart_playlist = 'played'
-        playlist._onchange_smart_playlist()
+        playlist.action_add_to_playlist()
         self.assertEqual(
             set(playlist.mapped('playlist_line_ids').mapped('track_id').mapped('name')),
             set(['Song1', 'Song2'])
@@ -200,7 +200,7 @@ class TestOomusicPlaylist(test_common.TestOomusicCommon):
 
         # not_played
         playlist.smart_playlist = 'not_played'
-        playlist._onchange_smart_playlist()
+        playlist.action_add_to_playlist()
         self.assertEqual(
             set(playlist.mapped('playlist_line_ids').mapped('track_id').mapped('name')),
             set(['Song3', 'Song4', 'Song5', 'Song6'])
@@ -212,7 +212,7 @@ class TestOomusicPlaylist(test_common.TestOomusicCommon):
         # most_played
         playlist.smart_playlist = 'most_played'
         playlist.smart_playlist_qty = 1
-        playlist._onchange_smart_playlist()
+        playlist.action_add_to_playlist()
         self.assertEqual(
             playlist.mapped('playlist_line_ids').mapped('track_id').mapped('name'),
             ['Song1']
@@ -224,7 +224,7 @@ class TestOomusicPlaylist(test_common.TestOomusicCommon):
         # last_listened
         playlist.smart_playlist = 'last_listened'
         playlist.smart_playlist_qty = 1
-        playlist._onchange_smart_playlist()
+        playlist.action_add_to_playlist()
         self.assertEqual(
             playlist.mapped('playlist_line_ids').mapped('track_id').mapped('name'),
             ['Song2']
@@ -236,7 +236,7 @@ class TestOomusicPlaylist(test_common.TestOomusicCommon):
         # recent
         playlist.smart_playlist = 'recent'
         playlist.smart_playlist_qty = 20
-        playlist._onchange_smart_playlist()
+        playlist.action_add_to_playlist()
         self.assertEqual(
             set(playlist.mapped('playlist_line_ids').mapped('track_id').mapped('name')),
             set(['Song1', 'Song2', 'Song3', 'Song4', 'Song5', 'Song6'])
@@ -247,7 +247,7 @@ class TestOomusicPlaylist(test_common.TestOomusicCommon):
 
         # favorite
         playlist.smart_playlist = 'favorite'
-        playlist._onchange_smart_playlist()
+        playlist.action_add_to_playlist()
         self.assertEqual(
             set(playlist.mapped('playlist_line_ids').mapped('track_id').mapped('name')),
             set(['Song1'])
@@ -259,7 +259,7 @@ class TestOomusicPlaylist(test_common.TestOomusicCommon):
         # best_rated
         playlist.smart_playlist = 'best_rated'
         playlist.smart_playlist_qty = 1
-        playlist._onchange_smart_playlist()
+        playlist.action_add_to_playlist()
         self.assertEqual(
             set(playlist.mapped('playlist_line_ids').mapped('track_id').mapped('name')),
             set(['Song2'])
@@ -271,7 +271,7 @@ class TestOomusicPlaylist(test_common.TestOomusicCommon):
         # best_rated
         playlist.smart_playlist = 'worst_rated'
         playlist.smart_playlist_qty = 5
-        playlist._onchange_smart_playlist()
+        playlist.action_add_to_playlist()
         self.assertEqual(
             set(playlist.mapped('playlist_line_ids').mapped('track_id').mapped('name')),
             set(['Song1', 'Song3', 'Song4', 'Song5', 'Song6'])
@@ -294,7 +294,7 @@ class TestOomusicPlaylist(test_common.TestOomusicCommon):
             'smart_playlist_qty': 3,
             'dynamic': True,
         })
-        playlist._onchange_smart_playlist()
+        playlist.action_add_to_playlist()
 
         # There should be 3 tracks
         self.assertEqual(len(playlist.playlist_line_ids), 3)
