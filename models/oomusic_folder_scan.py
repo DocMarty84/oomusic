@@ -184,11 +184,11 @@ class MusicFolderScan(models.TransientModel):
             if to_clean:
                 self.env[td[1].replace('_', '.')].browse(to_clean).sudo().unlink()
 
-    def _build_cache(self, folder_id, user_id):
+    def _build_cache_global(self, folder_id, user_id):
         '''
-        Builds the cache for a given folder. This avoids using the ORM cache which does not show
-        the required performances for a large number of files. It caches information about albums,
-        artists, folders, genres and tracks. Only the necessary data is set in cache.
+        Builds the cache for a given root folder. This avoids using the ORM cache which does not
+        show the required performances for a large number of files. It caches information about
+        albums, artists, folders and genres. Only the necessary data is set in cache.
 
         :param int folder_id: ID of the folder to scan
         :param int user_id: ID of the user to whom belongs the folder
@@ -219,16 +219,26 @@ class MusicFolderScan(models.TransientModel):
         res = self.env.cr.fetchall()
         cache['genre'] = {r[0]: r[1] for r in res}
 
+        return cache
+
+    def _build_cache_folder(self, folder_id, user_id, cache):
+        '''
+        Builds the cache for a given folder. This avoids using the ORM cache which does not show
+        the required performances for a large number of files. It caches information about tracks.
+        Only the necessary data is set in cache.
+
+        :param int folder_id: ID of the folder to scan
+        :param int user_id: ID of the user to whom belongs the folder
+        :return dict: content of the cache
+        '''
         params = (user_id, folder_id)
         query = '''
             SELECT path, id, last_modification FROM oomusic_track
-            WHERE user_id = %s AND root_folder_id = %s;
+            WHERE user_id = %s AND folder_id = %s;
         '''
         self.env.cr.execute(query, params)
         res = self.env.cr.fetchall()
         cache['track'] = {r[0]: (r[1], r[2]) for r in res}
-
-        return cache
 
     def _build_cache_write(self):
         '''
@@ -265,7 +275,7 @@ class MusicFolderScan(models.TransientModel):
         mtime = int(os.path.getmtime(rootdir))
 
         if not folder:
-            cache = self._create_folder(rootdir, cache)
+            self._create_folder(rootdir, cache)
         elif folder[1] >= mtime:
             skip = True
         else:
@@ -276,7 +286,7 @@ class MusicFolderScan(models.TransientModel):
                 'last_modification': mtime,
                 'parent_id': parent_dir[0],
             })
-        return cache, skip
+        return skip
 
     def _create_folder(self, rootdir, cache):
         '''
@@ -299,8 +309,6 @@ class MusicFolderScan(models.TransientModel):
             }
             Folder = self.env['oomusic.folder'].create(vals)
             cache['folder'][rootdir] = (Folder.id, mtime)
-
-        return cache
 
     def _get_tags(self, file_path, tag=taglib):
         tag = tag or mutagen
@@ -476,18 +484,28 @@ class MusicFolderScan(models.TransientModel):
             # - cache is used for read/search, i.e. avoid reading/searching same info several times
             # - cache_write is used for writing tracks info on other models and avoid stored
             #   related/computed fields
-            cache = self._build_cache(Folder.id, Folder.user_id.id)
+            cache = self._build_cache_global(Folder.id, Folder.user_id.id)
             cache_write = self._build_cache_write()
-            i = len(cache['track'].keys())
+            i = 0
 
             # Start scanning
             time_commit = time_start
             for rootdir, dirnames, filenames in os.walk(Folder.path):
                 _logger.debug("Scanning folder \"%s\"...", rootdir)
 
-                cache, skip = self._manage_dir(rootdir, cache)
+                # If the folder is in cache, it means we'll have to fetch the track data. We check
+                # now since _manage_dir will add a missing folder in the cache.
+                build_cache_folder = False
+                if rootdir in cache['folder']:
+                    build_cache_folder = True
+
+                skip = self._manage_dir(rootdir, cache)
                 if skip:
                     continue
+
+                # Complete the cache with track data
+                if build_cache_folder:
+                    self._build_cache_folder(cache['folder'][rootdir][0], Folder.user_id.id, cache)
 
                 for fn in filenames:
                     # Check file extension
@@ -553,7 +571,7 @@ class MusicFolderScan(models.TransientModel):
                         Track = MusicTrack.create(vals)
 
                     # Update writing cache
-                    cache_write = self._update_cache_write(vals, cache_write)
+                    self._update_cache_write(vals, cache_write)
 
                     # Commit every 1000 tracks or 2 minutes
                     i = i + 1
