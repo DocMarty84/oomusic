@@ -9,45 +9,52 @@ from odoo.tools import OrderedSet
 
 
 class MusicTranscoder(models.Model):
-    _name = 'oomusic.transcoder'
-    _description = 'Music Transcoder'
-    _order = 'sequence'
+    _name = "oomusic.transcoder"
+    _description = "Music Transcoder"
+    _order = "sequence"
 
-    name = fields.Char('Transcoder Name', required=True)
+    name = fields.Char("Transcoder Name", required=True)
     sequence = fields.Integer(
         default=10,
-        help='Sequence used to order the transcoders. The lower the value, the higher the priority')
+        help="Sequence used to order the transcoders. The lower the value, the higher the priority",
+    )
     command = fields.Char(
-        'Command line', required=True,
-        help='''Command to execute for transcoding. Specific keywords are automatically replaced:
+        "Command line",
+        required=True,
+        help="""Command to execute for transcoding. Specific keywords are automatically replaced:
         - "%i": input file
         - "%s": start from this seek time
         - "%b": birate for output file
         - "%n": extra parameter for normaliation
-        '''
+        """,
     )
     bitrate = fields.Integer(
-        'Bitrate/Quality', required=True,
-        help='''Default bitrate or quality (for VBR). Can be changed if necessary when the
-        transcoding function is called.'''
+        "Bitrate/Quality",
+        required=True,
+        help="""Default bitrate or quality (for VBR). Can be changed if necessary when the
+        transcoding function is called.""",
     )
     black_formats = fields.Many2many(
-        'oomusic.format', string='Blacklisted Formats', index=True,
-        help='Input formats which cannot be converted using this transcoder.'
+        "oomusic.format",
+        string="Blacklisted Formats",
+        index=True,
+        help="Input formats which cannot be converted using this transcoder.",
     )
-    output_format = fields.Many2one('oomusic.format', string='Output Format', required=True)
+    output_format = fields.Many2one("oomusic.format", string="Output Format", required=True)
     buffer_size = fields.Integer(
-        'Buffer Size (KB)', required=True, default=200,
-        help='''Size of the buffer used while streaming. A larger value can reduce the potential
+        "Buffer Size (KB)",
+        required=True,
+        default=200,
+        help="""Size of the buffer used while streaming. A larger value can reduce the potential
         file download errors when playing, but will increase the waiting delay when switching
         songs.
         The default value (200 KB) should be a good compromise between waiting delay and download
         stability. A large value (e.g. 20000 KB) will ensure the complete download of the file
-        before playing.'''
+        before playing.""",
     )
 
     def transcode(self, track_id, bitrate=0, seek=0, norm=False):
-        '''
+        """
         Method used to transcode a track. It takes in charge the replacement of the specific
         keywords of the command, and returns the subprocess executed. The subprocess output is
         redirected to stdout, so it is possible to stream the transcoding result while it is still
@@ -58,24 +65,25 @@ class MusicTranscoder(models.Model):
         :param seek: start time for the encoding
         :returns: subprocess redirected to stdout.
         :rtype: subprocess.Popen
-        '''
+        """
         self.ensure_one()
 
-        Track = self.env['oomusic.track'].browse([track_id])
+        Track = self.env["oomusic.track"].browse([track_id])
         cmd = (
-            self.command
-                .replace('%s', '%s' % (str(datetime.timedelta(seconds=seek))))
-                .replace('%b', '%d' % (bitrate or self.bitrate))
-                .replace('%n', '-af loudnorm=I=-18' if norm else '')
-                .replace('%f', '%s' % os.path.splitext(Track.path)[1][1:])
+            self.command.replace("%s", "%s" % (str(datetime.timedelta(seconds=seek))))
+            .replace("%b", "%d" % (bitrate or self.bitrate))
+            .replace("%n", "-af loudnorm=I=-18" if norm else "")
+            .replace("%f", "%s" % os.path.splitext(Track.path)[1][1:])
         )
-        cmd = [c for c in cmd.split(' ') if c]
-        cmd[cmd.index('%i')] = Track.path
+        cmd = [c for c in cmd.split(" ") if c]
+        cmd[cmd.index("%i")] = Track.path
 
-        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=open(os.devnull, 'w'))
+        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=open(os.devnull, "w"))
         return proc
 
     def _get_browser_output_formats(self):
-        return OrderedSet(self.search([
-            ('output_format', 'in', ['opus', 'ogg', 'mp3'])
-        ]).mapped('output_format.name'))
+        return OrderedSet(
+            self.search([("output_format", "in", ["opus", "ogg", "mp3"])]).mapped(
+                "output_format.name"
+            )
+        )

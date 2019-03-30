@@ -18,85 +18,110 @@ _logger = logging.getLogger(__name__)
 
 
 class MusicFolder(models.Model):
-    _name = 'oomusic.folder'
-    _description = 'Music Folder'
-    _order = 'path'
+    _name = "oomusic.folder"
+    _description = "Music Folder"
+    _order = "path"
 
-    name = fields.Char('Name')
-    root = fields.Boolean('Top Level Folder', default=True)
-    path = fields.Char('Folder Path', required=True, index=True)
+    name = fields.Char("Name")
+    root = fields.Boolean("Top Level Folder", default=True)
+    path = fields.Char("Folder Path", required=True, index=True)
     exclude_autoscan = fields.Boolean(
-        'No auto-scan', default=False,
-        help='Exclude this folder from the automatized scheduled scan. Useful if the folder is not '
-        'always accessible, e.g. linked to an external drive.'
+        "No auto-scan",
+        default=False,
+        help="Exclude this folder from the automatized scheduled scan. Useful if the folder is not "
+        "always accessible, e.g. linked to an external drive.",
     )
-    last_scan = fields.Datetime('Last Scanned')
-    last_scan_duration = fields.Integer('Scan Duration (s)')
-    last_commit = fields.Datetime('Last Commit')
+    last_scan = fields.Datetime("Last Scanned")
+    last_scan_duration = fields.Integer("Scan Duration (s)")
+    last_commit = fields.Datetime("Last Commit")
     parent_id = fields.Many2one(
-        'oomusic.folder', string='Parent Folder', index=True, ondelete='cascade')
-    child_ids = fields.One2many('oomusic.folder', 'parent_id', string='Child Folders')
-    user_id = fields.Many2one(
-        'res.users', string='User', index=True, required=True, ondelete='cascade',
-        default=lambda self: self.env.user
+        "oomusic.folder", string="Parent Folder", index=True, ondelete="cascade"
     )
-    last_modification = fields.Integer('Last Modification')
+    child_ids = fields.One2many("oomusic.folder", "parent_id", string="Child Folders")
+    user_id = fields.Many2one(
+        "res.users",
+        string="User",
+        index=True,
+        required=True,
+        ondelete="cascade",
+        default=lambda self: self.env.user,
+    )
+    last_modification = fields.Integer("Last Modification")
     locked = fields.Boolean(
-        'Locked', default=False,
+        "Locked",
+        default=False,
         help='When a folder is being scanned, it is flagged as "locked". It might be necessary to '
-        'unlock it manually if scanning has failed or has been interrupted.')
-    use_tags = fields.Boolean('Use ID3 Tags', default=True)
-    tag_analysis = fields.Selection([
-        ('taglib', 'Taglib'), ('mutagen', 'Mutagen')
-        ], 'File Analysis', default='taglib', required=True,
-        help='Choose Mutagen for better compatibility with remote mounting points, such as rclone.'
+        "unlock it manually if scanning has failed or has been interrupted.",
+    )
+    use_tags = fields.Boolean("Use ID3 Tags", default=True)
+    tag_analysis = fields.Selection(
+        [("taglib", "Taglib"), ("mutagen", "Mutagen")],
+        "File Analysis",
+        default="taglib",
+        required=True,
+        help="Choose Mutagen for better compatibility with remote mounting points, such as rclone.",
     )
 
-    path_name = fields.Char('Folder Name', compute='_compute_path_name')
-    in_playlist = fields.Boolean('In Current Playlist', compute='_compute_in_playlist')
-    track_ids = fields.One2many('oomusic.track', 'folder_id', 'Tracks')
-    star = fields.Selection(
-        [('0', 'Normal'), ('1', 'I Like It!')], 'Favorite', default='0')
+    path_name = fields.Char("Folder Name", compute="_compute_path_name")
+    in_playlist = fields.Boolean("In Current Playlist", compute="_compute_in_playlist")
+    track_ids = fields.One2many("oomusic.track", "folder_id", "Tracks")
+    star = fields.Selection([("0", "Normal"), ("1", "I Like It!")], "Favorite", default="0")
     rating = fields.Selection(
-        [('0', '0'), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')],
-        'Rating', default='0',
+        [("0", "0"), ("1", "1"), ("2", "2"), ("3", "3"), ("4", "4"), ("5", "5")],
+        "Rating",
+        default="0",
     )
-    root_preview = fields.Text('Preview Folder Content', compute='_compute_root_preview')
-    root_total_artists = fields.Integer('Total Artists', compute='_compute_root_total')
-    root_total_albums = fields.Integer('Total Albums', compute='_compute_root_total')
-    root_total_tracks = fields.Integer('Total Tracks', compute='_compute_root_total')
-    root_total_duration = fields.Integer('Total Duration', compute='_compute_root_total')
-    root_total_size = fields.Integer('Total Size', compute='_compute_root_total')
+    root_preview = fields.Text("Preview Folder Content", compute="_compute_root_preview")
+    root_total_artists = fields.Integer("Total Artists", compute="_compute_root_total")
+    root_total_albums = fields.Integer("Total Albums", compute="_compute_root_total")
+    root_total_tracks = fields.Integer("Total Tracks", compute="_compute_root_total")
+    root_total_duration = fields.Integer("Total Duration", compute="_compute_root_total")
+    root_total_size = fields.Integer("Total Size", compute="_compute_root_total")
 
     image_folder = fields.Binary(
-        'Folder Image', compute='_compute_image_folder',
-        help='This field holds the image used as image for the folder, limited to 1024x1024px.')
+        "Folder Image",
+        compute="_compute_image_folder",
+        help="This field holds the image used as image for the folder, limited to 1024x1024px.",
+    )
     image_big = fields.Binary(
-        'Big-sized Image', compute='_compute_image_big', inverse='_set_image_big',
-        help='Image of the folder. It is automatically resized as a 1024x1024px image, with aspect '
-        'ratio preserved.')
+        "Big-sized Image",
+        compute="_compute_image_big",
+        inverse="_set_image_big",
+        help="Image of the folder. It is automatically resized as a 1024x1024px image, with aspect "
+        "ratio preserved.",
+    )
     image_big_cache = fields.Binary(
-        'Cache Of Big-sized Image', attachment=True,
-        help='Image of the folder. It is automatically resized as a 1024x1024px image, with aspect '
-        'ratio preserved.')
+        "Cache Of Big-sized Image",
+        attachment=True,
+        help="Image of the folder. It is automatically resized as a 1024x1024px image, with aspect "
+        "ratio preserved.",
+    )
     image_medium = fields.Binary(
-        'Medium-sized Image', compute='_compute_image_medium', inverse='_set_image_medium',
-        help='Image of the folder.')
+        "Medium-sized Image",
+        compute="_compute_image_medium",
+        inverse="_set_image_medium",
+        help="Image of the folder.",
+    )
     image_medium_cache = fields.Binary(
-        'Cache Of Medium-sized Image', attachment=True,
-        help='Image of the folder')
+        "Cache Of Medium-sized Image", attachment=True, help="Image of the folder"
+    )
     image_small = fields.Binary(
-        'Small-sized image', compute='_compute_image_small', inverse='_set_image_small',
-        help='Image of the folder.')
+        "Small-sized image",
+        compute="_compute_image_small",
+        inverse="_set_image_small",
+        help="Image of the folder.",
+    )
     image_small_cache = fields.Binary(
-        'Cache Of Small-sized Image', attachment=True,
-        help='Image of the folder, used in Kanban view')
+        "Cache Of Small-sized Image",
+        attachment=True,
+        help="Image of the folder, used in Kanban view",
+    )
 
     _sql_constraints = [
-        ('oomusic_folder_path_uniq', 'unique(path, user_id)', 'Folder path must be unique!'),
+        ("oomusic_folder_path_uniq", "unique(path, user_id)", "Folder path must be unique!")
     ]
 
-    @api.depends('path')
+    @api.depends("path")
     def _compute_path_name(self):
         for folder in self:
             if folder.root:
@@ -105,76 +130,78 @@ class MusicFolder(models.Model):
                 folder.path_name = folder.path.split(os.sep)[-1]
 
     def _compute_in_playlist(self):
-        playlist = self.env['oomusic.playlist'].search([
-            ('current', '=', True)
-        ], limit=1).with_context(prefetch_fields=False)
-        for folder in (self & playlist.playlist_line_ids.mapped('track_id.folder_id')):
+        playlist = (
+            self.env["oomusic.playlist"]
+            .search([("current", "=", True)], limit=1)
+            .with_context(prefetch_fields=False)
+        )
+        for folder in self & playlist.playlist_line_ids.mapped("track_id.folder_id"):
             if all([t.in_playlist for t in folder.track_ids]):
                 folder.in_playlist = True
 
-    @api.depends('path')
+    @api.depends("path")
     def _compute_root_preview(self):
-        ALLOWED_FILE_EXTENSIONS = self.env['oomusic.folder.scan'].ALLOWED_FILE_EXTENSIONS
+        ALLOWED_FILE_EXTENSIONS = self.env["oomusic.folder.scan"].ALLOWED_FILE_EXTENSIONS
         time_start = dt.now()
         for folder in self.filtered(lambda f: f.root and f.path):
             i = 0
-            fn_paths = ''
+            fn_paths = ""
             for rootdir, dirnames, filenames in os.walk(folder.path):
                 ii = 0
                 for fn in filenames:
                     # Check file extension
-                    fn_ext = fn.split('.')[-1]
+                    fn_ext = fn.split(".")[-1]
                     if fn_ext and fn_ext.lower() not in ALLOWED_FILE_EXTENSIONS:
                         continue
 
-                    fn_paths += '{}\n'.format(os.path.join(rootdir.replace(folder.path, ''), fn))
+                    fn_paths += "{}\n".format(os.path.join(rootdir.replace(folder.path, ""), fn))
                     i += 1
                     ii += 1
                     if ii > 3 or (dt.now() - time_start).total_seconds() > 2:
-                        fn_paths += '...\n'
+                        fn_paths += "...\n"
                         break
                 if i > 30 or (dt.now() - time_start).total_seconds() > 2:
                     break
             if not fn_paths:
-                fn_paths = _('No track found')
+                fn_paths = _("No track found")
             folder.root_preview = fn_paths
 
     def _compute_root_total(self):
         folder_sharing = (
-            'inactive' if self.env.ref('oomusic.oomusic_track').sudo().perm_read else 'active'
+            "inactive" if self.env.ref("oomusic.oomusic_track").sudo().perm_read else "active"
         )
-        for folder in self.filtered('root'):
+        for folder in self.filtered("root"):
             query_1 = [
-                'SELECT COUNT(*) OVER()',
-                'FROM oomusic_artist AS a',
-                'JOIN oomusic_track AS t ON a.id = t.artist_id',
-                'WHERE t.root_folder_id = {}'.format(folder.id),
-                'AND a.user_id = {}'.format(self.env.user.id),
-                'GROUP BY a.id',
+                "SELECT COUNT(*) OVER()",
+                "FROM oomusic_artist AS a",
+                "JOIN oomusic_track AS t ON a.id = t.artist_id",
+                "WHERE t.root_folder_id = {}".format(folder.id),
+                "AND a.user_id = {}".format(self.env.user.id),
+                "GROUP BY a.id",
             ]
             query_2 = [
-                'SELECT COUNT(*) OVER()',
-                'FROM oomusic_album AS a',
-                'JOIN oomusic_track AS t ON a.id = t.album_id',
-                'WHERE t.root_folder_id = {}'.format(folder.id),
-                'AND a.user_id = {}'.format(self.env.user.id),
-                'GROUP BY a.id',
+                "SELECT COUNT(*) OVER()",
+                "FROM oomusic_album AS a",
+                "JOIN oomusic_track AS t ON a.id = t.album_id",
+                "WHERE t.root_folder_id = {}".format(folder.id),
+                "AND a.user_id = {}".format(self.env.user.id),
+                "GROUP BY a.id",
             ]
             query_3 = [
-                'SELECT COUNT(t.id), SUM(duration_min)/60.0, SUM(size)',
-                'FROM oomusic_track AS t',
-                'WHERE t.root_folder_id = {}'.format(folder.id),
-                'AND t.user_id = {}'.format(self.env.user.id),
+                "SELECT COUNT(t.id), SUM(duration_min)/60.0, SUM(size)",
+                "FROM oomusic_track AS t",
+                "WHERE t.root_folder_id = {}".format(folder.id),
+                "AND t.user_id = {}".format(self.env.user.id),
             ]
-            if folder_sharing == 'active':
+            if folder_sharing == "active":
                 del query_1[4]
                 del query_2[4]
                 del query_3[3]
-            self.env.cr.execute(' '.join(query_1))
+            self.env.cr.execute(" ".join(query_1))
             res_artists = self.env.cr.fetchall()
-            self.env.cr.execute(' '.join(query_2))
+            self.env.cr.execute(" ".join(query_2))
             res_albums = self.env.cr.fetchall()
-            self.env.cr.execute(' '.join(query_3))
+            self.env.cr.execute(" ".join(query_3))
             res_tracks = self.env.cr.fetchall()
 
             folder.root_total_artists = res_artists[0][0] if res_artists else 0
@@ -184,13 +211,14 @@ class MusicFolder(models.Model):
             folder.root_total_size = res_tracks[0][2] if res_tracks else 0
 
     def _compute_image_folder(self):
-        accepted_names = ['folder', 'cover', 'front']
+        accepted_names = ["folder", "cover", "front"]
         for folder in self:
             _logger.debug("Computing image folder %s...", folder.path)
 
             # Keep image files only
             files = [
-                f for f in os.listdir(folder.path)
+                f
+                for f in os.listdir(folder.path)
                 if os.path.isfile(os.path.join(folder.path, f))
                 and imghdr.what(os.path.join(folder.path, f))
             ]
@@ -200,7 +228,7 @@ class MusicFolder(models.Model):
             for f in files:
                 for n in accepted_names:
                     if n in f.lower():
-                        with open(os.path.join(folder.path, f), 'rb') as img:
+                        with open(os.path.join(folder.path, f), "rb") as img:
                             folder.image_folder = base64.b64encode(img.read())
                             break
                 if folder.image_folder:
@@ -211,126 +239,127 @@ class MusicFolder(models.Model):
             # Try to find an embedded cover art
             try:
                 track = folder.track_ids[:1]
-                track_ext = os.path.splitext(track.path)[1].lower() if track else ''
+                track_ext = os.path.splitext(track.path)[1].lower() if track else ""
                 song = File(track.path) if track else False
                 if song:
                     data = False
-                    if track_ext == '.mp3' and song.tags.getall('APIC'):
-                        data = song.tags.getall('APIC')[0].data
-                    elif track_ext == '.flac' and song.pictures:
+                    if track_ext == ".mp3" and song.tags.getall("APIC"):
+                        data = song.tags.getall("APIC")[0].data
+                    elif track_ext == ".flac" and song.pictures:
                         data = song.pictures[0].data
-                    elif track_ext == '.mp4' and song.get('covr'):
-                        data = song['covr'][0]
+                    elif track_ext == ".mp4" and song.get("covr"):
+                        data = song["covr"][0]
                     if data:
                         folder.image_folder = base64.b64encode(data)
             except:
                 _logger.debug(
-                    "Error while getting embedded cover art of %s", track.path, exc_info=1)
+                    "Error while getting embedded cover art of %s", track.path, exc_info=1
+                )
                 pass
 
-    @api.depends('image_folder')
+    @api.depends("image_folder")
     def _compute_image_big(self):
         for folder in self:
-            if folder.image_big_cache and not self.env.context.get('build_cache'):
+            if folder.image_big_cache and not self.env.context.get("build_cache"):
                 folder.image_big = folder.image_big_cache
                 continue
             try:
                 _logger.debug("Resizing image folder %s...", folder.path)
                 resized_images = tools.image_get_resized_images(
-                    folder.image_folder, return_big=True, return_medium=False, return_small=False)
+                    folder.image_folder, return_big=True, return_medium=False, return_small=False
+                )
             except:
                 _logger.warning(
-                    'Error with image in folder "%s" (id: %s)', folder.path, folder.id,
-                    exc_info=True
+                    'Error with image in folder "%s" (id: %s)',
+                    folder.path,
+                    folder.id,
+                    exc_info=True,
                 )
                 continue
 
-            folder.image_big = resized_images['image']
+            folder.image_big = resized_images["image"]
 
             # Avoid useless save in cache
-            if resized_images['image'] == folder.image_big_cache:
+            if resized_images["image"] == folder.image_big_cache:
                 continue
 
             # Save in cache
             try:
-                folder.sudo().write({
-                    'image_big_cache': resized_images['image'],
-                })
+                folder.sudo().write({"image_big_cache": resized_images["image"]})
                 self.env.cr.commit()
             except OperationalError:
                 _logger.warning(
-                    'Error when writing image cache for folder id: %s', folder.id,
-                    exc_info=True
+                    "Error when writing image cache for folder id: %s", folder.id, exc_info=True
                 )
 
-    @api.depends('image_folder')
+    @api.depends("image_folder")
     def _compute_image_medium(self):
         for folder in self:
-            if folder.image_medium_cache and not self.env.context.get('build_cache'):
+            if folder.image_medium_cache and not self.env.context.get("build_cache"):
                 folder.image_medium = folder.image_medium_cache
                 continue
             try:
                 _logger.debug("Resizing image folder %s...", folder.path)
                 resized_images = tools.image_get_resized_images(
-                    folder.image_folder, return_big=False, return_medium=True, return_small=False)
+                    folder.image_folder, return_big=False, return_medium=True, return_small=False
+                )
             except:
                 _logger.warning(
-                    'Error with image in folder "%s" (id: %s)', folder.path, folder.id,
-                    exc_info=True
+                    'Error with image in folder "%s" (id: %s)',
+                    folder.path,
+                    folder.id,
+                    exc_info=True,
                 )
                 continue
 
-            folder.image_medium = resized_images['image_medium']
+            folder.image_medium = resized_images["image_medium"]
 
             # Avoid useless save in cache
-            if resized_images['image_medium'] == folder.image_medium_cache:
+            if resized_images["image_medium"] == folder.image_medium_cache:
                 continue
 
             # Save in cache
             try:
-                folder.sudo().write({
-                    'image_medium_cache': resized_images['image_medium'],
-                })
+                folder.sudo().write({"image_medium_cache": resized_images["image_medium"]})
                 self.env.cr.commit()
             except OperationalError:
                 _logger.warning(
-                    'Error when writing image cache for folder id: %s', folder.id,
-                    exc_info=True
+                    "Error when writing image cache for folder id: %s", folder.id, exc_info=True
                 )
 
-    @api.depends('image_folder')
+    @api.depends("image_folder")
     def _compute_image_small(self):
         for folder in self:
-            if folder.image_small_cache and not self.env.context.get('build_cache'):
+            if folder.image_small_cache and not self.env.context.get("build_cache"):
                 folder.image_small = folder.image_small_cache
                 continue
             try:
                 _logger.debug("Resizing image folder %s...", folder.path)
                 resized_images = tools.image_get_resized_images(
-                    folder.image_folder, return_big=False, return_medium=False, return_small=True)
+                    folder.image_folder, return_big=False, return_medium=False, return_small=True
+                )
             except:
                 _logger.warning(
-                    'Error with image in folder "%s" (id: %s)', folder.path, folder.id,
-                    exc_info=True
+                    'Error with image in folder "%s" (id: %s)',
+                    folder.path,
+                    folder.id,
+                    exc_info=True,
                 )
                 continue
 
-            folder.image_small = resized_images['image_small']
+            folder.image_small = resized_images["image_small"]
 
             # Avoid useless save in cache
-            if resized_images['image_small'] == folder.image_small_cache:
+            if resized_images["image_small"] == folder.image_small_cache:
                 continue
 
             # Save in cache
             try:
-                folder.sudo().write({
-                    'image_small_cache': resized_images['image_small'],
-                })
+                folder.sudo().write({"image_small_cache": resized_images["image_small"]})
                 self.env.cr.commit()
             except OperationalError:
                 _logger.warning(
-                    'Error when writing image cache for folder id: %s', folder.id,
-                    exc_info=True
+                    "Error when writing image cache for folder id: %s", folder.id, exc_info=True
                 )
 
     def _set_image_big(self):
@@ -351,67 +380,69 @@ class MusicFolder(models.Model):
 
     @api.model
     def create(self, vals):
-        if 'path' in vals and vals.get('root', True):
-            vals['path'] = os.path.normpath(vals['path'])
+        if "path" in vals and vals.get("root", True):
+            vals["path"] = os.path.normpath(vals["path"])
         return super(MusicFolder, self).create(vals)
 
     @api.multi
     def write(self, vals):
-        if 'path' in vals:
-            vals['path'] = os.path.normpath(vals['path'])
-            folders = self | self.search([('id', 'child_of', self.ids)])
-            folders.write({'last_modification': 0})
-            tracks = self.env['oomusic.track'].search([('folder_id', 'in', folders.ids)])
-            tracks.write({'last_modification': 0})
+        if "path" in vals:
+            vals["path"] = os.path.normpath(vals["path"])
+            folders = self | self.search([("id", "child_of", self.ids)])
+            folders.write({"last_modification": 0})
+            tracks = self.env["oomusic.track"].search([("folder_id", "in", folders.ids)])
+            tracks.write({"last_modification": 0})
         return super(MusicFolder, self).write(vals)
 
     @api.multi
     def unlink(self):
         # Remove tracks and albums included in the folders.
-        self.env['oomusic.track'].search([('folder_id', 'child_of', self.ids)]).sudo().unlink()
-        self.env['oomusic.album'].search([('folder_id', 'child_of', self.ids)]).sudo().unlink()
-        user_ids = self.mapped('user_id')
+        self.env["oomusic.track"].search([("folder_id", "child_of", self.ids)]).sudo().unlink()
+        self.env["oomusic.album"].search([("folder_id", "child_of", self.ids)]).sudo().unlink()
+        user_ids = self.mapped("user_id")
         super(MusicFolder, self).unlink()
         for user_id in user_ids:
-            self.env['oomusic.folder.scan']._clean_tags(user_id.id)
+            self.env["oomusic.folder.scan"]._clean_tags(user_id.id)
 
     @api.multi
     def action_scan_folder(self):
-        '''
+        """
         This is the main method used to scan a oomusic folder. It creates a thread with the scanning
         process.
-        '''
+        """
         folder_id = self.id
         if folder_id:
-            self.env['oomusic.folder.scan'].scan_folder_th(folder_id)
+            self.env["oomusic.folder.scan"].scan_folder_th(folder_id)
 
     @api.multi
     def action_scan_folder_full(self):
-        '''
+        """
         This is a method used to force a full scan of a folder.
-        '''
+        """
         folder_id = self.id
         if folder_id:
             # Set the last modification date to zero so we force scanning all folders and files
-            folders = self.env['oomusic.folder'].search([('id', 'child_of', folder_id)]) | self
-            folders.sudo().write({'last_modification': 0})
-            tracks = self.env['oomusic.track'].search([('root_folder_id', '=', folder_id)])
-            tracks.sudo().write({'last_modification': 0})
+            folders = self.env["oomusic.folder"].search([("id", "child_of", folder_id)]) | self
+            folders.sudo().write({"last_modification": 0})
+            tracks = self.env["oomusic.track"].search([("root_folder_id", "=", folder_id)])
+            tracks.sudo().write({"last_modification": 0})
             self.env.cr.commit()
-            self.env['oomusic.folder.scan'].scan_folder_th(folder_id)
+            self.env["oomusic.folder.scan"].scan_folder_th(folder_id)
 
     def action_unlock(self):
-        return self.write({'locked': False})
+        return self.write({"locked": False})
 
     @api.model
     def cron_scan_folder(self):
-        for folder in self.search([('root', '=', True), ('exclude_autoscan', '=', False)]):
+        for folder in self.search([("root", "=", True), ("exclude_autoscan", "=", False)]):
             try:
-                self.env['oomusic.folder.scan']._scan_folder(folder.id)
+                self.env["oomusic.folder.scan"]._scan_folder(folder.id)
             except:
                 _logger.exception(
-                    'Error while scanning folder "%s" (id: %s)', folder.path, folder.id,
-                    exc_info=True
+                    'Error while scanning folder "%s" (id: %s)',
+                    folder.path,
+                    folder.id,
+                    exc_info=True,
                 )
 
     @api.model
@@ -424,7 +455,7 @@ class MusicFolder(models.Model):
         folders_sample = sample(folders.ids, min(size_sample, len(folders)))
         folders = self.browse(folders_sample).with_context(build_cache=True, prefetch_fields=False)
         for i in range(0, len(folders), size_step):
-            folder = folders[i:i+size_step]
+            folder = folders[i : i + size_step]
             folder._compute_image_big()
             folder._compute_image_medium()
             folder._compute_image_small()
@@ -433,65 +464,63 @@ class MusicFolder(models.Model):
     @api.model
     def cron_unlock_folder(self):
         domain = [
-            ('root', '=', True),
-            ('locked', '=', True),
-            ('last_commit', '<', dt.now() - relativedelta(seconds=300)),
+            ("root", "=", True),
+            ("locked", "=", True),
+            ("last_commit", "<", dt.now() - relativedelta(seconds=300)),
         ]
         folders = self.search(domain)
         if folders:
             _logger.warning(
-                'The following folders seem locked for no reason: %s. Unlocking.', folders.ids)
+                "The following folders seem locked for no reason: %s. Unlocking.", folders.ids
+            )
             folders.action_unlock()
 
     @api.multi
     def action_add_to_playlist(self):
-        playlist = self.env['oomusic.playlist'].search([('current', '=', True)], limit=1)
+        playlist = self.env["oomusic.playlist"].search([("current", "=", True)], limit=1)
         if not playlist:
-            raise UserError(_('No current playlist found!'))
-        if self.env.context.get('purge'):
+            raise UserError(_("No current playlist found!"))
+        if self.env.context.get("purge"):
             playlist.action_purge()
-        lines = playlist._add_tracks(self.mapped('track_ids'))
-        if self.env.context.get('play') and lines:
+        lines = playlist._add_tracks(self.mapped("track_ids"))
+        if self.env.context.get("play") and lines:
             return {
-                'type': 'ir.actions.act_play',
-                'res_model': 'oomusic.playlist.line',
-                'res_id': lines[0].id,
+                "type": "ir.actions.act_play",
+                "res_model": "oomusic.playlist.line",
+                "res_id": lines[0].id,
             }
 
     @api.multi
     def action_add_to_playlist_recursive(self):
-        playlist = self.env['oomusic.playlist'].search([('current', '=', True)], limit=1)
+        playlist = self.env["oomusic.playlist"].search([("current", "=", True)], limit=1)
         if not playlist:
-            raise UserError(_('No current playlist found!'))
-        if self.env.context.get('purge'):
+            raise UserError(_("No current playlist found!"))
+        if self.env.context.get("purge"):
             playlist.action_purge()
-        tracks = self.env['oomusic.track'].search([('folder_id', 'child_of', self.ids)])
+        tracks = self.env["oomusic.track"].search([("folder_id", "child_of", self.ids)])
         lines = playlist._add_tracks(tracks)
-        if self.env.context.get('play') and lines:
+        if self.env.context.get("play") and lines:
             return {
-                'type': 'ir.actions.act_play',
-                'res_model': 'oomusic.playlist.line',
-                'res_id': lines[0].id,
+                "type": "ir.actions.act_play",
+                "res_model": "oomusic.playlist.line",
+                "res_id": lines[0].id,
             }
 
     @api.multi
     def oomusic_browse(self):
         res = {}
         if self.root or self.parent_id:
-            res['parent_id'] =\
-                {'id': self.parent_id.id, 'name': self.path_name or ''}
+            res["parent_id"] = {"id": self.parent_id.id, "name": self.path_name or ""}
         if self:
-            res['current_id'] = {'id': self.id, 'name': self.path}
-            res['child_ids'] = [
-                {'id': c.id, 'name': c.path_name} for c in self.child_ids
-            ]
+            res["current_id"] = {"id": self.id, "name": self.path}
+            res["child_ids"] = [{"id": c.id, "name": c.path_name} for c in self.child_ids]
         else:
-            res['child_ids'] = [
-                {'id': c.id, 'name': c.path_name} for c in self.search([('root', '=', True)])
+            res["child_ids"] = [
+                {"id": c.id, "name": c.path_name} for c in self.search([("root", "=", True)])
             ]
-        res['track_ids'] = [
-            {'id': t.id, 'name': t.path.split(os.sep)[-1]}
-            for t in self.track_ids.sorted(key='path')
+        res["track_ids"] = [
+            {"id": t.id, "name": t.path.split(os.sep)[-1]}
+            for t in self.track_ids.sorted(key="path")
         ]
 
         return json.dumps(res)

@@ -16,52 +16,46 @@ from odoo import api, fields, models
 
 _logger = logging.getLogger(__name__)
 
-SYMBOL_NAME_MAP = {
-    '<': 'lt',
-    '<=': 'le',
-    '=': 'eq',
-    '!=': 'ne',
-    '>=': 'ge',
-    '>': 'gt',
-}
+SYMBOL_NAME_MAP = {"<": "lt", "<=": "le", "=": "eq", "!=": "ne", ">=": "ge", ">": "gt"}
+
 
 class MusicBandsintown(models.Model):
-    _name = 'oomusic.bandsintown'
-    _description = 'BandsInTown Cache Management'
+    _name = "oomusic.bandsintown"
+    _description = "BandsInTown Cache Management"
 
-    name = fields.Char('URL Hash', index=True, required=True)
-    url = fields.Char('URL', required=True)
-    content = fields.Char('Result', required=True)
-    expiry_date = fields.Datetime('Expiry Date', required=True)
-    removal_date = fields.Datetime('Removal Date', required=True)
+    name = fields.Char("URL Hash", index=True, required=True)
+    url = fields.Char("URL", required=True)
+    content = fields.Char("Result", required=True)
+    expiry_date = fields.Datetime("Expiry Date", required=True)
+    removal_date = fields.Datetime("Removal Date", required=True)
 
     _sql_constraints = [
-        ('oomusic_bandsintown_name_uniq', 'unique(name)', 'URL hash must be unique!'),
+        ("oomusic_bandsintown_name_uniq", "unique(name)", "URL hash must be unique!")
     ]
 
     def get_query(self, url, sleep=0.0, force=False):
         # Get BandsInTown key and cache duration
-        ConfigParam = self.env['ir.config_parameter'].sudo()
-        bit_key = ConfigParam.get_param('oomusic.bandsintown_key')
-        bit_cache = int(ConfigParam.get_param('oomusic.bandsintown_cache', 14))
-        ext_info = ConfigParam.get_param('oomusic.ext_info', 'auto')
+        ConfigParam = self.env["ir.config_parameter"].sudo()
+        bit_key = ConfigParam.get_param("oomusic.bandsintown_key")
+        bit_cache = int(ConfigParam.get_param("oomusic.bandsintown_cache", 14))
+        ext_info = ConfigParam.get_param("oomusic.ext_info", "auto")
         if not bit_key:
-            return '{}'
+            return "{}"
 
-        url = url_fix('{}?app_id={}&date=upcoming'.format(url, bit_key)).encode('utf-8')
+        url = url_fix("{}?app_id={}&date=upcoming".format(url, bit_key)).encode("utf-8")
         url_hash = hashlib.sha1(url).hexdigest()
 
-        Bandsintown = self.search([('name', '=', url_hash)])
+        Bandsintown = self.search([("name", "=", url_hash)])
         if force or not Bandsintown or Bandsintown.expiry_date < fields.Datetime.now():
-            content = '{}'
-            if ext_info == 'manual' and not force:
+            content = "{}"
+            if ext_info == "manual" and not force:
                 content = Bandsintown.content or content
                 return content
             try:
                 time.sleep(sleep)
                 r = requests.get(url, timeout=3.0)
                 if r.status_code == 200:
-                    content = r.content.decode('utf-8')
+                    content = r.content.decode("utf-8")
             except:
                 _logger.info('Error while fetching URL "%s"', url, exc_info=True)
 
@@ -73,16 +67,18 @@ class MusicBandsintown(models.Model):
                 writer = self.create
             else:
                 writer = self.write
-            writer({
-                'name': url_hash,
-                'url': url,
-                'content': content,
-                'expiry_date': expiry_date,
-                'removal_date': removal_date,
-            })
+            writer(
+                {
+                    "name": url_hash,
+                    "url": url,
+                    "content": content,
+                    "expiry_date": expiry_date,
+                    "removal_date": removal_date,
+                }
+            )
 
         else:
-            content = Bandsintown.content or '{}'
+            content = Bandsintown.content or "{}"
 
         return content
 
@@ -90,57 +86,62 @@ class MusicBandsintown(models.Model):
     def cron_build_bandsintown_cache(self):
         # Build cache for artists. Limit to 200 artists chosen randomly to avoid running for
         # unexpectedly long periods of time.
-        self.env.cr.execute('''
+        self.env.cr.execute(
+            """
             SELECT a.id, a.name FROM oomusic_artist a
             JOIN oomusic_preference AS p ON a.id = p.res_id
             WHERE p.bit_follow = 'done'
                 AND p.res_model = 'oomusic.artist'
-        ''')
+        """
+        )
         res = self.env.cr.fetchall()
         artists = {(r[0], r[1]) for r in res}
         artists_sample = sample(artists, min(200, len(artists)))
         cache = {}
         for artist in artists_sample:
-            _logger.debug("Getting Bandsintown cache for artist \"%s\"...", artist[1])
-            url = 'https://rest.bandsintown.com/artists/{}/events'.format(artist[1])
+            _logger.debug('Getting Bandsintown cache for artist "%s"...', artist[1])
+            url = "https://rest.bandsintown.com/artists/{}/events".format(artist[1])
             cache[artist] = self.get_query(url, sleep=0.5)
 
         # Create the events
-        self.env['oomusic.bandsintown.event']._create_from_cache(cache)
+        self.env["oomusic.bandsintown.event"]._create_from_cache(cache)
 
         # Clean-up outdated entries
-        self.search([('removal_date', '<', fields.Datetime.now())]).unlink()
-        self.env['oomusic.bandsintown.event'].search([
-            ('date_event', '<', fields.Date.context_today(self))
-        ]).write({'active': False})
+        self.search([("removal_date", "<", fields.Datetime.now())]).unlink()
+        self.env["oomusic.bandsintown.event"].search(
+            [("date_event", "<", fields.Date.context_today(self))]
+        ).write({"active": False})
 
 
 class MusicBandsintownEvent(models.Model):
-    _name = 'oomusic.bandsintown.event'
-    _description = 'BandsInTown Events'
-    _order = 'date_event'
+    _name = "oomusic.bandsintown.event"
+    _description = "BandsInTown Events"
+    _order = "date_event"
 
-    name = fields.Char('BandsInTown ID', index=True, required=True)
-    date_event = fields.Date('Date')
-    country = fields.Char('Country')
-    region = fields.Char('Region')
-    city = fields.Char('City')
-    location = fields.Char('Location')
-    latitude = fields.Char('Latitude')
-    longitude = fields.Char('Longitude')
+    name = fields.Char("BandsInTown ID", index=True, required=True)
+    date_event = fields.Date("Date")
+    country = fields.Char("Country")
+    region = fields.Char("Region")
+    city = fields.Char("City")
+    location = fields.Char("Location")
+    latitude = fields.Char("Latitude")
+    longitude = fields.Char("Longitude")
     distance = fields.Float(
-        'Distance From Location',
-        compute='_compute_distance', search='_search_distance', compute_sudo=False,
-        help='The current location can be set in your preferences (from the top right menu)'
+        "Distance From Location",
+        compute="_compute_distance",
+        search="_search_distance",
+        compute_sudo=False,
+        help="The current location can be set in your preferences (from the top right menu)",
     )
     active = fields.Boolean(default=True)
-    artist_id = fields.Many2one('oomusic.artist', 'Artist', ondelete='cascade')
+    artist_id = fields.Many2one("oomusic.artist", "Artist", ondelete="cascade")
     user_id = fields.Many2one(
-        'res.users', related='artist_id.user_id', store=True, index=True, related_sudo=False)
-    bit_follow = fields.Selection(related='artist_id.bit_follow', related_sudo=False)
+        "res.users", related="artist_id.user_id", store=True, index=True, related_sudo=False
+    )
+    bit_follow = fields.Selection(related="artist_id.bit_follow", related_sudo=False)
 
     def name_get(self):
-        return [(r.id, '{}, {} ({})'.format(r.artist_id.name, r.country, r.city)) for r in self]
+        return [(r.id, "{}, {} ({})".format(r.artist_id.name, r.country, r.city)) for r in self]
 
     def _compute_distance(self):
         def haversine(p1, p2):
@@ -163,42 +164,51 @@ class MusicBandsintownEvent(models.Model):
 
     def _search_distance(self, operator, value):
         if operator not in SYMBOL_NAME_MAP:
-            return [('id', 'in', self.search([]).ids)]
+            return [("id", "in", self.search([]).ids)]
         event_ids = [
-            event['id'] for event in self.search([]).read(['id', 'distance'])
-            if getattr(op, SYMBOL_NAME_MAP[operator])(event['distance'], value)
+            event["id"]
+            for event in self.search([]).read(["id", "distance"])
+            if getattr(op, SYMBOL_NAME_MAP[operator])(event["distance"], value)
         ]
-        return [('id', 'in', event_ids)]
+        return [("id", "in", event_ids)]
 
     def _search(self, args, offset=0, limit=None, order=None, count=False, access_rights_uid=None):
         event_ids = super(MusicBandsintownEvent, self)._search(
-            args, offset=offset, limit=limit, order=order, count=count,
-            access_rights_uid=access_rights_uid)
+            args,
+            offset=offset,
+            limit=limit,
+            order=order,
+            count=count,
+            access_rights_uid=access_rights_uid,
+        )
         if self.env.user.max_distance:
             event_ids = [
-                event['id'] for event in self.browse(event_ids).read(['id', 'distance'])
-                if event['distance'] <= self.env.user.max_distance
+                event["id"]
+                for event in self.browse(event_ids).read(["id", "distance"])
+                if event["distance"] <= self.env.user.max_distance
             ]
         return event_ids
 
     def _create_from_cache(self, cache):
-        self.env.cr.execute('SELECT name from oomusic_bandsintown_event')
+        self.env.cr.execute("SELECT name from oomusic_bandsintown_event")
         res = self.env.cr.fetchall()
         bit_ids = {r[0] for r in res}
         to_create = []
         for artist in cache:
-            events = json.loads(cache[artist] or '{}')
+            events = json.loads(cache[artist] or "{}")
             for event in events:
-                if event['id'] not in bit_ids:
-                    to_create.append({
-                        'name': event['id'],
-                        'date_event': event['datetime'][:10],
-                        'country': event['venue'].get('country'),
-                        'region': event['venue'].get('region'),
-                        'city': event['venue'].get('city'),
-                        'location': event['venue'].get('name'),
-                        'latitude': event['venue'].get('latitude'),
-                        'longitude': event['venue'].get('longitude'),
-                        'artist_id': artist[0],
-                    })
+                if event["id"] not in bit_ids:
+                    to_create.append(
+                        {
+                            "name": event["id"],
+                            "date_event": event["datetime"][:10],
+                            "country": event["venue"].get("country"),
+                            "region": event["venue"].get("region"),
+                            "city": event["venue"].get("city"),
+                            "location": event["venue"].get("name"),
+                            "latitude": event["venue"].get("latitude"),
+                            "longitude": event["venue"].get("longitude"),
+                            "artist_id": artist[0],
+                        }
+                    )
         self.create(to_create)
