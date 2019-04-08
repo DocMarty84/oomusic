@@ -67,12 +67,21 @@ class MusicAlbum(models.Model):
     )
 
     def _compute_in_playlist(self):
-        playlist = (
-            self.env["oomusic.playlist"]
-            .search([("current", "=", True)], limit=1)
-            .with_context(prefetch_fields=False)
-        )
-        for album in self & playlist.playlist_line_ids.mapped("album_id"):
+        playlist = self.env["oomusic.playlist"].search([("current", "=", True)], limit=1)
+        if not playlist:
+            return
+        query = """
+            SELECT album_id
+            FROM oomusic_track
+            WHERE id IN (
+                SELECT track_id
+                FROM oomusic_playlist_line
+                WHERE playlist_id = %s
+            )
+        """
+        self.env.cr.execute(query, (playlist.id,))
+        album_ids_in_playlist = list({r[0] for r in self.env.cr.fetchall() if r[0]})
+        for album in self & self.env["oomusic.album"].browse(album_ids_in_playlist):
             if all([t.in_playlist for t in album.track_ids]):
                 album.in_playlist = True
 
