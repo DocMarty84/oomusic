@@ -156,15 +156,17 @@ class MusicPlaylist(models.Model):
         if current_tracks:
             query += "WHERE id NOT IN %s" % (tuple(current_tracks.ids + [0]),)
         if folder_sharing == "inactive":
-            query += "{} user_id = {}".format(
+            query += "{} user_id = {} ".format(
                 "WHERE" if not current_tracks else "AND", self.env.uid
             )
+        query += "ORDER BY RANDOM() "
+        query += "LIMIT {}".format(self.smart_playlist_qty or 1)
         self.env.cr.execute(query)
         res = self.env.cr.fetchall()
         if not res:
             return self.env["oomusic.track"]
 
-        track_ids = random.sample([r[0] for r in res], min(self.smart_playlist_qty, len(res)))
+        track_ids = [r[0] for r in res]
         return self.env["oomusic.track"].browse(track_ids)
 
     def _smart_played(self):

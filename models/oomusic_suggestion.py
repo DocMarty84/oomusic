@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import random
-
 from odoo import fields, models, api
 
 
@@ -53,13 +51,15 @@ class MusicSuggestion(models.TransientModel):
         )
         query = "SELECT id FROM oomusic_track "
         if folder_sharing == "inactive":
-            query += "WHERE user_id = {}".format(self.env.uid)
+            query += "WHERE user_id = {} ".format(self.env.uid)
+        query += "ORDER BY RANDOM() "
+        query += "LIMIT 10"
         self.env.cr.execute(query)
         res = self.env.cr.fetchall()
         if not res:
             return
 
-        self.track_random = random.sample([r[0] for r in res], min(10, len(res)))
+        self.track_random = [r[0] for r in res]
 
     @api.depends("name_albums")
     def _compute_album_recently_added(self):
@@ -72,10 +72,12 @@ class MusicSuggestion(models.TransientModel):
         )
         query = "SELECT id FROM oomusic_album "
         if folder_sharing == "inactive":
-            query += "WHERE user_id = {}".format(self.env.uid)
+            query += "WHERE user_id = {} ".format(self.env.uid)
+        query += "ORDER BY RANDOM() "
+        query += "LIMIT 15"
         self.env.cr.execute(query)
         res = self.env.cr.fetchall()
         if not res:
             return
 
-        self.album_random = random.sample([r[0] for r in res], min(15, len(res)))
+        self.album_random = [r[0] for r in res]
