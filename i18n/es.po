@@ -12,12 +12,12 @@ msgstr ""
 "POT-Creation-Date: 2019-04-30 21:45+0000\n"
 "PO-Revision-Date: 2019-04-30 21:18+0000\n"
 "Last-Translator: Nicolas Martinelli <nicolas.martinelli@pm.me>, 2019\n"
-"Language-Team: French (France) (https://www.transifex.com/koozic/teams/98622/fr_FR/)\n"
+"Language-Team: Spanish (https://www.transifex.com/koozic/teams/98622/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: fr_FR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: oomusic
 #. openerp-web
@@ -26,7 +26,7 @@ msgstr ""
 #: code:addons/oomusic/static/src/js/browse.js:120
 #, python-format
 msgid "\" added to playlist."
-msgstr "\" ajouté à la liste de lecture."
+msgstr "\" añadido a la lista de reproducción."
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_playlist__audio_mode
@@ -36,31 +36,36 @@ msgid ""
 "- Normalize: normalize playlist loudness thanks to the EBU R128 normalization. It requires FFmpeg >=3.2.1 which includes by default the appropriate library (libebur128).\n"
 "Transcoding will be significantly slower when activated, implying larger gaps between songs."
 msgstr ""
-"- Standard : transcodage standard des fichiers\n"
-"- Pas de transcodage : ne pas transcoder les fichiers audio. Cela diminue la charge du serveur, au coût d'une utilisation plus importante du réseau.\n"
-"- Normaliser : normaliser le volume de la liste de lecture grâce à la méthode EBU R128. Cele nécessite FFmpeg >= 3.2.1 qui inclut par défaut la librairie appropriée (libebur128). L'encodage sera significativement plus lent quand activé, impliquant une attente plus longue entre les pistes."
+"- Estándar: transcodificación regular de los archivos. - Sin "
+"transcodificación: no transcodifique archivos de audio. Disminuye la carga "
+"del servidor, a costa de un mayor uso de la red. - Normalizar: normaliza el "
+"volumen de la lista de reproducción gracias a la normalización de EBU R128. "
+"Requiere FFmpeg> = 3.2.1 que incluye de forma predeterminada la biblioteca "
+"adecuada (libebur128). La transcodificación será significativamente más "
+"lenta cuando se active, lo que implica mayores brechas entre las canciones."
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_album_view_form
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_artist_view_form
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_track_view_form
 msgid "<span>&amp;nbsp;</span>"
-msgstr "<span>&amp;nbsp;</span>"
+msgstr "<span> & amp; nbsp; </span>"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_track_view_form
 msgid "<span>File Infos</span>"
-msgstr "<span>Infos Du Fichier</span>"
+msgstr "<span> Información de archivos </span>"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_track_view_form
 msgid "<span>Song Infos</span>"
-msgstr "<span>Infos De La Chanson</span>"
+msgstr "<span> Infos de canciones </span>"
 
 #. module: oomusic
 #: model_terms:ir.actions.act_window,help:oomusic.action_converter
 msgid "A converter is used to perform batch conversion of the..."
-msgstr "Un convertisseur est utilisé pour effectuer des conversions en lot..."
+msgstr ""
+"Un convertidor se utiliza para realizar la conversión por lotes de ..."
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_playlist__audio
@@ -70,45 +75,47 @@ msgid ""
 "- Web Audio API: need to download the full file before starting the playback. More \n"
 "reliable than HTML5, but longer gaps between tracks."
 msgstr ""
-"API utilisée pour la lecture audio.\n"
-"- Audio HTML5 : la lecture commence avant la fin du téléchargement de la piste.\n"
-"- API Web Audio : la lecture nécessite la réception complète du fichier. Plus robuste que HTML5, mais des pauses plus longues entre les pistes."
+"API utilizada para la reproducción de audio. - Audio HTML5: no es necesario "
+"descargar el archivo completo antes de iniciar la reproducción. - Web Audio "
+"API: necesita descargar el archivo completo antes de iniciar la "
+"reproducción. Más confiable que HTML5, pero más largas brechas entre las "
+"pistas."
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_download__access_token
 msgid "Access token to access the files"
-msgstr "Jeton d'accès aux fichiers"
+msgstr "Accede al token para acceder a los archivos."
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_config_settings__cron
 msgid "Activate automatic folder scan and image cache mechanism"
 msgstr ""
-"Activer l'analyse automatique des répertoires et le mécanisme de cache "
-"d'image"
+"Activar el escaneo automático de carpetas y el mecanismo de caché de "
+"imágenes."
 
 #. module: oomusic
 #. openerp-web
 #: code:addons/oomusic/static/src/xml/panel.xml:59
 #, python-format
 msgid "Activate repeat"
-msgstr "Activer la répétition"
+msgstr "Activar Repetición"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event__active
 #: selection:oomusic.config.settings,cron:0
 msgid "Active"
-msgstr "Actif"
+msgstr "Activo"
 
 #. module: oomusic
 #: selection:oomusic.config.settings,folder_sharing:0
 msgid "Active (shared amongst all users)"
-msgstr "Actif (partagé entre tous les utilisateurs)"
+msgstr "Activo (compartido entre todos los usuarios)"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter__album_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist__album_id
 msgid "Add Album Tracks"
-msgstr "Ajouter pistes de l'album"
+msgstr "Agregar pistas del album"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_album_view_form
@@ -118,25 +125,25 @@ msgstr "Ajouter pistes de l'album"
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_genre_view_form
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_suggestion_view_form
 msgid "Add And Play"
-msgstr "Ajouter et jouer"
+msgstr "Agregar y reproducir"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter__artist_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist__artist_id
 msgid "Add Artist Tracks"
-msgstr "Ajouter pistes de l'artiste"
+msgstr "Agregar canciones del artista"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter__playlist_id
 msgid "Add Playlist Tracks"
-msgstr "Ajout pistes d'une liste de lecture"
+msgstr "Añadir pistas de lista de reproducción"
 
 #. module: oomusic
 #. openerp-web
 #: code:addons/oomusic/static/src/xml/browse.xml:15
 #, python-format
 msgid "Add Recursively To Current Playlist"
-msgstr "Ajouter récursivement à la liste de lecture"
+msgstr "Añadir recursivamente a la lista de reproducción actual"
 
 #. module: oomusic
 #. openerp-web
@@ -153,30 +160,30 @@ msgstr "Ajouter récursivement à la liste de lecture"
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_track_view_tree
 #, python-format
 msgid "Add To Current Playlist"
-msgstr "Ajouter à la liste de lecture courante"
+msgstr "Agregar a la actual lista de reproducción"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_playlist_view_form
 msgid "Add To Playlist"
-msgstr "Ajouter à la liste de lecture"
+msgstr "Añadir a la lista de reproducción"
 
 #. module: oomusic
 #. openerp-web
 #: code:addons/oomusic/static/src/js/tour.js:15
 #, python-format
 msgid "Add your first music folder <b>here</b>"
-msgstr "Ajoutez votre premier répertoire musical <b>ici</b>"
+msgstr "Agregar a tu primer carpeta de música <b>aquí</b>"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_album_view_search
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_track_view_search
 msgid "Added This Month"
-msgstr "Ajoutés ce mois"
+msgstr "Agregar este mes"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_track_view_search
 msgid "Added Today"
-msgstr "Ajoutés aujourd'hui"
+msgstr "Agregado hoy"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album__name
@@ -190,7 +197,7 @@ msgstr "Album"
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__album_artist_id
 msgid "Album Artist"
-msgstr "Artiste de l'album"
+msgstr "Album del artista"
 
 #. module: oomusic
 #: model:ir.actions.act_window,name:oomusic.action_album
@@ -204,17 +211,17 @@ msgstr "Artiste de l'album"
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_artist_view_form
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_genre_view_form
 msgid "Albums"
-msgstr "Albums"
+msgstr "Álbumes"
 
 #. module: oomusic
 #: selection:oomusic.playlist,smart_playlist:0
 msgid "Already Played"
-msgstr "Déjà joué"
+msgstr "Ya se reprodujo"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_config_settings_view_form
 msgid "Apply"
-msgstr "Appliquer"
+msgstr "Aplicar"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album__artist_id
@@ -225,12 +232,12 @@ msgstr "Appliquer"
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__artist_id
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_artist_view_form
 msgid "Artist"
-msgstr "Artiste"
+msgstr "Artista"
 
 #. module: oomusic
 #: sql_constraint:oomusic.artist:0
 msgid "Artist name must be unique!"
-msgstr "Le nom de l'artiste doit être unique !"
+msgstr "El nombre del artista debe ser único"
 
 #. module: oomusic
 #: model:ir.actions.act_window,name:oomusic.action_artist
@@ -240,15 +247,15 @@ msgstr "Le nom de l'artiste doit être unique !"
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_artist_view_tree
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_genre_view_form
 msgid "Artists"
-msgstr "Artistes"
+msgstr "Artistas"
 
 #. module: oomusic
 #: model_terms:ir.actions.act_window,help:oomusic.action_suggestion
 msgid ""
 "As soon as a folder is added in your library, suggestions will appear here."
 msgstr ""
-"Dès qu'un répertoire est ajouté dans votre bibliothèque, des suggestions "
-"apparaîtront ici."
+"Tan pronto como se agregue una carpeta a su biblioteca, las sugerencias "
+"aparecerán aquí."
 
 #. module: oomusic
 #: model_terms:ir.actions.act_window,help:oomusic.action_genre
@@ -256,8 +263,8 @@ msgid ""
 "As soon as a folder is added in your library, the albums and artists are organized\n"
 "                here by genre."
 msgstr ""
-"Dès qu'un répertoire est ajouté à votre bibliothèque, les albums et les "
-"artistes sont organisés ici par genre."
+"Tan pronto como se agrega una carpeta a su biblioteca, los álbumes y los "
+"artistas se organizan aquí por género."
 
 #. module: oomusic
 #: model_terms:ir.actions.act_window,help:oomusic.action_album
@@ -267,11 +274,11 @@ msgid ""
 "                button to add them to the current playlist, or on the <span class=\"fa fa-star\"></span>\n"
 "                to mark them as favorite!"
 msgstr ""
-"Dès qu'un répertoire est ajouté à votre bibliothèque, les pistes sont "
-"organisées ici par album. Une image de couverture est affichée si "
-"disponible. Cliquez sur le bouton <span class=\"fa fa-plus\"></span> pour "
-"les ajouter à votre liste de lecture courante, ou sur le bouton <span "
-"class=\"fa fa-star\"></span> pour les marquer comme favoris !"
+"Tan pronto como se agrega una carpeta a su biblioteca, las pistas se "
+"organizan aquí por álbum. Cuando está disponible, se muestra una imagen de "
+"portada. Haga clic en el botón <span class = \"fa fa-plus\"> </span> para "
+"agregarlos a la lista de reproducción actual, o en el <span class = \"fa fa-"
+"star\"> </span> para marcarlos como favoritos !"
 
 #. module: oomusic
 #: model_terms:ir.actions.act_window,help:oomusic.action_artist
@@ -279,8 +286,8 @@ msgid ""
 "As soon as a folder is added in your library, the tracks are organized here by\n"
 "                artist."
 msgstr ""
-"Dès qu'un répertoire est ajouté à votre bibliothèque, les pistes sont "
-"organisées ici par artiste."
+"Tan pronto como se agrega una carpeta a su biblioteca, las pistas se "
+"organizan aquí por artista."
 
 #. module: oomusic
 #: model_terms:ir.actions.act_window,help:oomusic.action_track
@@ -289,10 +296,10 @@ msgid ""
 "                on the <span class=\"fa fa-plus\"></span> button to add them to the current playlist,\n"
 "                or on the <span class=\"fa fa-star\"></span> to mark them as favorite!"
 msgstr ""
-"Dès qu'un répertoire est ajouté à votre bibliothèque, les pistes sont "
-"listées ici. Cliquez sur le bouton <span class=\"fa fa-plus\"></span> pour "
-"les ajouter à votre liste de lecture courante, ou sur le bouton <span "
-"class=\"fa fa-star\"></span> pour les marquer comme favoris !"
+"Tan pronto como se agregue una carpeta a su biblioteca, las pistas se "
+"enumerarán aquí. Haga clic en el botón <span class = \"fa fa-plus\"> </span>"
+" para agregarlos a la lista de reproducción actual, o en el <span class = "
+"\"fa fa-star\"> </span> para marcarlos como favoritos !"
 
 #. module: oomusic
 #: model_terms:ir.actions.act_window,help:oomusic.action_playlist
@@ -301,74 +308,73 @@ msgid ""
 "                directly from the playlist form view, or from any other view. In the latter case,\n"
 "                tracks will be added to the current playlist, which is unique."
 msgstr ""
-"Au moins une liste de lecture est requise. Vous pouvez facilement ajouter "
-"les pistes à la liste de lecture à partir de la vue formulaire de la liste "
-"de lecture, ou à partir de toute autre vue. Dans ce cas, les pistes seront "
-"ajoutées à la liste de lecture courante, qui est unique."
+"Por lo menos una lista de reproducción es necesaria. Puedes fácilmente agregar canciones a tu lista de reproducción \n"
+"                                            directamente desde el formulario de la vista, o desde otra vista.En otro caso,\n"
+"                       las canciones se agregaran a la lista de reproducción actual, que es la única.\n"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist__audio
 msgid "Audio API"
-msgstr "API Audio"
+msgstr "API de audio"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist__audio_mode
 msgid "Audio Mode"
-msgstr "Mode Audio"
+msgstr "Modo del Audio"
 
 #. module: oomusic
 #: model:ir.model,name:oomusic.model_oomusic_bandsintown
 msgid "BandsInTown Cache Management"
-msgstr "Gestion du cache BandsInTown"
+msgstr "Administrador de cache bandas en el pueblo"
 
 #. module: oomusic
 #: model:ir.model,name:oomusic.model_oomusic_bandsintown_event
 msgid "BandsInTown Events"
-msgstr "Événements BandsInTown"
+msgstr "Eventos de las bandas en el pueblo"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event__name
 msgid "BandsInTown ID"
-msgstr "ID BandsInTown"
+msgstr "ID de las bandas en el pueblo"
 
 #. module: oomusic
 #: selection:oomusic.playlist,smart_playlist:0
 msgid "Best Rated"
-msgstr "Mieux noté"
+msgstr "Mejor valorados"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album__image_big
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__image_big
 msgid "Big-sized Image"
-msgstr "Grande image"
+msgstr "Imagen de gran tamaño"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist__fm_getinfo_bio
 msgid "Biography"
-msgstr "Biographie"
+msgstr "Biografía"
 
 #. module: oomusic
 #: code:addons/oomusic/models/oomusic_artist.py:112
 #: code:addons/oomusic/models/oomusic_artist.py:137
 #, python-format
 msgid "Biography not found"
-msgstr "Biographie non trouvée"
+msgstr "Biografía no encontrada"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__bitrate
 msgid "Bitrate (kbps)"
-msgstr "Taux d’Échantillonnage (kbps)"
+msgstr "Bitrate (kbps)"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter__bitrate
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder__bitrate
 msgid "Bitrate/Quality"
-msgstr "Échantillonnage/Qualité"
+msgstr "Bitrate/Calidad"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder__black_formats
 msgid "Blacklisted Formats"
-msgstr "Formats sur liste noire"
+msgstr "Formatos en lista negra"
 
 #. module: oomusic
 #. openerp-web
@@ -377,50 +383,50 @@ msgstr "Formats sur liste noire"
 #: model:ir.ui.menu,name:oomusic.menu_action_oomusic_browse
 #, python-format
 msgid "Browse Files"
-msgstr "Parcourir les Fichiers"
+msgstr " Búsqueda de archivos"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder__buffer_size
 msgid "Buffer Size (KB)"
-msgstr "Taille du Tampon (KB)"
+msgstr "Tamaño del Buffer (KB)"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__image_big_cache
 msgid "Cache Of Big-sized Image"
-msgstr "Cache de la grande image"
+msgstr "Caché De Imagen De Gran Tamaño"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist__fm_image_cache
 msgid "Cache Of Image"
-msgstr "Cache de l'image"
+msgstr "Cache de la imagen"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album__image_medium_cache
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__image_medium_cache
 msgid "Cache Of Medium-sized Image"
-msgstr "Cache de l'image moyenne"
+msgstr "Caché De Imagen Mediana"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__image_small_cache
 msgid "Cache Of Small-sized Image"
-msgstr "Cache de la petite image"
+msgstr "Caché De Imagen De Pequeño Tamaño"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_config_settings_view_form
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_converter_view_form
 msgid "Cancel"
-msgstr "Annuler"
+msgstr "Cancelar"
 
 #. module: oomusic
 #: selection:oomusic.converter,state:0
 #: selection:oomusic.converter.line,state:0
 msgid "Cancelled"
-msgstr "Annulé"
+msgstr "Cancelado"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__child_ids
 msgid "Child Folders"
-msgstr "Répertoires enfants"
+msgstr "Carpetas Hijas"
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_folder__tag_analysis
@@ -428,31 +434,31 @@ msgid ""
 "Choose Mutagen for better compatibility with remote mounting points, such as"
 " rclone."
 msgstr ""
-"Choisissez Mutagen pour une meilleure compatibilité avec les points de "
-"montage externes, par exemple rclone."
+"Elija Mutagen para una mejor compatibilidad con los puntos de montaje "
+"remotos, como rclone."
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event__city
 msgid "City"
-msgstr "Ville"
+msgstr "Ciudad"
 
 #. module: oomusic
 #: model_terms:ir.actions.act_window,help:oomusic.action_bandsintown_event
 msgid ""
 "Click on the switch at the top right of the artist page to start following."
 msgstr ""
-"Cliquez sur le bouton en haut à droite de la page de l'artiste pour le "
-"suivre."
+"Haga clic en el interruptor en la parte superior derecha de la página del "
+"artista para comenzar a seguir."
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_tag__color
 msgid "Color Index"
-msgstr "Index de couleur"
+msgstr "Índice de color"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder__command
 msgid "Command line"
-msgstr "Ligne de commande"
+msgstr "Linea de Comandos"
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_transcoder__command
@@ -464,38 +470,39 @@ msgid ""
 "        - \"%n\": extra parameter for normaliation\n"
 "        "
 msgstr ""
-"Commande à exécuter lors du transcodage. Des mots-clés spécifiques sont automatiquement remplacés :\n"
-"        - \"%i\": fichier d'entrée\n"
-"        - \"%s\": commencer à partir de ce moment\n"
-"        - \"%b\": échantillonnage du fichier de sortie\n"
-"        - \"%n\": paramètre supplémentaire pour la normalisation"
+"Comando a ejecutar para la transcodificación. Las palabras clave específicas se reemplazan automáticamente: \n"
+"- \"%i\": archivo de entrada \n"
+"- \"%s\": comience desde este tiempo de búsqueda \n"
+"- \"%b\": birate para archivo de salida \n"
+"- \"%n\": parámetro adicional para normalización\n"
+" "
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter__comment
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_download__note
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist__comment
 msgid "Comment"
-msgstr "Commentaire"
+msgstr "Comentario"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__composer
 msgid "Composer"
-msgstr "Compositeur"
+msgstr "Compositor"
 
 #. module: oomusic
 #: model:ir.ui.menu,name:oomusic.menu_oomusic_config
 msgid "Configuration"
-msgstr "Configuration"
+msgstr "Configuración"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_config_settings_view_form
 msgid "Configure OOMusic"
-msgstr "Configurer OOMusic"
+msgstr "Configurar OOMusic"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__contact
 msgid "Contact"
-msgstr "Contact"
+msgstr "Contacto"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_converter_view_form
@@ -506,30 +513,30 @@ msgstr "Convertir"
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line__converter_id
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_converter_view_form
 msgid "Converter"
-msgstr "Convertisseur"
+msgstr "Convertidor"
 
 #. module: oomusic
 #: model:ir.actions.act_window,name:oomusic.action_converter
 #: model:ir.ui.menu,name:oomusic.menu_action_converter
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_converter_view_tree
 msgid "Converters"
-msgstr "Convertisseurs"
+msgstr "Convertidores"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__copyright
 msgid "Copyright"
-msgstr "Droit d'Auteur"
+msgstr "Derechos de Autor"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event__country
 msgid "Country"
-msgstr "Pays"
+msgstr "País"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album__create_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__create_date
 msgid "Create Date"
-msgstr "Date De Création"
+msgstr "Crear Fecha"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_album_view_form
@@ -538,7 +545,7 @@ msgstr "Date De Création"
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_playlist_view_form
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_track_view_form
 msgid "Create Link"
-msgstr "Créer Lien"
+msgstr "Crear Link"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album__create_uid
@@ -562,7 +569,7 @@ msgstr "Créer Lien"
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__create_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder__create_uid
 msgid "Created by"
-msgstr "Créé par"
+msgstr "Creado por"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist__create_date
@@ -584,28 +591,28 @@ msgstr "Créé par"
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_tag__create_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder__create_date
 msgid "Created on"
-msgstr "Créé le"
+msgstr "Creado en"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist__current
 msgid "Current"
-msgstr "Courant"
+msgstr "Actual"
 
 #. module: oomusic
 #: model:ir.actions.act_window,name:oomusic.action_current_playlist
 #: model:ir.ui.menu,name:oomusic.menu_action_current_playlist
 msgid "Current Playlist"
-msgstr "Liste de lecture courante"
+msgstr "Lista de reproducción actual"
 
 #. module: oomusic
 #: selection:oomusic.playlist,smart_playlist:0
 msgid "Custom"
-msgstr "Personnalisé"
+msgstr "Personalizado"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist__smart_custom_domain
 msgid "Custom Domain"
-msgstr "Domaine personnalisé"
+msgstr "Dominio personalizado"
 
 #. module: oomusic
 #: model:ir.model,name:oomusic.model_oomusic_tag
@@ -614,25 +621,25 @@ msgstr "Domaine personnalisé"
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_preference__tag_ids
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__tag_ids
 msgid "Custom Tags"
-msgstr "Étiquettes personnalisées"
+msgstr "Etiquetas personalizadas"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event__date_event
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_bandsintown_event_view_search
 msgid "Date"
-msgstr "Date"
+msgstr "Fecha"
 
 #. module: oomusic
 #. openerp-web
 #: code:addons/oomusic/static/src/xml/panel.xml:62
 #, python-format
 msgid "Deactivate repeat"
-msgstr "Désactiver la répétition"
+msgstr "Desactivar repetición"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings__view
 msgid "Default Views"
-msgstr "Vues par défaut"
+msgstr "Vistas predeterminadas"
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_transcoder__bitrate
@@ -640,23 +647,23 @@ msgid ""
 "Default bitrate or quality (for VBR). Can be changed if necessary when the\n"
 "        transcoding function is called."
 msgstr ""
-"Échantillonnage par défaut ou qualité (pour VBR). Peut être changé si "
-"nécessaire quand la fonction de transcodage est appelée."
+"Bitrate o calidad por defecto (para VBR). Se puede cambiar si es necesario "
+"cuando se llama a la función de transcodificación."
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__description
 msgid "Description"
-msgstr "Description"
+msgstr "Descripción"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter__dest_folder
 msgid "Destination Folder"
-msgstr "Répertoire de destination"
+msgstr "Carpeta de destino"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__disc
 msgid "Disc"
-msgstr "Disque"
+msgstr "Disco"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album__display_name
@@ -682,14 +689,14 @@ msgstr "Disque"
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__display_name
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder__display_name
 msgid "Display Name"
-msgstr "Nom Affiché"
+msgstr "Nombre a mostrar"
 
 #. module: oomusic
 #. openerp-web
 #: code:addons/oomusic/static/src/xml/top_button.xml:5
 #, python-format
 msgid "Display Player Panel"
-msgstr "Afficher le Panneau du Lecteur"
+msgstr "Mostar el panel del reproductor"
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_res_users__max_distance
@@ -697,36 +704,36 @@ msgid ""
 "Display events located at this maximum distance from your location. Set to "
 "zero to show all events."
 msgstr ""
-"Affiche les événements situés à une distance maximale de votre position. "
-"Mettre à zéro pour montrer tous les événements."
+"Visualice los eventos ubicados a esta distancia máxima de su ubicación. Se "
+"establece en cero para mostrar todos los eventos."
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event__distance
 msgid "Distance From Location"
-msgstr "Distance depuis la position"
+msgstr "Distancia desde la ubicación"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_download__res_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_preference__res_id
 msgid "Document"
-msgstr "Document"
+msgstr "Documento"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_download__res_model
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_preference__res_model
 msgid "Document Model"
-msgstr "Modèle De Document"
+msgstr "Modelo de documento"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_preference__res_user_id
 msgid "Document User"
-msgstr "Document utilisateur"
+msgstr "Usuario del documento"
 
 #. module: oomusic
 #: selection:oomusic.converter,state:0
 #: selection:oomusic.converter.line,state:0
 msgid "Done"
-msgstr "Fait"
+msgstr "Listo"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_album_view_form
@@ -735,12 +742,12 @@ msgstr "Fait"
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_playlist_view_form
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_track_view_form
 msgid "Download"
-msgstr "Télécharger"
+msgstr "Descargar"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_download_view_form
 msgid "Download Link"
-msgstr "Lien De Téléchargement"
+msgstr "Link de Desacraga"
 
 #. module: oomusic
 #: model:ir.actions.act_window,name:oomusic.action_download
@@ -759,18 +766,18 @@ msgstr "Lien De Téléchargement"
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_playlist_view_form
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_track_view_form
 msgid "Download Links"
-msgstr "Liens De Téléchargement"
+msgstr "Links de Descarga"
 
 #. module: oomusic
 #: model:ir.model,name:oomusic.model_oomusic_download_mixin
 #: model:ir.model,name:oomusic.model_oomusic_preference_mixin
 msgid "Download Mixin"
-msgstr "Mixin de Téléchargement"
+msgstr "Descargar Mixin"
 
 #. module: oomusic
 #: model:ir.model,name:oomusic.model_oomusic_download
 msgid "Download links"
-msgstr "Liens De Téléchargement"
+msgstr "Descargar enlaces"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_album_view_form
@@ -779,38 +786,36 @@ msgstr "Liens De Téléchargement"
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_playlist_view_form
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_track_view_form
 msgid "Download the track(s). You should allow pop-up from this URL!"
-msgstr ""
-"Télécharger les pistes. Vous devez autoriser les pop-ups depuis cette "
-"adresse."
+msgstr "Descarga la (s) pista (s). ¡Debes permitir pop-up desde esta URL!"
 
 #. module: oomusic
 #: selection:oomusic.converter,state:0
 #: selection:oomusic.converter.line,state:0
 msgid "Draft"
-msgstr "Brouillon"
+msgstr "Borrador"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line__duration
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__duration
 msgid "Duration"
-msgstr "Durée"
+msgstr "Duración"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line__duration_min
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line__duration_min
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__duration_min
 msgid "Duration (min)"
-msgstr "Durée (min)"
+msgstr "Duración (min)"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist__dynamic
 msgid "Dynamic"
-msgstr "Dynamique"
+msgstr "Dinámica"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__encoded_by
 msgid "Encoder"
-msgstr "Encodeur"
+msgstr "Codificador"
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_converter__album_id
@@ -818,8 +823,8 @@ msgid ""
 "Encoding help. When selected, the associated album tracks are added for "
 "conversion."
 msgstr ""
-"Aide à l'encodage. Quand sélectionné, les pistes de l'album sont ajoutés "
-"pour conversion."
+"Codificación de ayuda. Cuando se selecciona, las pistas del álbum asociadas "
+"se agregan para la conversión."
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_playlist__album_id
@@ -827,8 +832,8 @@ msgid ""
 "Encoding help. When selected, the associated album tracks are added to the "
 "playlist."
 msgstr ""
-"Aide d'encodage. Quand l'album est choisi, les pistes associées sont "
-"ajoutées à la liste de lecture."
+"Codificación de ayuda. Cuando se selecciona, las canciones del álbum "
+"asociadas se agregan a la lista de reproducción."
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_converter__artist_id
@@ -836,8 +841,8 @@ msgid ""
 "Encoding help. When selected, the associated artist tracks are added for "
 "conversion."
 msgstr ""
-"Aide à l'encodage. Quand sélectionné, les pistes de l'artiste sont ajoutés "
-"pour conversion."
+"Codificación de ayuda. Cuando se seleccionan, las pistas de artista "
+"asociadas se agregan para la conversión."
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_playlist__artist_id
@@ -845,8 +850,8 @@ msgid ""
 "Encoding help. When selected, the associated artist tracks are added to the "
 "playlist."
 msgstr ""
-"Aide d'encodage. Quand l'artiste est choisi, les pistes associées sont "
-"ajoutées à la liste de lecture."
+"\n"
+"Codificación de ayuda. Cuando se selecciona, las canciones asociadas al artista  se agregan a la lista de reproducción."
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_converter__playlist_id
@@ -854,13 +859,13 @@ msgid ""
 "Encoding help. When selected, the associated playlist tracks are added for "
 "conversion."
 msgstr ""
-"Aide à l'encodage. Quand sélectionné, les pistes de la liste de lecture sont"
-" ajoutés pour conversion."
+"Codificación de ayuda. Cuando se selecciona, las pistas de la lista de "
+"reproducción asociadas se agregan para la conversión."
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_bandsintown_event_view_form
 msgid "Event"
-msgstr "Événement"
+msgstr "Evento"
 
 #. module: oomusic
 #: model:ir.actions.act_window,name:oomusic.action_bandsintown_event
@@ -871,17 +876,17 @@ msgstr "Événement"
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_bandsintown_event_view_search
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_bandsintown_event_view_tree
 msgid "Events"
-msgstr "Événements"
+msgstr "Eventos"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_res_users_preferences_inherit
 msgid "Events Location"
-msgstr "Lieu de l'événement"
+msgstr "Lugar de los eventos"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_res_users__max_distance
 msgid "Events Maximum Distance (km)"
-msgstr "Distance maximale de l'événement (km)"
+msgstr "Distancia máxima de eventos (km)"
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_folder__exclude_autoscan
@@ -889,32 +894,31 @@ msgid ""
 "Exclude this folder from the automatized scheduled scan. Useful if the "
 "folder is not always accessible, e.g. linked to an external drive."
 msgstr ""
-"Exclure ce répertoire de l'analyse programmée automatique. Utile si le "
-"répertoire n'est pas toujours accessible, par exemple lié à un disque "
-"externe."
+"programada automatizada. Útil si la carpeta no es siempre accesible, por "
+"ejemplo, vinculado a una unidad externa."
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_download__expiration_date
 msgid "Expiration Date"
-msgstr "Date d'Expiration"
+msgstr "Fecha de caducidad"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_download__expired
 msgid "Expired"
-msgstr "Expiré"
+msgstr "Muerto"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown__expiry_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_lastfm__expiry_date
 msgid "Expiry Date"
-msgstr "Date d'Expiration"
+msgstr "Fecha de caducidad"
 
 #. module: oomusic
 #. openerp-web
 #: code:addons/oomusic/static/src/js/tour.js:11
 #, python-format
 msgid "Explore the configuration"
-msgstr "Explorez la configuration"
+msgstr "Explorar la configuración"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album__star
@@ -926,49 +930,49 @@ msgstr "Explorez la configuration"
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_artist_view_search
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_track_view_search
 msgid "Favorite"
-msgstr "Favoris"
+msgstr "Favorito"
 
 #. module: oomusic
 #: selection:oomusic.playlist,smart_playlist:0
 msgid "Favorites"
-msgstr "Favoris"
+msgstr "Favoritos"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_config_settings_view_form
 msgid "Features"
-msgstr "Fonctionnalités"
+msgstr "Características"
 
 #. module: oomusic
 #: selection:oomusic.config.settings,ext_info:0
 msgid "Fetched automatically"
-msgstr "Récupérées Automatiquement"
+msgstr "Recuperado automáticamente"
 
 #. module: oomusic
 #: selection:oomusic.config.settings,ext_info:0
 msgid "Fetched manually"
-msgstr "Récupérées Manuellement"
+msgstr "Recuperado manualmente"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__tag_analysis
 msgid "File Analysis"
-msgstr "Analyse des fichiers"
+msgstr "Análisis del fichero"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__size
 msgid "File Size (MiB)"
-msgstr "Taille Du Fichier (MiB)"
+msgstr "Tamaño del archivo (MiB)"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_download__flatten
 msgid "Flatten"
-msgstr "Aplanir"
+msgstr "Aplanar"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album__folder_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__folder_id
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form
 msgid "Folder"
-msgstr "Répertoire"
+msgstr "Carpeta"
 
 #. module: oomusic
 #. openerp-web
@@ -976,28 +980,28 @@ msgstr "Répertoire"
 #: code:addons/oomusic/static/src/js/browse.js:104
 #, python-format
 msgid "Folder \""
-msgstr "Répertoire \""
+msgstr "Carpeta \""
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album__image_folder
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__image_folder
 msgid "Folder Image"
-msgstr "Image du répertoire"
+msgstr "Imagen de la carpeta"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__path_name
 msgid "Folder Name"
-msgstr "Nom du Répertoire"
+msgstr "Nombre de la carpeta"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__path
 msgid "Folder Path"
-msgstr "Chemin du répertoire"
+msgstr "Ruta de la Carpeta"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings__folder_sharing
 msgid "Folder Sharing"
-msgstr "Partage de répertoire"
+msgstr "Compartir carpetas"
 
 #. module: oomusic
 #. openerp-web
@@ -1005,12 +1009,12 @@ msgstr "Partage de répertoire"
 #: code:addons/oomusic/static/src/js/browse.js:103
 #, python-format
 msgid "Folder added"
-msgstr "Répertoire Ajouté"
+msgstr "Carpeta añadida"
 
 #. module: oomusic
 #: sql_constraint:oomusic.folder:0
 msgid "Folder path must be unique!"
-msgstr "Le chemin du répertoire doit être unique"
+msgstr "La ruta de la carpeta debe ser única!"
 
 #. module: oomusic
 #: model:ir.actions.act_window,name:oomusic.action_folder
@@ -1018,36 +1022,36 @@ msgstr "Le chemin du répertoire doit être unique"
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_config_settings_view_form
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_folder_view_tree
 msgid "Folders"
-msgstr "Répertoires"
+msgstr "Carpetas"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist__bit_follow
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event__bit_follow
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_preference__bit_follow
 msgid "Follow Events"
-msgstr "Suivre les événements"
+msgstr "Seguir eventos"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_bandsintown_event_view_search
 #: selection:oomusic.artist,bit_follow:0
 #: selection:oomusic.preference,bit_follow:0
 msgid "Followed"
-msgstr "Suivi"
+msgstr "Siguiendo"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form
 msgid "Force Full Scan"
-msgstr "Forcer Analyse Complète"
+msgstr "Forzar búsqueda completa"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_format__name
 msgid "Format"
-msgstr "Format"
+msgstr "Formato"
 
 #. module: oomusic
 #: sql_constraint:oomusic.format:0
 msgid "Format name must be unique!"
-msgstr "Le nom du format doit être unique !"
+msgstr "El nombre del formato debe ser único!"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album__genre_id
@@ -1055,31 +1059,31 @@ msgstr "Le nom du format doit être unique !"
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__genre_id
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_genre_view_form
 msgid "Genre"
-msgstr "Genre"
+msgstr "Genero"
 
 #. module: oomusic
 #: sql_constraint:oomusic.genre:0
 msgid "Genre name must be unique!"
-msgstr "Le nom du genre doit être unique !"
+msgstr "El nombre del genero debe ser único!"
 
 #. module: oomusic
 #: model:ir.actions.act_window,name:oomusic.action_genre
 #: model:ir.ui.menu,name:oomusic.menu_action_genre
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_genre_view_tree
 msgid "Genres"
-msgstr "Genres"
+msgstr "Géneros"
 
 #. module: oomusic
 #. openerp-web
 #: code:addons/oomusic/static/src/xml/geolocate.xml:5
 #, python-format
 msgid "Get my location"
-msgstr "Trouver ma position"
+msgstr "Dar mi ubicación"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_album_view_search
 msgid "Group By"
-msgstr "Grouper Par"
+msgstr "Agrupar por"
 
 #. module: oomusic
 #: selection:oomusic.playlist,audio:0
@@ -1094,7 +1098,7 @@ msgstr "Audio HTML5"
 #: selection:oomusic.track,star:0
 #, python-format
 msgid "I Like It!"
-msgstr "J'aime !"
+msgstr "Me gusta!"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album__id
@@ -1125,17 +1129,19 @@ msgstr "ID"
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_download__res_id
 msgid "Identifier of the downloaded object"
-msgstr "Identifiant de l'objet téléchargé"
+msgstr "Identificador del objeto descargado."
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_preference__res_id
 msgid "Identifier of the preference object"
-msgstr "Identifiant de l'objet de préférence"
+msgstr "Identificador del objeto de preferencia."
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_download__flatten
 msgid "If activated, all tracks will be in the root folder of the ZIP file."
-msgstr "Si activé, toutes les pistes seront à la racine du fichier ZIP."
+msgstr ""
+"Si está activado, todas las pistas estarán en la carpeta raíz del archivo "
+"ZIP."
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_playlist__dynamic
@@ -1143,30 +1149,30 @@ msgid ""
 "If activated, tracks will be automatically added based on the Smart "
 "Playlist."
 msgstr ""
-"Si activé, des pistes seront automatiquement ajoutées sur base de la liste "
-"de lecture intelligente."
+"Si está activado, las pistas se agregarán automáticamente según la lista de "
+"reproducción inteligente."
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist__fm_image
 msgid "Image"
-msgstr "Image"
+msgstr "Imagen"
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_artist__fm_image
 #: model:ir.model.fields,help:oomusic.field_oomusic_artist__fm_image_cache
 msgid "Image of the artist, obtained thanks to LastFM."
-msgstr "Image de l'artiste, obtenue depuis LastFM."
+msgstr "Imagen del artista, obtenida gracias a LastFM."
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_album__image_medium_cache
 #: model:ir.model.fields,help:oomusic.field_oomusic_folder__image_medium_cache
 msgid "Image of the folder"
-msgstr "Image du répertoire"
+msgstr "Imagen de la carpeta."
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_folder__image_small_cache
 msgid "Image of the folder, used in Kanban view"
-msgstr "Image du répertoire, utilisé dans la vue Kanban"
+msgstr "Imagen de la carpeta, usada en la vista Kanban"
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_album__image_medium
@@ -1174,7 +1180,7 @@ msgstr "Image du répertoire, utilisé dans la vue Kanban"
 #: model:ir.model.fields,help:oomusic.field_oomusic_folder__image_medium
 #: model:ir.model.fields,help:oomusic.field_oomusic_folder__image_small
 msgid "Image of the folder."
-msgstr "Image du répertoire"
+msgstr "Imagen de la carpeta."
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_album__image_big
@@ -1184,57 +1190,58 @@ msgid ""
 "Image of the folder. It is automatically resized as a 1024x1024px image, "
 "with aspect ratio preserved."
 msgstr ""
-"Image du répertoire. Elle est automatiquement redimensionnée en 1024x1024px,"
-" avec un rapport de taille préservé."
+"Imagen de la carpeta. Se cambia automáticamente de tamaño como una imagen de"
+" 1024x1024px, con la relación de aspecto conservada."
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album__in_playlist
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__in_playlist
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__in_playlist
 msgid "In Current Playlist"
-msgstr "Dans la Liste de Lecture Courante"
+msgstr "En la lista de reproducción actual"
 
 #. module: oomusic
 #: selection:oomusic.config.settings,cron:0
 msgid "Inactive"
-msgstr "Inactif"
+msgstr "Inactivo"
 
 #. module: oomusic
 #: selection:oomusic.config.settings,folder_sharing:0
 msgid "Inactive (user specific)"
-msgstr "Inactif (spécifique aux utilisateurs)"
+msgstr "Inactivo (usuario específico)"
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_transcoder__black_formats
 msgid "Input formats which cannot be converted using this transcoder."
 msgstr ""
-"Formats d'encodage qui ne peuvent pas être convertis par ce transcodeur."
+"Formatos de entrada que no se pueden convertir utilizando este "
+"transcodificador."
 
 #. module: oomusic
 #: selection:oomusic.config.settings,view:0
 msgid "Kanban, with thumbnails"
-msgstr "Kanban, avec miniatures"
+msgstr "Kanban, con miniaturas"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_download__access_date
 msgid "Last Access Date"
-msgstr "Date Du Dernier Accès"
+msgstr "Ultima fecha de acceso"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__last_commit
 msgid "Last Commit"
-msgstr "Dernière validation"
+msgstr "Ultimo compromiso"
 
 #. module: oomusic
 #: selection:oomusic.playlist,smart_playlist:0
 msgid "Last Listened"
-msgstr "Dernièrement écoutés"
+msgstr "Ultimo escuchado"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__last_modification
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__last_modification
 msgid "Last Modification"
-msgstr "Dernière Modification"
+msgstr "Ultima modificación"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album____last_update
@@ -1260,7 +1267,7 @@ msgstr "Dernière Modification"
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track____last_update
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder____last_update
 msgid "Last Modified on"
-msgstr "Dernière Modification le"
+msgstr "Ultima modificación fue en"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line__last_play
@@ -1269,12 +1276,12 @@ msgstr "Dernière Modification le"
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__last_play
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_suggestion_view_form
 msgid "Last Played"
-msgstr "Lus Dernièrement"
+msgstr "Ultima vez escuchada"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__last_scan
 msgid "Last Scanned"
-msgstr "Analysés Dernièrement"
+msgstr "Ultima buscada"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album__write_uid
@@ -1298,7 +1305,7 @@ msgstr "Analysés Dernièrement"
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__write_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder__write_uid
 msgid "Last Updated by"
-msgstr "Dernière Mise-à-jour par"
+msgstr "Ultima actualización por"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album__write_date
@@ -1322,68 +1329,68 @@ msgstr "Dernière Mise-à-jour par"
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__write_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder__write_date
 msgid "Last Updated on"
-msgstr "Dernière Mise-à-jour le"
+msgstr "Ultima actualización en"
 
 #. module: oomusic
 #: model:ir.model,name:oomusic.model_oomusic_lastfm
 msgid "LastFM Cache Management"
-msgstr "Gestion du Cache LastFM"
+msgstr "LastFM Cache Management"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings__ext_info
 msgid "LastFM and Events Info"
-msgstr "Info LastFM et événements"
+msgstr "Información de LastFM y eventos"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event__latitude
 #: model:ir.model.fields,field_description:oomusic.field_res_users__latitude
 msgid "Latitude"
-msgstr "Latitude"
+msgstr "Latitud"
 
 #. module: oomusic
 #. openerp-web
 #: code:addons/oomusic/static/src/js/tour.js:19
 #, python-format
 msgid "Let's create a new folder."
-msgstr "Créons un nouveau répertoire."
+msgstr "Vamos a crear una nueva carpeta."
 
 #. module: oomusic
 #: model:ir.ui.menu,name:oomusic.menu_oomusic_library
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form
 msgid "Library"
-msgstr "Bibliothèque"
+msgstr "Biblioteca"
 
 #. module: oomusic
 #: selection:oomusic.config.settings,view:0
 msgid "List, without thumbnails"
-msgstr "Liste, sans miniatures"
+msgstr "Lista, sin miniaturas."
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event__location
 msgid "Location"
-msgstr "Position"
+msgstr "Ubicación"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__locked
 msgid "Locked"
-msgstr "Verrouillé"
+msgstr "Bloqueado"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event__longitude
 #: model:ir.model.fields,field_description:oomusic.field_res_users__longitude
 msgid "Longitude"
-msgstr "Longitude"
+msgstr "Longitud"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter__max_threads
 msgid "Max Threads"
-msgstr "Nombre de tâches maximum"
+msgstr "Hilos máximos"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album__image_medium
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__image_medium
 msgid "Medium-sized Image"
-msgstr "Image moyenne"
+msgstr "Imagen mediana"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form
@@ -1393,103 +1400,103 @@ msgstr "MiB"
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_format__mimetype
 msgid "Mimetype"
-msgstr "Type MIME"
+msgstr "Mimetype"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_download__min_delay
 msgid "Minimum Delay"
-msgstr "Délai Minimum"
+msgstr "Retraso mínimo"
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_download__min_delay
 msgid "Minimum delay in seconds between consecutive accesses."
-msgstr "Délai minimum, en secondes, entre accès consécutifs."
+msgstr "Retardo mínimo en segundos entre accesos consecutivos."
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_download__res_model_id
 msgid "Model of the followed resource"
-msgstr "Modèle de la ressource associée"
+msgstr "Modelo del recurso seguido"
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_preference__res_model_id
 msgid "Model of the preference resource"
-msgstr "Modèle de l'objet de préférence"
+msgstr "Modelo del recurso de preferencia."
 
 #. module: oomusic
 #: selection:oomusic.playlist,smart_playlist:0
 msgid "Most Played"
-msgstr "Le plus joué"
+msgstr "El mas reproducido"
 
 #. module: oomusic
 #: model:ir.ui.menu,name:oomusic.menu_oomusic_root
 msgid "Music"
-msgstr "Musique"
+msgstr "Musica"
 
 #. module: oomusic
 #: model:ir.model,name:oomusic.model_oomusic_album
 msgid "Music Album"
-msgstr "Album"
+msgstr "Álbum musical"
 
 #. module: oomusic
 #: model:ir.model,name:oomusic.model_oomusic_artist
 msgid "Music Artist"
-msgstr "Artiste"
+msgstr "Artista musical"
 
 #. module: oomusic
 #: model:ir.model,name:oomusic.model_oomusic_converter
 msgid "Music Converter"
-msgstr "Convertisseur audio"
+msgstr "Convertidor de música"
 
 #. module: oomusic
 #: model:ir.model,name:oomusic.model_oomusic_converter_line
 msgid "Music Converter Track"
-msgstr "Piste de conversion musicale"
+msgstr "Convertidor de canciones"
 
 #. module: oomusic
 #: model:ir.model,name:oomusic.model_oomusic_folder
 msgid "Music Folder"
-msgstr "Répertoire"
+msgstr "Carpeta de música"
 
 #. module: oomusic
 #: model:ir.model,name:oomusic.model_oomusic_folder_scan
 msgid "Music Folder scan log"
-msgstr "Journal d'Analyse du Répertoire"
+msgstr "Log del scaneo en carpeta"
 
 #. module: oomusic
 #: model:ir.model,name:oomusic.model_oomusic_format
 msgid "Music Format"
-msgstr "Format Musical"
+msgstr "Formato de la música"
 
 #. module: oomusic
 #: model:ir.model,name:oomusic.model_oomusic_genre
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_genre__name
 msgid "Music Genre"
-msgstr "Genre Musical"
+msgstr "Genero de la música"
 
 #. module: oomusic
 #: model:ir.model,name:oomusic.model_oomusic_playlist
 msgid "Music Playlist"
-msgstr "Liste de Lecture"
+msgstr "Lista de reproducción "
 
 #. module: oomusic
 #: model:ir.model,name:oomusic.model_oomusic_playlist_line
 msgid "Music Playlist Track"
-msgstr "Piste de la Liste de Lecture"
+msgstr "Canción de lista de reproducción"
 
 #. module: oomusic
 #: model:ir.model,name:oomusic.model_oomusic_suggestion
 msgid "Music Suggestion page"
-msgstr "Page de Suggestion Musicale"
+msgstr "Pagina de sugerencias musicales"
 
 #. module: oomusic
 #: model:ir.model,name:oomusic.model_oomusic_track
 msgid "Music Track"
-msgstr "Piste"
+msgstr "Canción de música"
 
 #. module: oomusic
 #: model:ir.model,name:oomusic.model_oomusic_transcoder
 msgid "Music Transcoder"
-msgstr "Encodeur Musical"
+msgstr "Trasncoder de música"
 
 #. module: oomusic
 #: selection:oomusic.folder,tag_analysis:0
@@ -1500,7 +1507,7 @@ msgstr "Mutagen"
 #: code:addons/oomusic/models/res_users.py:35
 #, python-format
 msgid "My Playlist"
-msgstr "Ma liste de lecture"
+msgstr "Mi lista de reproducción"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter__name
@@ -1509,32 +1516,32 @@ msgstr "Ma liste de lecture"
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_tag__name
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form
 msgid "Name"
-msgstr "Nom"
+msgstr "Nombre"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion__name_albums
 msgid "Name Albums"
-msgstr "Nom des albums"
+msgstr "Nombre de álbumes"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion__name_tracks
 msgid "Name Tracks"
-msgstr "Nom des pistes"
+msgstr "Nombre de las canciones"
 
 #. module: oomusic
 #: selection:oomusic.playlist,smart_playlist:0
 msgid "Never Played"
-msgstr "Jamais joué"
+msgstr "Nunca reproducido"
 
 #. module: oomusic
 #: selection:oomusic.playlist,audio_mode:0
 msgid "No Transcoding"
-msgstr "Pas de transcodage"
+msgstr "Sin transcodificación"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__exclude_autoscan
 msgid "No auto-scan"
-msgstr "Pas d'auto-scan"
+msgstr "No auto-búsqueda"
 
 #. module: oomusic
 #: code:addons/oomusic/models/oomusic_album.py:61
@@ -1549,14 +1556,14 @@ msgstr "Pas d'auto-scan"
 #: code:addons/oomusic/models/oomusic_track.py:178
 #, python-format
 msgid "No current playlist found!"
-msgstr "Aucune liste de lecture courante trouvée !"
+msgstr "No se ha encontrado ninguna lista de reproducción actual!"
 
 #. module: oomusic
 #: code:addons/oomusic/models/oomusic_folder.py:139
 #: code:addons/oomusic/models/oomusic_folder.py:166
 #, python-format
 msgid "No track found"
-msgstr "Aucune piste trouvée"
+msgstr "No se encontró canción"
 
 #. module: oomusic
 #: selection:oomusic.album,star:0 selection:oomusic.artist,star:0
@@ -1569,7 +1576,7 @@ msgstr "Normal"
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter__norm
 #: selection:oomusic.playlist,audio_mode:0
 msgid "Normalize"
-msgstr "Normaliser"
+msgstr "Normalizar"
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_converter__norm
@@ -1577,35 +1584,36 @@ msgid ""
 "Normalize playlist loudness thanks to the EBU R128 normalization. It requires FFmpeg >=3.2.1 which includes by default the appropriate library (libebur128).\n"
 "Transcoding will be significantly slower when activated."
 msgstr ""
-"Normaliser le volume de la liste de lecture grâce à la méthode EBU R128. "
-"Cele nécessite FFmpeg >= 3.2.1 qui inclut par défaut la librairie appropriée"
-" (libebur128). L'encodage sera significativement plus lent quand activé."
+"Normalice el volumen de la lista de reproducción gracias a la normalización "
+"de EBU R128. Requiere FFmpeg> = 3.2.1 que incluye de forma predeterminada la"
+" biblioteca adecuada (libebur128). La transcodificación será "
+"significativamente más lenta cuando se active."
 
 #. module: oomusic
 #: selection:oomusic.artist,bit_follow:0
 #: selection:oomusic.preference,bit_follow:0
 msgid "Not Followed"
-msgstr "Non suivi"
+msgstr "No seguido"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__performer_id
 msgid "Original Artist"
-msgstr "Artiste Original"
+msgstr "Artista original"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder__output_format
 msgid "Output Format"
-msgstr "Format de Sortie"
+msgstr "Formato de salida"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__parent_id
 msgid "Parent Folder"
-msgstr "Répertoire Parent"
+msgstr "Carpeta padre"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__path
 msgid "Path"
-msgstr "Chemin"
+msgstr "Ruta"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_album_view_form
@@ -1614,24 +1622,24 @@ msgstr "Chemin"
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_track_view_form
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_track_view_tree
 msgid "Play"
-msgstr "Jouer"
+msgstr "Reproducir"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_preference__play_count
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__play_count
 msgid "Play Count"
-msgstr "Nombre d'Écoutes"
+msgstr "Contador de reproducciones"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line__playing
 msgid "Playing"
-msgstr "Lecture en Cours"
+msgstr "Reproduciendo"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line__playlist_id
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_playlist_view_form
 msgid "Playlist"
-msgstr "Liste de lecture"
+msgstr "Lista de reproducción"
 
 #. module: oomusic
 #: model:ir.actions.act_window,name:oomusic.action_playlist
@@ -1639,56 +1647,56 @@ msgstr "Liste de lecture"
 #: model:ir.ui.menu,name:oomusic.menu_oomusic_playlist
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_playlist_view_tree
 msgid "Playlists"
-msgstr "Listes de lecture"
+msgstr "Listas de reproducción"
 
 #. module: oomusic
 #: model_terms:ir.actions.act_window,help:oomusic.action_transcoder
 msgid "Please read the documentation in a first place."
-msgstr "Veuillez tout d'abord lire la documentation."
+msgstr "Por favor lea la documentación en primer lugar"
 
 #. module: oomusic
 #. openerp-web
 #: code:addons/oomusic/static/src/xml/browse.xml:21
 #, python-format
 msgid "Preview"
-msgstr "Prévisualiser"
+msgstr "Previsualizar"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__root_preview
 msgid "Preview Folder Content"
-msgstr "Contenu du répertoire"
+msgstr "Previsualizar contenido de la carpeta"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter__progress
 msgid "Progress"
-msgstr "Avancement"
+msgstr "Progreso"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_converter_view_form
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_playlist_view_form
 msgid "Purge"
-msgstr "Vider"
+msgstr "Purga"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist__smart_playlist_qty
 msgid "Quantity To Add"
-msgstr "Quantité à ajouter"
+msgstr "Cantidad a añadir"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_suggestion_view_form
 msgid "Random"
-msgstr "Aléatoire"
+msgstr "Aleatorio"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion__album_random
 msgid "Random Albums"
-msgstr "Albums aléatoires"
+msgstr "Álbumes aleatorios"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion__track_random
 #: selection:oomusic.playlist,smart_playlist:0
 msgid "Random Tracks"
-msgstr "Pistes aléatoires"
+msgstr "Canciones Aleatorias"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album__rating
@@ -1697,104 +1705,102 @@ msgstr "Pistes aléatoires"
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_preference__rating
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__rating
 msgid "Rating"
-msgstr "Évaluation"
+msgstr "Calificación"
 
 #. module: oomusic
 #: selection:oomusic.playlist,smart_playlist:0
 msgid "Recent"
-msgstr "Récent"
+msgstr "Reciente"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_suggestion_view_form
 msgid "Recently Added"
-msgstr "Récemment ajoutés"
+msgstr "Recientemente agregado"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion__album_recently_added
 msgid "Recently Added Albums"
-msgstr "Albums ajoutés récemment"
+msgstr "Álbumes recientemente agregados"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion__track_recently_added
 msgid "Recently Added Tracks"
-msgstr "Pistes ajoutées récemment"
+msgstr "Canciones recientemente agregadas"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown_event__region
 msgid "Region"
-msgstr "Région"
+msgstr "Región"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_download__res_model_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_preference__res_model_id
 msgid "Related Document Model"
-msgstr "Document Lié Au Modèle"
+msgstr "Modelo de documento relacionado"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_album_view_search
 msgid "Released This Year"
-msgstr "Sorti Cette Année"
+msgstr "Lanzado este año"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown__removal_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_lastfm__removal_date
 msgid "Removal Date"
-msgstr "Date de Suppression"
+msgstr "Fecha de retiro"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown__content
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_lastfm__content
 msgid "Result"
-msgstr "Résultat"
+msgstr "Resultado"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__root_folder_id
 msgid "Root Folder"
-msgstr "Répertoire racine"
+msgstr "Carpeta raiz"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_converter_view_form
 msgid "Run"
-msgstr "Démarrer"
+msgstr "Run"
 
 #. module: oomusic
 #: selection:oomusic.converter,state:0
 msgid "Running"
-msgstr "En cours"
+msgstr "Running"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form
 msgid "Scan"
-msgstr "Scanner"
+msgstr "Búsqueda"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__last_scan_duration
 msgid "Scan Duration (s)"
-msgstr "Durée du scan (s)"
+msgstr "Duración de la búsqueda"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings__cron
 msgid "Scheduled Actions"
-msgstr "Actions Planifiées"
+msgstr "Acciones programadas"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_download__access_token
 msgid "Security Token"
-msgstr "Jeton De Sécurité"
+msgstr "Token de seguridad"
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_download__url
 msgid "Send this URL to your contacts so they will download the tracks."
-msgstr ""
-"Envoyez cette URL à vos contacts pour qu'ils puissent télécharger les "
-"pistes."
+msgstr "Envía esta URL a tus contactos para que descarguen las pistas."
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line__sequence
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line__sequence
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder__sequence
 msgid "Sequence"
-msgstr "Séquence"
+msgstr "Secuencia"
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_transcoder__sequence
@@ -1802,40 +1808,40 @@ msgid ""
 "Sequence used to order the transcoders. The lower the value, the higher the "
 "priority"
 msgstr ""
-"Séquence utilisée pour ordonner les encodeurs. Une valeur plus basse donne "
-"une priorité plus haute."
+"Secuencia utilizada para ordenar los trascoders. Cuanto menor sea el valor, "
+"mayor será la prioridad"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_playlist_view_form
 msgid "Set As Current"
-msgstr "Définir comme courante"
+msgstr "Establecer como actual"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_converter_view_form
 msgid "Set To Draft"
-msgstr "Mettre en brouillon"
+msgstr "Establecer como borrador"
 
 #. module: oomusic
 #: model_terms:ir.actions.act_window,help:oomusic.action_folder
 msgid "Set-up the music directories to scan."
-msgstr "Configurez les répertoires musicaux à analyser."
+msgstr "Configurar los directorios de música para escanear."
 
 #. module: oomusic
 #: model:ir.actions.act_window,name:oomusic.action_oomusic_config_settings
 #: model:ir.ui.menu,name:oomusic.menu_oomusic_general_settings
 msgid "Settings"
-msgstr "Paramètres"
+msgstr "Ajustes"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter__show_waiting
 msgid "Show Waiting"
-msgstr "Montrer en attente"
+msgstr "Mostrar en espera"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist__fm_getsimilar_artist_ids
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_artist_view_form
 msgid "Similar Artists"
-msgstr "Artistes Similaires"
+msgstr "Artistas similares"
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_transcoder__buffer_size
@@ -1847,55 +1853,56 @@ msgid ""
 "        stability. A large value (e.g. 20000 KB) will ensure the complete download of the file\n"
 "        before playing."
 msgstr ""
-"Taille du tampon utilisé pour le streaming. Une valeur plus grande peut réduire les erreur potentielles de téléchargement lors de la lecture, mais augmente le délai d'attente entre les pistes.\n"
-"La valeur par défaut (200 KB) devrait être un bon compromis entre délai d'attente et stabilité du téléchargement. Une plus grande valeur (par exemple 20000 KB) assurera un téléchargement complet du fichier avant sa lecture."
+"Tamaño del búfer utilizado durante la transmisión. Un valor mayor puede reducir los potenciales errores de descarga de archivos durante la reproducción, pero aumentará el retraso de espera al cambiar canciones.\n"
+"        El valor predeterminado (200 KB) debe ser un buen compromiso entre el retraso de espera y la estabilidad de la descarga. Un gran valor (por ejemplo, 20000 KB) garantizará la descarga completa del archivo\n"
+"        antes de reproducir"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album__image_small
 msgid "Small-sized Image"
-msgstr "Petite image"
+msgstr "Imagen de menor tamaño"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__image_small
 msgid "Small-sized image"
-msgstr "Petite Image"
+msgstr "Imagen de tamaño pequeño"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist__smart_playlist
 msgid "Smart Playlist"
-msgstr "Liste de lecture intelligente"
+msgstr "Lista de reproducción inteligente"
 
 #. module: oomusic
 #: selection:oomusic.playlist,audio_mode:0
 msgid "Standard"
-msgstr "Standard"
+msgstr "Estándar"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter__state
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line__state
 msgid "State"
-msgstr "État"
+msgstr "Estado"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_suggestion_view_form
 msgid "Suggestion"
-msgstr "Suggestion"
+msgstr "Sugerencia"
 
 #. module: oomusic
 #: model:ir.actions.act_window,name:oomusic.action_suggestion
 #: model:ir.ui.menu,name:oomusic.menu_action_suggestion
 msgid "Suggestions"
-msgstr "Suggestions"
+msgstr "Sugerencias"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_tag_view_form
 msgid "Tag"
-msgstr "Étiquette"
+msgstr "Etiquetas"
 
 #. module: oomusic
 #: sql_constraint:oomusic.tag:0
 msgid "Tag name already exists!"
-msgstr "L'étiquette existe déjà !"
+msgstr "El nombre de la etiqueta ya existe!"
 
 #. module: oomusic
 #: selection:oomusic.folder,tag_analysis:0
@@ -1907,7 +1914,7 @@ msgstr "Taglib"
 #: model:ir.ui.menu,name:oomusic.menu_action_tag
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_tag_view_tree
 msgid "Tags"
-msgstr "Étiquettes"
+msgstr "Etiquetas"
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_bandsintown_event__distance
@@ -1915,19 +1922,19 @@ msgid ""
 "The current location can be set in your preferences (from the top right "
 "menu)"
 msgstr ""
-"La position actuelle peut être définie dans vos préférences (dans le menu "
-"supérieur droit)"
+"La ubicación actual se puede configurar en sus preferencias (desde el menú "
+"superior derecho)"
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_download__expiration_date
 msgid "The link will be deactivated after this date."
-msgstr "Le lien sera désactivé après cette date."
+msgstr "El enlace se desactivará después de esta fecha."
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_converter_view_form
 msgid "The track conversion will automatically start within a few minutes."
 msgstr ""
-"La conversion des pistes commencera automatiquement dans quelques minutes."
+"La conversión de la pista comenzará automáticamente en unos pocos minutos."
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_album__image_folder
@@ -1936,8 +1943,8 @@ msgid ""
 "This field holds the image used as image for the folder, limited to "
 "1024x1024px."
 msgstr ""
-"Ce champs contient l'image utilisée pour l'image du répertoire, limitée à "
-"1024x1024px."
+"Este campo contiene la imagen utilizada como imagen para la carpeta, "
+"limitada a 1024x1024px."
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form
@@ -1945,31 +1952,33 @@ msgid ""
 "This folder is being scanned. The music library will be updated "
 "progressively."
 msgstr ""
-"Ce répertoire est en cours d'analyse. La médiathèque sera mise à jour "
-"progressivement."
+"Esta carpeta está siendo escaneada. La biblioteca de música se actualizará "
+"progresivamente."
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__name
 msgid "Title"
-msgstr "Titre"
+msgstr "Titulo"
 
 #. module: oomusic
 #: code:addons/oomusic/controllers/main.py:30
 #: code:addons/oomusic/controllers/main.py:36
 #, python-format
 msgid "Too many requests received. Please try again in a few minutes."
-msgstr "Trop de requêtes reçues. Essayez dans quelques minutes."
+msgstr ""
+"Demasiadas peticiones recibidas. Por favor, inténtalo de nuevo en unos "
+"minutos."
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__root
 msgid "Top Level Folder"
-msgstr "Répertoire de plus Haut Niveau"
+msgstr "Carpeta de nivel superior"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_artist__fm_gettoptracks_track_ids
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_artist_view_form
 msgid "Top Tracks"
-msgstr "Meilleures Pistes"
+msgstr "Las mejores canciones"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_album_view_form
@@ -1982,61 +1991,61 @@ msgstr "Total"
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__root_total_albums
 msgid "Total Albums"
-msgstr "Total d'Albums"
+msgstr "Cantidad de álbumes"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__root_total_artists
 msgid "Total Artists"
-msgstr "Total d'Artistes"
+msgstr "Cantidad de artistas"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__root_total_duration
 msgid "Total Duration"
-msgstr "Durée Totale"
+msgstr "Duración total"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__root_total_size
 msgid "Total Size"
-msgstr "Taille Totale"
+msgstr "Tamaño total"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__root_total_tracks
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__track_total
 msgid "Total Tracks"
-msgstr "Pistes Totales"
+msgstr "Total de canciones"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line__track_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line__track_id
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_track_view_form
 msgid "Track"
-msgstr "Piste"
+msgstr "Canción"
 
 #. module: oomusic
 #. openerp-web
 #: code:addons/oomusic/static/src/js/browse.js:120
 #, python-format
 msgid "Track \""
-msgstr "Piste \""
+msgstr "Canción \""
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter_line__track_number
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line__track_number
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__track_number
 msgid "Track #"
-msgstr "Piste #"
+msgstr "Canción#"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__track_number_int
 msgid "Track # (int)"
-msgstr "# de piste (int)"
+msgstr "Canción # (init)"
 
 #. module: oomusic
 #. openerp-web
 #: code:addons/oomusic/static/src/js/browse.js:119
 #, python-format
 msgid "Track added"
-msgstr "Piste ajoutée"
+msgstr "Canción añadida"
 
 #. module: oomusic
 #: model:ir.actions.act_window,name:oomusic.action_track
@@ -2058,39 +2067,39 @@ msgstr "Piste ajoutée"
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_track_view_search
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_track_view_tree
 msgid "Tracks"
-msgstr "Pistes"
+msgstr "Canciones"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter__transcoder_id
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_transcoder_view_form
 msgid "Transcoder"
-msgstr "Encodeur"
+msgstr "Transcoder"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder__name
 msgid "Transcoder Name"
-msgstr "Nom de l'Encodeur"
+msgstr "Nombre del transcoder"
 
 #. module: oomusic
 #: model:ir.actions.act_window,name:oomusic.action_transcoder
 #: model:ir.ui.menu,name:oomusic.menu_action_transcoder
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_transcoder_view_tree
 msgid "Transcoders"
-msgstr "Encodeurs"
+msgstr "Transcoders"
 
 #. module: oomusic
 #. openerp-web
 #: code:addons/oomusic/static/src/xml/panel.xml:56
 #, python-format
 msgid "Turn shuffle off"
-msgstr "Désactiver Lecture Aléatoire"
+msgstr "Desactivar reproducción aleatoria"
 
 #. module: oomusic
 #. openerp-web
 #: code:addons/oomusic/static/src/xml/panel.xml:53
 #, python-format
 msgid "Turn shuffle on"
-msgstr "Activer lecture aléatoire"
+msgstr "Activar reproducción aleatoria "
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown__url
@@ -2103,37 +2112,37 @@ msgstr "URL"
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown__name
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_lastfm__name
 msgid "URL Hash"
-msgstr "Hash de l'URL"
+msgstr "URL Hash"
 
 #. module: oomusic
 #: sql_constraint:oomusic.bandsintown:0 sql_constraint:oomusic.lastfm:0
 msgid "URL hash must be unique!"
-msgstr "Le hash de l'URL doit être unique!"
+msgstr "URL hash debe ser única!"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form
 msgid "Unlock"
-msgstr "Déverrouiller"
+msgstr "desbloquear"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_artist_view_form
 msgid "Update Events"
-msgstr "Mettre à jour les événements"
+msgstr "Eventos de actualización"
 
 #. module: oomusic
 #: model:ir.actions.server,name:oomusic.oomusic_artist_reload_bit_info
 msgid "Update Events Info"
-msgstr "Mettre à jour les infos de l'événement"
+msgstr "Actualizar información de eventos"
 
 #. module: oomusic
 #: model:ir.actions.server,name:oomusic.oomusic_artist_reload_info
 msgid "Update LastFM Info"
-msgstr "Mettre à jour les infos LastFM"
+msgstr "Actualizar la información de LastFM"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__use_tags
 msgid "Use ID3 Tags"
-msgstr "Utiliser les tags ID3"
+msgstr "Usar etiquetas ID3"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album__user_id
@@ -2149,7 +2158,7 @@ msgstr "Utiliser les tags ID3"
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_preference__user_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__user_id
 msgid "User"
-msgstr "Utilisateur"
+msgstr "Usuario"
 
 #. module: oomusic
 #: model:ir.model,name:oomusic.model_oomusic_preference
@@ -2158,27 +2167,27 @@ msgstr "Utilisateur"
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_preference_mixin__pref_ids
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__pref_ids
 msgid "User Preferences"
-msgstr "Préférences utilisateur"
+msgstr "Preferencias del usuario"
 
 #. module: oomusic
 #: model:ir.model,name:oomusic.model_res_users
 msgid "Users"
-msgstr "Utilisateurs"
+msgstr "Usuarios"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings__version
 msgid "Version"
-msgstr "Version"
+msgstr "Versión"
 
 #. module: oomusic
 #: selection:oomusic.converter.line,state:0
 msgid "Waiting"
-msgstr "En attente"
+msgstr "Esperando"
 
 #. module: oomusic
 #: selection:oomusic.playlist,audio:0
 msgid "Web Audio API"
-msgstr "API Web Audio"
+msgstr "API de audio web"
 
 #. module: oomusic
 #: model:ir.model.fields,help:oomusic.field_oomusic_folder__locked
@@ -2187,14 +2196,14 @@ msgid ""
 "necessary to unlock it manually if scanning has failed or has been "
 "interrupted."
 msgstr ""
-"Quand un répertoire est analysé, il est marqué comme \"bloqué\". Il peut "
-"être nécessaire de le débloquer manuellement si l'analyse a rencontré une "
-"erreur ou a été interrompue."
+"Cuando una carpeta está siendo escaneada, se marca como \"bloqueada\". Puede"
+" que sea necesario desbloquearlo manualmente si el escaneo ha fallado o se "
+"ha interrumpido."
 
 #. module: oomusic
 #: selection:oomusic.playlist,smart_playlist:0
 msgid "Worst Rated"
-msgstr "Le moins bien noté"
+msgstr "Peor valorados"
 
 #. module: oomusic
 #. openerp-web
@@ -2204,8 +2213,8 @@ msgid ""
 "Write the full path of your folder. Click on the 'Scan' button to add the "
 "content to your library!"
 msgstr ""
-"Écrivez le chemin complet de votre répertoire. Cliquez sur le bouton "
-"\"Sauvegarder\" pour ajouter le contenu à votre bibliothèque."
+"Escribe la ruta completa de tu carpeta. Haga clic en el botón 'Escanear' "
+"para agregar el contenido a su biblioteca."
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_album__year
@@ -2213,7 +2222,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__year
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_album_view_search
 msgid "Year"
-msgstr "Année"
+msgstr "Año"
 
 #. module: oomusic
 #: model_terms:ir.actions.act_window,help:oomusic.action_current_playlist
@@ -2221,9 +2230,8 @@ msgid ""
 "You can create your first playlist from the \"Playlists\" menu, and set it as\n"
 "                \"Current\" so the tracks will appear here."
 msgstr ""
-"Vous pouvez créer votre première liste de lecture à partir du menu \"Listes "
-"de Lecture\", et la définir comme \"Courante\" de façon à faire apparaître "
-"les pistes ici."
+"Puede crear su primera lista de reproducción desde el menú \"Listas de reproducción\" y establecerla como\n"
+"                \"Actual\" por lo que las pistas aparecerán aquí."
 
 #. module: oomusic
 #: model_terms:ir.actions.act_window,help:oomusic.action_download
@@ -2231,63 +2239,63 @@ msgid ""
 "You can define download links for tracks, albums, artists, genres and "
 "playlists."
 msgstr ""
-"Vous pouvez définir des liens de téléchargement pour les pistes, les albums,"
-" les artistes, les genres ou les listes de lecture."
+"Puede definir enlaces de descarga para pistas, álbumes, artistas, géneros y "
+"listas de reproducción."
 
 #. module: oomusic
 #: model_terms:ir.actions.act_window,help:oomusic.action_transcoder
 msgid "You can define your own music transcoders."
-msgstr "Vous pouvez définir vos propres transcodeurs musicaux."
+msgstr "Puedes definir tus propios transcoders para tu música."
 
 #. module: oomusic
 #: model_terms:ir.actions.act_window,help:oomusic.action_artist
 msgid "You will find here all the artists."
-msgstr "Vous trouverez ici tous les artistes."
+msgstr "Puedes encontrar aquí todos los artistas."
 
 #. module: oomusic
 #: model_terms:ir.actions.act_window,help:oomusic.action_converter
 msgid "You will find here all the converter jobs."
-msgstr "Vous trouverez ici tous les travaux de conversion."
+msgstr "Aquí encontrará todos los trabajos de convertidor."
 
 #. module: oomusic
 #: model_terms:ir.actions.act_window,help:oomusic.action_genre
 msgid "You will find here all the music genres."
-msgstr "Vous trouverez ici tous les genres musicaux."
+msgstr "Aquí encontrarás todos los géneros musicales."
 
 #. module: oomusic
 #: model_terms:ir.actions.act_window,help:oomusic.action_playlist
 msgid "You will find here all the playlists."
-msgstr "Vous trouverez ici toutes les listes de lecture."
+msgstr "Puedes encontrar aquí todas las listas de reproducción."
 
 #. module: oomusic
 #: model_terms:ir.actions.act_window,help:oomusic.action_album
 msgid "You will find here all your albums."
-msgstr "Vous trouverez ici tous vos albums."
+msgstr "Puedes encontrar aquí todos los álbumes."
 
 #. module: oomusic
 #: model_terms:ir.actions.act_window,help:oomusic.action_tag
 msgid "You will find here all your tags."
-msgstr "Vous trouverez ici toutes vos étiquettes."
+msgstr "Aquí encontrará todas sus etiquetas."
 
 #. module: oomusic
 #: model_terms:ir.actions.act_window,help:oomusic.action_track
 msgid "You will find here all your tracks."
-msgstr "Vous trouverez ici toutes vos pistes."
+msgstr "Puedes encontrar aquí todas las canciones."
 
 #. module: oomusic
 #: model_terms:ir.actions.act_window,help:oomusic.action_suggestion
 msgid "You will find here suggestions."
-msgstr "Vous trouverez ici tous des suggestions."
+msgstr "Puedes encontrar aquí todas las sugerencias."
 
 #. module: oomusic
 #: model_terms:ir.actions.act_window,help:oomusic.action_current_playlist
 msgid "You will find here the current playlist."
-msgstr "Vous trouverez ici la liste de lecture courante."
+msgstr "Puedes encontrar aquí la lista actual de reproducción."
 
 #. module: oomusic
 #: model_terms:ir.actions.act_window,help:oomusic.action_bandsintown_event
 msgid "You will find here the upcoming events of the followed artists."
-msgstr "Vous trouverez ici les événements à venir des artistes suivis."
+msgstr "Aquí encontrarás los próximos eventos de los artistas seguidos."
 
 #. module: oomusic
 #: model_terms:ir.actions.act_window,help:oomusic.action_folder
@@ -2296,24 +2304,24 @@ msgid ""
 "                menu. Scanning a directory is usually quite fast, taking around 30 seconds to scan\n"
 "                1,000 files."
 msgstr ""
-"Votre musique sera automatiquement organisée par album et artiste dans les "
-"menus correspondants. L'analyse d'un répertoire est habituellement assez "
-"rapide, avec une durée d'environ 30 secondes pour 1000 fichiers."
+"Su música se organizará automáticamente por álbum y artista en el menú "
+"correspondiente. El escaneo de un directorio suele ser bastante rápido, ya "
+"que toma alrededor de 30 segundos escanear 1,000 archivos."
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form
 msgid "albums"
-msgstr "albums"
+msgstr "álbumes"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form
 msgid "artists"
-msgstr "artistes"
+msgstr "artistas"
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form
 msgid "hours"
-msgstr "heures"
+msgstr "horas"
 
 #. module: oomusic
 #: model:ir.actions.server,name:oomusic.oomusic_build_artists_image_cache_ir_actions_server
@@ -2327,7 +2335,7 @@ msgstr "oomusic.build.artists.image.cache"
 #: model:ir.cron,cron_name:oomusic.oomusic_build_bandsintown_cache
 #: model:ir.cron,name:oomusic.oomusic_build_bandsintown_cache
 msgid "oomusic.build.bandsintown.cache"
-msgstr "oomusic.build.bandsintown.cach"
+msgstr "oomusic.build.bandsintown.cache"
 
 #. module: oomusic
 #: model:ir.actions.server,name:oomusic.oomusic_build_image_cache_ir_actions_server
@@ -2372,4 +2380,4 @@ msgstr "oomusic.unlock.folder"
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form
 msgid "tracks"
-msgstr "pistes"
+msgstr "canciones"
