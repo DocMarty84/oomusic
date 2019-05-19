@@ -271,12 +271,14 @@ class MusicPlaylist(models.Model):
             if playlist.smart_playlist_qty != 1:
                 playlist.smart_playlist_qty = 1
 
-            # Add a track
-            tracks = getattr(self, "_smart_{}".format(playlist.smart_playlist))()
-            playlist._add_tracks(tracks)
+            played = playlist.playlist_line_ids.filtered("last_play")
+
+            # Add a track if no more than 10 tracks already waiting
+            if len(playlist.playlist_line_ids - played) < 10:
+                tracks = getattr(self, "_smart_{}".format(playlist.smart_playlist))()
+                playlist._add_tracks(tracks)
 
             # Resequence if user did not play the last track
-            played = playlist.playlist_line_ids.filtered("last_play")
             max_seq_last_play = max(x["sequence"] for x in played.read(["sequence"]))
             min_seq_not_play = min(
                 x["sequence"] for x in (playlist.playlist_line_ids - played).read(["sequence"])
