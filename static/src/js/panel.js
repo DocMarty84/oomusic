@@ -395,6 +395,8 @@ var Panel = Widget.extend({
                 model: 'oomusic.playlist.line',
                 method: 'oomusic_next',
                 args: [[this.current_playlist_line_id], false],
+            }, {
+                shadow: true,
             })
             .then(function (res) {
                 var data_json = JSON.parse(res);
