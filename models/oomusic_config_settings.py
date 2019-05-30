@@ -19,7 +19,7 @@ class MusicConfigSettings(models.TransientModel):
     )
     ext_info = fields.Selection(
         [("auto", "Fetched automatically"), ("manual", "Fetched manually")],
-        string="LastFM and Events Info",
+        string="Artists and Events Info",
     )
     folder_sharing = fields.Selection(
         [("inactive", "Inactive (user specific)"), ("active", "Active (shared amongst all users)")],
@@ -35,6 +35,7 @@ class MusicConfigSettings(models.TransientModel):
             + self.env.ref("oomusic.oomusic_build_artists_image_cache")
             + self.env.ref("oomusic.oomusic_build_image_cache")
             + self.env.ref("oomusic.oomusic_build_lastfm_cache")
+            + self.env.ref("oomusic.oomusic_build_spotify_cache")
         ).mapped("active")
         view = (
             self.env.ref("oomusic.action_album") + self.env.ref("oomusic.action_artist")
@@ -64,6 +65,7 @@ class MusicConfigSettings(models.TransientModel):
             + self.env.ref("oomusic.oomusic_build_image_cache")
             + self.env.ref("oomusic.oomusic_build_bandsintown_cache")
             + self.env.ref("oomusic.oomusic_build_lastfm_cache")
+            + self.env.ref("oomusic.oomusic_build_spotify_cache")
         ).write({"active": bool(self.cron == "active")})
         # Set view order
         if self.view == "tree":

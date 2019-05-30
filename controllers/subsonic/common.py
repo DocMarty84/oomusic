@@ -450,13 +450,11 @@ class SubsonicREST:
             elem_artist.set("starred", self._dt_to_string(artist.write_date))
 
         if API_VERSION_LIST[self.version_client] >= API_VERSION_LIST["1.16.1"]:
-            req_json = artist._lastfm_artist_getinfo()
-            if "artist" in req_json and "image" in req_json["artist"]:
-                for image in req_json["artist"]["image"]:
-                    if image.get("size") == "extralarge" and image["#text"]:
-                        elem_artist.set("artistImageUrl", image["#text"])
-                        break
-
+            req_json = artist._spotify_artist_search()
+            item = req_json["artists"]["items"][0] if req_json["artists"]["items"] else {}
+            for image in item.get("images", []):
+                elem_artist.set("artistImageUrl", image["url"])
+                break
         return elem_artist
 
     def make_AlbumID3(self, album):
@@ -519,20 +517,15 @@ class SubsonicREST:
             url.text = req_json["artist"]["url"]
             list_artist_info.append(url)
 
-        if "artist" in req_json and "image" in req_json["artist"]:
-            for image in req_json["artist"]["image"]:
-                if image.get("size") == "large" and image["#text"]:
-                    img = etree.Element("smallImageUrl")
-                    img.text = image["#text"]
-                    list_artist_info.append(img)
-                elif image.get("size") == "extralarge" and image["#text"]:
-                    img = etree.Element("mediumImageUrl")
-                    img.text = image["#text"]
-                    list_artist_info.append(img)
-                elif image.get("size") == "mega" and image["#text"]:
-                    img = etree.Element("largeImageUrl")
-                    img.text = image["#text"]
-                    list_artist_info.append(img)
+        # Image from Spotify
+        req_json = artist._spotify_artist_search()
+        item = req_json["artists"]["items"][0] if req_json["artists"]["items"] else {}
+        for image in item.get("images", []):
+            for size in ["smallImageUrl", "mediumImageUrl", "largeImageUrl"]:
+                img = etree.Element(size)
+                img.text = image["url"]
+                list_artist_info.append(img)
+            break
 
         return list_artist_info
 

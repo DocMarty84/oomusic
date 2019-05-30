@@ -13,7 +13,7 @@
                         help="Download the track(s). You should allow pop-up from this URL!"/>
                 </header>
                 <sheet>
-                    <field name="fm_image" widget="image" class="oe_avatar"/>
+                    <field name="sp_image" widget="image" class="oe_avatar"/>
                     <div class="oe_title">
                         <div class="oe_right">
                             <field name="bit_follow" widget="state_selection"/>
@@ -138,7 +138,7 @@
                     <t t-name="kanban-box">
                         <div class="oe_kanban_global_click oom_artist_kanban_main">
                             <div class="oom_artist_kanban_image">
-                                <img t-att-src="kanban_image('oomusic.artist', 'fm_image', record.id.raw_value)" t-att-title="record.value" t-att-alt="record.value"/>
+                                <img t-att-src="kanban_image('oomusic.artist', 'sp_image', record.id.raw_value)" t-att-title="record.value" t-att-alt="record.value"/>
                             </div>
                             <div class="oom_artist_kanban_name">
                                 <strong>

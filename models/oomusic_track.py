@@ -219,7 +219,7 @@ class MusicTrack(models.Model):
             ),
             "duration": self.duration,
             "image": (
-                (self.album_id.image_medium or self.artist_id.fm_image or b"").decode("utf-8")
+                (self.album_id.image_medium or self.artist_id.sp_image or b"").decode("utf-8")
                 if not self.env.context.get("test_mode")
                 else "TEST"
             ),

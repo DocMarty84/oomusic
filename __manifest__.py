@@ -39,6 +39,7 @@ Music Collection
         "data/oomusic_format_data.xml",
         "data/oomusic_lastfm_data.xml",
         "data/oomusic_playlist_data.xml",
+        "data/oomusic_spotify_data.xml",
         "data/oomusic_track_data.xml",
         "data/oomusic_transcoder_data.xml",
     ],

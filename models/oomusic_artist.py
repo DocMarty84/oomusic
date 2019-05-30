@@ -52,6 +52,16 @@ class MusicArtist(models.Model):
     fm_image_cache = fields.Binary(
         "Cache Of Image", attachment=True, help="Image of the artist, obtained thanks to LastFM."
     )
+    sp_image = fields.Binary(
+        "Spotify Image",
+        compute="_compute_sp_image",
+        help="Image of the artist, obtained thanks to Spotify.",
+    )
+    sp_image_cache = fields.Binary(
+        "Cache Of Spotify Image",
+        attachment=True,
+        help="Image of the artist, obtained thanks to Spotify.",
+    )
     fm_getinfo_bio = fields.Char("Biography", compute="_compute_fm_getinfo")
     fm_gettoptracks_track_ids = fields.Many2many(
         "oomusic.track", string="Top Tracks", compute="_compute_fm_gettoptracks"
@@ -128,6 +138,61 @@ class MusicArtist(models.Model):
                     "Error when writing image cache for artist id: %s", artist.id, exc_info=True
                 )
 
+    @api.depends("name")
+    def _compute_sp_image(self):
+        build_cache = self.env.context.get("build_cache", False)
+        force = self.env.context.get("force", False)
+        for artist in self:
+            if artist.sp_image_cache and not build_cache and not force:
+                artist.sp_image = artist.sp_image_cache
+                continue
+
+            resized_images = {"image_medium": False}
+            req_json = artist._spotify_artist_search(force=force)
+            try:
+                _logger.debug("Retrieving image for artist %s...", artist.name)
+                item = req_json["artists"]["items"][0] if req_json["artists"]["items"] else {}
+                images = item.get("images")
+                if not images:
+                    _logger.info('No image found for artist "%s" (id: %s)', artist.name, artist.id)
+                    continue
+                for image in images:
+                    image_content = urllib.request.urlopen(image["url"], timeout=5).read()
+                    resized_images = tools.image_get_resized_images(
+                        base64.b64encode(image_content),
+                        return_big=False,
+                        return_medium=True,
+                        return_small=False,
+                    )
+                    break
+            except KeyError:
+                _logger.info(
+                    "No image found for artist '%s' (id: %s)", artist.name, artist.id, exc_info=True
+                )
+            except urllib.error.HTTPError:
+                _logger.info(
+                    "HTTPError when retrieving image for artist '%s' (id: %s). "
+                    "Forcing Spotify info refresh.",
+                    artist.name,
+                    artist.id,
+                )
+                artist._spotify_artist_search(force=True)
+
+            # Avoid useless save in cache
+            if resized_images["image_medium"] == artist.sp_image_cache:
+                continue
+
+            artist.sp_image = resized_images["image_medium"]
+
+            # Save in cache
+            try:
+                artist.sudo().write({"sp_image_cache": resized_images["image_medium"]})
+                self.env.cr.commit()
+            except OperationalError:
+                _logger.warning(
+                    "Error when writing image cache for artist id: %s", artist.id, exc_info=True
+                )
+
     def _compute_fm_getinfo(self):
         for artist in self:
             req_json = artist._lastfm_artist_getinfo()
@@ -190,12 +255,12 @@ class MusicArtist(models.Model):
                 "res_id": lines[0].id,
             }
 
-    def action_reload_fm_info(self):
+    def action_reload_artist_info(self):
         for artist in self:
             artist._lastfm_artist_getinfo(force=True)
             artist._lastfm_artist_getsimilar(force=True)
             artist._lastfm_artist_gettoptracks(force=True)
-            artist.with_context(build_cache=True)._compute_fm_image()
+            artist.with_context(force=True)._compute_sp_image()
 
     def action_reload_bit_info(self):
         for artist in self:
@@ -212,7 +277,7 @@ class MusicArtist(models.Model):
         artists = self.browse(artists_sample).with_context(build_cache=True, prefetch_fields=False)
         for i in range(0, len(artists), size_step):
             artist = artists[i : i + size_step]
-            artist._compute_fm_image()
+            artist._compute_sp_image()
             self.invalidate_cache()
 
     def _lastfm_artist_getinfo(self, force=False):
@@ -236,3 +301,8 @@ class MusicArtist(models.Model):
         cache = {}
         cache[(self.id, self.name)] = self.env["oomusic.bandsintown"].get_query(url, force=force)
         self.env["oomusic.bandsintown.event"].sudo()._create_from_cache(cache)
+
+    def _spotify_artist_search(self, force=False):
+        self.ensure_one()
+        url = "https://api.spotify.com/v1/search?type=artist&limit=1&q=" + self.name
+        return json.loads(self.env["oomusic.spotify"].get_query(url, force=force))

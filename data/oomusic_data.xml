@@ -9,6 +9,14 @@
             <field name="key">oomusic.lastfm_key</field>
             <field name="value">48a48a2bc9c6fc3b4a7df96ef51c6a0f</field>
         </record>
+        <record model="ir.config_parameter" id="spotify_id">
+            <field name="key">oomusic.spotify_id</field>
+            <field name="value">ee1efd5f0e76482f9598cdae7f139fc0</field>
+        </record>
+        <record model="ir.config_parameter" id="spotify_secret">
+            <field name="key">oomusic.spotify_secret</field>
+            <field name="value">9f3c3699472d4d6cab9251f610dbb54f</field>
+        </record>
         <record model="ir.config_parameter" id="ext_info">
             <field name="key">oomusic.ext_info</field>
             <field name="value">auto</field>
