@@ -65,7 +65,7 @@ var Panel = Widget.extend({
         // ========================================================================================
 
         setInterval(this._infUpdateProgress.bind(this), 1000);
-        setInterval(this._infCheckStuck.bind(this), 3000);
+        setInterval(this._infCheckStuck.bind(this), 500);
         setInterval(this._infLoadNext.bind(this), 5000);
 
         this.appendTo(web_client.$el);
