@@ -50,19 +50,19 @@
                 </ul>
 
                 <ul class="oom_toggles">
-                    <li><a class="oom_shuffle btn btn-sm" tabindex="1" title="Turn shuffle on">
+                    <li><a class="oom_shuffle btn" tabindex="1" title="Turn shuffle on">
                         <span class="fa fa-random"></span>
                     </a></li>
-                    <li><a class="oom_shuffle_off btn btn-sm" tabindex="1" title="Turn shuffle off">
+                    <li><a class="oom_shuffle_off btn" tabindex="1" title="Turn shuffle off">
                         <span class="fa fa-arrow-right"></span>
                     </a></li>
-                    <li><a class="oom_repeat btn btn-sms" tabindex="1" title="Activate repeat">
+                    <li><a class="oom_repeat btn" tabindex="1" title="Activate repeat">
                         <span class="fa fa-repeat"></span>
                     </a></li>
-                    <li><a class="oom_repeat_off btn btn-sm" tabindex="1" title="Deactivate repeat">
+                    <li><a class="oom_repeat_off btn" tabindex="1" title="Deactivate repeat">
                         <span class="fa fa-arrow-down"></span>
                     </a></li>
-                    <li><a class="oom_star btn btn-sm" tabindex="1" title="I Like It!">
+                    <li><a class="oom_star btn" tabindex="1" title="I Like It!">
                         <span class="fa fa-star"></span>
                     </a></li>
                 </ul>
