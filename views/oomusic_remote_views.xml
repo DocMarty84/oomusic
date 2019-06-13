@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="oomusic_remote_view_form" model="ir.ui.view">
+        <field name="name">oomusic.remote.form</field>
+        <field name="model">oomusic.remote</field>
+        <field name="arch" type="xml">
+            <form string="Remote URL">
+                <sheet>
+                    <field name="user_id" invisible="1"/>
+                    <field name="access_token" invisible="1"/>
+                    <group>
+                        <field name="name"/>
+                        <field name="public"/>
+                        <field name="url"/>
+                        <field name="qr"
+                               widget="image"
+                               options="{'size': [300, 300]}"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="oomusic_remote_view_tree" model="ir.ui.view">
+        <field name="name">oomusic.remote.tree</field>
+        <field name="model">oomusic.remote</field>
+        <field name="arch" type="xml">
+            <tree string="Remote URLs">
+                <field name="name"/>
+                <field name="url"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_oomusic_remote" model="ir.actions.act_window">
+        <field name="name">Remote Controls</field>
+        <field name="res_model">oomusic.remote</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create remote control access tokens
+            </p><p>
+                It allows you to control the KooZic playback.
+            </p>
+        </field>
+    </record>
+
+    <!-- Third Level Menu -->
+    <menuitem
+        id="menu_action_oomusic_remote"
+        parent="menu_oomusic_config"
+        action="action_oomusic_remote"
+        sequence="15"
+    />
+</odoo>

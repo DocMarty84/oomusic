@@ -1,6 +1,7 @@
 odoo.define('oomusic.Panel', function (require) {
 "use strict";
 
+require('bus.BusService');
 var core = require('web.core');
 var web_client = require('web.web_client');
 var WebClient = require('web.WebClient');
@@ -87,6 +88,7 @@ var Panel = Widget.extend({
             self.$el.find('.oom_shuffle_off').closest('li').hide();
             self.$el.find('.oom_repeat_off').closest('li').hide();
             self._play(self.init_id, {play_now: false});
+            self._startPolling();
         });
     },
 
@@ -354,6 +356,14 @@ var Panel = Widget.extend({
         });
     },
 
+    _startPolling: function () {
+        if (!this.polling) {
+            this.call('bus_service', 'startPolling');
+            this.call('bus_service', 'onNotification', this, this._onNotification);
+            this.polling = true;
+        }
+    },
+
     _infUpdateProgress: function () {
         if (!this.sound || !this.sound.playing()) {
             return;
@@ -523,6 +533,64 @@ var Panel = Widget.extend({
             });
         }
         this.shown = ! this.shown;
+    },
+
+    /**
+     * @private
+     * @param {Array[]} notifications
+     */
+    _onNotification: function (notifications) {
+        var self = this;
+        _.each(notifications, function (notification) {
+            if (notification[0][1] === 'oomusic.remote') {
+                var control = notification[1]['control'];
+                self.do_notify(
+                    _t('Remote control received'),
+                    _t('Control: ') + control,
+                    false
+                );
+                switch (control) {
+                    case 'volume_down':
+                        Howler.volume(Math.round(Howler.volume() * 100 - 5) / 100)
+                        self.$el.find('.oom_volume').val(Howler.volume() * 100);
+                        break;
+                    case 'volume_up':
+                        Howler.volume(Math.round(Howler.volume() * 100 + 5) / 100)
+                        self.$el.find('.oom_volume').val(Howler.volume() * 100);
+                        break;
+                    case 'play':
+                        self.play();
+                        break;
+                    case 'pause':
+                        self.pause();
+                        break;
+                    case 'stop':
+                        self.stop();
+                        break;
+                    case 'previous':
+                        self.previous(self.current_playlist_line_id);
+                        break;
+                    case 'next':
+                        self.next(self.current_playlist_line_id);
+                        break;
+                    case 'shuffle':
+                        self._onClickShuffle();
+                        break;
+                    case 'shuffle_off':
+                        self._onClickShuffleOff();
+                        break;
+                    case 'repeat':
+                        self._onClickRepeat();
+                        break;
+                    case 'repeat_off':
+                        self._onClickRepeatOff();
+                        break;
+                    case 'star':
+                        self._onClickStar();
+                        break;
+                }
+            }
+        });
     },
 
 });

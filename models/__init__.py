@@ -14,6 +14,7 @@ from . import oomusic_format
 from . import oomusic_genre
 from . import oomusic_lastfm
 from . import oomusic_playlist
+from . import oomusic_remote
 from . import oomusic_spotify
 from . import oomusic_suggestion
 from . import oomusic_tag

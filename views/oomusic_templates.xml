@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="remote" name="Remote">
+    <t t-call="web.layout">
+        <t t-set="html_data"/>
+        <t t-set="head">
+            <link type="text/css" rel="stylesheet"
+                  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+                  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+                  crossorigin="anonymous"/>
+
+            <link type="text/css" rel="stylesheet"
+                  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.css"
+                  crossorigin="anonymous"/>
+            <style>
+                body {
+                    background-color: #f8f9fa;
+                }
+            </style>
+        </t>
+        <div class="container">
+            <t t-if="line">
+                <div t-if="not public" class="row text-center">
+                    <div class="col-3"/>
+                    <div class="col-6">
+                        <div t-if="line.album_id.image_big" t-options="{'widget': 'image'}" t-field="line.album_id.image_big"/>
+                        <div t-if="not line.album_id.image_big" t-options="{'widget': 'image'}" t-field="line.artist_id.sp_image"/>
+                    </div>
+                    <div class="col-3"/>
+                </div>
+                <div class="row text-center">
+                    <div class="col">
+                        <strong>
+                            <span t-field="line.artist_id"/> ‒ <span t-field="line.track_id"/>
+                            (<span t-field="line.duration_min" t-options="{'widget': 'float_time'}"/>)
+                        </strong>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col"><span t-field="line.album_id"/> (<span t-field="line.year"/>)</div>
+                </div>
+                <div class="row text-center">
+                    <div class="col"><span t-field="line.genre_id"/></div>
+                </div>
+            </t>
+            <p/>
+
+            <div class="row">
+                <div class="col">
+                    <div class="btn-group btn-block" role="group" aria-label="Play">
+                        <a t-attf-href="{{ url + '/volume_down' }}" role="button" class="btn btn-dark btn-lg"><i class="fas fa-volume-down fa-2x"></i></a>
+                        <a t-attf-href="{{ url + '/volume_up' }}" role="button" class="btn btn-dark btn-lg"><i class="fas fa-volume-up fa-2x"></i></a>
+                    </div>
+                </div>
+            </div>
+            <p/>
+
+            <div class="row">
+                <div class="col">
+                    <div class="btn-group btn-block" role="group" aria-label="Play">
+                        <a t-attf-href="{{ url + '/pause' }}" role="button" class="btn btn-dark btn-lg"><i class="fas fa-pause fa-2x"></i></a>
+                        <a t-attf-href="{{ url + '/play' }}" role="button" class="btn btn-dark btn-lg"><i class="fas fa-play fa-2x"></i></a>
+                        <a t-attf-href="{{ url + '/stop' }}" role="button" class="btn btn-dark btn-lg"><i class="fas fa-stop fa-2x"></i></a>
+                    </div>
+                </div>
+            </div>
+            <p/>
+
+            <div class="row">
+                <div class="col">
+                    <div class="btn-group btn-block" role="group" aria-label="Skip">
+                        <a t-attf-href="{{ url + '/previous' }}" role="button" class="btn btn-dark btn-lg"><i class="fas fa-backward fa-2x"></i></a>
+                        <a t-attf-href="{{ url + '/next' }}" role="button" class="btn btn-dark btn-lg"><i class="fas fa-forward fa-2x"></i></a>
+                    </div>
+                </div>
+            </div>
+            <p/>
+
+            <div class="row">
+                <div class="col">
+                    <div class="btn-group btn-block" role="group" aria-label="Skip">
+                        <a t-attf-href="{{ url + '/shuffle' }}" role="button" class="btn btn-dark btn-lg"><i class="fas fa-random fa-2x"></i></a>
+                        <a t-attf-href="{{ url + '/shuffle_off' }}" role="button" class="btn btn-dark btn-lg"><i class="fas fa-arrow-right fa-2x"></i></a>
+                        <a t-attf-href="{{ url + '/repeat' }}" role="button" class="btn btn-dark btn-lg"><i class="fas fa-redo fa-2x"></i></a>
+                        <a t-attf-href="{{ url + '/repeat_off' }}" role="button" class="btn btn-dark btn-lg"><i class="fas fa-arrow-down fa-2x"></i></a>
+                        <a t-if="not public" t-attf-href="{{ url + '/star' }}" role="button" class="btn btn-dark btn-lg"><i class="fas fa-star fa-2x"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <hr/>
+            <p class="text-right">
+                <small><a href="https://koozic.net">KooZic</a> remote control ‒ An open-source media streaming server</small>
+            </p>
+        </div>
+    </t>
+</template>
+</odoo>

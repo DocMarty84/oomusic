@@ -11,7 +11,7 @@ Music Collection
 ================
 
         """,
-    "depends": ["base", "web", "web_tour"],
+    "depends": ["base", "bus", "web", "web_tour"],
     "data": [
         "security/ir.model.access.csv",
         "security/oomusic_security.xml",
@@ -26,7 +26,9 @@ Music Collection
         "views/oomusic_genre_views.xml",
         "views/oomusic_playlist_views.xml",
         "views/oomusic_tag_views.xml",
+        "views/oomusic_templates.xml",
         "views/oomusic_track_views.xml",
+        "views/oomusic_remote_views.xml",
         "views/oomusic_suggestion_views.xml",
         "views/oomusic_transcoder_views.xml",
         "views/res_users.xml",
