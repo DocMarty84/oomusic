@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server v2.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-30 21:45+0000\n"
-"PO-Revision-Date: 2019-04-30 21:45+0000\n"
+"POT-Creation-Date: 2019-06-14 17:09+0000\n"
+"PO-Revision-Date: 2019-06-14 17:09+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -229,6 +229,11 @@ msgid "Artists"
 msgstr ""
 
 #. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings__ext_info
+msgid "Artists and Events Info"
+msgstr ""
+
+#. module: oomusic
 #: model_terms:ir.actions.act_window,help:oomusic.action_suggestion
 msgid "As soon as a folder is added in your library, suggestions will appear here."
 msgstr ""
@@ -310,7 +315,7 @@ msgstr ""
 
 #. module: oomusic
 #: code:addons/oomusic/models/oomusic_artist.py:112
-#: code:addons/oomusic/models/oomusic_artist.py:137
+#: code:addons/oomusic/models/oomusic_artist.py:202
 #, python-format
 msgid "Biography not found"
 msgstr ""
@@ -364,6 +369,11 @@ msgstr ""
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__image_small_cache
 msgid "Cache Of Small-sized Image"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist__sp_image_cache
+msgid "Cache Of Spotify Image"
 msgstr ""
 
 #. module: oomusic
@@ -505,6 +515,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist__create_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line__create_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_preference__create_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_spotify__create_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_spotify_token__create_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion__create_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_tag__create_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__create_uid
@@ -528,6 +540,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist__create_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line__create_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_preference__create_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_spotify__create_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_spotify_token__create_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion__create_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_tag__create_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_transcoder__create_date
@@ -622,6 +636,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line__display_name
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_preference__display_name
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_preference_mixin__display_name
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_spotify__display_name
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_spotify_token__display_name
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion__display_name
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_tag__display_name
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__display_name
@@ -820,6 +836,8 @@ msgstr ""
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown__expiry_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_lastfm__expiry_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_spotify__expiry_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_spotify_token__expiry_date
 msgid "Expiry Date"
 msgstr ""
 
@@ -1031,6 +1049,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line__id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_preference__id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_preference_mixin__id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_spotify__id
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_spotify_token__id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion__id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_tag__id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__id
@@ -1067,6 +1087,12 @@ msgstr ""
 #: model:ir.model.fields,help:oomusic.field_oomusic_artist__fm_image
 #: model:ir.model.fields,help:oomusic.field_oomusic_artist__fm_image_cache
 msgid "Image of the artist, obtained thanks to LastFM."
+msgstr ""
+
+#. module: oomusic
+#: model:ir.model.fields,help:oomusic.field_oomusic_artist__sp_image
+#: model:ir.model.fields,help:oomusic.field_oomusic_artist__sp_image_cache
+msgid "Image of the artist, obtained thanks to Spotify."
 msgstr ""
 
 #. module: oomusic
@@ -1162,6 +1188,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line____last_update
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_preference____last_update
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_preference_mixin____last_update
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_spotify____last_update
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_spotify_token____last_update
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion____last_update
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_tag____last_update
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track____last_update
@@ -1200,6 +1228,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist__write_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line__write_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_preference__write_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_spotify__write_uid
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_spotify_token__write_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion__write_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_tag__write_uid
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__write_uid
@@ -1224,6 +1254,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist__write_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_playlist_line__write_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_preference__write_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_spotify__write_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_spotify_token__write_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_suggestion__write_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_tag__write_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__write_date
@@ -1234,11 +1266,6 @@ msgstr ""
 #. module: oomusic
 #: model:ir.model,name:oomusic.model_oomusic_lastfm
 msgid "LastFM Cache Management"
-msgstr ""
-
-#. module: oomusic
-#: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings__ext_info
-msgid "LastFM and Events Info"
 msgstr ""
 
 #. module: oomusic
@@ -1447,7 +1474,7 @@ msgstr ""
 #: code:addons/oomusic/models/oomusic_album.py:61
 #: code:addons/oomusic/models/oomusic_album.py:92
 #: code:addons/oomusic/models/oomusic_artist.py:155
-#: code:addons/oomusic/models/oomusic_artist.py:182
+#: code:addons/oomusic/models/oomusic_artist.py:247
 #: code:addons/oomusic/models/oomusic_folder.py:450
 #: code:addons/oomusic/models/oomusic_folder.py:465
 #: code:addons/oomusic/models/oomusic_folder.py:482
@@ -1513,11 +1540,14 @@ msgid "Path"
 msgstr ""
 
 #. module: oomusic
+#. openerp-web
+#: code:addons/oomusic/static/src/xml/browse.xml:21
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_album_view_form
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_artist_view_form
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_playlist_view_form
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_track_view_form
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_track_view_tree
+#, python-format
 msgid "Play"
 msgstr ""
 
@@ -1643,12 +1673,14 @@ msgstr ""
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown__removal_date
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_lastfm__removal_date
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_spotify__removal_date
 msgid "Removal Date"
 msgstr ""
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown__content
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_lastfm__content
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_spotify__content
 msgid "Result"
 msgstr ""
 
@@ -1680,6 +1712,11 @@ msgstr ""
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings__cron
 msgid "Scheduled Actions"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_spotify_token__scope
+msgid "Scope"
 msgstr ""
 
 #. module: oomusic
@@ -1762,6 +1799,21 @@ msgid "Smart Playlist"
 msgstr ""
 
 #. module: oomusic
+#: model:ir.model,name:oomusic.model_oomusic_spotify
+msgid "Spotify Cache Management"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_artist__sp_image
+msgid "Spotify Image"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.model,name:oomusic.model_oomusic_spotify_token
+msgid "Spotify Token"
+msgstr ""
+
+#. module: oomusic
 #: selection:oomusic.playlist,audio_mode:0
 msgid "Standard"
 msgstr ""
@@ -1834,6 +1886,11 @@ msgstr ""
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__name
 msgid "Title"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_spotify_token__name
+msgid "Token"
 msgstr ""
 
 #. module: oomusic
@@ -1976,27 +2033,40 @@ msgid "Turn shuffle on"
 msgstr ""
 
 #. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_spotify_token__token_type
+msgid "Type"
+msgstr ""
+
+#. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown__url
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_download__url
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_lastfm__url
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_spotify__url
 msgid "URL"
 msgstr ""
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_bandsintown__name
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_lastfm__name
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_spotify__name
 msgid "URL Hash"
 msgstr ""
 
 #. module: oomusic
 #: sql_constraint:oomusic.bandsintown:0
 #: sql_constraint:oomusic.lastfm:0
+#: sql_constraint:oomusic.spotify:0
 msgid "URL hash must be unique!"
 msgstr ""
 
 #. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_folder_view_form
 msgid "Unlock"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.actions.server,name:oomusic.oomusic_artist_reload_info
+msgid "Update Artist Info"
 msgstr ""
 
 #. module: oomusic
@@ -2007,11 +2077,6 @@ msgstr ""
 #. module: oomusic
 #: model:ir.actions.server,name:oomusic.oomusic_artist_reload_bit_info
 msgid "Update Events Info"
-msgstr ""
-
-#. module: oomusic
-#: model:ir.actions.server,name:oomusic.oomusic_artist_reload_info
-msgid "Update LastFM Info"
 msgstr ""
 
 #. module: oomusic
@@ -2203,6 +2268,13 @@ msgstr ""
 #: model:ir.cron,cron_name:oomusic.oomusic_build_lastfm_cache
 #: model:ir.cron,name:oomusic.oomusic_build_lastfm_cache
 msgid "oomusic.build.lastfm.cache"
+msgstr ""
+
+#. module: oomusic
+#: model:ir.actions.server,name:oomusic.oomusic_build_spotify_cache_ir_actions_server
+#: model:ir.cron,cron_name:oomusic.oomusic_build_spotify_cache
+#: model:ir.cron,name:oomusic.oomusic_build_spotify_cache
+msgid "oomusic.build.spotify.cache"
 msgstr ""
 
 #. module: oomusic
