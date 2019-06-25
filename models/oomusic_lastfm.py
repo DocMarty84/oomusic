@@ -59,7 +59,7 @@ class MusicLastfm(models.Model):
             if not Lastfm:
                 writer = self.create
             else:
-                writer = self.write
+                writer = Lastfm.write
             writer(
                 {
                     "name": url_hash,

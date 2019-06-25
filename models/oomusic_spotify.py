@@ -68,7 +68,7 @@ class MusicSpotify(models.Model):
             if not Spotify:
                 writer = self.create
             else:
-                writer = self.write
+                writer = Spotify.write
             writer(
                 {
                     "name": url_hash,
