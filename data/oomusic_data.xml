@@ -17,9 +17,5 @@
             <field name="key">oomusic.spotify_secret</field>
             <field name="value">9f3c3699472d4d6cab9251f610dbb54f</field>
         </record>
-        <record model="ir.config_parameter" id="ext_info">
-            <field name="key">oomusic.ext_info</field>
-            <field name="value">auto</field>
-        </record>
     </data>
 </odoo>
