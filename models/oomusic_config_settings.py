@@ -8,6 +8,11 @@ class MusicConfigSettings(models.TransientModel):
     _name = "oomusic.config.settings"
     _inherit = "res.config.settings"
 
+    def _default_subsonic_format_id(self):
+        if self.env.ref("oomusic.oomusic_format_mp3", False):
+            return self.env.ref("oomusic.oomusic_format_mp3").id
+        return 0
+
     cron = fields.Selection(
         [("active", "Active"), ("inactive", "Inactive")],
         string="Scheduled Actions",
@@ -26,6 +31,13 @@ class MusicConfigSettings(models.TransientModel):
     folder_sharing = fields.Selection(
         [("inactive", "Inactive (user specific)"), ("active", "Active (shared amongst all users)")],
         string="Folder Sharing",
+    )
+    subsonic_format_id = fields.Many2one(
+        "oomusic.format",
+        string="Format",
+        config_parameter="oomusic.subsonic_format_id",
+        default=lambda s: s._default_subsonic_format_id(),
+        help="Transcoding format for the Subsonic API. Change at your own risks!",
     )
     version = fields.Char("Version", readonly=True)
 

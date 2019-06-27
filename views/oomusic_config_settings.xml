@@ -18,6 +18,15 @@
                         <field name="view" widget="radio"/>
                         <field name="ext_info" widget="radio"/>
                     </group>
+                    <group string="Subsonic API">
+                        <group>
+                            <group>
+                                <field name="subsonic_format_id"
+                                       domain="[('name', 'in', ('mp3', 'ogg', 'opus'))]"
+                                       widget="selection"/>
+                            </group>
+                        </group>
+                    </group>
                     <group>
                         <field name="version"/>
                     </group>

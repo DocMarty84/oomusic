@@ -36,8 +36,14 @@ class MusicSubsonicMediaRetrieval(http.Controller):
         else:
             return rest.make_error(code="10", message='Required int parameter "id" is not present')
 
+        ConfigParam = request.env["ir.config_parameter"].sudo()
+        subsonic_format_id = (
+            request.env["oomusic.format"]
+            .browse(int(ConfigParam.get_param("oomusic.subsonic_format_id", 0)))
+            .exists()
+        )
+        output_format = kwargs.get("format", subsonic_format_id.name or "mp3")
         maxBitRate = int(kwargs.get("maxBitRate", 0))
-        output_format = kwargs.get("format", "mp3")
         estimateContentLength = kwargs.get("estimateContentLength", False)
 
         # Only for video
