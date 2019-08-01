@@ -17,6 +17,7 @@
                         <field name="cron" widget="radio"/>
                         <field name="view" widget="radio"/>
                         <field name="ext_info" widget="radio"/>
+                        <field name="trans_disabled" groups="base.group_no_one"/>
                     </group>
                     <group string="Subsonic API" groups="base.group_no_one">
                         <group>

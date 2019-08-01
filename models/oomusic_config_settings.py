@@ -13,6 +13,10 @@ class MusicConfigSettings(models.TransientModel):
             return self.env.ref("oomusic.oomusic_format_mp3").id
         return 0
 
+    def _default_trans_disabled(self):
+        ConfigParam = self.env["ir.config_parameter"].sudo()
+        return ConfigParam.get_param("oomusic.trans_disabled")
+
     cron = fields.Selection(
         [("active", "Active"), ("inactive", "Inactive")],
         string="Scheduled Actions",
@@ -38,6 +42,13 @@ class MusicConfigSettings(models.TransientModel):
         config_parameter="oomusic.subsonic_format_id",
         default=lambda s: s._default_subsonic_format_id(),
         help="Transcoding format for the Subsonic API. Change at your own risks!",
+    )
+    trans_disabled = fields.Boolean(
+        "Disable Transcoding",
+        config_parameter="oomusic.trans_disabled",
+        default=lambda s: s._default_trans_disabled(),
+        help="Disable transcoding everywhere. This option bypasses any other transcoding setting. "
+        "Change at your own risks!",
     )
     version = fields.Char("Version", readonly=True)
 

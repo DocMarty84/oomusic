@@ -351,9 +351,15 @@ class MusicPlaylistLine(models.Model):
         if not self:
             return json.dumps(res)
 
+        ConfigParam = self.env["ir.config_parameter"].sudo()
+        audio_mode = (
+            "raw"
+            if ConfigParam.get_param("oomusic.trans_disabled")
+            else self.playlist_id.audio_mode
+        )
         res["playlist_line_id"] = self.id
         res["audio"] = self.playlist_id.audio
-        track_info = self.track_id._oomusic_info(seek=seek, mode=self.playlist_id.audio_mode)
+        track_info = self.track_id._oomusic_info(seek=seek, mode=audio_mode)
         res.update(track_info)
         return json.dumps(res)
 

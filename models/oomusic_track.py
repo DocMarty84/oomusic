@@ -187,7 +187,9 @@ class MusicTrack(models.Model):
     def oomusic_play(self, seek=0):
         if not self:
             return json.dumps({})
-        return json.dumps(self._oomusic_info(seek=seek))
+        ConfigParam = self.env["ir.config_parameter"].sudo()
+        audio_mode = "raw" if ConfigParam.get_param("oomusic.trans_disabled") else "standard"
+        return json.dumps(self._oomusic_info(seek=seek, mode=audio_mode))
 
     @api.multi
     def oomusic_star(self):

@@ -36,6 +36,11 @@ class MusicSubsonicMediaRetrieval(http.Controller):
         else:
             return rest.make_error(code="10", message='Required int parameter "id" is not present')
 
+        # Specific case of transcoding disabled globally
+        ConfigParam = request.env["ir.config_parameter"].sudo()
+        if ConfigParam.get_param("oomusic.trans_disabled"):
+            return http.send_file(track.path)
+
         output_format = kwargs.get("format", rest._get_format())
         maxBitRate = int(kwargs.get("maxBitRate", 0))
         estimateContentLength = kwargs.get("estimateContentLength", False)

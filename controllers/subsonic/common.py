@@ -182,8 +182,10 @@ class SubsonicREST:
 
         return indexes_dict
 
-    def _get_format(self):
+    def _get_format(self, track=None):
         ConfigParam = request.env["ir.config_parameter"].sudo()
+        if ConfigParam.get_param("oomusic.trans_disabled") and track:
+            return os.path.splitext(track.path)[1].lstrip(".")
         return (
             request.env["oomusic.format"]
             .browse(int(ConfigParam.get_param("oomusic.subsonic_format_id", 0)))
@@ -234,7 +236,7 @@ class SubsonicREST:
             contentType=mimetypes.guess_type(track.path)[0],
             suffix=os.path.splitext(track.path)[1].lstrip("."),
             transcodedContentType="audio/mpeg",
-            transcodedSuffix=self._get_format(),
+            transcodedSuffix=self._get_format(track),
             duration=str(track.duration),
             bitRate=str(track.bitrate),
             path=track.path.replace(track.root_folder_id.path + os.sep, ""),
