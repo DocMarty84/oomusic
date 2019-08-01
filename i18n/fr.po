@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server v2.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-14 17:09+0000\n"
+"POT-Creation-Date: 2019-08-01 20:06+0000\n"
 "PO-Revision-Date: 2019-04-30 21:18+0000\n"
 "Last-Translator: Nicolas Martinelli <nicolas.martinelli@pm.me>, 2019\n"
 "Language-Team: French (France) (https://www.transifex.com/koozic/teams/98622/fr_FR/)\n"
@@ -353,7 +353,6 @@ msgid "Biography"
 msgstr "Biographie"
 
 #. module: oomusic
-#: code:addons/oomusic/models/oomusic_artist.py:112
 #: code:addons/oomusic/models/oomusic_artist.py:202
 #, python-format
 msgid "Biography not found"
@@ -666,6 +665,20 @@ msgstr "Description"
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_converter__dest_folder
 msgid "Destination Folder"
 msgstr "Répertoire de destination"
+
+#. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings__trans_disabled
+msgid "Disable Transcoding"
+msgstr "Désactiver transcodage"
+
+#. module: oomusic
+#: model:ir.model.fields,help:oomusic.field_oomusic_config_settings__trans_disabled
+msgid ""
+"Disable transcoding everywhere. This option bypasses any other transcoding "
+"setting. Change at your own risks!"
+msgstr ""
+"Désactive le transcodage partout. Cette option contourne toute autre option "
+"liée au transcodage. Changez à vos propre risques !"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_track__disc
@@ -1058,6 +1071,7 @@ msgid "Force Full Scan"
 msgstr "Forcer Analyse Complète"
 
 #. module: oomusic
+#: model:ir.model.fields,field_description:oomusic.field_oomusic_config_settings__subsonic_format_id
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_format__name
 msgid "Format"
 msgstr "Format"
@@ -1564,22 +1578,16 @@ msgid "No auto-scan"
 msgstr "Pas d'auto-scan"
 
 #. module: oomusic
-#: code:addons/oomusic/models/oomusic_album.py:61
 #: code:addons/oomusic/models/oomusic_album.py:92
-#: code:addons/oomusic/models/oomusic_artist.py:155
 #: code:addons/oomusic/models/oomusic_artist.py:247
-#: code:addons/oomusic/models/oomusic_folder.py:450
-#: code:addons/oomusic/models/oomusic_folder.py:465
 #: code:addons/oomusic/models/oomusic_folder.py:482
 #: code:addons/oomusic/models/oomusic_folder.py:497
-#: code:addons/oomusic/models/oomusic_track.py:146
 #: code:addons/oomusic/models/oomusic_track.py:178
 #, python-format
 msgid "No current playlist found!"
 msgstr "Aucune liste de lecture courante trouvée !"
 
 #. module: oomusic
-#: code:addons/oomusic/models/oomusic_folder.py:139
 #: code:addons/oomusic/models/oomusic_folder.py:166
 #, python-format
 msgid "No track found"
@@ -1675,13 +1683,6 @@ msgstr "Listes de lecture"
 #: model_terms:ir.actions.act_window,help:oomusic.action_transcoder
 msgid "Please read the documentation in a first place."
 msgstr "Veuillez tout d'abord lire la documentation."
-
-#. module: oomusic
-#. openerp-web
-#: code:addons/oomusic/static/src/xml/browse.xml:21
-#, python-format
-msgid "Preview"
-msgstr "Prévisualiser"
 
 #. module: oomusic
 #: model:ir.model.fields,field_description:oomusic.field_oomusic_folder__root_preview
@@ -1929,6 +1930,11 @@ msgid "State"
 msgstr "État"
 
 #. module: oomusic
+#: model_terms:ir.ui.view,arch_db:oomusic.oomusic_config_settings_view_form
+msgid "Subsonic API"
+msgstr "API Subsonic"
+
+#. module: oomusic
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_suggestion_view_form
 msgid "Suggestion"
 msgstr "Suggestion"
@@ -2011,7 +2017,6 @@ msgid "Token"
 msgstr "Jeton"
 
 #. module: oomusic
-#: code:addons/oomusic/controllers/main.py:30
 #: code:addons/oomusic/controllers/main.py:36
 #, python-format
 msgid "Too many requests received. Please try again in a few minutes."
@@ -2134,6 +2139,12 @@ msgstr "Nom de l'Encodeur"
 #: model_terms:ir.ui.view,arch_db:oomusic.oomusic_transcoder_view_tree
 msgid "Transcoders"
 msgstr "Encodeurs"
+
+#. module: oomusic
+#: model:ir.model.fields,help:oomusic.field_oomusic_config_settings__subsonic_format_id
+msgid "Transcoding format for the Subsonic API. Change at your own risks!"
+msgstr ""
+"Format de transcodage pour l'API Subsonic. Changez à vos propre risques !"
 
 #. module: oomusic
 #. openerp-web
