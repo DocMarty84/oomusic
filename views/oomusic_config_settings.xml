@@ -18,7 +18,7 @@
                         <field name="view" widget="radio"/>
                         <field name="ext_info" widget="radio"/>
                     </group>
-                    <group string="Subsonic API">
+                    <group string="Subsonic API" groups="base.group_no_one">
                         <group>
                             <group>
                                 <field name="subsonic_format_id"
