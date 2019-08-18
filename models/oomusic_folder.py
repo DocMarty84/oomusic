@@ -270,7 +270,7 @@ class MusicFolder(models.Model):
                 )
             except:
                 _logger.warning(
-                    'Error with image in folder "%s" (id: %s)',
+                    "Error with image in folder '%s' (id: %s)",
                     folder.path,
                     folder.id,
                     exc_info=True,
@@ -305,7 +305,7 @@ class MusicFolder(models.Model):
                 )
             except:
                 _logger.warning(
-                    'Error with image in folder "%s" (id: %s)',
+                    "Error with image in folder '%s' (id: %s)",
                     folder.path,
                     folder.id,
                     exc_info=True,
@@ -340,7 +340,7 @@ class MusicFolder(models.Model):
                 )
             except:
                 _logger.warning(
-                    'Error with image in folder "%s" (id: %s)',
+                    "Error with image in folder '%s' (id: %s)",
                     folder.path,
                     folder.id,
                     exc_info=True,

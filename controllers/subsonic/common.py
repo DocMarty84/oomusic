@@ -254,10 +254,11 @@ class SubsonicREST:
                 int(track_number)
                 elem_track.set("track", track_number)
             except ValueError:
-                _logger.warn(
+                _logger.warning(
                     "Could not convert track number %s of track id %s to integer",
                     track.track_number,
                     track.id,
+                    exc_info=True,
                 )
         if track.year:
             elem_track.set("year", track.year[:4])
@@ -281,10 +282,11 @@ class SubsonicREST:
                     int(disc)
                     elem_track.set("discNumber", disc)
                 except ValueError:
-                    _logger.warn(
+                    _logger.warning(
                         "Could not convert disc number %s of track id %s to integer",
                         track.disc,
                         track.id,
+                        exc_info=True,
                     )
             elem_track.set("created", self._dt_to_string(track.create_date))
             if track.star == "1":
@@ -331,10 +333,11 @@ class SubsonicREST:
                         int(disc)
                         elem_directory.set("discNumber", disc)
                     except ValueError:
-                        _logger.warn(
+                        _logger.warning(
                             "Could not convert disc number %s of track id %s to integer",
                             track.disc,
                             track.id,
+                            exc_info=True,
                         )
                 if track.album_id:
                     elem_directory.set("albumId", str(track.album_id.id))
@@ -461,10 +464,19 @@ class SubsonicREST:
 
         if API_VERSION_LIST[self.version_client] >= API_VERSION_LIST["1.16.1"]:
             req_json = artist._spotify_artist_search()
-            item = req_json["artists"]["items"][0] if req_json["artists"]["items"] else {}
-            for image in item.get("images", []):
-                elem_artist.set("artistImageUrl", image["url"])
-                break
+            try:
+                item = req_json["artists"]["items"][0] if req_json["artists"]["items"] else {}
+                for image in item.get("images", []):
+                    elem_artist.set("artistImageUrl", image["url"])
+                    break
+            except KeyError:
+                _logger.warning(
+                    "No image found for artist '%s' (id: %s). json contains:\n%s",
+                    artist.name,
+                    artist.id,
+                    pformat(req_json),
+                    exc_info=True,
+                )
         return elem_artist
 
     def make_AlbumID3(self, album):
@@ -529,13 +541,22 @@ class SubsonicREST:
 
         # Image from Spotify
         req_json = artist._spotify_artist_search()
-        item = req_json["artists"]["items"][0] if req_json["artists"]["items"] else {}
-        for image in item.get("images", []):
-            for size in ["smallImageUrl", "mediumImageUrl", "largeImageUrl"]:
-                img = etree.Element(size)
-                img.text = image["url"]
-                list_artist_info.append(img)
-            break
+        try:
+            item = req_json["artists"]["items"][0] if req_json["artists"]["items"] else {}
+            for image in item.get("images", []):
+                for size in ["smallImageUrl", "mediumImageUrl", "largeImageUrl"]:
+                    img = etree.Element(size)
+                    img.text = image["url"]
+                    list_artist_info.append(img)
+                break
+        except KeyError:
+            _logger.warning(
+                "No image found for artist '%s' (id: %s). json contains:\n%s",
+                artist.name,
+                artist.id,
+                pformat(req_json),
+                exc_info=True,
+            )
 
         return list_artist_info
 
@@ -641,7 +662,7 @@ class SubsonicREST:
             for s_track in s_tracks:
                 elem_song = self.make_Child_track(s_track, tag_name="song")
                 elem_song_similar.append(elem_song)
-        except:
+        except KeyError:
             _logger.warning(
                 "An error occurred while searching similar songs. json contains:\n%s",
                 pformat(req_json),

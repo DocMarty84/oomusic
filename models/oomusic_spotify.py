@@ -6,6 +6,7 @@ import hashlib
 import json
 import logging
 import time
+from pprint import pformat
 from random import sample
 
 import requests
@@ -53,12 +54,21 @@ class MusicSpotify(models.Model):
                 if r.status_code == 200:
                     content = r.content.decode("utf-8")
                 else:
-                    _logger.info(
-                        "Error while fetching URL '%s'. Error code: %s", url, r.status_code
+                    _logger.warning(
+                        "Error getting Spotify info.\nError code: %s\nURL: %s\nheaders: %s",
+                        r.status_code,
+                        url,
+                        pformat(headers),
                     )
                     return content
             except:
-                _logger.info("Error while fetching URL '%s'", url, exc_info=True)
+                _logger.warning(
+                    "Error getting Spotify info.\nError code: %s\nURL: %s\nheaders: %s",
+                    r.status_code,
+                    url,
+                    pformat(headers),
+                    exc_info=True,
+                )
                 return content
 
             expiry_date = datetime.datetime.utcnow() + datetime.timedelta(days=sp_cache)
@@ -136,7 +146,13 @@ class MusicSpotifyToken(models.Model):
         headers = {"Authorization": "Basic {}".format(self._get_auth())}
         res = requests.post(url, data=data, headers=headers)
         if res.status_code != 200:
-            _logger.info("Could not get Spotify token. Error code: %s", res.status_code)
+            _logger.warning(
+                "Error getting Spotify token.\nError code: %s\nURL: %s\ndata: %s\nheaders: %s",
+                res.status_code,
+                url,
+                pformat(data),
+                headers,
+            )
             return ""
         content = json.loads(res.content.decode("utf-8"))
         self.create(

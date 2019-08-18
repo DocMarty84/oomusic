@@ -551,6 +551,9 @@ class MusicFolderScan(models.TransientModel):
                     try:
                         vals["track_number_int"] = int(vals["track_number"].split("/")[0])
                     except ValueError:
+                        _logger.warning(
+                            "Could not convert track number '%s' to integer", vals["track_number"]
+                        )
                         vals["track_number_int"] = 0
 
                     # Create the track. No need to insert a new track in the cache, since we won't

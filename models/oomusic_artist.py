@@ -3,6 +3,7 @@
 import base64
 import json
 import logging
+from pprint import pformat
 from psycopg2 import OperationalError
 from random import sample
 import urllib.request
@@ -113,13 +114,20 @@ class MusicArtist(models.Model):
                         )
                         break
             except KeyError:
-                _logger.info('No image found for artist "%s" (id: %s)', artist.name, artist.id)
+                _logger.warning(
+                    'No image found for artist "%s" (id: %s). json contains:\n%s',
+                    artist.name,
+                    artist.id,
+                    pformat(req_json),
+                    exc_info=True,
+                )
             except urllib.error.HTTPError:
-                _logger.info(
+                _logger.warning(
                     'HTTPError when retrieving image for artist "%s" (id: %s). '
                     "Forcing LastFM info refresh.",
                     artist.name,
                     artist.id,
+                    exc_info=True,
                 )
                 artist._lastfm_artist_getinfo(force=True)
 
@@ -166,15 +174,20 @@ class MusicArtist(models.Model):
                     )
                     break
             except KeyError:
-                _logger.info(
-                    "No image found for artist '%s' (id: %s)", artist.name, artist.id, exc_info=True
+                _logger.warning(
+                    "No image found for artist '%s' (id: %s). json contains:\n%s",
+                    artist.name,
+                    artist.id,
+                    pformat(req_json),
+                    exc_info=True,
                 )
             except urllib.error.HTTPError:
-                _logger.info(
+                _logger.warning(
                     "HTTPError when retrieving image for artist '%s' (id: %s). "
                     "Forcing Spotify info refresh.",
                     artist.name,
                     artist.id,
+                    exc_info=True,
                 )
                 artist._spotify_artist_search(force=True)
 
@@ -200,7 +213,13 @@ class MusicArtist(models.Model):
                 artist.fm_getinfo_bio = req_json["artist"]["bio"]["summary"].replace("\n", "<br/>")
             except KeyError:
                 artist.fm_getinfo_bio = _("Biography not found")
-                _logger.info('Biography not found for artist "%s" (id: %s)', artist.name, artist.id)
+                _logger.warning(
+                    "Biography not found for artist '%s' (id: %s). json contains:\n%s",
+                    artist.name,
+                    artist.id,
+                    pformat(req_json),
+                    exc_info=True,
+                )
 
     def _compute_fm_gettoptracks(self):
         # Create a global cache dict for all artists to avoid multiple search calls.
@@ -219,8 +238,12 @@ class MusicArtist(models.Model):
                 ]
                 artist.fm_gettoptracks_track_ids = t_tracks[:10]
             except KeyError:
-                _logger.info(
-                    'Top tracks not found for artist "%s" (id: %s)', artist.name, artist.id
+                _logger.warning(
+                    "Top tracks not found for artist '%s' (id: %s). json contains:\n%s",
+                    artist.name,
+                    artist.id,
+                    pformat(req_json),
+                    exc_info=True,
                 )
 
     def _compute_fm_getsimilar(self):
@@ -236,8 +259,12 @@ class MusicArtist(models.Model):
                         break
                 artist.fm_getsimilar_artist_ids = s_artists.ids
             except KeyError:
-                _logger.info(
-                    'Similar artists not found for artist "%s" (id: %s)', artist.name, artist.id
+                _logger.warning(
+                    "Similar artists not found for artist '%s' (id: %s). json contains:\n%s",
+                    artist.name,
+                    artist.id,
+                    pformat(req_json),
+                    exc_info=True,
                 )
 
     @api.multi

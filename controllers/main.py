@@ -83,7 +83,7 @@ class MusicController(http.Controller):
             ).stdout
             mimetype = Transcoder.output_format.mimetype
         else:
-            _logger.warning('Could not find converter from "%s" to "%s"', fn_ext[1:], output_format)
+            _logger.warning("Could not find converter from '%s' to '%s'", fn_ext[1:], output_format)
             return http.send_file(Track.path)
 
         # FIXME: see http://librelist.com/browser/flask/2011/10/5/response-to-a-range-request/#1e95dd715f412161d3db2fc8aaf8666f

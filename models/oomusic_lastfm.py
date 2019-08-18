@@ -50,7 +50,7 @@ class MusicLastfm(models.Model):
                 if r.status_code == 200:
                     content = r.content.decode("utf-8")
             except:
-                _logger.info('Error while fetching URL "%s"', url, exc_info=True)
+                _logger.warning("Error while fetching URL '%s'", url, exc_info=True)
 
             expiry_date = datetime.datetime.utcnow() + datetime.timedelta(days=fm_cache)
             removal_date = datetime.datetime.utcnow() + datetime.timedelta(days=fm_cache + 14)

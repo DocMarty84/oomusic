@@ -48,8 +48,10 @@ class MusicSubsonicBrowsing(http.Controller):
             try:
                 ifModifiedSince = int(ifModifiedSince) // 1000
             except ValueError:
-                _logger.warn(
-                    'Could not convert param "ifModifiedSince" %s to integer', ifModifiedSince
+                _logger.warning(
+                    "Could not convert param 'ifModifiedSince' %s to integer",
+                    ifModifiedSince,
+                    exc_info=True,
                 )
                 return rest.make_error(code="0", message="Invalid timestamp")
 

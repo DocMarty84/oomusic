@@ -67,7 +67,7 @@ class MusicSubsonicMediaRetrieval(http.Controller):
             generator = Transcoder.transcode(int(trackId), bitrate=maxBitRate).stdout
             mimetype = Transcoder.output_format.mimetype
         else:
-            _logger.warning('Could not find converter from "%s" to "%s"', fn_ext[1:], output_format)
+            _logger.warning("Could not find converter from '%s' to '%s'", fn_ext[1:], output_format)
             return http.send_file(track.path)
 
         data = wrap_file(
