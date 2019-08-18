@@ -11,65 +11,37 @@ $background_color_1: #F0EEEE;
     z-index: 100;
     box-shadow: 2px 2px 3px rgba(0,0,0,.4), 0px 0px 5px rgba(0,0,0,.8);
 
-    .oom_albumart {
-        background-color: $background_color_1;
+    .oom_panel_left {
         float: left;
-        width: 90px;
-        height: 90px;
-        left: 0px;
-    }
 
-    .oom_time_holder {
-        .oom_title {
-            text-align: center;
-        }
-
-        .oom_current_time {
-            float: left;
-            margin-left: 5px;
-        }
-
-        .oom_duration {
-            float: right;
-            margin-right: 5px;
+        .oom_albumart {
+            background-color: $background_color_1;
+            width: 90px;
+            height: 90px;
         }
     }
 
-    .oom_controls {
-        position: absolute;
-        left: 50%;
-        padding: 0;
-        margin-left: -180px;
+    .oom_panel_right {
+        float: none;
 
-        li {
-            display: inline-block;
-        }
-    }
+        .container {
+            max-width: 100%;
 
-    .oom_volume_toggles {
-        position: absolute;
-        left: 50%;
-        padding: 0;
-
-        li {
-            display: inline;
-
-            .oom_volume_bar {
-                position: absolute;
-                width: 60px;
-                top: 10px;
+            // Avoid padding so progressbar takes the whole width.
+            .oom_nopad {
+                padding-left: 0px;
+                padding-right: 0px;
             }
-        }
-    }
+            @media (min-width: 576px) {
+                &.oom_nopad_container {
+                    padding-left: 0px;
+                    padding-right: 0px;
+                }
+            }
 
-    .oom_toggles {
-        position: absolute;
-        left: 50%;
-        padding: 6px;
-        margin-left: 80px;
-
-        li {
-            display: inline-block;
+            .oom_title {
+                @include o-text-overflow;
+            }
         }
     }
 }

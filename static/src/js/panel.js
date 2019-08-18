@@ -85,8 +85,8 @@ var Panel = Widget.extend({
     start: function () {
         var self = this;
         return this._super.apply(this, arguments).then(function() {
-            self.$el.find('.oom_shuffle_off').closest('li').hide();
-            self.$el.find('.oom_repeat_off').closest('li').hide();
+            self.$el.find('.oom_shuffle_off').hide();
+            self.$el.find('.oom_repeat_off').hide();
             self._play(self.init_id, {play_now: false});
             self._startPolling();
         });
@@ -123,8 +123,8 @@ var Panel = Widget.extend({
             return;
         }
         this.sound.play();
-        this.$el.find('.oom_pause').closest('li').show();
-        this.$el.find('.oom_play').closest('li').hide();
+        this.$el.find('.oom_pause').show();
+        this.$el.find('.oom_play').hide();
     },
 
     pause: function () {
@@ -132,8 +132,8 @@ var Panel = Widget.extend({
             return;
         }
         this.sound.pause();
-        this.$el.find('.oom_pause').closest('li').hide();
-        this.$el.find('.oom_play').closest('li').show();
+        this.$el.find('.oom_pause').hide();
+        this.$el.find('.oom_play').show();
     },
 
     stop: function (play_now, keep_loaded) {
@@ -267,11 +267,11 @@ var Panel = Widget.extend({
         if (params.play_now) {
             this.sound_seek_last_played = 0;
             this.sound.play();
-            this.$el.find('.oom_pause').closest('li').show();
-            this.$el.find('.oom_play').closest('li').hide();
+            this.$el.find('.oom_pause').show();
+            this.$el.find('.oom_play').hide();
         } else {
-            this.$el.find('.oom_pause').closest('li').hide();
-            this.$el.find('.oom_play').closest('li').show();
+            this.$el.find('.oom_pause').hide();
+            this.$el.find('.oom_play').show();
         }
 
         // Reset next sound
@@ -461,26 +461,26 @@ var Panel = Widget.extend({
 
     _onClickShuffle: function () {
         this.shuffle = true;
-        this.$el.find('.oom_shuffle_off').closest('li').show();
-        this.$el.find('.oom_shuffle').closest('li').hide();
+        this.$el.find('.oom_shuffle_off').show();
+        this.$el.find('.oom_shuffle').hide();
     },
 
     _onClickShuffleOff: function () {
         this.shuffle = false;
-        this.$el.find('.oom_shuffle').closest('li').show();
-        this.$el.find('.oom_shuffle_off').closest('li').hide();
+        this.$el.find('.oom_shuffle').show();
+        this.$el.find('.oom_shuffle_off').hide();
     },
 
     _onClickRepeat: function () {
         this.repeat = true;
-        this.$el.find('.oom_repeat_off').closest('li').show();
-        this.$el.find('.oom_repeat').closest('li').hide();
+        this.$el.find('.oom_repeat_off').show();
+        this.$el.find('.oom_repeat').hide();
     },
 
     _onClickRepeatOff: function () {
         this.repeat = false;
-        this.$el.find('.oom_repeat').closest('li').show();
-        this.$el.find('.oom_repeat_off').closest('li').hide();
+        this.$el.find('.oom_repeat').show();
+        this.$el.find('.oom_repeat_off').hide();
     },
 
     _onClickStar: function () {
