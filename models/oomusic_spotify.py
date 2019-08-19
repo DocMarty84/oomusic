@@ -138,7 +138,7 @@ class MusicSpotifyToken(models.Model):
         if res.status_code != 200:
             _logger.info("Could not get Spotify token. Error code: %s", res.status_code)
             return ""
-        content = json.loads(res.content)
+        content = json.loads(res.content.decode("utf-8"))
         self.create(
             {
                 "name": content["access_token"],
