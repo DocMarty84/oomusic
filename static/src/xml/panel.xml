@@ -34,19 +34,19 @@
                 <div class="row">
                     <!-- Control buttons-->
                     <div class="col text-right">
-                        <a class="oom_previous btn btn-lg" tabindex="1">
+                        <a class="oom_previous btn btn-lg btn-link" tabindex="1">
                             <span class="fa fa-step-backward"></span>
                         </a>
-                        <a class="oom_play btn btn-lg" tabindex="1">
+                        <a class="oom_play btn btn-lg btn-link" tabindex="1">
                             <span class="fa fa-play"></span>
                         </a>
-                        <a class="oom_pause btn btn-lg" tabindex="1">
+                        <a class="oom_pause btn btn-lg btn-link" tabindex="1">
                             <span class="fa fa-pause"></span>
                         </a>
-                        <a class="oom_next btn btn-lg" tabindex="1">
+                        <a class="oom_next btn btn-lg btn-link" tabindex="1">
                             <span class="fa fa-step-forward"></span>
                         </a>
-                        <a class="oom_stop btn btn-lg" tabindex="1">
+                        <a class="oom_stop btn btn-lg btn-link" tabindex="1">
                             <span class="fa fa-stop"></span>
                         </a>
                     </div>
@@ -58,19 +58,19 @@
                     </div>
                     <!-- Control toggles-->
                     <div class="col">
-                        <a class="oom_shuffle btn" tabindex="1" title="Turn shuffle on">
+                        <a class="oom_shuffle btn btn-link" tabindex="1" title="Turn shuffle on">
                             <span class="fa fa-random"></span>
                         </a>
-                        <a class="oom_shuffle_off btn" tabindex="1" title="Turn shuffle off">
+                        <a class="oom_shuffle_off btn btn-link" tabindex="1" title="Turn shuffle off">
                             <span class="fa fa-arrow-right"></span>
                         </a>
-                        <a class="oom_repeat btn" tabindex="1" title="Activate repeat">
+                        <a class="oom_repeat btn btn-link" tabindex="1" title="Activate repeat">
                             <span class="fa fa-repeat"></span>
                         </a>
-                        <a class="oom_repeat_off btn" tabindex="1" title="Deactivate repeat">
+                        <a class="oom_repeat_off btn btn-link" tabindex="1" title="Deactivate repeat">
                             <span class="fa fa-arrow-down"></span>
                         </a>
-                        <a class="oom_star btn" tabindex="1" title="I Like It!">
+                        <a class="oom_star btn btn-link" tabindex="1" title="I Like It!">
                             <span class="fa fa-star"></span>
                         </a>
                     </div>
