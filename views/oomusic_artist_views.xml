@@ -15,13 +15,12 @@
                 <sheet>
                     <field name="sp_image" widget="image" class="oe_avatar"/>
                     <div class="oe_title">
-                        <div class="oe_right">
-                            <field name="bit_follow" widget="state_selection"/>
-                        </div>
                         <h1>
                             <field name="name"/>
                             <span>&amp;nbsp;</span>
                             <field name="star" widget="priority"/>
+                            <span>&amp;nbsp;</span>
+                            <field name="bit_follow" widget="state_selection"/>
                         </h1>
                     </div>
                     <group>
