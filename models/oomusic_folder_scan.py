@@ -512,7 +512,7 @@ class MusicFolderScan(models.TransientModel):
                     song, song_tags = self._get_tags(os.path.join(rootdir, fn), tag=tag)
                     if song is False:
                         continue
-                    vals = {f: "" for f in self.FIELDS_TO_CLEAN}
+                    vals = {f: False if "_id" in f else "" for f in self.FIELDS_TO_CLEAN}
                     if Folder.use_tags:
                         vals.update(
                             {
@@ -549,7 +549,9 @@ class MusicFolderScan(models.TransientModel):
                     if not vals["name"]:
                         vals["name"] = fn
                     try:
-                        vals["track_number_int"] = int(vals["track_number"].split("/")[0])
+                        vals["track_number_int"] = (
+                            int(vals["track_number"].split("/")[0]) if vals["track_number"] else 0
+                        )
                     except ValueError:
                         _logger.warning(
                             "Could not convert track number '%s' to integer", vals["track_number"]
