@@ -128,11 +128,11 @@ class MusicArtist(models.Model):
                 )
                 artist._lastfm_artist_getinfo(force=True)
 
+            artist.fm_image = resized_image
+
             # Avoid useless save in cache
             if resized_image == artist.fm_image_cache:
                 continue
-
-            artist.fm_image = resized_image
 
             # Save in cache
             try:
@@ -157,10 +157,9 @@ class MusicArtist(models.Model):
             try:
                 _logger.debug("Retrieving image for artist %s...", artist.name)
                 item = req_json["artists"]["items"][0] if req_json["artists"]["items"] else {}
-                images = item.get("images")
+                images = item.get("images", [])
                 if not images:
                     _logger.info('No image found for artist "%s" (id: %s)', artist.name, artist.id)
-                    continue
                 for image in images:
                     image_content = urllib.request.urlopen(image["url"], timeout=5).read()
                     resized_image = tools.image_process(
@@ -185,11 +184,11 @@ class MusicArtist(models.Model):
                 )
                 artist._spotify_artist_search(force=True)
 
+            artist.sp_image = resized_image
+
             # Avoid useless save in cache
             if resized_image == artist.sp_image_cache:
                 continue
-
-            artist.sp_image = resized_image
 
             # Save in cache
             try:
