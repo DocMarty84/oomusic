@@ -159,7 +159,6 @@
         <field name="name">Artists</field>
         <field name="res_model">oomusic.artist</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="view_type">form</field>
         <field name="view_mode">kanban,tree,form</field>
         <field name="help" type="html">
             <p>

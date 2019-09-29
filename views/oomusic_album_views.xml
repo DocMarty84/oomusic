@@ -179,7 +179,6 @@
         <field name="name">Albums</field>
         <field name="res_model">oomusic.album</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="view_type">form</field>
         <field name="view_mode">kanban,tree,form,graph,pivot</field>
         <field name="help" type="html">
             <p>

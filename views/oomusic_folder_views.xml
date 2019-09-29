@@ -84,7 +84,6 @@
         <field name="name">Folders</field>
         <field name="res_model">oomusic.folder</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('root', '=', True)]</field>
         <field name="help" type="html">
