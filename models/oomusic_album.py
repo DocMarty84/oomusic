@@ -85,7 +85,6 @@ class MusicAlbum(models.Model):
             if all([t.in_playlist for t in album.track_ids]):
                 album.in_playlist = True
 
-    @api.multi
     def action_add_to_playlist(self):
         playlist = self.env["oomusic.playlist"].search([("current", "=", True)], limit=1)
         if not playlist:

@@ -171,7 +171,6 @@ class MusicTrack(models.Model):
         sleep(0.2)
         return z_name
 
-    @api.multi
     def action_add_to_playlist(self):
         playlist = self.env["oomusic.playlist"].search([("current", "=", True)], limit=1)
         if not playlist:
@@ -183,7 +182,6 @@ class MusicTrack(models.Model):
     def action_play(self):
         return {"type": "ir.actions.act_play", "res_model": "oomusic.track", "res_id": self.id}
 
-    @api.multi
     def oomusic_play(self, seek=0):
         if not self:
             return json.dumps({})
@@ -191,7 +189,6 @@ class MusicTrack(models.Model):
         audio_mode = "raw" if ConfigParam.get_param("oomusic.trans_disabled") else "standard"
         return json.dumps(self._oomusic_info(seek=seek, mode=audio_mode))
 
-    @api.multi
     def oomusic_star(self):
         try:
             self.write({"star": "1"})

@@ -267,7 +267,6 @@ class MusicArtist(models.Model):
                     exc_info=True,
                 )
 
-    @api.multi
     def action_add_to_playlist(self):
         playlist = self.env["oomusic.playlist"].search([("current", "=", True)], limit=1)
         if not playlist:

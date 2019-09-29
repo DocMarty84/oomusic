@@ -384,7 +384,6 @@ class MusicFolder(models.Model):
             vals["path"] = os.path.normpath(vals["path"])
         return super(MusicFolder, self).create(vals)
 
-    @api.multi
     def write(self, vals):
         if "path" in vals:
             vals["path"] = os.path.normpath(vals["path"])
@@ -394,7 +393,6 @@ class MusicFolder(models.Model):
             tracks.write({"last_modification": 0})
         return super(MusicFolder, self).write(vals)
 
-    @api.multi
     def unlink(self):
         # Remove tracks and albums included in the folders.
         self.env["oomusic.track"].search([("folder_id", "child_of", self.ids)]).sudo().unlink()
@@ -404,7 +402,6 @@ class MusicFolder(models.Model):
         for user_id in user_ids:
             self.env["oomusic.folder.scan"]._clean_tags(user_id.id)
 
-    @api.multi
     def action_scan_folder(self):
         """
         This is the main method used to scan a oomusic folder. It creates a thread with the scanning
@@ -414,7 +411,6 @@ class MusicFolder(models.Model):
         if folder_id:
             self.env["oomusic.folder.scan"].scan_folder_th(folder_id)
 
-    @api.multi
     def action_scan_folder_full(self):
         """
         This is a method used to force a full scan of a folder.
@@ -475,7 +471,6 @@ class MusicFolder(models.Model):
             )
             folders.action_unlock()
 
-    @api.multi
     def action_add_to_playlist(self):
         playlist = self.env["oomusic.playlist"].search([("current", "=", True)], limit=1)
         if not playlist:
@@ -490,7 +485,6 @@ class MusicFolder(models.Model):
                 "res_id": lines[0].id,
             }
 
-    @api.multi
     def action_add_to_playlist_recursive(self):
         playlist = self.env["oomusic.playlist"].search([("current", "=", True)], limit=1)
         if not playlist:
@@ -506,7 +500,6 @@ class MusicFolder(models.Model):
                 "res_id": lines[0].id,
             }
 
-    @api.multi
     def oomusic_browse(self):
         res = {}
         if self.root or self.parent_id:

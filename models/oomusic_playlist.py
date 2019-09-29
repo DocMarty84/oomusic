@@ -130,11 +130,9 @@ class MusicPlaylist(models.Model):
     def _onchange_audio(self):
         self.audio_mode = "raw" if self.audio == "web" else "standard"
 
-    @api.multi
     def action_purge(self):
         self.mapped("playlist_line_ids").unlink()
 
-    @api.multi
     def action_current(self):
         self.ensure_one()
         self.env["oomusic.playlist"].search([]).write({"current": False})
@@ -325,7 +323,6 @@ class MusicPlaylistLine(models.Model):
     )
     last_play = fields.Datetime("Last Played", readonly=True)
 
-    @api.multi
     def oomusic_set_current(self):
         now = fields.Datetime.now()
         res = {}
@@ -345,7 +342,6 @@ class MusicPlaylistLine(models.Model):
         self.playlist_id._update_dynamic()
         return json.dumps(res)
 
-    @api.multi
     def oomusic_play(self, seek=0):
         res = {}
         if not self:
@@ -363,7 +359,6 @@ class MusicPlaylistLine(models.Model):
         res.update(track_info)
         return json.dumps(res)
 
-    @api.multi
     def oomusic_previous(self, shuffle=False):
         res = {}
         # User might have removed the line from the playlist in the meantime => Fallback on first
@@ -387,7 +382,6 @@ class MusicPlaylistLine(models.Model):
             pass
         return json.dumps(res)
 
-    @api.multi
     def oomusic_next(self, shuffle=False):
         res = {}
         # User might have removed the line from the playlist in the meantime => Fallback on first

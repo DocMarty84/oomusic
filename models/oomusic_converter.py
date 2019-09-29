@@ -175,32 +175,27 @@ class MusicConverter(models.Model):
     def _onchange_transcoder_id(self):
         self.bitrate = self.transcoder_id.bitrate
 
-    @api.multi
     def action_purge(self):
         self.mapped("converter_line_ids").unlink()
 
-    @api.multi
     def action_run(self):
         self.write({"state": "running"})
         self.env["oomusic.converter.line"].search([("converter_id", "in", self.ids)]).write(
             {"state": "waiting"}
         )
 
-    @api.multi
     def action_draft(self):
         self.write({"state": "draft"})
         self.env["oomusic.converter.line"].search([("converter_id", "in", self.ids)]).write(
             {"state": "draft"}
         )
 
-    @api.multi
     def action_cancel(self):
         self.write({"state": "cancel"})
         self.env["oomusic.converter.line"].search(
             [("converter_id", "in", self.ids), ("state", "=", "waiting")]
         ).write({"state": "cancel"})
 
-    @api.multi
     def action_convert(self):
         for cv in self:
             cv_pool = mp.Pool(processes=max(cv.max_threads or 1, 1))
@@ -212,7 +207,6 @@ class MusicConverter(models.Model):
             cv_pool.join()
             cv.write({"state": "done"})
 
-    @api.multi
     def cron_convert(self):
         self.search([("state", "=", "running")]).action_convert()
 

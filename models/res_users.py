@@ -36,7 +36,6 @@ class ResUsers(models.Model):
         )
         return User
 
-    @api.multi
     def unlink(self):
         # Manually unlink the root folder to trigger the deletion of all children and tracks. This
         # is really necessary, but performance-wise this has a major impact.
