@@ -56,8 +56,6 @@ class MusicSuggestion(models.TransientModel):
         query += "LIMIT 10"
         self.env.cr.execute(query)
         res = self.env.cr.fetchall()
-        if not res:
-            return
 
         self.track_random = [r[0] for r in res]
 
@@ -77,7 +75,5 @@ class MusicSuggestion(models.TransientModel):
         query += "LIMIT 15"
         self.env.cr.execute(query)
         res = self.env.cr.fetchall()
-        if not res:
-            return
 
         self.album_random = [r[0] for r in res]

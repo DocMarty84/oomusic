@@ -81,6 +81,8 @@ class MusicAlbum(models.Model):
         """
         self.env.cr.execute(query, (playlist.id,))
         album_ids_in_playlist = {r[0] for r in self.env.cr.fetchall() if r[0]}
+        for album in self:
+            album.in_playlist = False
         for album in self.env["oomusic.album"].browse(set(self.ids) & album_ids_in_playlist):
             if all([t.in_playlist for t in album.track_ids]):
                 album.in_playlist = True

@@ -99,6 +99,8 @@ class MusicTrack(models.Model):
     def _compute_in_playlist(self):
         playlist = self.env["oomusic.playlist"].search([("current", "=", True)], limit=1)
         if not playlist:
+            for track in self:
+                track.in_playlist = False
             return
         query = """
             SELECT track_id
@@ -107,6 +109,8 @@ class MusicTrack(models.Model):
         """
         self.env.cr.execute(query, (playlist.id,))
         track_ids_in_playlist = {r[0] for r in self.env.cr.fetchall() if r[0]}
+        for track in self:
+            track.in_playlist = False
         for track in self.env["oomusic.track"].browse(set(self.ids) & track_ids_in_playlist):
             track.in_playlist = True
 
