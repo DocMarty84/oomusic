@@ -270,8 +270,8 @@ class MusicFolder(models.Model):
                 continue
             try:
                 _logger.debug("Resizing image folder %s...", folder.path)
-                resized_images = tools.image_get_resized_images(
-                    folder.image_folder, return_big=True, return_medium=False, return_small=False
+                resized_image = tools.image_process(
+                    folder.image_folder, size=(1024, 1024), crop=True
                 )
             except:
                 _logger.warning(
@@ -282,15 +282,15 @@ class MusicFolder(models.Model):
                 )
                 continue
 
-            folder.image_big = resized_images["image"]
+            folder.image_big = resized_image
 
             # Avoid useless save in cache
-            if resized_images["image"] == folder.image_big_cache:
+            if resized_image == folder.image_big_cache:
                 continue
 
             # Save in cache
             try:
-                folder.sudo().write({"image_big_cache": resized_images["image"]})
+                folder.sudo().write({"image_big_cache": resized_image})
                 self.env.cr.commit()
             except OperationalError:
                 _logger.warning(
@@ -305,9 +305,7 @@ class MusicFolder(models.Model):
                 continue
             try:
                 _logger.debug("Resizing image folder %s...", folder.path)
-                resized_images = tools.image_get_resized_images(
-                    folder.image_folder, return_big=False, return_medium=True, return_small=False
-                )
+                resized_image = tools.image_process(folder.image_folder, size=(128, 128), crop=True)
             except:
                 _logger.warning(
                     "Error with image in folder '%s' (id: %s)",
@@ -317,15 +315,15 @@ class MusicFolder(models.Model):
                 )
                 continue
 
-            folder.image_medium = resized_images["image_medium"]
+            folder.image_medium = resized_image
 
             # Avoid useless save in cache
-            if resized_images["image_medium"] == folder.image_medium_cache:
+            if resized_image == folder.image_medium_cache:
                 continue
 
             # Save in cache
             try:
-                folder.sudo().write({"image_medium_cache": resized_images["image_medium"]})
+                folder.sudo().write({"image_medium_cache": resized_image})
                 self.env.cr.commit()
             except OperationalError:
                 _logger.warning(
@@ -340,9 +338,7 @@ class MusicFolder(models.Model):
                 continue
             try:
                 _logger.debug("Resizing image folder %s...", folder.path)
-                resized_images = tools.image_get_resized_images(
-                    folder.image_folder, return_big=False, return_medium=False, return_small=True
-                )
+                resized_image = tools.image_process(folder.image_folder, size=(64, 64), crop=True)
             except:
                 _logger.warning(
                     "Error with image in folder '%s' (id: %s)",
@@ -352,15 +348,15 @@ class MusicFolder(models.Model):
                 )
                 continue
 
-            folder.image_small = resized_images["image_small"]
+            folder.image_small = resized_image
 
             # Avoid useless save in cache
-            if resized_images["image_small"] == folder.image_small_cache:
+            if resized_image == folder.image_small_cache:
                 continue
 
             # Save in cache
             try:
-                folder.sudo().write({"image_small_cache": resized_images["image_small"]})
+                folder.sudo().write({"image_small_cache": resized_image})
                 self.env.cr.commit()
             except OperationalError:
                 _logger.warning(
