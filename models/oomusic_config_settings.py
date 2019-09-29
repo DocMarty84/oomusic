@@ -7,6 +7,7 @@ from odoo.release import version
 class MusicConfigSettings(models.TransientModel):
     _name = "oomusic.config.settings"
     _inherit = "res.config.settings"
+    _description = "Music Settings"
 
     def _default_subsonic_format_id(self):
         if self.env.ref("oomusic.oomusic_format_mp3", False):
