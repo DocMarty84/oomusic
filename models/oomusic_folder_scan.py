@@ -192,6 +192,7 @@ class MusicFolderScan(models.TransientModel):
         """
         _logger.debug('Building cache for folder_id "%s"...', folder_id)
         cache = {}
+        cache["track"] = {}
         cache["user_id"] = user_id
         params = (user_id,)
 
