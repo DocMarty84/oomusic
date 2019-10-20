@@ -563,6 +563,8 @@ class MusicFolderScan(models.TransientModel):
                     if fn_path in cache["track"].keys():
                         Track = MusicTrack.browse(cache["track"][fn_path][0])
                         Track.write(vals)
+                        if self.env.context.get("test_mode"):
+                            Track.flush()
                     else:
                         Track = MusicTrack.create(vals)
 
@@ -581,6 +583,15 @@ class MusicFolderScan(models.TransientModel):
                         # Commit and close the transaction
                         if not self.env.context.get("test_mode"):
                             self.env.cr.commit()
+                        else:
+                            for model in [
+                                "oomusic.album",
+                                "oomusic.artist",
+                                "oomusic.folder",
+                                "oomusic.genre",
+                                "oomusic.track",
+                            ]:
+                                self.env[model].flush()
 
             # Final stuff to write and tags cleaning
             self._write_cache_write(cache_write)
@@ -597,6 +608,16 @@ class MusicFolderScan(models.TransientModel):
                 )
             if not self.env.context.get("test_mode"):
                 self.env.cr.commit()
+            else:
+                for model in [
+                    "oomusic.album",
+                    "oomusic.artist",
+                    "oomusic.folder",
+                    "oomusic.genre",
+                    "oomusic.track",
+                ]:
+                    self.env[model].flush()
+                self.invalidate_cache()
             _logger.debug('Scan of folder_id "%s" completed!', folder_id)
             return {}
 

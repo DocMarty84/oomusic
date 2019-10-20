@@ -288,4 +288,7 @@ class MusicConverterLine(models.Model):
                     for d in outdata:
                         outfile.write(d)
                 move(fn_out + ".tmp", fn_out)
-            new_self.write({"state": "done"})
+            # In 'test_mode', the instanciation of a new registry fails on 'threading.RLock()'. We
+            # skip the state update.
+            if not self.env.context.get("test_mode"):
+                new_self.write({"state": "done"})

@@ -9,7 +9,7 @@ from time import sleep
 from urllib.parse import urlencode
 from zipfile import ZipFile
 
-from odoo import fields, models, api, _
+from odoo import fields, models, _
 from odoo.exceptions import UserError, MissingError
 
 

@@ -250,11 +250,18 @@ class MusicPlaylist(models.Model):
 
     def _smart_worst_rated(self):
         current_tracks = self.playlist_line_ids.mapped("track_id")
-        return self.env["oomusic.track"].search(
-            [("id", "not in", current_tracks.ids)],
-            limit=self.smart_playlist_qty,
-            order="rating, " + self.env["oomusic.track"]._order,
-        )
+        # By searching in the 'oomusic.preference' table, we miss the tracks not rated.
+        res_ids = [
+            p["res_id"]
+            for p in self.env["oomusic.preference"]
+            .search(
+                [("res_model", "=", "oomusic.track"), ("res_id", "not in", current_tracks.ids)],
+                limit=self.smart_playlist_qty,
+                order="rating",
+            )
+            .read(["res_id"])
+        ]
+        return self.env["oomusic.track"].browse(res_ids)
 
     def _smart_custom(self):
         current_tracks = self.playlist_line_ids.mapped("track_id")
@@ -334,9 +341,11 @@ class MusicPlaylistLine(models.Model):
             self.playlist_id.action_current()
 
         # Update playing status and stats of the current playlist
-        self.search([]).write({"playing": False})
-        self.write({"last_play": now if self.playlist_id.dynamic else False, "playing": True})
-        self.track_id.write({"last_play": now, "play_count": self.track_id.play_count + 1})
+        self.search([]).playing = False
+        self.last_play = now if self.playlist_id.dynamic else False
+        self.playing = True
+        self.track_id.last_play = now
+        self.track_id.play_count = +1
 
         # Specific case of a dynamic playlist
         self.playlist_id._update_dynamic()

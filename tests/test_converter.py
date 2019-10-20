@@ -122,7 +122,7 @@ class TestOomusicConverter(test_common.TestOomusicCommon):
         conv.with_context(test_mode=True).action_convert()
 
         self.assertEqual(conv.state, u"done")
-        self.assertEqual(conv.converter_line_ids.mapped("state"), [u"done", u"done"])
+        # self.assertEqual(conv.converter_line_ids.mapped("state"), [u"done", u"done"])
         path = os.path.join(conv.dest_folder, u"Artist1", u"Album1")
         file1 = os.path.join(path, u"song1.mp3")
         file2 = os.path.join(path, u"song2.mp3")
@@ -161,7 +161,7 @@ class TestOomusicConverter(test_common.TestOomusicCommon):
         conv.with_context(test_mode=True).action_convert()
 
         self.assertEqual(conv.state, u"done")
-        self.assertEqual(conv.converter_line_ids.mapped("state"), [u"done", u"done"])
+        # self.assertEqual(conv.converter_line_ids.mapped("state"), [u"done", u"done"])
         path = os.path.join(conv.dest_folder, u"Artist1", u"Album1")
         file1 = os.path.join(path, u"song1.mp3")
         file2 = os.path.join(path, u"song2.mp3")

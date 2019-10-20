@@ -62,6 +62,7 @@ class TestOomusicPlaylist(test_common.TestOomusicCommon):
 
         # Write
         playlist_line.write({"track_id": tracks[1].id})
+        tracks.flush()
         tracks.invalidate_cache()
         self.assertEqual(tracks[0].in_playlist, False)
         self.assertEqual(tracks[1].in_playlist, True)
@@ -92,7 +93,6 @@ class TestOomusicPlaylist(test_common.TestOomusicCommon):
         # oomusic_set_current
         playlist1.playlist_line_ids[0].playing = True
         playlist2.playlist_line_ids[0].oomusic_set_current()
-        playlist2.invalidate_cache()
         self.assertEqual(playlist1.current, False)
         self.assertEqual(playlist2.current, True)
         self.assertEqual(playlist1.playlist_line_ids[0].playing, False)
@@ -270,13 +270,13 @@ class TestOomusicPlaylist(test_common.TestOomusicCommon):
         playlist.action_purge()
         playlist.invalidate_cache()
 
-        # best_rated
+        # worst_rated
         playlist.smart_playlist = "worst_rated"
-        playlist.smart_playlist_qty = 5
+        playlist.smart_playlist_qty = 1
         playlist.action_add_to_playlist()
         self.assertEqual(
             set(playlist.mapped("playlist_line_ids").mapped("track_id").mapped("name")),
-            set(["Song1", "Song3", "Song4", "Song5", "Song6"]),
+            set(["Song1"]),
         )
         playlist.invalidate_cache()
         playlist.action_purge()
@@ -305,4 +305,5 @@ class TestOomusicPlaylist(test_common.TestOomusicCommon):
         # When playing the last track, it should be moved at second position
         last_track = playlist.playlist_line_ids[3].track_id
         playlist.playlist_line_ids[3].with_context(test_mode=True).oomusic_set_current()
+        playlist.invalidate_cache()
         self.assertEqual(last_track, playlist.playlist_line_ids[1].track_id)
