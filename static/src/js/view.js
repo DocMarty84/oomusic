@@ -15,7 +15,7 @@ var viewRegistry = require('web.view_registry');
 ListRenderer.include(/** @lends instance.web.ListView.List# */{
     _renderHeaderCell: function (node) {
         if (node.attrs.name === 'action_play' || node.attrs.name === 'action_add_to_playlist') {
-            return $('<th width=1></th>');
+            return $(`<th data-name="${node.attrs.name}" width="1px"></th>`);
         }
         return this._super.apply(this, arguments);
     },
