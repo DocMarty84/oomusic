@@ -28,7 +28,6 @@ class MusicAlbum(models.Model):
         ondelete="cascade",
         default=lambda self: self.env.user,
     )
-    in_playlist = fields.Boolean("In Current Playlist", compute="_compute_in_playlist")
 
     star = fields.Selection(
         [("0", "Normal"), ("1", "I Like It!")],
@@ -65,27 +64,6 @@ class MusicAlbum(models.Model):
     image_small = fields.Binary(
         "Small-sized Image", related="folder_id.image_small", related_sudo=False
     )
-
-    def _compute_in_playlist(self):
-        playlist = self.env["oomusic.playlist"].search([("current", "=", True)], limit=1)
-        if not playlist:
-            return
-        query = """
-            SELECT album_id
-            FROM oomusic_track
-            WHERE id IN (
-                SELECT track_id
-                FROM oomusic_playlist_line
-                WHERE playlist_id = %s
-            )
-        """
-        self.env.cr.execute(query, (playlist.id,))
-        album_ids_in_playlist = {r[0] for r in self.env.cr.fetchall() if r[0]}
-        for album in self:
-            album.in_playlist = False
-        for album in self.env["oomusic.album"].browse(set(self.ids) & album_ids_in_playlist):
-            if all([t.in_playlist for t in album.track_ids]):
-                album.in_playlist = True
 
     def action_add_to_playlist(self):
         playlist = self.env["oomusic.playlist"].search([("current", "=", True)], limit=1)

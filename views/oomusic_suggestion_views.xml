@@ -14,7 +14,6 @@
                         <field name="album_recently_added" mode="kanban">
                             <kanban>
                                 <field name="id"/>
-                                <field name="in_playlist"/>
                                 <templates>
                                     <t t-name="kanban-box">
                                         <div class="oe_kanban_global_click">
@@ -38,11 +37,10 @@
                                                     </div>
                                                     <div class="oe_kanban_bottom_right">
                                                         <button name="action_add_to_playlist" string="Add To Current Playlist"
-                                                            class="btn btn-secondary btn-sm fa fa-plus" type="object"
-                                                            attrs="{'invisible': [('in_playlist','=', True)]}"/>
+                                                            class="btn btn-secondary btn-sm fa fa-plus" type="object"/>
                                                         <button name="action_add_to_playlist" string="Add And Play"
                                                             class="btn btn-secondary btn-sm fa fa-play" type="object"
-                                                            attrs="{'invisible': [('in_playlist','=', True)]}" context="{'play': True}"/>
+                                                            context="{'play': True}"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -56,7 +54,6 @@
                         <field name="album_random" mode="kanban">
                             <kanban>
                                 <field name="id"/>
-                                <field name="in_playlist"/>
                                 <templates>
                                     <t t-name="kanban-box">
                                         <div class="oe_kanban_global_click">
@@ -80,11 +77,10 @@
                                                     </div>
                                                     <div class="oe_kanban_bottom_right">
                                                         <button name="action_add_to_playlist" string="Add To Current Playlist"
-                                                            class="btn btn-secondary btn-sm fa fa-plus" type="object"
-                                                            attrs="{'invisible': [('in_playlist','=', True)]}"/>
+                                                            class="btn btn-secondary btn-sm fa fa-plus" type="object"/>
                                                         <button name="action_add_to_playlist" string="Add And Play"
                                                             class="btn btn-secondary btn-sm fa fa-play" type="object"
-                                                            attrs="{'invisible': [('in_playlist','=', True)]}" context="{'play': True}"/>
+                                                            context="{'play': True}"/>
                                                     </div>
                                                 </div>
                                             </div>

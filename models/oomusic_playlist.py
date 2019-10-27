@@ -92,11 +92,7 @@ class MusicPlaylist(models.Model):
         seq = self.playlist_line_ids[-1:].sequence or 10
 
         playlist_line = self.env["oomusic.playlist.line"]
-        playlist_tracks_ids = set(self.playlist_line_ids.mapped("track_id").ids)
         for track in tracks:
-            if track.id in playlist_tracks_ids:
-                continue
-            playlist_tracks_ids.add(track.id)
             seq = seq + 1
             data = {"sequence": seq, "track_id": track.id, "user_id": self.user_id.id}
             if onchange:
@@ -144,6 +140,17 @@ class MusicPlaylist(models.Model):
                 playlist.smart_playlist_qty = 20
             tracks = getattr(self, "_smart_{}".format(playlist.smart_playlist))()
             playlist._add_tracks(tracks)
+
+    def action_remove_duplicate(self):
+        for playlist in self:
+            track_ids = set([])
+            lines_to_unlink = self.env["oomusic.playlist.line"]
+            for playlist_line_id in playlist.playlist_line_ids:
+                if playlist_line_id.track_id.id in track_ids:
+                    lines_to_unlink |= playlist_line_id
+                else:
+                    track_ids.add(playlist_line_id.track_id.id)
+        lines_to_unlink.unlink()
 
     def _smart_rnd(self):
         current_tracks = self.playlist_line_ids.mapped("track_id")

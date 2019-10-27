@@ -73,7 +73,6 @@ class MusicTrack(models.Model):
         ondelete="cascade",
         default=lambda self: self.env.user,
     )
-    in_playlist = fields.Boolean("In Current Playlist", compute="_compute_in_playlist")
     star = fields.Selection(
         [("0", "Normal"), ("1", "I Like It!")],
         "Favorite",
@@ -95,24 +94,6 @@ class MusicTrack(models.Model):
         inverse="_inverse_tag_ids",
         search="_search_tag_ids",
     )
-
-    def _compute_in_playlist(self):
-        playlist = self.env["oomusic.playlist"].search([("current", "=", True)], limit=1)
-        if not playlist:
-            for track in self:
-                track.in_playlist = False
-            return
-        query = """
-            SELECT track_id
-            FROM oomusic_playlist_line
-            WHERE playlist_id = %s
-        """
-        self.env.cr.execute(query, (playlist.id,))
-        track_ids_in_playlist = {r[0] for r in self.env.cr.fetchall() if r[0]}
-        for track in self:
-            track.in_playlist = False
-        for track in self.env["oomusic.track"].browse(set(self.ids) & track_ids_in_playlist):
-            track.in_playlist = True
 
     def _search_play_count(self, operator, value):
         res = super(MusicTrack, self)._search_play_count(operator, value)

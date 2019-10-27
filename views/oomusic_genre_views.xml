@@ -29,13 +29,10 @@
                         <page string="Albums">
                             <field name="album_ids">
                                 <tree string="Albums">
-                                    <field name="in_playlist" invisible="1"/>
                                     <button name="action_add_to_playlist" string="Add To Current Playlist"
-                                        icon="fa-plus" type="object"
-                                        attrs="{'invisible': [('in_playlist','=', True)]}"/>
+                                        icon="fa-plus" type="object"/>
                                     <button name="action_add_to_playlist" string="Add And Play"
-                                        icon="fa-play" type="object"
-                                        attrs="{'invisible': [('in_playlist','=', True)]}" context="{'play': True}"/>
+                                        icon="fa-play" type="object" context="{'play': True}"/>
                                     <field name="name"/>
                                     <field name="year"/>
                                     <field name="artist_id"/>

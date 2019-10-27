@@ -58,18 +58,12 @@ class TestOomusicPlaylist(test_common.TestOomusicCommon):
         playlist_line = self.PlaylistLineObj.create(
             {"playlist_id": playlist.id, "track_id": tracks[0].id}
         )
-        self.assertEqual(tracks[0].in_playlist, True)
 
         # Write
         playlist_line.write({"track_id": tracks[1].id})
-        tracks.flush()
-        tracks.invalidate_cache()
-        self.assertEqual(tracks[0].in_playlist, False)
-        self.assertEqual(tracks[1].in_playlist, True)
 
         # Unlink
         playlist_line.unlink()
-        self.assertEqual(tracks[1].in_playlist, False)
 
         self.cleanUp()
 

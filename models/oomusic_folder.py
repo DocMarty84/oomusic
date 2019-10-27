@@ -63,7 +63,6 @@ class MusicFolder(models.Model):
     )
 
     path_name = fields.Char("Folder Name", compute="_compute_path_name")
-    in_playlist = fields.Boolean("In Current Playlist", compute="_compute_in_playlist")
     track_ids = fields.One2many("oomusic.track", "folder_id", "Tracks")
     star = fields.Selection([("0", "Normal"), ("1", "I Like It!")], "Favorite", default="0")
     rating = fields.Selection(
@@ -128,18 +127,6 @@ class MusicFolder(models.Model):
                 folder.path_name = folder.path
             else:
                 folder.path_name = folder.path.split(os.sep)[-1]
-
-    def _compute_in_playlist(self):
-        playlist = (
-            self.env["oomusic.playlist"]
-            .search([("current", "=", True)], limit=1)
-            .with_context(prefetch_fields=False)
-        )
-        for folder in self:
-            folder.in_playlist = False
-        for folder in self & playlist.playlist_line_ids.mapped("track_id.folder_id"):
-            if all([t.in_playlist for t in folder.track_ids]):
-                folder.in_playlist = True
 
     @api.depends("path")
     def _compute_root_preview(self):
