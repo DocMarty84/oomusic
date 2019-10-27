@@ -55,7 +55,7 @@ class MusicRemote(http.Controller):
             return werkzeug.utils.redirect(remote.url)
         line = (
             request.env["oomusic.playlist.line"]
-            .sudo(user=remote.user_id)
+            .with_user(remote.user_id)
             .search([("playing", "=", True)], limit=1)
         )
         return request.render(
