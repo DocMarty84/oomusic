@@ -159,11 +159,13 @@ class MusicSubsonicMediaRetrieval(http.Controller):
         else:
             return rest.make_error(code="10", message='Required int parameter "id" is not present')
 
-        image = (
-            folder.image_medium_cache
-            or folder.image_medium
-            or b"R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
-        )
+        # Only retrieve big image if necessary
+        image_cache = "image_big_cache"
+        image = "image_big"
+        if "size" in kwargs and int(kwargs["size"]) < 256:
+            image_cache = "image_medium_cache"
+            image = "image_medium"
+        image = folder[image_cache] or folder[image] or b"R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
         image_stream = BytesIO(base64.b64decode(image))
         image_ext = "." + (imghdr.what(image_stream) or "png")
         return http.send_file(image_stream, filename=folderId + image_ext)

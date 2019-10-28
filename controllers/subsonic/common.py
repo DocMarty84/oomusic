@@ -264,7 +264,9 @@ class SubsonicREST:
             elem_track.set("year", track.year[:4])
         if track.genre_id:
             elem_track.set("genre", track.genre_id.name)
-        if track.folder_id.image_medium:
+        # Use of [0] to make sure to fetch the image_small for this album only, not all albums of
+        # the recordset.
+        if track.folder_id.image_small_cache or track[0].folder_id.image_small:
             elem_track.set("coverArt", str(track.folder_id.id))
 
         if API_VERSION_LIST[self.version_client] >= API_VERSION_LIST["1.4.0"]:
@@ -311,9 +313,9 @@ class SubsonicREST:
             path=folder.path,
         )
 
-        # Use of [0] to make sure to fetch the image_medium for this album only, not all albums of
+        # Use of [0] to make sure to fetch the image_small for this album only, not all albums of
         # the recordset.
-        if folder.image_medium_cache or folder[0].image_medium:
+        if folder.image_small_cache or folder[0].image_small:
             elem_directory.set("coverArt", str(folder.id))
 
         if folder.track_ids:
