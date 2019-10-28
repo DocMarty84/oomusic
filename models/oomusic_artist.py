@@ -231,6 +231,7 @@ class MusicArtist(models.Model):
                 ]
                 artist.fm_gettoptracks_track_ids = t_tracks[:10]
             except KeyError:
+                artist.fm_gettoptracks_track_ids = False
                 _logger.warning(
                     "Top tracks not found for artist '%s' (id: %s). json contains:\n%s",
                     artist.name,
@@ -252,6 +253,7 @@ class MusicArtist(models.Model):
                         break
                 artist.fm_getsimilar_artist_ids = s_artists.ids
             except KeyError:
+                artist.fm_getsimilar_artist_ids = False
                 _logger.warning(
                     "Similar artists not found for artist '%s' (id: %s). json contains:\n%s",
                     artist.name,
