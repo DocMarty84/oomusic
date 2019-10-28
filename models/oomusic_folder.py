@@ -239,7 +239,7 @@ class MusicFolder(models.Model):
                         data = song.tags.getall("APIC")[0].data
                     elif track_ext == ".flac" and song.pictures:
                         data = song.pictures[0].data
-                    elif track_ext == ".mp4" and song.get("covr"):
+                    elif track_ext in [".mp4", ".m4a"] and song.get("covr"):
                         data = song["covr"][0]
                     if data:
                         folder.image_folder = base64.b64encode(data)
