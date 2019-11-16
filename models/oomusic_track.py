@@ -163,6 +163,11 @@ class MusicTrack(models.Model):
         if self.env.context.get("purge"):
             playlist.action_purge()
         playlist._add_tracks(self)
+        return {
+            "type": "ir.actions.act_add",
+            "res_model_name": _("Track"),
+            "res_name": ", ".join(self.mapped("name")[:5]),
+        }
 
     def action_play(self):
         return {"type": "ir.actions.act_play", "res_model": "oomusic.track", "res_id": self.id}
