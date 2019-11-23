@@ -123,8 +123,10 @@ class MusicPreferenceMixin(models.AbstractModel):
 
     @api.depends("pref_ids")
     def _compute_tag_ids(self):
+        self.env.cr.execute("SELECT true FROM oomusic_preference_oomusic_tag_rel LIMIT 1")
+        row = self.env.cr.fetchone()
         for obj in self:
-            obj.tag_ids = obj._get_pref("tag_ids")
+            obj.tag_ids = obj._get_pref("tag_ids") if row else False
 
     def _inverse_tag_ids(self):
         for obj in self:
