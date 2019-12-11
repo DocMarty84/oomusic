@@ -364,7 +364,7 @@ class MusicFolder(models.Model):
 
     def _set_image_value(self, value):
         for folder in self:
-            folder.image_folder = tools.image_resize_image_big(value)
+            folder.image_folder = tools.image_process(value, size=(1024, 1024), crop=True)
 
     @api.model
     def create(self, vals):
