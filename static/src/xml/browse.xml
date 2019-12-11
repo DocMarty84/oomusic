@@ -2,7 +2,7 @@
 <templates xml:space="preserve">
 
 <t t-name="oomusic.Browse">
-    <div class="list-group">
+    <div class="list-group oom_browse">
         <t t-if="widget.folder_id">
             <a class="list-group-item"><t t-esc="widget.folder_data[widget.folder_id].current_id.name"/></a>
         </t>
