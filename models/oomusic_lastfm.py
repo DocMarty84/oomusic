@@ -3,7 +3,6 @@
 import datetime
 import hashlib
 import logging
-from random import sample
 import time
 
 import requests
@@ -80,17 +79,12 @@ class MusicLastfm(models.Model):
     def cron_build_lastfm_cache(self):
         # Build cache for artists. Limit to 200 artists chosen randomly to avoid running for
         # unexpectedly long periods of time.
-        self.env.cr.execute("SELECT name from oomusic_artist")
-        res = self.env.cr.fetchall()
-        artists = {r[0] for r in res}
-        for artist in sample(artists, min(200, len(artists))):
-            _logger.debug('Gettting LastFM cache for artist "%s"...', artist)
-            url = "https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=" + artist
-            self.get_query(url)
-            url = "https://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=" + artist
-            self.get_query(url)
-            url = "https://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist=" + artist
-            self.get_query(url, sleep=1.0)
+        self.env.cr.execute("SELECT id FROM oomusic_artist ORDER BY RANDOM() LIMIT 200")
+        for artist in self.env["oomusic.artist"].browse([r[0] for r in self.env.cr.fetchall()]):
+            _logger.debug("Gettting LastFM cache for artist '%s'...", artist.name)
+            artist._lastfm_artist_getinfo()
+            artist._lastfm_artist_gettoptracks()
+            artist._lastfm_artist_getsimilar(sleep=1.0)
 
         # Clean-up outdated entries
         self.search([("removal_date", "<", fields.Datetime.now())]).unlink()

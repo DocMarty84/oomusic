@@ -307,29 +307,31 @@ class MusicArtist(models.Model):
             artist._compute_sp_image()
             self.invalidate_cache()
 
-    def _lastfm_artist_getinfo(self, force=False):
+    def _lastfm_artist_getinfo(self, sleep=0.0, force=False):
         self.ensure_one()
         url = "https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=" + self.name
-        return json.loads(self.env["oomusic.lastfm"].get_query(url, force=force))
+        return json.loads(self.env["oomusic.lastfm"].get_query(url, sleep=sleep, force=force))
 
-    def _lastfm_artist_getsimilar(self, force=False):
+    def _lastfm_artist_getsimilar(self, sleep=0.0, force=False):
         self.ensure_one()
         url = "https://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist=" + self.name
-        return json.loads(self.env["oomusic.lastfm"].get_query(url, force=force))
+        return json.loads(self.env["oomusic.lastfm"].get_query(url, sleep=sleep, force=force))
 
-    def _lastfm_artist_gettoptracks(self, force=False):
+    def _lastfm_artist_gettoptracks(self, sleep=0.0, force=False):
         self.ensure_one()
         url = "https://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=" + self.name
-        return json.loads(self.env["oomusic.lastfm"].get_query(url, force=force))
+        return json.loads(self.env["oomusic.lastfm"].get_query(url, sleep=sleep, force=force))
 
-    def _bandsintown_artist_getevents(self, force=False):
+    def _bandsintown_artist_getevents(self, sleep=0.0, force=False):
         self.ensure_one()
         url = "https://rest.bandsintown.com/artists/{}/events".format(self.name)
         cache = {}
-        cache[(self.id, self.name)] = self.env["oomusic.bandsintown"].get_query(url, force=force)
+        cache[(self.id, self.name)] = self.env["oomusic.bandsintown"].get_query(
+            url, sleep=sleep, force=force
+        )
         self.env["oomusic.bandsintown.event"].sudo()._create_from_cache(cache)
 
-    def _spotify_artist_search(self, force=False):
+    def _spotify_artist_search(self, sleep=0.0, force=False):
         self.ensure_one()
         url = "https://api.spotify.com/v1/search?type=artist&limit=1&q=" + self.name
-        return json.loads(self.env["oomusic.spotify"].get_query(url, force=force))
+        return json.loads(self.env["oomusic.spotify"].get_query(url, sleep=sleep, force=force))

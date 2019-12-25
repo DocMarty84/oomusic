@@ -7,7 +7,6 @@ import logging
 import operator as op
 import time
 from math import asin, cos, radians, sin, sqrt
-from random import sample
 
 import requests
 from werkzeug.urls import url_fix
@@ -87,21 +86,20 @@ class MusicBandsintown(models.Model):
         # Build cache for artists. Limit to 200 artists chosen randomly to avoid running for
         # unexpectedly long periods of time.
         self.env.cr.execute(
-            """
-            SELECT a.id, a.name FROM oomusic_artist a
+        """
+            SELECT a.id
+            FROM oomusic_artist a
             JOIN oomusic_preference AS p ON a.id = p.res_id
             WHERE p.bit_follow = 'done'
                 AND p.res_model = 'oomusic.artist'
+            ORDER BY RANDOM()
+            LIMIT 200
         """
         )
-        res = self.env.cr.fetchall()
-        artists = {(r[0], r[1]) for r in res}
-        artists_sample = sample(artists, min(200, len(artists)))
         cache = {}
-        for artist in artists_sample:
-            _logger.debug('Getting Bandsintown cache for artist "%s"...', artist[1])
-            url = "https://rest.bandsintown.com/artists/{}/events".format(artist[1])
-            cache[artist] = self.get_query(url, sleep=0.5)
+        for artist in self.env['oomusic.artist'].browse([r[0] for r in self.env.cr.fetchall()]):
+            _logger.debug("Getting Bandsintown cache for artist '%s'...", artist.name)
+            cache[(artist.id, artist.name)] = artist._bandsintown_artist_getevents(sleep=0.5)
 
         # Create the events
         self.env["oomusic.bandsintown.event"]._create_from_cache(cache)

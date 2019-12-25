@@ -7,7 +7,6 @@ import json
 import logging
 import time
 from pprint import pformat
-from random import sample
 
 import requests
 from werkzeug.urls import url_fix
@@ -99,13 +98,10 @@ class MusicSpotify(models.Model):
     def cron_build_spotify_cache(self):
         # Build cache for artists. Limit to 200 artists chosen randomly to avoid running for
         # unexpectedly long periods of time.
-        self.env.cr.execute("SELECT name from oomusic_artist")
-        res = self.env.cr.fetchall()
-        artists = {r[0] for r in res}
-        for artist in sample(artists, min(200, len(artists))):
-            _logger.debug('Gettting Spotify cache for artist "%s"...', artist)
-            url = "https://api.spotify.com/v1/search?type=artist&limit=1&q=" + artist
-            self.get_query(url, sleep=0.25)
+        self.env.cr.execute("SELECT id FROM oomusic_artist ORDER BY RANDOM() LIMIT 200")
+        for artist in self.env["oomusic.artist"].browse([r[0] for r in self.env.cr.fetchall()]):
+            _logger.debug("Gettting Spotify cache for artist '%s'...", artist.name)
+            artist._spotify_artist_search(sleep=0.25)
 
         # Clean-up outdated entries
         self.search([("removal_date", "<", fields.Datetime.now())]).unlink()
