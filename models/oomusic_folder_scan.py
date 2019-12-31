@@ -226,7 +226,6 @@ class MusicFolderScan(models.TransientModel):
 
         :param int folder_id: ID of the folder to scan
         :param int user_id: ID of the user to whom belongs the folder
-        :return dict: content of the cache
         """
         params = (user_id, folder_id)
         query = """
@@ -264,8 +263,7 @@ class MusicFolderScan(models.TransientModel):
 
         :param str rootdir: folder to check
         :param dict cache: reading cache
-        :return dict, bool: tuple with content of the cache updated, and boolean which indicates if
-            the folder can be skipped
+        :return bool: indicates if the folder scanning can be skipped
         """
         skip = False
         folder = cache["folder"].get(rootdir)
@@ -288,7 +286,6 @@ class MusicFolderScan(models.TransientModel):
 
         :param str rootdir: path of the folder to create
         :param dict cache: reading cache
-        :return dict: cache updated
         """
         parent_dir = os.sep.join(rootdir.split(os.sep)[:-1])
         parent_dir = cache["folder"].get(parent_dir)
@@ -333,7 +330,6 @@ class MusicFolderScan(models.TransientModel):
         :param dict vals: data of the track
         :param dict cache: reading cache
         :param str rootdir: path of the folder being scanned
-        :return dict: cache updated
         """
         MusicAlbum = self.env["oomusic.album"]
         MusicArtist = self.env["oomusic.artist"]
@@ -367,8 +363,6 @@ class MusicFolderScan(models.TransientModel):
                 {"name": vals["genre_id"], "user_id": cache["user_id"]}
             ).id
 
-        return cache
-
     def _replace_related_by_id(self, vals, cache, rootdir):
         """
         Replace the data of the track with the ID of the related object. In other words, convert the
@@ -377,7 +371,6 @@ class MusicFolderScan(models.TransientModel):
         :param dict vals: data of the track
         :param dict cache: reading cache
         :param str rootdir: path of the folder being scanned
-        :return dict: vals updated
         """
         if vals.get("album_id"):
             vals["album_id"] = cache["album"][(vals["album_id"], cache["folder"][rootdir][0])]
@@ -390,8 +383,6 @@ class MusicFolderScan(models.TransientModel):
         if vals.get("genre_id"):
             vals["genre_id"] = cache["genre"][vals["genre_id"]]
 
-        return vals
-
     def _update_cache_write(self, vals, cache_write):
         """
         Update the write cache with additional information. For example adds the year, artist and
@@ -399,7 +390,6 @@ class MusicFolderScan(models.TransientModel):
 
         :param dict vals: data of the track
         :param dict cache_write: writing cache
-        :return dict: cache updated
         """
         if vals.get("album_id") and vals["album_id"] not in cache_write["album"]:
             cache_write["album"][vals["album_id"]] = {
@@ -407,8 +397,6 @@ class MusicFolderScan(models.TransientModel):
                 "artist_id": vals.get("album_artist_id") or vals.get("artist_id"),
                 "genre_id": vals.get("genre_id"),
             }
-
-        return cache_write
 
     def _write_cache_write(self, cache_write):
         """
@@ -523,10 +511,10 @@ class MusicFolderScan(models.TransientModel):
                         )
 
                     # Create new album, artist or genre, and update the cache
-                    cache = self._create_related(vals, cache, rootdir)
+                    self._create_related(vals, cache, rootdir)
 
                     # Replace album, artist or genre by ID
-                    vals = self._replace_related_by_id(vals, cache, rootdir)
+                    self._replace_related_by_id(vals, cache, rootdir)
 
                     # Add missing fields
                     if tag.__name__ == "taglib":
