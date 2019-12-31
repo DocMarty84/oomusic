@@ -96,6 +96,20 @@ class MusicFolderScan(models.TransientModel):
         self.env.cr.commit()
         return res
 
+    def _commit_or_flush(self):
+        # Commit and close the transaction
+        if not self.env.context.get("test_mode"):
+            self.env.cr.commit()
+        else:
+            for model in [
+                "oomusic.album",
+                "oomusic.artist",
+                "oomusic.folder",
+                "oomusic.genre",
+                "oomusic.track",
+            ]:
+                self.env[model].flush()
+
     def _clean_directory(self, path, user_id):
         """
         Clean a directory. It removes folders and tracks which are not on the disk anymore. This
@@ -569,22 +583,13 @@ class MusicFolderScan(models.TransientModel):
                         Folder.write({"last_commit": time_commit, "locked": True})
 
                         # Commit and close the transaction
-                        if not self.env.context.get("test_mode"):
-                            self.env.cr.commit()
-                        else:
-                            for model in [
-                                "oomusic.album",
-                                "oomusic.artist",
-                                "oomusic.folder",
-                                "oomusic.genre",
-                                "oomusic.track",
-                            ]:
-                                self.env[model].flush()
+                        self._commit_or_flush()
 
             # Final stuff to write and tags cleaning
             self._write_cache_write(cache_write)
             if Folder.exists():
                 if Folder.last_scan:
+                    self._commit_or_flush()
                     self._clean_tags(Folder.user_id.id)
                 Folder.write(
                     {
@@ -594,17 +599,8 @@ class MusicFolderScan(models.TransientModel):
                         "locked": False,
                     }
                 )
-            if not self.env.context.get("test_mode"):
-                self.env.cr.commit()
-            else:
-                for model in [
-                    "oomusic.album",
-                    "oomusic.artist",
-                    "oomusic.folder",
-                    "oomusic.genre",
-                    "oomusic.track",
-                ]:
-                    self.env[model].flush()
+            self._commit_or_flush()
+            if self.env.context.get("test_mode"):
                 self.invalidate_cache()
             _logger.debug('Scan of folder_id "%s" completed!', folder_id)
             return {}
