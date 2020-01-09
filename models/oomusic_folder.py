@@ -7,6 +7,7 @@ import imghdr
 import json
 import logging
 from mutagen import File
+from mutagen.flac import Picture
 import os
 from psycopg2 import OperationalError
 from random import sample
@@ -241,6 +242,17 @@ class MusicFolder(models.Model):
                         data = song.pictures[0].data
                     elif track_ext in [".mp4", ".m4a"] and song.get("covr"):
                         data = song["covr"][0]
+                    elif track_ext in [".oga", ".ogg", ".opus"] and song.get(
+                        "metadata_block_picture"
+                    ):
+                        # The metadata block contains more than the picture. Indeed, it also
+                        # contains other info related to the picture such as height, width,
+                        # mimetype, etc. See for details:
+                        # https://github.com/quodlibet/mutagen/blob/caaa2c5e31d/mutagen/flac.py#L604
+                        #
+                        # Therefore, we use the 'Picture' class which handles it.
+                        b64_data = song["metadata_block_picture"][0]
+                        data = Picture(base64.b64decode(b64_data)).data
                     if data:
                         folder.image_folder = base64.b64encode(data)
             except:
