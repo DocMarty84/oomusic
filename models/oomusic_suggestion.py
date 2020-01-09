@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import fields, models, api
+from odoo import api, fields, models
 
 
 class MusicSuggestion(models.TransientModel):

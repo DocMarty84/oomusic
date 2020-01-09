@@ -86,7 +86,7 @@ class MusicBandsintown(models.Model):
         # Build cache for artists. Limit to 200 artists chosen randomly to avoid running for
         # unexpectedly long periods of time.
         self.env.cr.execute(
-        """
+            """
             SELECT a.id
             FROM oomusic_artist a
             JOIN oomusic_preference AS p ON a.id = p.res_id
@@ -97,7 +97,7 @@ class MusicBandsintown(models.Model):
         """
         )
         cache = {}
-        for artist in self.env['oomusic.artist'].browse([r[0] for r in self.env.cr.fetchall()]):
+        for artist in self.env["oomusic.artist"].browse([r[0] for r in self.env.cr.fetchall()]):
             _logger.debug("Getting Bandsintown cache for artist '%s'...", artist.name)
             cache[(artist.id, artist.name)] = artist._bandsintown_artist_getevents(sleep=0.5)
 

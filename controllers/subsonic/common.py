@@ -5,15 +5,16 @@ import hashlib
 import logging
 import mimetypes
 import os
+from collections import OrderedDict
 from pprint import pformat
 
-from collections import OrderedDict
 from lxml import etree
 
-from . import xml2json
 from odoo import fields
 from odoo.exceptions import AccessError
 from odoo.http import request
+
+from . import xml2json
 
 _logger = logging.getLogger(__name__)
 API_VERSION_LIST = {

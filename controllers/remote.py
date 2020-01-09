@@ -2,8 +2,8 @@
 
 import logging
 
-from werkzeug.exceptions import abort
 import werkzeug.utils
+from werkzeug.exceptions import abort
 
 from odoo import http
 from odoo.http import request

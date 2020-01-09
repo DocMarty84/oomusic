@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime, timedelta
 import uuid
+from datetime import datetime, timedelta
+
 from werkzeug.urls import url_encode
 
-from odoo import fields, models, api
+from odoo import api, fields, models
 
 
 class MusicDownload(models.Model):

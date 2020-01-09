@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import shutil
 import os
+import shutil
 
 from odoo import fields
 from odoo.tests import common

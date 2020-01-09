@@ -5,6 +5,7 @@ import shutil
 import time
 
 import taglib
+
 from . import test_common
 
 

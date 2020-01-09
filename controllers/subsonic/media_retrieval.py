@@ -13,6 +13,7 @@ from werkzeug.wsgi import wrap_file
 from odoo import http
 from odoo.exceptions import AccessError
 from odoo.http import request
+
 from .common import SubsonicREST
 
 _logger = logging.getLogger(__name__)

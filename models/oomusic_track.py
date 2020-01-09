@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 
-from hashlib import sha1
 import json
 import os
+from hashlib import sha1
 from shutil import copyfile
 from tempfile import gettempdir
 from time import sleep
 from urllib.parse import urlencode
 from zipfile import ZipFile
 
-from odoo import fields, models, _
-from odoo.exceptions import UserError, MissingError
+from odoo import _, fields, models
+from odoo.exceptions import MissingError, UserError
 
 
 class MusicTrack(models.Model):

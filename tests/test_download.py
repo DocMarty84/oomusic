@@ -2,8 +2,7 @@
 
 import hashlib
 
-from . import test_common
-from . import test_sub_common
+from . import test_common, test_sub_common
 
 
 class TestOomusicDownload(test_common.TestOomusicCommon):

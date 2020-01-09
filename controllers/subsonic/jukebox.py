@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import http
+
 from .common import SubsonicREST
 
 

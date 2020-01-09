@@ -1,18 +1,19 @@
 # -*- coding: utf-8 -*-
 
 import base64
-from datetime import datetime as dt
-from dateutil.relativedelta import relativedelta
 import imghdr
 import json
 import logging
-from mutagen import File
-from mutagen.flac import Picture
 import os
-from psycopg2 import OperationalError
+from datetime import datetime as dt
 from random import sample
 
-from odoo import fields, models, api, tools, _
+from dateutil.relativedelta import relativedelta
+from mutagen import File
+from mutagen.flac import Picture
+from psycopg2 import OperationalError
+
+from odoo import _, api, fields, models, tools
 from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)

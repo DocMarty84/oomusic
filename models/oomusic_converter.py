@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 
 import multiprocessing.dummy as mp
-from multiprocessing import cpu_count
 import os
 import random
+from multiprocessing import cpu_count
 from shutil import copyfile, move
 from tempfile import gettempdir
 from time import sleep
 
-from odoo import fields, models, api
+from odoo import api, fields, models
 
 
 class MusicConverter(models.Model):

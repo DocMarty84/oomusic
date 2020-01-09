@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 
 import hashlib
-from multiprocessing import cpu_count
 import os
 import shutil
+from multiprocessing import cpu_count
 from tempfile import gettempdir
 
-from . import test_common
 from odoo import fields
+
+from . import test_common
 
 
 class TestOomusicConverter(test_common.TestOomusicCommon):

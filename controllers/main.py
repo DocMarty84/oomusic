@@ -3,11 +3,11 @@
 import logging
 import os
 
-from werkzeug.exceptions import abort, Forbidden
+from werkzeug.exceptions import Forbidden, abort
 from werkzeug.wrappers import Response
 from werkzeug.wsgi import wrap_file
 
-from odoo import http, fields, _
+from odoo import _, fields, http
 from odoo.http import request
 
 _logger = logging.getLogger(__name__)

@@ -3,12 +3,13 @@
 import base64
 import json
 import logging
-from pprint import pformat
-from psycopg2 import OperationalError
-from random import sample
 import urllib.request
+from pprint import pformat
+from random import sample
 
-from odoo import fields, models, api, tools, _
+from psycopg2 import OperationalError
+
+from odoo import _, api, fields, models, tools
 from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
