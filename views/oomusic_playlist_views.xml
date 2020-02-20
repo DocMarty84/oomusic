@@ -41,6 +41,8 @@
                                 <button name="action_add_to_playlist" string="Add To Playlist"
                                         type="object" attrs="{'invisible': [('smart_playlist', '=', False)]}"/>
                             </div>
+                            <field name="smart_custom_order"
+                                attrs="{'invisible': [('smart_playlist', '!=', 'custom')]}"/>
                         </group>
                         <field name="smart_custom_domain" widget="domain"
                                options="{'model': 'oomusic.track'}"

@@ -92,6 +92,7 @@ class MusicPlaylist(models.Model):
     )
     smart_playlist_qty = fields.Integer("Quantity To Add", default=20)
     smart_custom_domain = fields.Char("Custom Domain")
+    smart_custom_order = fields.Char("Custom Order")
 
     def _add_tracks(self, tracks, onchange=False):
         # Set starting sequence
@@ -278,11 +279,21 @@ class MusicPlaylist(models.Model):
 
     def _smart_custom(self):
         current_tracks = self.playlist_line_ids.mapped("track_id")
-        tracks = self.env["oomusic.track"].search(
-            [("id", "not in", current_tracks.ids)] + safe_eval(self.smart_custom_domain)
-        )
-        tracks_list = random.sample(tracks, min(self.smart_playlist_qty, len(tracks)))
-        return self.env["oomusic.track"].browse([t.id for t in tracks_list])
+        if not self.smart_custom_order:
+            tracks = self.env["oomusic.track"].search_read(
+                domain=[("id", "not in", current_tracks.ids)] + safe_eval(self.smart_custom_domain),
+                fields=["id"],
+            )
+            tracks_list = random.sample(tracks, min(self.smart_playlist_qty, len(tracks)))
+        else:
+            tracks = self.env["oomusic.track"].search_read(
+                domain=[("id", "not in", current_tracks.ids)] + safe_eval(self.smart_custom_domain),
+                fields=["id"],
+                order=self.smart_custom_order,
+                limit=self.smart_playlist_qty,
+            )
+            tracks_list = tracks
+        return self.env["oomusic.track"].browse([t["id"] for t in tracks_list])
 
     def _update_dynamic(self):
         for playlist in self.filtered("dynamic"):
