@@ -69,6 +69,12 @@ class MusicPlaylist(models.Model):
         default=False,
         help="If activated, tracks will be automatically added based on the Smart Playlist.",
     )
+    dynamic_max_qty = fields.Integer(
+        "Maximum Tracks",
+        default=0,
+        help="If set, the oldest tracks of a dynamic playlist are automatically removed. "
+        "This way, they can be added again.",
+    )
     smart_playlist = fields.Selection(
         [
             ("rnd", "Random Tracks"),
@@ -302,6 +308,10 @@ class MusicPlaylist(models.Model):
                     offset = i + 1
                 for i, line in enumerate(playlist.playlist_line_ids - played):
                     line.write({"sequence": i + offset})
+
+            # Remove oldest lines if maximum size:
+            if playlist.dynamic_max_qty > 0:
+                playlist.playlist_line_ids[: -playlist.dynamic_max_qty].unlink()
 
 
 class MusicPlaylistLine(models.Model):
