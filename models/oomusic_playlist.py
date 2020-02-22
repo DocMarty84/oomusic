@@ -372,12 +372,30 @@ class MusicPlaylistLine(models.Model):
         self.search([]).playing = False
         self.last_play = now if self.playlist_id.dynamic else False
         self.playing = True
-        self.track_id.last_play = now
-        self.track_id.play_count += 1
 
         # Specific case of a dynamic playlist
         self.playlist_id._update_dynamic()
         return json.dumps(res)
+
+    def oomusic_play_skip(self, play=False):
+        now = fields.Datetime.now()
+        # Do not update the Play/Skip ratio more than once every 5 minutes for a given track
+        if (
+            self.track_id.last_play_skip_ratio
+            and (now - self.track_id.last_play_skip_ratio).total_seconds() < 300
+        ):
+            return True
+        if play:
+            self.track_id.last_play = now
+            self.track_id.play_count += 1
+        else:
+            self.track_id.last_skip = now
+            self.track_id.skip_count += 1
+        play_count = self.track_id.play_count or 1.0
+        skip_count = self.track_id.skip_count or 1.0
+        self.track_id.play_skip_ratio = play_count / skip_count
+        self.track_id.last_play_skip_ratio = now
+        return True
 
     def oomusic_play(self, seek=0):
         res = {}

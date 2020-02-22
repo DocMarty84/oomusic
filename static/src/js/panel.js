@@ -47,12 +47,14 @@ var Panel = Widget.extend({
         this.current_playlist_line_id = undefined;
         this.current_track_id = undefined;
         this.current_model = 'oomusic.playlist.line';
+        this.current_progress = 0;
         this.repeat = false;
         this.shuffle = false;
         this.duration = 1;
         this.user_seek = 0;
         this.sound_seek = 0;
         this.sound_seek_last_played = 0;
+        this.play_skip = false;
 
         // ========================================================================================
         // Bus events
@@ -68,6 +70,7 @@ var Panel = Widget.extend({
         setInterval(this._infUpdateProgress.bind(this), 1000);
         setInterval(this._infCheckStuck.bind(this), 500);
         setInterval(this._infLoadNext.bind(this), 5000);
+        setInterval(this._infSetPlay.bind(this), 5000);
 
         this.appendTo(web_client.$el);
 
@@ -157,6 +160,7 @@ var Panel = Widget.extend({
             return;
         }
         var self = this;
+        this._updatePlaySkip(playlist_line_id);
         return this._rpc({
                 model: 'oomusic.playlist.line',
                 method: 'oomusic_previous',
@@ -173,6 +177,7 @@ var Panel = Widget.extend({
             return;
         }
         var self = this;
+        this._updatePlaySkip(playlist_line_id);
         var params = _.extend(params || {}, {play_now: true});
         if (this.next_playlist_line_id) {
             self.user_seek = 0;
@@ -274,8 +279,10 @@ var Panel = Widget.extend({
             this.$el.find('.oom_play').show();
         }
 
-        // Reset next sound
+        // Reset next line, progress and play/skip ratio
         this.next_playlist_line_id = undefined;
+        this.current_progress = 0;
+        this.play_skip = false;
 
         // Update time, title and album picture
         this.duration = data_json.duration;
@@ -297,6 +304,22 @@ var Panel = Widget.extend({
         // Update global data
         this._updateGlobalData(data, params);
 
+    },
+
+    _updatePlaySkip: function (playlist_line_id) {
+        if (!_.isNumber(playlist_line_id)) {
+            return;
+        }
+        if (this.play_skip === false) {
+            this.play_skip = true;
+            this._rpc({
+                model: 'oomusic.playlist.line',
+                method: 'oomusic_play_skip',
+                args: [[playlist_line_id], this.current_progress >= 50],
+            }, {
+                shadow: true,
+            })
+        }
     },
 
     _updateGlobalData: function (data, params) {
@@ -438,6 +461,13 @@ var Panel = Widget.extend({
         } else {
             this.sound_seek = sound_seek;
         }
+    },
+
+    _infSetPlay: function () {
+        if (!this.sound || !this.sound.playing() || this.play_skip === true || this.current_progress < 50) {
+            return;
+        }
+        this._updatePlaySkip(this.current_playlist_line_id);
     },
 
     //--------------------------------------------------------------------------

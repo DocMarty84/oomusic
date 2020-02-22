@@ -33,7 +33,11 @@ class MusicPreference(models.Model):
         default=lambda self: self.env.user,
     )
     play_count = fields.Integer("Play Count", default=0, readonly=True)
+    skip_count = fields.Integer("Skip Count", default=0, readonly=True)
+    play_skip_ratio = fields.Float("Play/Skip Ratio", default=1.0, readonly=True)
     last_play = fields.Datetime("Last Played", index=True, readonly=True)
+    last_skip = fields.Datetime("Last Skipped", index=True, readonly=True)
+    last_play_skip_ratio = fields.Datetime("Last Play/Skip Update", readonly=True)
     star = fields.Selection([("0", "Normal"), ("1", "I Like It!")], "Favorite", default="0")
     rating = fields.Selection(
         [("0", "0"), ("1", "1"), ("2", "2"), ("3", "3"), ("4", "4"), ("5", "5")],
@@ -74,6 +78,30 @@ class MusicPreferenceMixin(models.AbstractModel):
         return self._search_pref("play_count", operator, value)
 
     @api.depends("pref_ids")
+    def _compute_skip_count(self):
+        for obj in self:
+            obj.skip_count = obj._get_pref("skip_count")
+
+    def _inverse_skip_count(self):
+        for obj in self:
+            obj._set_pref({"skip_count": obj.skip_count})
+
+    def _search_skip_count(self, operator, value):
+        return self._search_pref("skip_count", operator, value)
+
+    @api.depends("pref_ids")
+    def _compute_play_skip_ratio(self):
+        for obj in self:
+            obj.play_skip_ratio = obj._get_pref("play_skip_ratio")
+
+    def _inverse_play_skip_ratio(self):
+        for obj in self:
+            obj._set_pref({"play_skip_ratio": obj.play_skip_ratio})
+
+    def _search_play_skip_ratio(self, operator, value):
+        return self._search_pref("play_skip_ratio", operator, value)
+
+    @api.depends("pref_ids")
     def _compute_last_play(self):
         for obj in self:
             obj.last_play = obj._get_pref("last_play")
@@ -84,6 +112,30 @@ class MusicPreferenceMixin(models.AbstractModel):
 
     def _search_last_play(self, operator, value):
         return self._search_pref("last_play", operator, value)
+
+    @api.depends("pref_ids")
+    def _compute_last_skip(self):
+        for obj in self:
+            obj.last_skip = obj._get_pref("last_skip")
+
+    def _inverse_last_skip(self):
+        for obj in self:
+            obj._set_pref({"last_skip": obj.last_skip})
+
+    def _search_last_skip(self, operator, value):
+        return self._search_pref("last_skip", operator, value)
+
+    @api.depends("pref_ids")
+    def _compute_last_play_skip_ratio(self):
+        for obj in self:
+            obj.last_play_skip_ratio = obj._get_pref("last_play_skip_ratio")
+
+    def _inverse_last_play_skip_ratio(self):
+        for obj in self:
+            obj._set_pref({"last_play_skip_ratio": obj.last_play_skip_ratio})
+
+    def _search_last_play_skip_ratio(self, operator, value):
+        return self._search_pref("last_play_skip_ratio", operator, value)
 
     @api.depends("pref_ids")
     def _compute_star(self):
@@ -173,7 +225,18 @@ class MusicPreferenceMixin(models.AbstractModel):
         # `oomusic.preference`.
         # When the library is shared, this triggers an AccessError if the user is not the owner
         # of the object.
-        fields = {"play_count", "last_play", "star", "rating", "bit_follow", "tag_ids"}
+        fields = {
+            "play_count",
+            "skip_count",
+            "play_skip_ratio",
+            "last_play",
+            "last_skip",
+            "last_play_skip_ratio",
+            "star",
+            "rating",
+            "bit_follow",
+            "tag_ids",
+        }
         new_self = self
         if any([k in fields for k in vals.keys()]):
             self.check_access_rule("read")

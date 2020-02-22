@@ -53,7 +53,10 @@
                             <field name="rating" widget="priority"/>
                             <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                             <field name="play_count"/>
+                            <field name="skip_count"/>
+                            <field name="play_skip_ratio" groups="base.group_no_one"/>
                             <field name="last_play"/>
+                            <field name="last_skip"/>
                             <field name="last_modification" groups="base.group_no_one"/>
                         </group>
                         <group>

@@ -52,12 +52,40 @@ class MusicTrack(models.Model):
         inverse="_inverse_play_count",
         search="_search_play_count",
     )
+    skip_count = fields.Integer(
+        "Skip Count",
+        readonly=True,
+        compute="_compute_skip_count",
+        inverse="_inverse_skip_count",
+        search="_search_skip_count",
+    )
+    play_skip_ratio = fields.Float(
+        "Play/Skip Ratio",
+        readonly=True,
+        compute="_compute_play_skip_ratio",
+        inverse="_inverse_play_skip_ratio",
+        search="_search_play_skip_ratio",
+    )
     last_play = fields.Datetime(
         "Last Played",
         readonly=True,
         compute="_compute_last_play",
         inverse="_inverse_last_play",
         search="_search_last_play",
+    )
+    last_skip = fields.Datetime(
+        "Last Skipped",
+        readonly=True,
+        compute="_compute_last_skip",
+        inverse="_inverse_last_skip",
+        search="_search_last_skip",
+    )
+    last_play_skip_ratio = fields.Datetime(
+        "Last Play/Skip Update",
+        readonly=True,
+        compute="_compute_last_play_skip_ratio",
+        inverse="_inverse_last_play_skip_ratio",
+        search="_search_last_play_skip_ratio",
     )
     last_modification = fields.Integer("Last Modification", readonly=True)
     root_folder_id = fields.Many2one(

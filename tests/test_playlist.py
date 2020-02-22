@@ -2,6 +2,7 @@
 
 import json
 import time
+from datetime import datetime as dt
 
 from . import test_common
 
@@ -91,7 +92,19 @@ class TestOomusicPlaylist(test_common.TestOomusicCommon):
         self.assertEqual(playlist2.current, True)
         self.assertEqual(playlist1.playlist_line_ids[0].playing, False)
         self.assertEqual(playlist2.playlist_line_ids[0].playing, True)
+
+        # oomusic_play_skip
+        playlist2.playlist_line_ids[0].oomusic_play_skip(play=True)
         self.assertEqual(playlist2.playlist_line_ids[0].track_id.play_count, 1)
+        self.assertEqual(playlist2.playlist_line_ids[0].track_id.play_skip_ratio, 1)
+        playlist2.playlist_line_ids[0].track_id.last_play_skip_ratio = dt.now().replace(year=2016)
+        playlist2.playlist_line_ids[0].oomusic_play_skip(play=True)
+        self.assertEqual(playlist2.playlist_line_ids[0].track_id.play_count, 2)
+        self.assertEqual(playlist2.playlist_line_ids[0].track_id.play_skip_ratio, 2)
+        playlist2.playlist_line_ids[0].track_id.last_play_skip_ratio = dt.now().replace(year=2016)
+        playlist2.playlist_line_ids[0].oomusic_play_skip(play=False)
+        self.assertEqual(playlist2.playlist_line_ids[0].track_id.skip_count, 1)
+        self.assertEqual(playlist2.playlist_line_ids[0].track_id.play_skip_ratio, 2)
 
         # oomusic_play
         res = json.loads(playlist1.playlist_line_ids[0].with_context(test_mode=True).oomusic_play())
@@ -178,9 +191,14 @@ class TestOomusicPlaylist(test_common.TestOomusicCommon):
         playlist.album_id = album1
         playlist._onchange_album_id()
         playlist.playlist_line_ids[0].with_context(test_mode=True).oomusic_set_current()
+        playlist.playlist_line_ids[0].oomusic_play_skip(play=True)
+        playlist.playlist_line_ids[0].track_id.last_play_skip_ratio = dt.now().replace(year=2016)
         playlist.playlist_line_ids[0].with_context(test_mode=True).oomusic_set_current()
+        playlist.playlist_line_ids[0].oomusic_play_skip(play=True)
+        playlist.playlist_line_ids[0].track_id.last_play_skip_ratio = dt.now().replace(year=2016)
         time.sleep(2)
         playlist.playlist_line_ids[1].with_context(test_mode=True).oomusic_set_current()
+        playlist.playlist_line_ids[1].oomusic_play_skip(play=True)
         playlist.invalidate_cache()
         playlist.action_purge()
         playlist.invalidate_cache()
