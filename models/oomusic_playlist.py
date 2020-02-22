@@ -352,7 +352,7 @@ class MusicPlaylistLine(models.Model):
         self.last_play = now if self.playlist_id.dynamic else False
         self.playing = True
         self.track_id.last_play = now
-        self.track_id.play_count = +1
+        self.track_id.play_count += 1
 
         # Specific case of a dynamic playlist
         self.playlist_id._update_dynamic()
