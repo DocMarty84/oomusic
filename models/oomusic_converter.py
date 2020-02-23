@@ -218,7 +218,7 @@ class MusicConverterLine(models.Model):
 
     sequence = fields.Integer("Sequence", default=10)
     converter_id = fields.Many2one(
-        "oomusic.converter", "Converter", required=True, ondelete="cascade"
+        "oomusic.converter", "Converter", required=True, index=True, ondelete="cascade"
     )
     state = fields.Selection(
         [("draft", "Draft"), ("waiting", "Waiting"), ("done", "Done"), ("cancel", "Cancelled")],

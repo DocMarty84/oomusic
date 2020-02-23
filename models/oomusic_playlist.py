@@ -331,7 +331,9 @@ class MusicPlaylistLine(models.Model):
     _order = "sequence"
 
     sequence = fields.Integer("Sequence", default=10)
-    playlist_id = fields.Many2one("oomusic.playlist", "Playlist", required=True, ondelete="cascade")
+    playlist_id = fields.Many2one(
+        "oomusic.playlist", "Playlist", required=True, index=True, ondelete="cascade"
+    )
     playing = fields.Boolean("Playing", default=False)
     track_id = fields.Many2one("oomusic.track", "Track", required=True, ondelete="cascade")
     track_number = fields.Char(

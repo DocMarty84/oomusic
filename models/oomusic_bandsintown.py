@@ -132,7 +132,7 @@ class MusicBandsintownEvent(models.Model):
         help="The current location can be set in your preferences (from the top right menu)",
     )
     active = fields.Boolean(default=True)
-    artist_id = fields.Many2one("oomusic.artist", "Artist", ondelete="cascade")
+    artist_id = fields.Many2one("oomusic.artist", "Artist", ondelete="cascade", index=True)
     user_id = fields.Many2one(
         "res.users", related="artist_id.user_id", store=True, index=True, related_sudo=False
     )

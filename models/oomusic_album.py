@@ -16,8 +16,8 @@ class MusicAlbum(models.Model):
 
     name = fields.Char("Album", index=True)
     track_ids = fields.One2many("oomusic.track", "album_id", "Tracks", readonly=True)
-    artist_id = fields.Many2one("oomusic.artist", "Artist")
-    genre_id = fields.Many2one("oomusic.genre", "Genre")
+    artist_id = fields.Many2one("oomusic.artist", "Artist", index=True)
+    genre_id = fields.Many2one("oomusic.genre", "Genre", index=True)
     year = fields.Char("Year", index=True)
     folder_id = fields.Many2one("oomusic.folder", "Folder", index=True, required=True)
     user_id = fields.Many2one(
