@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class MusicSuggestion(models.TransientModel):
@@ -11,41 +11,61 @@ class MusicSuggestion(models.TransientModel):
     name_albums = fields.Char("Name Albums", default="Albums")
 
     track_last_played = fields.Many2many(
-        "oomusic.track", string="Last Played", compute="_compute_track_last_played"
+        "oomusic.track",
+        string="Last Played",
+        store=False,
+        readonly=True,
+        default=lambda s: s._default_track_last_played(),
     )
     track_recently_added = fields.Many2many(
-        "oomusic.track", string="Recently Added Tracks", compute="_compute_track_recently_added"
+        "oomusic.track",
+        string="Recently Added Tracks",
+        store=False,
+        default=lambda s: s._default_track_recently_added(),
     )
     track_random = fields.Many2many(
-        "oomusic.track", string="Random Tracks", compute="_compute_track_random"
+        "oomusic.track",
+        string="Random Tracks",
+        store=False,
+        readonly=True,
+        default=lambda s: s._default_track_random(),
     )
 
     album_recently_added = fields.Many2many(
-        "oomusic.album", string="Recently Added Albums", compute="_compute_album_recently_added"
+        "oomusic.album",
+        string="Recently Added Albums",
+        store=False,
+        readonly=True,
+        default=lambda s: s._default_album_recently_added(),
     )
     album_random = fields.Many2many(
-        "oomusic.album", string="Random Albums", compute="_compute_album_random"
+        "oomusic.album",
+        string="Random Albums",
+        store=False,
+        readonly=True,
+        default=lambda s: s._default_album_random(),
     )
 
-    @api.depends("name_tracks")
-    def _compute_track_last_played(self):
-        self.track_last_played = [
+    def _default_track_last_played(self):
+        return [
             p["res_id"]
-            for p in self.env["oomusic.preference"]
-            .search(
-                [("play_count", ">", 0), ("res_model", "=", "oomusic.track")],
+            for p in self.env["oomusic.preference"].search_read(
+                fields=["res_id"],
+                domain=[("play_count", ">", 0), ("res_model", "=", "oomusic.track")],
                 order="last_play desc",
                 limit=10,
             )
-            .read(["res_id"])
         ]
 
-    @api.depends("name_tracks")
-    def _compute_track_recently_added(self):
-        self.track_recently_added = self.env["oomusic.track"].search([], order="id desc", limit=10)
+    def _default_track_recently_added(self):
+        return [
+            p["id"]
+            for p in self.env["oomusic.track"].search_read(
+                fields=["id"], domain=[], order="id desc", limit=10,
+            )
+        ]
 
-    @api.depends("name_tracks")
-    def _compute_track_random(self):
+    def _default_track_random(self):
         folder_sharing = (
             "inactive" if self.env.ref("oomusic.oomusic_track").sudo().perm_read else "active"
         )
@@ -57,14 +77,17 @@ class MusicSuggestion(models.TransientModel):
         self.env.cr.execute(query)
         res = self.env.cr.fetchall()
 
-        self.track_random = [r[0] for r in res]
+        return [r[0] for r in res]
 
-    @api.depends("name_albums")
-    def _compute_album_recently_added(self):
-        self.album_recently_added = self.env["oomusic.album"].search([], order="id desc", limit=10)
+    def _default_album_recently_added(self):
+        return [
+            p["id"]
+            for p in self.env["oomusic.album"].search_read(
+                fields=["id"], domain=[], order="id desc", limit=10,
+            )
+        ]
 
-    @api.depends("name_albums")
-    def _compute_album_random(self):
+    def _default_album_random(self):
         folder_sharing = (
             "inactive" if self.env.ref("oomusic.oomusic_track").sudo().perm_read else "active"
         )
@@ -76,4 +99,4 @@ class MusicSuggestion(models.TransientModel):
         self.env.cr.execute(query)
         res = self.env.cr.fetchall()
 
-        self.album_random = [r[0] for r in res]
+        return [r[0] for r in res]
