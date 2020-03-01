@@ -32,7 +32,7 @@ class MusicController(http.Controller):
 
         # Set a minimum delay between link access to avoid overload
         now = fields.Datetime.now()
-        if down.access_date and (now - down.access_date).seconds < down.min_delay:
+        if down.access_date and (now - down.access_date).total_seconds() < down.min_delay:
             raise Forbidden(_("Too many requests received. Please try again in a few minutes."))
         down._update_access_date(now)
 
