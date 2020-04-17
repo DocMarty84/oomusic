@@ -159,6 +159,16 @@ class MusicPlaylist(models.Model):
                     track_ids.add(playlist_line_id.track_id.id)
         lines_to_unlink.unlink()
 
+    def action_play(self):
+        if len(self) != 1 or not self.playlist_line_ids:
+            return True
+        line = False
+        if self.dynamic:
+            line = self.playlist_line_ids.filtered("last_play")[-1:]
+        if not line:
+            line = self.playlist_line_ids[:1]
+        return line.action_play()
+
     def _smart_rnd(self):
         current_tracks = self.playlist_line_ids.mapped("track_id")
         folder_sharing = (

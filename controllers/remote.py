@@ -24,7 +24,7 @@ class MusicRemote(http.Controller):
         remote = request.env["oomusic.remote"].search(
             [("access_token", "=", access_token), ("public", "=", False)]
         )
-        return self._render_remote(remote, access_token, control)
+        return self._render_remote(remote, access_token, control, **kwargs)
 
     @http.route(
         [
@@ -40,15 +40,17 @@ class MusicRemote(http.Controller):
             .sudo()
             .search([("access_token", "=", access_token), ("public", "=", True)])
         )
-        return self._render_remote(remote, access_token, control)
+        return self._render_remote(remote, access_token, control, **kwargs)
 
-    def _render_remote(self, remote, access_token, control=False):
+    def _render_remote(self, remote, access_token, control=False, **kwargs):
         if not remote:
             _logger.warn("Access refused with token %s", access_token)
             abort(404)
-        _logger.info("Access granted with token %s, control: %s", access_token, control)
+        _logger.info(
+            "Access granted with token %s, control: %s, options: %s", access_token, control, kwargs
+        )
         if control:
-            notification = {"control": control}
+            notification = {"control": control, "options": kwargs}
             request.env["bus.bus"].sendone(
                 (request.db, "oomusic.remote", remote.user_id.id), notification
             )
@@ -58,6 +60,12 @@ class MusicRemote(http.Controller):
             .with_user(remote.user_id)
             .search([("playing", "=", True)], limit=1)
         )
+        playlists = (
+            request.env["oomusic.playlist"]
+            .with_user(remote.user_id)
+            .search([], order="current desc, name")
+        )
         return request.render(
-            "oomusic.remote", {"url": remote.url, "public": remote.public, "line": line}
+            "oomusic.remote",
+            {"url": remote.url, "public": remote.public, "line": line, "playlists": playlists},
         )

@@ -574,6 +574,7 @@ var Panel = Widget.extend({
         _.each(notifications, function (notification) {
             if (notification[0][1] === 'oomusic.remote') {
                 var control = notification[1]['control'];
+                var options = notification[1]['options'];
                 self.do_notify(
                     _t('Remote control received'),
                     _t('Control: ') + control,
@@ -618,6 +619,15 @@ var Panel = Widget.extend({
                     case 'star':
                         self._onClickStar();
                         break;
+                    case 'playlist':
+                        return self._rpc({
+                            model: 'oomusic.playlist',
+                            method: 'action_play',
+                            args: [[parseInt(options.playlist_id || 0)]],
+                        })
+                        .then(function (res) {
+                            self.do_action(res);
+                        });
                 }
             }
         });

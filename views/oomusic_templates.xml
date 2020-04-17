@@ -87,6 +87,21 @@
                     </div>
                 </div>
             </div>
+            <p/>
+
+            <div class="row">
+                <div class="col">
+                    <div class="input-group input-group-lg">
+                        <select class="custom-select border" onchange="location = this.value;">
+                            <t t-foreach="playlists" t-as="playlist">
+                                <option t-attf-value="{{ url + '/playlist?playlist_id=' + str(playlist.id) }}">
+                                    <t t-esc="playlist.name"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                </div>
+            </div>
 
             <hr/>
             <p class="text-right">
