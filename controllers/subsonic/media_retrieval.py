@@ -206,7 +206,7 @@ class MusicSubsonicMediaRetrieval(http.Controller):
 
         user = request.env["res.users"].search([("login", "=", username)])
 
-        image = user.partner_id.image_medium or b"R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+        image = user.partner_id.image_512 or b"R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
         image_stream = BytesIO(base64.b64decode(image))
         image_ext = "." + (imghdr.what(image_stream) or "png")
         return http.send_file(image_stream, filename=str(user.id) + image_ext)
