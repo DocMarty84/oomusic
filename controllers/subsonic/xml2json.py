@@ -39,6 +39,12 @@ import json, optparse, sys, os
 # List of tags which might need to be set in a list
 LIST_TAGS = ["album", "artist", "child", "genre", "index", "musicFolder", "playlist"]
 
+# List of tags which must be converted to integer
+INT_TAGS = ["bitRate"]
+
+# List of tags which must be converted to booleans
+BOOL_TAGS = ["isDir"]
+
 
 def elem_to_internal(elem, strip=1, level=0):
 
@@ -46,6 +52,13 @@ def elem_to_internal(elem, strip=1, level=0):
 
     d = {}
     for key, value in elem.attrib.items():
+        if key in INT_TAGS:
+            try:
+                value = int(value or 0)
+            except (ValueError, TypeError):
+                pass
+        if key in BOOL_TAGS:
+            value = True if value.lower() == "true" else False
         d[key] = value
 
     level += 1
