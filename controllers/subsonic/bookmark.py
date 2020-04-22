@@ -9,7 +9,11 @@ from .common import SubsonicREST
 
 class MusicSubsonicBookmarks(http.Controller):
     @http.route(
-        ["/rest/getBookmarks.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/getBookmarks.view", "/rest/getBookmarks"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def getBookmarks(self, **kwargs):
         rest = SubsonicREST(kwargs)
@@ -26,9 +30,13 @@ class MusicSubsonicBookmarks(http.Controller):
     @http.route(
         [
             "/rest/createBookmark.view",
+            "/rest/createBookmark",
             "/rest/deleteBookmark.view",
+            "/rest/deleteBookmark",
             "/rest/getPlayQueue.view",
+            "/rest/getPlayQueue",
             "/rest/savePlayQueue.view",
+            "/rest/savePlayQueue",
         ],
         type="http",
         auth="public",

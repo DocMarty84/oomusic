@@ -9,7 +9,11 @@ from .common import SubsonicREST
 
 class MusicSubsonicSystem(http.Controller):
     @http.route(
-        ["/rest/ping.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/ping.view", "/rest/ping"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def ping(self, **kwargs):
         rest = SubsonicREST(kwargs)
@@ -17,7 +21,11 @@ class MusicSubsonicSystem(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/getLicense.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/getLicense.view", "/rest/getLicense"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def getLicense(self, **kwargs):
         rest = SubsonicREST(kwargs)

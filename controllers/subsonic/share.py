@@ -9,7 +9,11 @@ from .common import SubsonicREST
 
 class MusicSubsonicShare(http.Controller):
     @http.route(
-        ["/rest/getShares.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/getShares.view", "/rest/getShares"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def getShares(self, **kwargs):
         rest = SubsonicREST(kwargs)
@@ -26,7 +30,11 @@ class MusicSubsonicShare(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/createShare.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/createShare.view", "/rest/createShare"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def createShare(self, **kwargs):
         rest = SubsonicREST(kwargs)
@@ -37,7 +45,11 @@ class MusicSubsonicShare(http.Controller):
         return rest.make_error(code="30", message="Feature not supported by server.")
 
     @http.route(
-        ["/rest/updateShare.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/updateShare.view", "/rest/updateShare"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def updateShare(self, **kwargs):
         rest = SubsonicREST(kwargs)
@@ -49,7 +61,11 @@ class MusicSubsonicShare(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/deleteShare.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/deleteShare.view", "/rest/deleteShare"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def deleteShare(self, **kwargs):
         rest = SubsonicREST(kwargs)

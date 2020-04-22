@@ -10,7 +10,11 @@ from .common import SubsonicREST
 
 class MusicSubsonicMediaAnnotation(http.Controller):
     @http.route(
-        ["/rest/star.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/star.view", "/rest/star"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def star(self, **kwargs):
         rest = SubsonicREST(kwargs)
@@ -45,7 +49,11 @@ class MusicSubsonicMediaAnnotation(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/unstar.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/unstar.view", "/rest/unstar"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def unstar(self, **kwargs):
         rest = SubsonicREST(kwargs)
@@ -80,7 +88,11 @@ class MusicSubsonicMediaAnnotation(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/setRating.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/setRating.view", "/rest/setRating"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def setRating(self, **kwargs):
         rest = SubsonicREST(kwargs)
@@ -121,7 +133,11 @@ class MusicSubsonicMediaAnnotation(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/scrobble.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/scrobble.view", "/rest/scrobble"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def scrobble(self, **kwargs):
         rest = SubsonicREST(kwargs)

@@ -14,7 +14,7 @@ _logger = logging.getLogger(__name__)
 
 class MusicSubsonicBrowsing(http.Controller):
     @http.route(
-        ["/rest/getMusicFolders.view"],
+        ["/rest/getMusicFolders.view", "/rest/getMusicFolders"],
         type="http",
         auth="public",
         csrf=False,
@@ -37,7 +37,11 @@ class MusicSubsonicBrowsing(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/getIndexes.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/getIndexes.view", "/rest/getIndexes"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def getIndexes(self, **kwargs):
         rest = SubsonicREST(kwargs)
@@ -91,7 +95,7 @@ class MusicSubsonicBrowsing(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/getMusicDirectory.view"],
+        ["/rest/getMusicDirectory.view", "/rest/getMusicDirectory"],
         type="http",
         auth="public",
         csrf=False,
@@ -128,7 +132,11 @@ class MusicSubsonicBrowsing(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/getGenres.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/getGenres.view", "/rest/getGenres"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def getGenres(self, **kwargs):
         rest = SubsonicREST(kwargs)
@@ -143,7 +151,11 @@ class MusicSubsonicBrowsing(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/getArtists.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/getArtists.view", "/rest/getArtists"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def getArtists(self, **kwargs):
         rest = SubsonicREST(kwargs)
@@ -181,7 +193,11 @@ class MusicSubsonicBrowsing(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/getArtist.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/getArtist.view", "/rest/getArtist"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def getArtist(self, **kwargs):
         rest = SubsonicREST(kwargs)
@@ -208,7 +224,11 @@ class MusicSubsonicBrowsing(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/getAlbum.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/getAlbum.view", "/rest/getAlbum"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def getAlbum(self, **kwargs):
         rest = SubsonicREST(kwargs)
@@ -235,7 +255,11 @@ class MusicSubsonicBrowsing(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/getSong.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/getSong.view", "/rest/getSong"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def getSong(self, **kwargs):
         rest = SubsonicREST(kwargs)
@@ -258,7 +282,11 @@ class MusicSubsonicBrowsing(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/getVideos.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/getVideos.view", "/rest/getVideos"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def getVideos(self, **kwargs):
         rest = SubsonicREST(kwargs)
@@ -273,7 +301,11 @@ class MusicSubsonicBrowsing(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/getVideoInfo.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/getVideoInfo.view", "/rest/getVideoInfo"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def getVideoInfo(self, **kwargs):
         # TODO: support video infos
@@ -285,7 +317,7 @@ class MusicSubsonicBrowsing(http.Controller):
         return request.make_error(code="30", message="Videos are not supported yet")
 
     @http.route(
-        ["/rest/getArtistInfo.view"],
+        ["/rest/getArtistInfo.view", "/rest/getArtistInfo"],
         type="http",
         auth="public",
         csrf=False,
@@ -320,7 +352,7 @@ class MusicSubsonicBrowsing(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/getArtistInfo2.view"],
+        ["/rest/getArtistInfo2.view", "/rest/getArtistInfo2"],
         type="http",
         auth="public",
         csrf=False,
@@ -355,7 +387,11 @@ class MusicSubsonicBrowsing(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/getAlbumInfo.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/getAlbumInfo.view", "/rest/getAlbumInfo"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def getAlbumInfo(self, **kwargs):
         rest = SubsonicREST(kwargs)
@@ -378,7 +414,7 @@ class MusicSubsonicBrowsing(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/getAlbumInfo2.view"],
+        ["/rest/getAlbumInfo2.view", "/rest/getAlbumInfo2"],
         type="http",
         auth="public",
         csrf=False,
@@ -405,7 +441,7 @@ class MusicSubsonicBrowsing(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/getSimilarSongs.view"],
+        ["/rest/getSimilarSongs.view", "/rest/getSimilarSongs"],
         type="http",
         auth="public",
         csrf=False,
@@ -415,7 +451,7 @@ class MusicSubsonicBrowsing(http.Controller):
         return self.getSimilarSongs2(**dict(kwargs, tag_name="similarSongs"))
 
     @http.route(
-        ["/rest/getSimilarSongs2.view"],
+        ["/rest/getSimilarSongs2.view", "/rest/getSimilarSongs2"],
         type="http",
         auth="public",
         csrf=False,
@@ -445,7 +481,11 @@ class MusicSubsonicBrowsing(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/getTopSongs.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/getTopSongs.view", "/rest/getTopSongs"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def getTopSongs(self, **kwargs):
         rest = SubsonicREST(kwargs)

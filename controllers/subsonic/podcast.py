@@ -9,7 +9,11 @@ from .common import SubsonicREST
 
 class MusicSubsonicPodcast(http.Controller):
     @http.route(
-        ["/rest/getPodcasts.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/getPodcasts.view", "/rest/getPodcasts"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def getPodcasts(self, **kwargs):
         rest = SubsonicREST(kwargs)
@@ -24,7 +28,7 @@ class MusicSubsonicPodcast(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/getNewestPodcasts.view"],
+        ["/rest/getNewestPodcasts.view", "/rest/getNewestPodcasts"],
         type="http",
         auth="public",
         csrf=False,
@@ -45,10 +49,15 @@ class MusicSubsonicPodcast(http.Controller):
     @http.route(
         [
             "/rest/refreshPodcasts.view",
+            "/rest/refreshPodcasts",
             "/rest/createPodcastChannel.view",
+            "/rest/createPodcastChannel",
             "/rest/deletePodcastChannel.view",
+            "/rest/deletePodcastChannel",
             "/rest/deletePodcastEpisode.view",
+            "/rest/deletePodcastEpisode",
             "/rest/downloadPodcastEpisode.view",
+            "/rest/downloadPodcastEpisode",
         ],
         type="http",
         auth="public",

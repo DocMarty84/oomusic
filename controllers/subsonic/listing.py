@@ -17,7 +17,11 @@ def _uniquify_list(seq):
 
 class MusicSubsonicListing(http.Controller):
     @http.route(
-        ["/rest/getAlbumList.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/getAlbumList.view", "/rest/getAlbumList"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def getAlbumList(self, **kwargs):
         rest = SubsonicREST(kwargs)
@@ -149,7 +153,7 @@ class MusicSubsonicListing(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/getAlbumList2.view"],
+        ["/rest/getAlbumList2.view", "/rest/getAlbumList2"],
         type="http",
         auth="public",
         csrf=False,
@@ -297,7 +301,7 @@ class MusicSubsonicListing(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/getRandomSongs.view"],
+        ["/rest/getRandomSongs.view", "/rest/getRandomSongs"],
         type="http",
         auth="public",
         csrf=False,
@@ -349,7 +353,7 @@ class MusicSubsonicListing(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/getSongsByGenre.view"],
+        ["/rest/getSongsByGenre.view", "/rest/getSongsByGenre"],
         type="http",
         auth="public",
         csrf=False,
@@ -398,7 +402,7 @@ class MusicSubsonicListing(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/getNowPlaying.view"],
+        ["/rest/getNowPlaying.view", "/rest/getNowPlaying"],
         type="http",
         auth="public",
         csrf=False,
@@ -419,7 +423,11 @@ class MusicSubsonicListing(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/getStarred.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/getStarred.view", "/rest/getStarred"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def getStarred(self, **kwargs):
         rest = SubsonicREST(kwargs)
@@ -458,7 +466,11 @@ class MusicSubsonicListing(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/getStarred2.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/getStarred2.view", "/rest/getStarred2"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def getStarred2(self, **kwargs):
         rest = SubsonicREST(kwargs)

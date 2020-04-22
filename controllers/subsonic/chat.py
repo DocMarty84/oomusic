@@ -9,7 +9,7 @@ from .common import SubsonicREST
 
 class MusicSubsonicChat(http.Controller):
     @http.route(
-        ["/rest/getChatMessages.view"],
+        ["/rest/getChatMessages.view", "/rest/getChatMessages"],
         type="http",
         auth="public",
         csrf=False,
@@ -28,7 +28,7 @@ class MusicSubsonicChat(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/addChatMessage.view"],
+        ["/rest/addChatMessage.view", "/rest/addChatMessage"],
         type="http",
         auth="public",
         csrf=False,

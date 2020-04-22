@@ -12,7 +12,11 @@ from .common import SubsonicREST
 
 class MusicSubsonicSearching(http.Controller):
     @http.route(
-        ["/rest/search.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/search.view", "/rest/search"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def search(self, **kwargs):
         rest = SubsonicREST(kwargs)
@@ -113,7 +117,11 @@ class MusicSubsonicSearching(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/search2.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/search2.view", "/rest/search2"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def search2(self, **kwargs):
         rest = SubsonicREST(kwargs)
@@ -178,7 +186,11 @@ class MusicSubsonicSearching(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/search3.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/search3.view", "/rest/search3"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def search3(self, **kwargs):
         rest = SubsonicREST(kwargs)

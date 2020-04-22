@@ -10,7 +10,11 @@ from .common import API_VERSION_LIST, SubsonicREST
 
 class MusicSubsonicPlaylist(http.Controller):
     @http.route(
-        ["/rest/getPlaylists.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/getPlaylists.view", "/rest/getPlaylists"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def getPlaylists(self, **kwargs):
         rest = SubsonicREST(kwargs)
@@ -29,7 +33,11 @@ class MusicSubsonicPlaylist(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/getPlaylist.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/getPlaylist.view", "/rest/getPlaylist"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def getPlaylist(self, **kwargs):
         rest = SubsonicREST(kwargs)
@@ -56,7 +64,7 @@ class MusicSubsonicPlaylist(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/createPlaylist.view"],
+        ["/rest/createPlaylist.view", "/rest/createPlaylist"],
         type="http",
         auth="public",
         csrf=False,
@@ -106,7 +114,7 @@ class MusicSubsonicPlaylist(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/updatePlaylist.view"],
+        ["/rest/updatePlaylist.view", "/rest/updatePlaylist"],
         type="http",
         auth="public",
         csrf=False,
@@ -161,7 +169,7 @@ class MusicSubsonicPlaylist(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/deletePlaylist.view"],
+        ["/rest/deletePlaylist.view", "/rest/deletePlaylist"],
         type="http",
         auth="public",
         csrf=False,

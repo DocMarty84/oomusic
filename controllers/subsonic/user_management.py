@@ -10,7 +10,11 @@ from .common import SubsonicREST
 
 class MusicSubsonicUserManagement(http.Controller):
     @http.route(
-        ["/rest/getUser.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/getUser.view", "/rest/getUser"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def getUser(self, **kwargs):
         rest = SubsonicREST(kwargs)
@@ -35,7 +39,11 @@ class MusicSubsonicUserManagement(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/getUsers.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/getUsers.view", "/rest/getUsers"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def getUsers(self, **kwargs):
         rest = SubsonicREST(kwargs)
@@ -57,9 +65,13 @@ class MusicSubsonicUserManagement(http.Controller):
     @http.route(
         [
             "/rest/createUser.view",
+            "/rest/createUser",
             "/rest/updateUser.view",
+            "/rest/updateUser",
             "/rest/deleteUser.view",
+            "/rest/deleteUser",
             "/rest/changePassword.view",
+            "/rest/changePassword",
         ],
         type="http",
         auth="public",

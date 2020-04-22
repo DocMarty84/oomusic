@@ -9,7 +9,7 @@ from .common import SubsonicREST
 
 class MusicSubsonicRadio(http.Controller):
     @http.route(
-        ["/rest/getInternetRadioStations.view"],
+        ["/rest/getInternetRadioStations.view", "/rest/getInternetRadioStations"],
         type="http",
         auth="public",
         csrf=False,
@@ -30,8 +30,11 @@ class MusicSubsonicRadio(http.Controller):
     @http.route(
         [
             "/rest/createInternetRadioStation.view",
+            "/rest/createInternetRadioStation",
             "/rest/updateInternetRadioStation.view",
+            "/rest/updateInternetRadioStation",
             "/rest/deleteInternetRadioStation.view",
+            "/rest/deleteInternetRadioStation",
         ],
         type="http",
         auth="public",

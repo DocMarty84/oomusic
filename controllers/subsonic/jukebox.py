@@ -7,7 +7,7 @@ from .common import SubsonicREST
 
 class MusicSubsonicJukebox(http.Controller):
     @http.route(
-        ["/rest/jukeboxControl.view"],
+        ["/rest/jukeboxControl.view", "/rest/jukeboxControl"],
         type="http",
         auth="public",
         csrf=False,

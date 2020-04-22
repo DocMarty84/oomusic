@@ -10,7 +10,7 @@ from .common import SubsonicREST
 
 class MusicSubsonicMediaLibraryScanning(http.Controller):
     @http.route(
-        ["/rest/getScanStatus.view"],
+        ["/rest/getScanStatus.view", "/rest/getScanStatus"],
         type="http",
         auth="public",
         csrf=False,
@@ -31,7 +31,11 @@ class MusicSubsonicMediaLibraryScanning(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/startScan.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/startScan.view", "/rest/startScan"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def startScan(self, **kwargs):
         rest = SubsonicREST(kwargs)

@@ -21,7 +21,11 @@ _logger = logging.getLogger(__name__)
 
 class MusicSubsonicMediaRetrieval(http.Controller):
     @http.route(
-        ["/rest/stream.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/stream.view", "/rest/stream"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def stream(self, **kwargs):
         rest = SubsonicREST(kwargs)
@@ -77,7 +81,11 @@ class MusicSubsonicMediaRetrieval(http.Controller):
         return Response(data, mimetype=mimetype, direct_passthrough=True)
 
     @http.route(
-        ["/rest/download.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/download.view", "/rest/download"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def download(self, **kwargs):
         rest = SubsonicREST(kwargs)
@@ -95,7 +103,13 @@ class MusicSubsonicMediaRetrieval(http.Controller):
 
         return http.send_file(track.path, as_attachment=True)
 
-    @http.route(["/rest/hls.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"])
+    @http.route(
+        ["/rest/hls.view", "/rest/hls"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
+    )
     def hls(self, **kwargs):
         rest = SubsonicREST(kwargs)
         success, response = rest.check_login()
@@ -105,7 +119,11 @@ class MusicSubsonicMediaRetrieval(http.Controller):
         return rest.make_error(code="30", message="Feature not supported by server.")
 
     @http.route(
-        ["/rest/getCaptions.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/getCaptions.view", "/rest/getCaptions"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def getCaptions(self, **kwargs):
         rest = SubsonicREST(kwargs)
@@ -116,7 +134,11 @@ class MusicSubsonicMediaRetrieval(http.Controller):
         return rest.make_error(code="30", message="Feature not supported by server.")
 
     @http.route(
-        ["/rest/getCoverArt.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/getCoverArt.view", "/rest/getCoverArt"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def getCoverArt(self, **kwargs):
         rest = SubsonicREST(kwargs)
@@ -172,7 +194,11 @@ class MusicSubsonicMediaRetrieval(http.Controller):
         return http.send_file(image_stream, filename=folderId + image_ext)
 
     @http.route(
-        ["/rest/getLyrics.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/getLyrics.view", "/rest/getLyrics"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def getLyrics(self, **kwargs):
         rest = SubsonicREST(kwargs)
@@ -190,7 +216,11 @@ class MusicSubsonicMediaRetrieval(http.Controller):
         return rest.make_response(root)
 
     @http.route(
-        ["/rest/getAvatar.view"], type="http", auth="public", csrf=False, methods=["GET", "POST"]
+        ["/rest/getAvatar.view", "/rest/getAvatar"],
+        type="http",
+        auth="public",
+        csrf=False,
+        methods=["GET", "POST"],
     )
     def getAvatar(self, **kwargs):
         rest = SubsonicREST(kwargs)
