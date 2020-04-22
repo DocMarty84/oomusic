@@ -59,7 +59,9 @@ class MusicSubsonicMediaRetrieval(http.Controller):
 
         # As specified in Subsonic API: if maxBitRate is set to zero, no limit is imposed. We also
         # avoid any upsampling.
-        if fn_ext[1:] == output_format and (not maxBitRate or maxBitRate >= track.bitrate):
+        if output_format == "raw" or (
+            fn_ext[1:] == output_format and (not maxBitRate or maxBitRate >= track.bitrate)
+        ):
             return http.send_file(track.path)
 
         Transcoder = (
