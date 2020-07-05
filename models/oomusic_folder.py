@@ -291,7 +291,6 @@ class MusicFolder(models.Model):
             # Save in cache
             try:
                 folder.sudo().write({"image_big_cache": resized_image})
-                self.env.cr.commit()
             except OperationalError:
                 _logger.warning(
                     "Error when writing image cache for folder id: %s", folder.id, exc_info=True
@@ -324,7 +323,6 @@ class MusicFolder(models.Model):
             # Save in cache
             try:
                 folder.sudo().write({"image_medium_cache": resized_image})
-                self.env.cr.commit()
             except OperationalError:
                 _logger.warning(
                     "Error when writing image cache for folder id: %s", folder.id, exc_info=True
@@ -357,7 +355,6 @@ class MusicFolder(models.Model):
             # Save in cache
             try:
                 folder.sudo().write({"image_small_cache": resized_image})
-                self.env.cr.commit()
             except OperationalError:
                 _logger.warning(
                     "Error when writing image cache for folder id: %s", folder.id, exc_info=True
