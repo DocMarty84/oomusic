@@ -498,9 +498,9 @@ class SubsonicREST:
         if album.artist_id:
             elem_album.set("artist", album.artist_id.name)
             elem_album.set("artistId", str(album.artist_id.id))
-        # Use of [0] to make sure to fetch the image_medium for this album only, not all albums of
+        # Use of [0] to make sure to fetch the image_small for this album only, not all albums of
         # the recordset.
-        if album.image_medium_cache or album[0].image_medium:
+        if album.has_image or album[0].image_small:
             elem_album.set("coverArt", str(album.folder_id.id))
         if album.star == "1":
             elem_album.set("starred", self._dt_to_string(album.write_date))

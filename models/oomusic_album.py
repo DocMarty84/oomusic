@@ -58,12 +58,10 @@ class MusicAlbum(models.Model):
     image_medium = fields.Binary(
         "Medium-sized Image", related="folder_id.image_medium", related_sudo=False
     )
-    image_medium_cache = fields.Binary(
-        "Cache Of Medium-sized Image", related="folder_id.image_medium_cache", related_sudo=False
-    )
     image_small = fields.Binary(
         "Small-sized Image", related="folder_id.image_small", related_sudo=False
     )
+    has_image = fields.Boolean("Has Image", related="folder_id.has_image", related_sudo=False)
 
     def action_add_to_playlist(self):
         playlist = self.env["oomusic.playlist"].search([("current", "=", True)], limit=1)

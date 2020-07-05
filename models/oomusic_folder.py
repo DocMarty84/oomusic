@@ -117,6 +117,7 @@ class MusicFolder(models.Model):
         attachment=True,
         help="Image of the folder, used in Kanban view",
     )
+    has_image = fields.Boolean("Has Image")
 
     _sql_constraints = [
         ("oomusic_folder_path_uniq", "unique(path, user_id)", "Folder path must be unique!")
@@ -290,7 +291,9 @@ class MusicFolder(models.Model):
 
             # Save in cache
             try:
-                folder.sudo().write({"image_big_cache": resized_image})
+                folder.sudo().write(
+                    {"image_big_cache": resized_image, "has_image": bool(resized_image)}
+                )
             except OperationalError:
                 _logger.warning(
                     "Error when writing image cache for folder id: %s", folder.id, exc_info=True
@@ -322,7 +325,9 @@ class MusicFolder(models.Model):
 
             # Save in cache
             try:
-                folder.sudo().write({"image_medium_cache": resized_image})
+                folder.sudo().write(
+                    {"image_medium_cache": resized_image, "has_image": bool(resized_image)}
+                )
             except OperationalError:
                 _logger.warning(
                     "Error when writing image cache for folder id: %s", folder.id, exc_info=True
@@ -354,7 +359,9 @@ class MusicFolder(models.Model):
 
             # Save in cache
             try:
-                folder.sudo().write({"image_small_cache": resized_image})
+                folder.sudo().write(
+                    {"image_small_cache": resized_image, "has_image": bool(resized_image)}
+                )
             except OperationalError:
                 _logger.warning(
                     "Error when writing image cache for folder id: %s", folder.id, exc_info=True
