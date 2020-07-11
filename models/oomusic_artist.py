@@ -138,7 +138,6 @@ class MusicArtist(models.Model):
             # Save in cache
             try:
                 artist.sudo().write({"fm_image_cache": resized_image})
-                self.env.cr.commit()
             except OperationalError:
                 _logger.warning(
                     "Error when writing image cache for artist id: %s", artist.id, exc_info=True
@@ -194,7 +193,6 @@ class MusicArtist(models.Model):
             # Save in cache
             try:
                 artist.sudo().write({"sp_image_cache": resized_image})
-                self.env.cr.commit()
             except OperationalError:
                 _logger.warning(
                     "Error when writing image cache for artist id: %s", artist.id, exc_info=True
