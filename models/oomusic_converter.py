@@ -184,6 +184,11 @@ class MusicConverter(models.Model):
             {"state": "waiting"}
         )
 
+        # Activate the cron if necessary
+        cron = self.env.ref("oomusic.oomusic_convert", raise_if_not_found=False)
+        if cron and not cron.active:
+            cron.try_write({"active": True})
+
     def action_draft(self):
         self.write({"state": "draft"})
         self.env["oomusic.converter.line"].search([("converter_id", "in", self.ids)]).write(
@@ -209,6 +214,15 @@ class MusicConverter(models.Model):
 
     def cron_convert(self):
         self.search([("state", "=", "running")]).action_convert()
+
+    def cron_toggle(self):
+        # Deactivate the cron automatically if there is no job running. This prevents unnecessary
+        # cache clearing.
+        if not self.sudo().search([("state", "=", "running")]):
+            cron = self.env.ref("oomusic.oomusic_convert", raise_if_not_found=False)
+            if cron and cron.active:
+                cron.try_write({"active": False})
+            return
 
 
 class MusicConverterLine(models.Model):
