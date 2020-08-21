@@ -98,7 +98,7 @@
         <field name="name">oomusic.artist.tree</field>
         <field name="model">oomusic.artist</field>
         <field name="arch" type="xml">
-            <tree string="Artists" create="0">
+            <tree string="Artists" create="0" multi_edit="1">
                 <field name="name"/>
                 <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
             </tree>

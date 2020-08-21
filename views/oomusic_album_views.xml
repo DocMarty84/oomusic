@@ -63,7 +63,7 @@
         <field name="name">oomusic.album.tree</field>
         <field name="model">oomusic.album</field>
         <field name="arch" type="xml">
-            <tree string="Albums" create="0">
+            <tree string="Albums" create="0" multi_edit="1">
                 <button name="action_add_to_playlist" string="Add To Current Playlist"
                     icon="fa-plus"  type="object"/>
                 <button name="action_add_to_playlist" string="Add And Play"
