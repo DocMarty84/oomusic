@@ -61,7 +61,10 @@ class MusicSuggestion(models.TransientModel):
         return [
             p["id"]
             for p in self.env["oomusic.track"].search_read(
-                fields=["id"], domain=[], order="id desc", limit=10,
+                fields=["id"],
+                domain=[],
+                order="id desc",
+                limit=10,
             )
         ]
 
@@ -83,7 +86,10 @@ class MusicSuggestion(models.TransientModel):
         return [
             p["id"]
             for p in self.env["oomusic.album"].search_read(
-                fields=["id"], domain=[], order="id desc", limit=10,
+                fields=["id"],
+                domain=[],
+                order="id desc",
+                limit=10,
             )
         ]
 
