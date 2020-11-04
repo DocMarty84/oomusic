@@ -487,13 +487,21 @@ class MusicPlaylistLine(models.Model):
 
     def oomusic_last_track(self):
         playlist = self.env["oomusic.playlist"].search([("current", "=", True)], limit=1)
-        if playlist and playlist.playlist_line_ids:
-            playlist_line = playlist.playlist_line_ids.filtered(lambda r: r.playing is True)
-            if not playlist_line:
-                playlist_line = playlist.playlist_line_ids
-            return playlist_line[0].oomusic_play()
-        else:
+        if not playlist:
             return json.dumps({})
+        # Search for the playing track
+        playlist_line = self.env["oomusic.playlist.line"].search(
+            [("playlist_id", "=", playlist.id), ("playing", "=", True)], limit=1
+        )
+        if playlist_line:
+            return playlist_line.oomusic_play()
+        # Fallback on any track
+        playlist_line = self.env["oomusic.playlist.line"].search(
+            [("playlist_id", "=", playlist.id)], limit=1
+        )
+        if playlist_line:
+            return playlist_line.oomusic_play()
+        return json.dumps({})
 
     def action_play(self):
         return {
