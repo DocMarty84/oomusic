@@ -134,7 +134,7 @@ class MusicPlaylist(models.Model):
         self.audio_mode = "raw" if self.audio == "web" else "standard"
 
     def action_purge(self):
-        self.mapped("playlist_line_ids").unlink()
+        self.with_context(prefetch_fields=False).mapped("playlist_line_ids").unlink()
 
     def action_current(self):
         self.ensure_one()

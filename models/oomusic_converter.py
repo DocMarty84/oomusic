@@ -176,7 +176,7 @@ class MusicConverter(models.Model):
         self.bitrate = self.transcoder_id.bitrate
 
     def action_purge(self):
-        self.mapped("converter_line_ids").unlink()
+        self.with_context(prefetch_fields=False).mapped("converter_line_ids").unlink()
 
     def action_run(self):
         self.write({"state": "running"})
