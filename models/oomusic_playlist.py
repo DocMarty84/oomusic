@@ -138,7 +138,7 @@ class MusicPlaylist(models.Model):
 
     def action_current(self):
         self.ensure_one()
-        self.env["oomusic.playlist"].search([]).write({"current": False})
+        self.env["oomusic.playlist"].search([("current", "=", True)]).current = False
         self.current = True
 
     def action_add_to_playlist(self):
@@ -381,7 +381,7 @@ class MusicPlaylistLine(models.Model):
             self.playlist_id.action_current()
 
         # Update playing status and stats of the current playlist
-        self.search([]).playing = False
+        self.search([("playing", "=", True)]).playing = False
         self.last_play = now if self.playlist_id.dynamic else False
         self.playing = True
 
