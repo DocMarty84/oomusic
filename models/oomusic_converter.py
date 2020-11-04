@@ -130,23 +130,32 @@ class MusicConverter(models.Model):
         seq = self.converter_line_ids[-1:].sequence or 10
 
         converter_line = self.env["oomusic.converter.line"]
+        converter_line_list = []
         converter_tracks_ids = set(self.converter_line_ids.mapped("track_id").ids)
         for track in tracks:
             if track.id in converter_tracks_ids:
                 continue
             converter_tracks_ids.add(track.id)
             seq = seq + 1
-            data = {"sequence": seq, "track_id": track.id, "state": "draft"}
+            data = {
+                "sequence": seq,
+                "track_id": track.id,
+                "state": "draft",
+            }
             if onchange:
                 # This will keep the line displayed in a (more or less) correct order while they
                 # are added
-                converter_line |= converter_line.new(data)
+                converter_line_list.append(converter_line.new(data))
             else:
                 data["converter_id"] = self.id
-                converter_line.create(data)
+                converter_line_list.append(data)
 
         if onchange:
+            ids = [cl.id for cl in converter_line_list]
+            converter_line = converter_line.browse(ids)
             self.converter_line_ids += converter_line
+        else:
+            converter_line.create(converter_line_list)
 
     @api.onchange("album_id")
     def _onchange_album_id(self):

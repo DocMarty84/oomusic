@@ -99,19 +99,28 @@ class MusicPlaylist(models.Model):
         seq = self.playlist_line_ids[-1:].sequence or 10
 
         playlist_line = self.env["oomusic.playlist.line"]
+        playlist_line_list = []
         for track in tracks:
             seq = seq + 1
-            data = {"sequence": seq, "track_id": track.id, "user_id": self.user_id.id}
+            data = {
+                "sequence": seq,
+                "track_id": track.id,
+                "user_id": self.user_id.id,
+            }
             if onchange:
                 # This will keep the line displayed in a (more or less) correct order while they
                 # are added
-                playlist_line |= playlist_line.new(data)
+                playlist_line_list.append(playlist_line.new(data))
             else:
                 data["playlist_id"] = self.id
-                playlist_line |= playlist_line.create(data)
+                playlist_line_list.append(data)
 
         if onchange:
+            ids = [pl.id for pl in playlist_line_list]
+            playlist_line = playlist_line.browse(ids)
             self.playlist_line_ids += playlist_line
+        else:
+            playlist_line = playlist_line.create(playlist_line_list)
         return playlist_line
 
     def _get_track_ids(self):
