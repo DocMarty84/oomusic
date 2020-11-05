@@ -185,7 +185,10 @@ class MusicConverter(models.Model):
         self.bitrate = self.transcoder_id.bitrate
 
     def action_purge(self):
-        self.with_context(prefetch_fields=False).mapped("converter_line_ids").unlink()
+        # Use sudo to skip ir.rules checks: if we can read the lines it means we can deleted them.
+        self.env["oomusic.converter.line"].search(
+            [("converter_id", "in", self.ids)]
+        ).sudo().unlink()
 
     def action_run(self):
         self.write({"state": "running"})

@@ -143,7 +143,8 @@ class MusicPlaylist(models.Model):
         self.audio_mode = "raw" if self.audio == "web" else "standard"
 
     def action_purge(self):
-        self.with_context(prefetch_fields=False).mapped("playlist_line_ids").unlink()
+        # Use sudo to skip ir.rules checks: if we can read the lines it means we can deleted them.
+        self.env["oomusic.playlist.line"].search([("playlist_id", "in", self.ids)]).sudo().unlink()
 
     def action_current(self):
         self.ensure_one()
