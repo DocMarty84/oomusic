@@ -4,16 +4,17 @@
     <menuitem name="Music" id="menu_oomusic_root" sequence="90"/>
 
         <!-- Suggestions -->
-        <menuitem id="menu_action_suggestion" parent="menu_oomusic_root"  action="action_suggestion" sequence="0"/>
+        <menuitem id="menu_action_suggestion" parent="menu_oomusic_root" action="action_suggestion" sequence="0"/>
+        <menuitem id="menu_action_current_playlist" parent="menu_oomusic_root" action="action_current_playlist" sequence="10"/>
 
         <!-- Playlist -->
-        <menuitem id="menu_oomusic_playlist" parent="menu_oomusic_root" name="Playlists" sequence="10"/>
-            <menuitem id="menu_action_current_playlist" parent="menu_oomusic_playlist" action="action_current_playlist" sequence="10"/>
+        <menuitem id="menu_oomusic_playlist" parent="menu_oomusic_root" name="Playlists" sequence="20"/>
+            <menuitem id="menu_action_playlist_line" parent="menu_oomusic_playlist" action="action_playlist_line" sequence="10"/>
             <menuitem id="menu_action_playlist" parent="menu_oomusic_playlist" action="action_playlist" sequence="20"/>
             <menuitem id="menu_action_converter" parent="menu_oomusic_playlist" action="action_converter" sequence="30"/>
 
         <!-- Library -->
-        <menuitem id="menu_oomusic_library" parent="menu_oomusic_root"  name="Library" sequence="20"/>
+        <menuitem id="menu_oomusic_library" parent="menu_oomusic_root"  name="Library" sequence="30"/>
             <menuitem id="menu_action_track" parent="menu_oomusic_library" action="action_track" sequence="10"/>
             <menuitem id="menu_action_album" parent="menu_oomusic_library" action="action_album" sequence="20"/>
             <menuitem id="menu_action_artist" parent="menu_oomusic_library" action="action_artist" sequence="30"/>
@@ -21,7 +22,7 @@
             <menuitem id="menu_action_oomusic_browse" parent="menu_oomusic_library" action="action_oomusic_browse" sequence="40"/>
 
         <!-- Events -->
-        <menuitem id="menu_action_bandsintown_event" parent="menu_oomusic_root" action="action_bandsintown_event" sequence="30"/>
+        <menuitem id="menu_action_bandsintown_event" parent="menu_oomusic_root" action="action_bandsintown_event" sequence="40"/>
 
         <!-- Configuration -->
         <menuitem id="menu_oomusic_config" name="Configuration" sequence="100"/>

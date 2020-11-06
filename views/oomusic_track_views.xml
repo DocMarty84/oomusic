@@ -118,6 +118,15 @@
                     domain="[('create_date', '&gt;=', time.strftime('%%Y-%%m-01'))]"/>
                 <filter string="Favorite" name="filter_favorite"
                     domain="[('star', '=', '1')]"/>
+
+                <group expand="1" string="Group By">
+                    <filter string="Artist" name='group_artist' context="{'group_by': 'artist_id'}"/>
+                    <filter string="Album" name='group_album' context="{'group_by': 'album_id'}"/>
+                </group>
+
+                <searchpanel>
+                    <field name="genre_id"/>
+                </searchpanel>
             </search>
         </field>
     </record>

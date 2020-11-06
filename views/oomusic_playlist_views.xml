@@ -152,4 +152,36 @@
             </p>
         </field>
     </record>
+
+    <record id="oomusic_playlist_line_view_search_panel" model="ir.ui.view">
+        <field name="name">oomusic.playlist.line.search.panel</field>
+        <field name="model">oomusic.playlist.line</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="oomusic.oomusic_playlist_line_view_search"/>
+        <field name="arch" type="xml">
+            <search position="inside">
+                <searchpanel>
+                    <field name="playlist_id" icon="fa-music"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_playlist_line" model="ir.actions.act_window">
+        <field name="name">Overview</field>
+        <field name="res_model">oomusic.playlist.line</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="oomusic.oomusic_playlist_line_view_search_panel"></field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                You will find here all the playlists.
+            </p><p>
+                At least one playlist is required. You can easily add the tracks to the playlist
+                directly from the playlist form view, or from any other view. In the latter case,
+                tracks will be added to the current playlist, which is unique.
+            </p>
+        </field>
+    </record>
+
 </odoo>
