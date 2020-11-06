@@ -47,7 +47,4 @@
             </p>
         </field>
     </record>
-
-    <!-- Third Level Menu -->
-    <menuitem id="menu_action_transcoder" parent="menu_oomusic_config" action="action_transcoder" sequence="30" groups="base.group_system"/>
 </odoo>

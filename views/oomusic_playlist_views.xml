@@ -152,8 +152,4 @@
             </p>
         </field>
     </record>
-
-    <!-- Third Level Menu -->
-    <menuitem id="menu_action_current_playlist" parent="menu_oomusic_playlist" action="action_current_playlist" sequence="10"/>
-    <menuitem id="menu_action_playlist" parent="menu_oomusic_playlist" action="action_playlist" sequence="20"/>
 </odoo>

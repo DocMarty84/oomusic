@@ -45,12 +45,4 @@
             </p>
         </field>
     </record>
-
-    <!-- Third Level Menu -->
-    <menuitem
-        id="menu_action_oomusic_remote"
-        parent="menu_oomusic_config"
-        action="action_oomusic_remote"
-        sequence="15"
-    />
 </odoo>

@@ -75,7 +75,4 @@
             </p>
         </field>
     </record>
-
-    <!-- Second Level Menu -->
-    <menuitem id="menu_action_bandsintown_event" parent="menu_oomusic_root" action="action_bandsintown_event" sequence="30"/>
 </odoo>

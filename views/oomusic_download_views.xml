@@ -65,7 +65,4 @@
             </p>
         </field>
     </record>
-
-    <!-- Third Level Menu -->
-    <menuitem id="menu_action_download" parent="menu_oomusic_config" action="action_download" sequence="20"/>
 </odoo>

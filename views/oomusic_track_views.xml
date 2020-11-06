@@ -157,7 +157,4 @@
             </p>
         </field>
     </record>
-
-    <!-- Third Level Menu -->
-    <menuitem id="menu_action_track" parent="menu_oomusic_library" action="action_track" sequence="10"/>
 </odoo>

@@ -74,8 +74,4 @@
             </p>
         </field>
     </record>
-
-    <!-- Third Level Menu -->
-    <menuitem id="menu_action_genre" parent="menu_oomusic_library" action="action_genre" sequence="35"/>
-
 </odoo>
