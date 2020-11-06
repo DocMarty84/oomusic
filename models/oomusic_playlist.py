@@ -348,7 +348,7 @@ class MusicPlaylist(models.Model):
 class MusicPlaylistLine(models.Model):
     _name = "oomusic.playlist.line"
     _description = "Music Playlist Track"
-    _order = "sequence"
+    _order = "playlist_id, sequence"
 
     sequence = fields.Integer("Sequence", default=10)
     playlist_id = fields.Many2one(
