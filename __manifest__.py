@@ -15,7 +15,6 @@ Music Collection
     "data": [
         "security/ir.model.access.csv",
         "security/oomusic_security.xml",
-        "views/oomusic_menu_views.xml",
         "views/oomusic_album_views.xml",
         "views/oomusic_artist_views.xml",
         "views/oomusic_bandsintown_views.xml",
@@ -31,6 +30,7 @@ Music Collection
         "views/oomusic_remote_views.xml",
         "views/oomusic_suggestion_views.xml",
         "views/oomusic_transcoder_views.xml",
+        "views/oomusic_menu_views.xml",
         "views/res_users.xml",
         "views/oomusic.xml",
         "data/oomusic_data.xml",

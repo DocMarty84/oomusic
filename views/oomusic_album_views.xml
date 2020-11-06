@@ -182,7 +182,4 @@
             </p>
         </field>
     </record>
-
-    <!-- Third Level Menu -->
-    <menuitem id="menu_action_album" parent="menu_oomusic_library" action="action_album" sequence="20"/>
 </odoo>

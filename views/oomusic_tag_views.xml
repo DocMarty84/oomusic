@@ -39,7 +39,4 @@
             </p>
         </field>
     </record>
-
-    <!-- Third Level Menu -->
-    <menuitem id="menu_action_tag" parent="menu_oomusic_config" action="action_tag" sequence="40" groups="base.group_no_one"/>
 </odoo>

@@ -89,7 +89,4 @@
             </p>
         </field>
     </record>
-
-    <!-- Third Level Menu -->
-    <menuitem id="menu_action_converter" parent="menu_oomusic_playlist" action="action_converter" sequence="30"/>
 </odoo>

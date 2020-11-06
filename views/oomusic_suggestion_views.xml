@@ -122,7 +122,4 @@
             </p>
         </field>
     </record>
-
-    <!-- Second Level Menu -->
-    <menuitem id="menu_action_suggestion" parent="menu_oomusic_root" action="action_suggestion" sequence="0"/>
 </odoo>
