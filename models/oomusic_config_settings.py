@@ -129,3 +129,6 @@ class MusicConfigSettings(models.TransientModel):
                 WHERE user_id != res_user_id
             """
             )
+        self.env["ir.config_parameter"].set_param(
+            "oomusic.subsonic_format_name", self.subsonic_format_id.name
+        )

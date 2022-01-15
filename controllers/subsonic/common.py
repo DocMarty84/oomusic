@@ -187,6 +187,10 @@ class SubsonicREST:
         ConfigParam = request.env["ir.config_parameter"].sudo()
         if ConfigParam.get_param("oomusic.trans_disabled") and track:
             return os.path.splitext(track.path)[1].lstrip(".")
+        elif ConfigParam.get_param("oomusic.subsonic_format_name"):
+            return ConfigParam.get_param("oomusic.subsonic_format_name")
+        elif not ConfigParam.get_param("oomusic.subsonic_format_id"):
+            return "mp3"
         return (
             request.env["oomusic.format"]
             .browse(int(ConfigParam.get_param("oomusic.subsonic_format_id", 0)))
@@ -233,7 +237,7 @@ class SubsonicREST:
             id=str(track.id),
             parent=str(track.folder_id.id),
             isDir="false",
-            size=str(os.path.getsize(track.path)),
+            size=str(round(track.size * 1024 ** 2)),
             contentType=mimetypes.guess_type(track.path)[0],
             suffix=os.path.splitext(track.path)[1].lstrip("."),
             transcodedContentType="audio/mpeg",
