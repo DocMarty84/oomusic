@@ -271,8 +271,10 @@ class MusicFolder(models.Model):
                 continue
             try:
                 _logger.debug("Resizing image folder %s...", folder.path)
-                resized_image = tools.image_process(
-                    folder.image_folder, size=(1024, 1024), crop=True
+                resized_image = base64.b64encode(
+                    tools.image_process(
+                        base64.b64encode(folder.image_folder), size=(1024, 1024), crop=True
+                    )
                 )
             except:
                 _logger.warning(
@@ -307,7 +309,11 @@ class MusicFolder(models.Model):
                 continue
             try:
                 _logger.debug("Resizing image folder %s...", folder.path)
-                resized_image = tools.image_process(folder.image_folder, size=(128, 128), crop=True)
+                resized_image = base64.b64encode(
+                    tools.image_process(
+                        base64.b64decode(folder.image_folder), size=(128, 128), crop=True
+                    )
+                )
             except:
                 _logger.warning(
                     "Error with image in folder '%s' (id: %s)",
@@ -341,7 +347,11 @@ class MusicFolder(models.Model):
                 continue
             try:
                 _logger.debug("Resizing image folder %s...", folder.path)
-                resized_image = tools.image_process(folder.image_folder, size=(64, 64), crop=True)
+                resized_image = base64.b64encode(
+                    tools.image_process(
+                        base64.b64decode(folder.image_folder), size=(64, 64), crop=True
+                    )
+                )
             except:
                 _logger.warning(
                     "Error with image in folder '%s' (id: %s)",
