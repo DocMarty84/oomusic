@@ -32,7 +32,7 @@ Music Collection
         "views/oomusic_transcoder_views.xml",
         "views/oomusic_menu_views.xml",
         "views/res_users.xml",
-        "views/oomusic.xml",
+        # "views/oomusic.xml",
         "data/oomusic_data.xml",
         "data/oomusic_artist_data.xml",
         "data/oomusic_bandsintown_data.xml",

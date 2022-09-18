@@ -3,8 +3,10 @@ access_oomusic_album,oomusic.album,model_oomusic_album,base.group_user,1,1,0,0
 access_oomusic_artist,oomusic.artist,model_oomusic_artist,base.group_user,1,1,0,0
 access_oomusic_bandsintown,oomusic.bandsintown,model_oomusic_bandsintown,base.group_user,1,1,1,1
 access_oomusic_bandsintown_event,oomusic.bandsintown.event,model_oomusic_bandsintown_event,base.group_user,1,1,0,0
+access_oomusic_config_settings,access_oomusic_config_settings,oomusic.model_oomusic_config_settings,base.group_user,1,1,1,1
 access_oomusic_download,oomusic.download,model_oomusic_download,base.group_user,1,1,1,1
 access_oomusic_folder,oomusic.folder,model_oomusic_folder,base.group_user,1,1,1,1
+access_oomusic_folder_scan,access_oomusic_folder_scan,oomusic.model_oomusic_folder_scan,base.group_user,1,1,1,1
 access_oomusic_format,oomusic.format,model_oomusic_format,base.group_user,1,0,0,0
 access_oomusic_genre,oomusic.genre,model_oomusic_genre,base.group_user,1,1,0,0
 access_oomusic_lastfm,oomusic.lastfm,model_oomusic_lastfm,base.group_user,1,1,1,1
@@ -16,6 +18,7 @@ access_oomusic_spotify,oomusic.spotify,model_oomusic_spotify,base.group_user,1,1
 access_oomusic_spotify_token,oomusic.spotify.token,model_oomusic_spotify_token,base.group_user,1,1,1,1
 access_oomusic_converter,oomusic.converter,model_oomusic_converter,base.group_user,1,1,1,1
 access_oomusic_converter_line,oomusic.converter.line,model_oomusic_converter_line,base.group_user,1,1,1,1
+access_oomusic_suggestion,access_oomusic_suggestion,oomusic.model_oomusic_suggestion,base.group_user,1,1,1,1
 access_oomusic_tag,oomusic.tag,model_oomusic_tag,base.group_user,1,1,1,0
 access_oomusic_tag_system,oomusic.tag,model_oomusic_tag,base.group_system,1,1,1,1
 access_oomusic_track,oomusic.track,model_oomusic_track,base.group_user,1,1,0,0

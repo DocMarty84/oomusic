@@ -14,27 +14,22 @@ class ResUsers(models.Model):
         "Set to zero to show all events.",
     )
 
-    def __init__(self, pool, cr):
-        """Override of __init__ to add access rights on latitude, longitude and max_distance.
-        Access rights are disabled by default, but allowed on some specific fields defined in
-        self.SELF_{READ/WRITE}ABLE_FIELDS.
-        """
-        init_res = super(ResUsers, self).__init__(pool, cr)
-        # duplicate list to avoid modifying the original reference
-        type(self).SELF_WRITEABLE_FIELDS = list(self.SELF_WRITEABLE_FIELDS)
-        type(self).SELF_WRITEABLE_FIELDS.extend(["latitude", "longitude", "max_distance"])
-        # duplicate list to avoid modifying the original reference
-        type(self).SELF_READABLE_FIELDS = list(self.SELF_READABLE_FIELDS)
-        type(self).SELF_READABLE_FIELDS.extend(["latitude", "longitude", "max_distance"])
-        return init_res
+    @property
+    def SELF_READABLE_FIELDS(self):
+        return super().SELF_READABLE_FIELDS + ["latitude", "longitude", "max_distance"]
 
-    @api.model
-    def create(self, vals):
-        User = super(ResUsers, self).create(vals)
-        self.env["oomusic.playlist"].sudo().create(
-            {"name": _("My Playlist"), "user_id": User.id, "current": True}
-        )
-        return User
+    @property
+    def SELF_WRITEABLE_FIELDS(self):
+        return super().SELF_WRITEABLE_FIELDS + ["latitude", "longitude", "max_distance"]
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        users = super(ResUsers, self).create(vals_list)
+        for user in users:
+            self.env["oomusic.playlist"].sudo().create(
+                {"name": _("My Playlist"), "user_id": user.id, "current": True}
+            )
+        return users
 
     def unlink(self):
         # Manually unlink the root folder to trigger the deletion of all children and tracks. This

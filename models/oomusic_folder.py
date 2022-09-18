@@ -383,11 +383,12 @@ class MusicFolder(models.Model):
         for folder in self:
             folder.image_folder = tools.image_process(value, size=(1024, 1024), crop=True)
 
-    @api.model
-    def create(self, vals):
-        if "path" in vals and vals.get("root", True):
-            vals["path"] = os.path.normpath(vals["path"])
-        return super(MusicFolder, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if "path" in vals and vals.get("root", True):
+                vals["path"] = os.path.normpath(vals["path"])
+        return super(MusicFolder, self).create(vals_list)
 
     def write(self, vals):
         if "path" in vals:
