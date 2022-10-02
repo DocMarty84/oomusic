@@ -49,7 +49,9 @@ class MusicArtist(models.Model):
     )
 
     fm_image = fields.Binary(
-        "Image", compute="_compute_fm_image", help="Image of the artist, obtained thanks to LastFM."
+        "Image",
+        compute="_compute_fm_image",
+        help="Image of the artist, obtained thanks to LastFM.",
     )
     fm_image_cache = fields.Binary(
         "Cache Of Image", attachment=True, help="Image of the artist, obtained thanks to LastFM."
@@ -107,8 +109,8 @@ class MusicArtist(models.Model):
                 for image in req_json["artist"]["image"]:
                     if image["size"] == "large" and image["#text"]:
                         image_content = urllib.request.urlopen(image["#text"], timeout=5).read()
-                        resized_image = tools.image_process(
-                            base64.b64encode(image_content), size=(128, 128), crop=True
+                        resized_image = base64.b64encode(
+                            tools.image_process(image_content, size=(128, 128), crop=True)
                         )
                         break
             except KeyError:
@@ -162,8 +164,8 @@ class MusicArtist(models.Model):
                     _logger.info('No image found for artist "%s" (id: %s)', artist.name, artist.id)
                 for image in images:
                     image_content = urllib.request.urlopen(image["url"], timeout=5).read()
-                    resized_image = tools.image_process(
-                        base64.b64encode(image_content), size=(128, 128), crop=True
+                    resized_image = base64.b64encode(
+                        tools.image_process(image_content, size=(128, 128), crop=True)
                     )
                     break
             except KeyError:

@@ -273,7 +273,7 @@ class MusicFolder(models.Model):
                 _logger.debug("Resizing image folder %s...", folder.path)
                 resized_image = base64.b64encode(
                     tools.image_process(
-                        base64.b64encode(folder.image_folder), size=(1024, 1024), crop=True
+                        base64.b64decode(folder.image_folder), size=(1024, 1024), crop=True
                     )
                 )
             except:
