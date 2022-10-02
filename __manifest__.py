@@ -46,7 +46,11 @@ Music Collection
         "data/oomusic_transcoder_data.xml",
     ],
     "demo": [],
-    "qweb": ["static/src/xml/*.xml"],
+    "assets": {
+        "web.assets_backend": [
+            "oomusic/static/src/scss/oomusic.scss",
+        ],
+    },
     "installable": True,
     "auto_install": True,
     "application": True,
