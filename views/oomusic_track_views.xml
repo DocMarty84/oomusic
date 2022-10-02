@@ -9,8 +9,8 @@
                 <header>
                     <button name="action_add_to_playlist" string="Add To Current Playlist" class="btn-primary"
                         type="object"/>
-                    <button name="action_play" string="Play" type="object"/>
-                    <button name="action_download" string="Download" type="object"
+                    <button name="action_play" title="Play" type="object"/>
+                    <button name="action_download" title="Download" type="object"
                         help="Download the track(s). You should allow pop-up from this URL!"/>
                 </header>
                 <sheet>
@@ -84,9 +84,9 @@
         <field name="model">oomusic.track</field>
         <field name="arch" type="xml">
             <tree string="Tracks" default_order="artist_id, album_id, disc, track_number_int, track_number, path" create="0" limit="120" multi_edit="1">
-                <button name="action_add_to_playlist" string="Add To Current Playlist"
+                <button name="action_add_to_playlist" title="Add To Current Playlist"
                     icon="fa-plus" type="object"/>
-                <button name="action_play" string="Play" icon="fa-play" type="object"/>
+                <button name="action_play" title="Play" icon="fa-play" type="object"/>
                 <field name="name"/>
                 <field name="album_id"/>
                 <field name="artist_id"/>

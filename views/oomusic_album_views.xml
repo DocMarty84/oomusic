@@ -38,9 +38,9 @@
                         <page string="Tracks">
                             <field name="track_ids">
                                 <tree string="Tracks">
-                                    <button name="action_add_to_playlist" string="Add To Current Playlist"
-                                        icon="fa-plus"  type="object"/>
-                                    <button name="action_play" string="Play"
+                                    <button name="action_add_to_playlist" title="Add To Current Playlist"
+                                        icon="fa-plus" type="object"/>
+                                    <button name="action_play" title="Play"
                                         icon="fa-play" type="object"/>
                                     <field name="track_number"/>
                                     <field name="name"/>
@@ -64,9 +64,9 @@
         <field name="model">oomusic.album</field>
         <field name="arch" type="xml">
             <tree string="Albums" create="0" multi_edit="1">
-                <button name="action_add_to_playlist" string="Add To Current Playlist"
-                    icon="fa-plus"  type="object"/>
-                <button name="action_add_to_playlist" string="Add And Play"
+                <button name="action_add_to_playlist" title="Add To Current Playlist"
+                    icon="fa-plus" type="object"/>
+                <button name="action_add_to_playlist" title="Add And Play"
                     icon="fa-play" type="object" context="{'play': True}"/>
                 <field name="name"/>
                 <field name="year"/>
@@ -131,9 +131,9 @@
                                     </div>
                                     <div class="oe_kanban_bottom_right">
                                         <field name="star" widget="priority"/>
-                                        <button name="action_add_to_playlist" string="Add To Current Playlist"
+                                        <button name="action_add_to_playlist" title="Add To Current Playlist"
                                             class="btn btn-secondary btn-sm fa fa-plus" type="object"/>
-                                        <button name="action_add_to_playlist" string="Add And Play"
+                                        <button name="action_add_to_playlist" title="Add And Play"
                                             class="btn btn-secondary btn-sm fa fa-play" type="object"
                                             context="{'play': True}"/>
                                     </div>

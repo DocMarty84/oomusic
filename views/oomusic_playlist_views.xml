@@ -54,7 +54,7 @@
                                 <tree string="Tracks" editable="bottom" limit="120">
                                     <field name="user_id" invisible="1" force_save="1"/>
                                     <field name="sequence" widget="handle"/>
-                                    <button name="action_play" string="Play" icon="fa-play" type="object"/>
+                                    <button name="action_play" title="Play" icon="fa-play" type="object"/>
                                     <field name="track_id"/>
                                     <field name="artist_id"/>
                                     <field name="album_id"/>

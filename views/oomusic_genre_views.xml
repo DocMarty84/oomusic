@@ -18,9 +18,9 @@
                         <page string="Artists">
                             <field name="artist_ids">
                                 <tree string="Artists">
-                                    <button name="action_add_to_playlist" string="Add To Current Playlist"
+                                    <button name="action_add_to_playlist" title="Add To Current Playlist"
                                         icon="fa-plus" type="object" />
-                                    <button name="action_add_to_playlist" string="Add And Play"
+                                    <button name="action_add_to_playlist" title="Add And Play"
                                         icon="fa-play" type="object" context="{'play': True}"/>
                                     <field name="name"/>
                                 </tree>
@@ -29,9 +29,9 @@
                         <page string="Albums">
                             <field name="album_ids">
                                 <tree string="Albums">
-                                    <button name="action_add_to_playlist" string="Add To Current Playlist"
+                                    <button name="action_add_to_playlist" title="Add To Current Playlist"
                                         icon="fa-plus" type="object"/>
-                                    <button name="action_add_to_playlist" string="Add And Play"
+                                    <button name="action_add_to_playlist" title="Add And Play"
                                         icon="fa-play" type="object" context="{'play': True}"/>
                                     <field name="name"/>
                                     <field name="year"/>

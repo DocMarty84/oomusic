@@ -34,9 +34,9 @@
                         <page string="Albums">
                             <field name="album_ids">
                                 <tree string="Albums">
-                                    <button name="action_add_to_playlist" string="Add To Current Playlist"
+                                    <button name="action_add_to_playlist" title="Add To Current Playlist"
                                         icon="fa-plus" type="object"/>
-                                    <button name="action_add_to_playlist" string="Add And Play"
+                                    <button name="action_add_to_playlist" title="Add And Play"
                                         icon="fa-play" type="object" context="{'play': True}"/>
                                     <field name="name"/>
                                     <field name="year"/>
@@ -47,9 +47,9 @@
                         <page string="Top Tracks">
                             <field name="fm_gettoptracks_track_ids">
                                 <tree string="Top Tracks">
-                                    <button name="action_add_to_playlist" string="Add To Current Playlist"
+                                    <button name="action_add_to_playlist" title="Add To Current Playlist"
                                         icon="fa-plus" type="object"/>
-                                    <button name="action_play" string="Play"
+                                    <button name="action_play" title="Play"
                                         icon="fa-play" type="object"/>
                                     <field name="name"/>
                                     <field name="album_id"/>
@@ -60,9 +60,9 @@
                         <page string="Tracks">
                             <field name="track_ids">
                                 <tree string="Tracks" limit="120">
-                                    <button name="action_add_to_playlist" string="Add To Current Playlist"
+                                    <button name="action_add_to_playlist" title="Add To Current Playlist"
                                         icon="fa-plus" type="object"/>
-                                    <button name="action_play" string="Play"
+                                    <button name="action_play" title="Play"
                                         icon="fa-play" type="object"
                                         context="{'play': True}"/>
                                     <field name="name"/>

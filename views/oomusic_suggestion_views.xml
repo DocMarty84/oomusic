@@ -36,9 +36,9 @@
                                                         <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                                                     </div>
                                                     <div class="oe_kanban_bottom_right">
-                                                        <button name="action_add_to_playlist" string="Add To Current Playlist"
+                                                        <button name="action_add_to_playlist" title="Add To Current Playlist"
                                                             class="btn btn-secondary btn-sm fa fa-plus" type="object"/>
-                                                        <button name="action_add_to_playlist" string="Add And Play"
+                                                        <button name="action_add_to_playlist" title="Add And Play"
                                                             class="btn btn-secondary btn-sm fa fa-play" type="object"
                                                             context="{'play': True}"/>
                                                     </div>
@@ -76,9 +76,9 @@
                                                         <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                                                     </div>
                                                     <div class="oe_kanban_bottom_right">
-                                                        <button name="action_add_to_playlist" string="Add To Current Playlist"
+                                                        <button name="action_add_to_playlist" title="Add To Current Playlist"
                                                             class="btn btn-secondary btn-sm fa fa-plus" type="object"/>
-                                                        <button name="action_add_to_playlist" string="Add And Play"
+                                                        <button name="action_add_to_playlist" title="Add And Play"
                                                             class="btn btn-secondary btn-sm fa fa-play" type="object"
                                                             context="{'play': True}"/>
                                                     </div>
