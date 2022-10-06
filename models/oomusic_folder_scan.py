@@ -443,7 +443,7 @@ class MusicFolderScan(models.TransientModel):
                 "It seems the locale of your system is not set correctly. "
                 + "It might be resolved by setting the system variable LC_ALL to UTF-8."
             )
-        with api.Environment.manage(), self.pool.cursor() as cr:
+        with self.pool.cursor() as cr:
             time_start = dt.now()
             # As this function is in a new thread, open a new cursor because the existing one may be
             # closed

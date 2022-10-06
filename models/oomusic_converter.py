@@ -271,7 +271,7 @@ class MusicConverterLine(models.Model):
     )
 
     def convert(self):
-        with api.Environment.manage(), self.pool.cursor() as cr:
+        with self.pool.cursor() as cr:
             if not self.env.context.get("test_mode"):
                 new_self = self.with_env(self.env(cr))
             else:

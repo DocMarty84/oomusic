@@ -70,18 +70,18 @@ class MusicAlbum(models.Model):
         if self.env.context.get("purge"):
             playlist.action_purge()
         lines = playlist._add_tracks(self.mapped("track_ids"))
-        if self.env.context.get("play"):
-            return {
-                "type": "ir.actions.act_play",
-                "res_model": "oomusic.playlist.line",
-                "res_id": lines[:1].id,
-            }
-        else:
-            return {
-                "type": "ir.actions.act_add",
-                "res_model_name": _("Album"),
-                "res_name": ", ".join(self.mapped("name")[:5]),
-            }
+        # if self.env.context.get("play"):
+        #     return {
+        #         "type": "ir.actions.act_play",
+        #         "res_model": "oomusic.playlist.line",
+        #         "res_id": lines[:1].id,
+        #     }
+        # else:
+        #     return {
+        #         "type": "ir.actions.act_add",
+        #         "res_model_name": _("Album"),
+        #         "res_name": ", ".join(self.mapped("name")[:5]),
+        #     }
 
     def _lastfm_album_getinfo(self):
         self.ensure_one()
